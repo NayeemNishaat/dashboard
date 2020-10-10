@@ -1,10 +1,13 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import router from "./router/index";
+import PaperDashboard from "./plugins/paperDashboard";
 import "./registerServiceWorker";
-import router from "./router";
 import store from "./store";
 
+/* eslint-disable no-new */
 createApp(App)
-  .use(store)
   .use(router)
+  .use(store)
+  .use(PaperDashboard)
   .mount("#app");
