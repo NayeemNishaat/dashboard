@@ -1,25 +1,46 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav
+    class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent"
+  >
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">{{ routeName }}</a>
-      <button
-        class="navbar-toggler navbar-burger"
+      <div class="navbar-wrapper">
+        <div class="navbar-toggle">
+          <button
+            class="navbar-toggler"
+            type="button"
+            @click="toggleSidebar"
+            :aria-expanded="$sidebar.state.showSidebar"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </button>
+        </div>
+        <a class="navbar-brand" href="#">{{ routeName }}</a>
+      </div>
+      <!-- <button
+        class="navbar-toggler collapsed"
         type="button"
         @click="toggleSidebar"
+        data-toggle="collapse"
+        data-target="#navigation"
+        aria-controls="navigation-index"
         :aria-expanded="$sidebar.state.showSidebar"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-bar"></span>
-        <span class="navbar-toggler-bar"></span>
-        <span class="navbar-toggler-bar"></span>
-      </button>
-      <div class="collapse navbar-collapse">
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+        <span class="navbar-toggler-bar navbar-kebab"></span>
+      </button> -->
+
+      <div class="navbar-collapse justify-content-end collapse" id="navigation">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="ti-settings"></i>
+            <a class="nav-link" @click="logout()">
+              <i class="nc-icon nc-single-02"></i>
               <p>
-                Settings
+                Logout
               </p>
             </a>
           </li>
@@ -28,22 +49,18 @@
     </div>
   </nav>
 </template>
-<script>
-export default {
-  computed: {
-    routeName() {
-      const { name } = this.$route;
-      return this.capitalizeFirstLetter(name);
-    }
-  },
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   data() {
     return {
       activeNotifications: false
     };
   },
   methods: {
-    capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
+    logout() {
+      console.log("hello");
     },
     toggleNotificationDropDown() {
       this.activeNotifications = !this.activeNotifications;
@@ -52,12 +69,24 @@ export default {
       this.activeNotifications = false;
     },
     toggleSidebar() {
-      this.$sidebar.displaySidebar(!this.$sidebar.state.showSidebar);
+      const sidebar = (this as any).$sidebar;
+      sidebar.displaySidebar(!sidebar.state.showSidebar);
     },
     hideSidebar() {
-      this.$sidebar.displaySidebar(false);
+      (this as any).$sidebar.displaySidebar(false);
+    }
+  },
+  computed: {
+    routeName() {
+      const { name } = this.$route;
+      let newName = (name as string) || "";
+      if (newName === "") {
+        return "";
+      }
+      newName = newName.charAt(0).toUpperCase() + newName.slice(1);
+      return newName;
     }
   }
-};
+});
 </script>
 <style></style>

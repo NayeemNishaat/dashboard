@@ -1,20 +1,14 @@
 <template>
-  <div
-    class="sidebar"
-    data-background-color="darkblue"
-    data-active-color="warning"
-  >
-    <div class="sidebar-wrapper" id="style-3">
-      <div class="logo">
-        <router-link to="/" class="simple-text">
-          <div class="logo-img">
-            <img src="@/assets/img/datacue-logo.svg" alt />
-          </div>
-        </router-link>
-      </div>
-      <slot> </slot>
+  <div class="sidebar" data-color="darkblue" data-active-color="warning">
+    <div class="logo">
+      <router-link to="/" class="simple-text">
+        <div class="logo-img">
+          <img src="@/assets/img/datacue-logo.svg" alt />
+        </div>
+      </router-link>
+    </div>
+    <div class="sidebar-wrapper">
       <ul class="nav">
-        <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot name="links">
           <sidebar-link
             v-for="(link, index) in sidebarLinks"
@@ -26,7 +20,9 @@
           </sidebar-link>
         </slot>
       </ul>
-      <moving-arrow :move-y="arrowMovePx"> </moving-arrow>
+      <moving-arrow :move-y="arrowMovePx" :hide="this.activeLinkIndex > 3">
+      </moving-arrow>
+      <slot> </slot>
     </div>
   </div>
 </template>
@@ -67,7 +63,7 @@ export default defineComponent({
   },
   data() {
     return {
-      linkHeight: 65,
+      linkHeight: 60,
       activeLinkIndex: 0,
       windowWidth: 0,
       isWindows: false,
@@ -86,8 +82,15 @@ export default defineComponent({
     addLink(link) {
       const slotLinks = this.$slots.links().map(elem => elem.props.name);
       const index = slotLinks.indexOf(link.name);
-      // console.log(JSON.stringify(slotLinks));
-      // console.log("link", JSON.stringify(link));
+      // console.dir({
+      //   link: JSON.stringify(link),
+      //   links: JSON.stringify(this.links),
+      //   index: index
+      // });
+      if (index < 0) {
+        this.links.push(link);
+        return;
+      }
       this.links.splice(index, 0, link);
     },
     removeLink(link) {

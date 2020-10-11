@@ -11,15 +11,18 @@
         />
         <sidebar-link to="/creatives" name="Creatives" icon="ti-image" />
       </template>
-      <mobile-menu>
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="ti-settings"></i>
-            <p>Settings</p>
-          </a>
-        </li>
-        <li class="divider"></li>
-      </mobile-menu>
+      <options-menu>
+        <sidebar-link
+          to="/billing"
+          name="Billing"
+          icon="nc-icon nc-credit-card"
+        />
+        <sidebar-link
+          to="/settings"
+          name="Settings"
+          icon="nc-icon nc-settings"
+        />
+      </options-menu>
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
@@ -35,7 +38,7 @@
 import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
-import MobileMenu from "./MobileMenu.vue";
+import OptionsMenu from "./OptionsMenu.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -43,7 +46,7 @@ export default defineComponent({
     TopNavbar,
     ContentFooter,
     DashboardContent,
-    MobileMenu
+    OptionsMenu
   },
   methods: {
     toggleSidebar() {

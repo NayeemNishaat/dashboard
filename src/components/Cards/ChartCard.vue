@@ -13,7 +13,13 @@
       </p>
     </template>
     <div>
-      <div :id="chartId" class="ct-chart"></div>
+      <div class="chart">
+        <apex-chart
+          :options="chartOptions"
+          :series="chartData"
+          :type="chartType"
+        ></apex-chart>
+      </div>
       <div class="footer">
         <div class="chart-legend">
           <slot name="legend"></slot>
@@ -29,10 +35,13 @@
 </template>
 <script>
 import Card from "./Card.vue";
+import ApexChart from "../ApexCharts.vue";
+
 export default {
   name: "chart-card",
   components: {
-    Card
+    Card,
+    ApexChart
   },
   props: {
     footerText: {
@@ -49,7 +58,7 @@ export default {
     },
     chartType: {
       type: String,
-      default: "Line" // Line | Pie | Bar
+      default: "line" // line | pie | bar
     },
     chartOptions: {
       type: Object,
@@ -66,40 +75,6 @@ export default {
         };
       }
     }
-  },
-  data() {
-    return {
-      chartId: "no-id"
-    };
-  },
-  methods: {
-    /***
-     * Initializes the chart by merging the chart options sent via props and the default chart options
-     */
-    initChart(Chartist) {
-      const chartIdQuery = `#${this.chartId}`;
-      Chartist[this.chartType](chartIdQuery, this.chartData, this.chartOptions);
-    },
-    /***
-     * Assigns a random id to the chart
-     */
-    updateChartId() {
-      const currentTime = new Date().getTime().toString();
-      const randomInt = this.getRandomInt(0, currentTime);
-      this.chartId = `div_${randomInt}`;
-    },
-    getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-  },
-  mounted() {
-    this.updateChartId();
-    import("chartist").then(Chartist => {
-      let ChartistLib = Chartist.default || Chartist;
-      this.$nextTick(() => {
-        this.initChart(ChartistLib);
-      });
-    });
   }
 };
 </script>

@@ -1,0 +1,56 @@
+@import "colors";
+
+.btn-large {
+  font-size: 16px;
+  height: 50px;
+  padding: 0 30px;
+
+  &.rounded {
+    border-radius: 25px !important;
+  }
+}
+
+.btn-yellow {
+  color: #fff;
+  fill: #fff;
+  background-color: $primary;
+  border-color: $primary;
+
+  &:active {
+    color: #fff;
+    fill: #fff;
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  &:focus,
+  &:hover {
+    border-color: $primary-light;
+    background-color: $primary-light;
+    color: #fff;
+  }
+
+  &.is-disabled:hover,
+  &.is-disabled:focus,
+  &:disabled {
+    background-color: $bg-disabled;
+    border-color: $gray-light;
+    color: $gray;
+    fill: $gray;
+  }
+}
+
+.btn-yellow-outline {
+  background-color: #fff;
+  color: $primary;
+  fill: $primary;
+  border: 1px solid $primary;
+
+  &:active,
+  &:focus,
+  &:hover {
+    color: $primary;
+    border-color: $primary;
+    background-color: #fff;
+  }
+}

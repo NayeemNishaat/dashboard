@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
-import PaperDashboard from "./plugins/paperDashboard";
+import DataCueDashboard from "./plugins/datacueDashboard";
 import "./registerServiceWorker";
 import store from "./store";
 
@@ -9,5 +9,5 @@ import store from "./store";
 createApp(App)
   .use(router)
   .use(store)
-  .use(PaperDashboard)
+  .use(DataCueDashboard)
   .mount("#app");

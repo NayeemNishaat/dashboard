@@ -10,7 +10,7 @@
         <stats-card>
           <template v-slot:header>
             <div class="icon-big text-center" :class="`icon-${stats.type}`">
-              <i :class="stats.icon"></i>
+              <i class="nc-icon" :class="stats.icon"></i>
             </div>
           </template>
           <template v-slot:content>
@@ -31,7 +31,7 @@
     <!--Charts-->
     <div class="row">
       <div class="col-12">
-        <stats-card
+        <chart-card
           title="Users behavior"
           sub-title="24 Hours performance"
           :chart-data="usersChart.data"
@@ -47,7 +47,7 @@
               <i class="fa fa-circle text-warning"></i> Click Second Time
             </div>
           </template>
-        </stats-card>
+        </chart-card>
       </div>
 
       <div class="col-md-6 col-12">
@@ -93,10 +93,12 @@
 </template>
 <script lang="ts">
 import { StatsCard } from "@/components/index";
+import ChartCard from "@/components/Cards/ChartCard.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
   components: {
-    StatsCard
+    StatsCard,
+    ChartCard
   },
   /**
    * Chart data used to render stats, charts. Should be replaced with server data
@@ -106,7 +108,7 @@ export default defineComponent({
       statsCards: [
         {
           type: "warning",
-          icon: "ti-server",
+          icon: "nc-globe",
           title: "Capacity",
           value: "105GB",
           footerText: "Updated now",
@@ -138,34 +140,19 @@ export default defineComponent({
         }
       ],
       usersChart: {
-        data: {
-          labels: [
-            "9:00AM",
-            "12:00AM",
-            "3:00PM",
-            "6:00PM",
-            "9:00PM",
-            "12:00PM",
-            "3:00AM",
-            "6:00AM"
-          ],
-          series: [
-            [287, 385, 490, 562, 594, 626, 698, 895, 952],
-            [67, 152, 193, 240, 387, 435, 535, 642, 744],
-            [23, 113, 67, 108, 190, 239, 307, 410, 410]
-          ]
-        },
+        data: [
+          {
+            name: "series-1",
+            data: [30, 40, 45, 50, 49, 60, 70, 91]
+          }
+        ],
         options: {
-          low: 0,
-          high: 1000,
-          showArea: true,
-          height: "245px",
-          axisX: {
-            showGrid: false
+          chart: {
+            id: "chart-id"
           },
-          lineSmooth: null,
-          showLine: true,
-          showPoint: false
+          xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          }
         }
       },
       activityChart: {

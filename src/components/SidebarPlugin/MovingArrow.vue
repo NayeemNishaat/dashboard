@@ -1,6 +1,5 @@
 <template>
-  <div class="moving-arrow" :style="arrowStyle">
-  </div>
+  <div class="moving-arrow" :style="arrowStyle"></div>
 </template>
 <script>
 export default {
@@ -8,6 +7,10 @@ export default {
     moveY: {
       type: Number,
       default: 0
+    },
+    hide: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -17,7 +20,8 @@ export default {
      */
     arrowStyle() {
       return {
-        transform: `translate3d(0px, ${this.moveY}px, 0px)`
+        transform: `translate3d(0px, ${this.moveY}px, 0px)`,
+        display: this.hide ? "none" : "inline-block"
       };
     }
   }
@@ -33,7 +37,7 @@ $bg-nude: #f4f3ef !default;
   display: inline-block;
   position: absolute;
   left: 243px;
-  top: 95px;
+  top: 30px;
   transition: all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1);
 }
 @media (max-width: 992px) {

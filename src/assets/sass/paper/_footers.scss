@@ -1,41 +1,46 @@
-.footer {
-  background-attachment: fixed;
-  position: relative;
-  line-height: 20px;
-  nav {
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      font-weight: normal;
-      li {
-        display: inline-block;
-        padding: 10px 15px;
-        margin: 15px 3px;
-        line-height: 20px;
-        text-align: center;
-      }
-      a:not(.btn) {
-        color: $font-color;
-        display: block;
-        margin-bottom: 3px;
+.footer{
+    padding: 24px 0;
 
-        &:focus,
-        &:hover {
-          color: $default-states-color;
-        }
-      }
+    &.footer-default{
+        background-color: #f2f2f2;
     }
-  }
-  .copyright {
-    color: $font-color;
-    padding: 10px 15px;
-    font-size: 14px;
-    white-space: nowrap;
-    margin: 15px 3px;
-    line-height: 20px;
-  }
-  .heart {
-    color: $danger-color;
-  }
+
+    nav{
+        display: inline-block;
+        float: left;
+        padding-left: 0;
+    }
+
+    ul{
+        margin-bottom: 0;
+        padding: 0;
+        list-style: none;
+
+        li{
+            display: inline-block;
+
+            a{
+                color: inherit;
+                padding: $padding-base-vertical;
+                font-size: $font-size-small;
+                text-transform: uppercase;
+                text-decoration: none;
+
+                &:hover{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .copyright{
+        font-size: $font-size-small;
+        line-height: 1.8;
+    }
+
+    &:after{
+        display: table;
+        clear: both;
+        content: " ";
+    }
 }

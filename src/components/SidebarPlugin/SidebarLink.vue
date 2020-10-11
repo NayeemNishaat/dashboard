@@ -1,12 +1,12 @@
 <template>
-  <router-link ref="el" class="nav-item" v-bind="$attrs">
-    <a class="nav-link">
+  <li>
+    <router-link ref="el" v-bind="$attrs">
       <slot>
         <i v-if="icon" :class="icon"></i>
         <p>{{ name }}</p>
       </slot>
-    </a>
-  </router-link>
+    </router-link>
+  </li>
 </template>
 <script>
 export default {
@@ -46,7 +46,8 @@ export default {
       }
     },
     isActive() {
-      return this.$el.classList.contains("active");
+      const to = this.$refs?.el?.to ?? "";
+      return this.$route.path.startsWith(to);
     }
   },
   mounted() {

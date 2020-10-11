@@ -1,8 +1,4 @@
-@mixin filter($color) {
-  @if $color == #FFFFFF {
-    background-color: rgba($color, .91);
-  } @else {
-    background-color: rgba($color, .69);
-  }
+@mixin icon-color($color) {
+    box-shadow:  0px 9px 30px -6px $color;
+    color: $color;
 }
-
