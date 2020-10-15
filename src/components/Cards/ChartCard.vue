@@ -33,11 +33,12 @@
     </div>
   </card>
 </template>
-<script>
+<script lang="ts">
 import Card from "./Card.vue";
 import ApexChart from "../ApexCharts.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "chart-card",
   components: {
     Card,
@@ -76,6 +77,6 @@ export default {
       }
     }
   }
-};
+});
 </script>
 <style></style>

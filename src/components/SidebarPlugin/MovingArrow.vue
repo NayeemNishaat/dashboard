@@ -1,8 +1,10 @@
 <template>
   <div class="moving-arrow" :style="arrowStyle"></div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   props: {
     moveY: {
       type: Number,
@@ -20,12 +22,12 @@ export default {
      */
     arrowStyle() {
       return {
-        transform: `translate3d(0px, ${this.moveY}px, 0px)`,
-        display: this.hide ? "none" : "inline-block"
+        transform: `translate3d(0px, ${(this as any).moveY}px, 0px)`,
+        display: (this as any).hide ? "none" : "inline-block"
       };
     }
   }
-};
+});
 </script>
 <style lang="scss">
 $bg-nude: #f4f3ef !default;

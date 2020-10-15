@@ -27,10 +27,11 @@
   </div>
 </template>
 
-<script>
-import LoaderDots from "@/components/LoaderDots";
+<script lang="ts">
+import LoaderDots from "@/components/LoaderDots.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "DcButton",
   components: {
     LoaderDots
@@ -43,7 +44,7 @@ export default {
     type: {
       type: String,
       default: "outline",
-      validator: function(value) {
+      validator: function(value: string) {
         // The value must match one of these strings
         return ["primary", "outline", "link", "circle"].indexOf(value) !== -1;
       }
@@ -62,11 +63,11 @@ export default {
     }
   },
   methods: {
-    handleClick(event) {
-      this.$emit("click", event);
+    handleClick() {
+      this.$emit("click");
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

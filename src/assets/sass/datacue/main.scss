@@ -1,7 +1,14 @@
+@import "variables.scss";
+@import "mixins.scss";
+@import "misc.scss";
 @import "colors.scss";
+@import "cards.scss";
 @import "buttons.scss";
-@import "form.scss";
-@import "element.scss";
+@import "footers.scss";
+@import "navbar.scss";
+@import "nucleo-outline.scss";
+@import "responsive.scss";
+@import "sidebar-and-main-panel.scss";
 
 .centered-box {
   display: flex;

@@ -8,8 +8,10 @@
     </router-link>
   </li>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "sidebar-link",
   inheritAttrs: false,
   emits: {
@@ -41,28 +43,28 @@ export default {
   },
   methods: {
     hideSidebar() {
-      if (this.autoClose) {
-        this.$sidebar.displaySidebar(false);
+      if ((this as any).autoClose) {
+        (this as any).$sidebar.displaySidebar(false);
       }
     },
     isActive() {
-      const to = this.$refs?.el?.to ?? "";
+      const to = (this as any).$refs?.el?.to ?? "";
       return this.$route.path.startsWith(to);
     }
   },
   mounted() {
-    if (this.addLink) {
-      this.addLink(this);
+    if ((this as any).addLink) {
+      (this as any).addLink(this);
     }
   },
   beforeUnmount() {
     if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }
-    if (this.removeLink) {
-      this.removeLink(this);
+    if ((this as any).removeLink) {
+      (this as any).removeLink(this);
     }
   }
-};
+});
 </script>
 <style></style>

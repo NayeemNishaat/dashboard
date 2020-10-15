@@ -26,7 +26,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import MovingArrow from "./MovingArrow.vue";
 import SidebarLink from "./SidebarLink.vue";
@@ -57,7 +57,7 @@ export default defineComponent({
      * Styles to animate the arrow near the current active sidebar link
      * @returns {{transform: string}}
      */
-    arrowMovePx() {
+    arrowMovePx(): number {
       return this.linkHeight * this.activeLinkIndex;
     }
   },
@@ -68,32 +68,29 @@ export default defineComponent({
       windowWidth: 0,
       isWindows: false,
       hasAutoHeight: false,
-      links: []
+      links: [] as Array<any>
     };
   },
   methods: {
     findActiveLink() {
       this.links.forEach((link, index) => {
-        if (link.isActive()) {
+        if ((link as any).isActive()) {
           this.activeLinkIndex = index;
         }
       });
     },
-    addLink(link) {
-      const slotLinks = this.$slots.links().map(elem => elem.props.name);
+    addLink(link: any) {
+      const slotLinks = (this as any).$slots
+        .links()
+        .map((elem: any) => elem.props.name);
       const index = slotLinks.indexOf(link.name);
-      // console.dir({
-      //   link: JSON.stringify(link),
-      //   links: JSON.stringify(this.links),
-      //   index: index
-      // });
       if (index < 0) {
         this.links.push(link);
         return;
       }
       this.links.splice(index, 0, link);
     },
-    removeLink(link) {
+    removeLink(link: any) {
       const index = this.links.indexOf(link);
       if (index > -1) {
         this.links.splice(index, 1);

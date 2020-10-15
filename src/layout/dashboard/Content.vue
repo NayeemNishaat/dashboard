@@ -3,14 +3,23 @@
     <div class="container-fluid">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
-          <component :is="Component" />
+          <Suspense>
+            <template #default>
+              <component :is="Component" />
+            </template>
+            <template #fallback>
+              <loader-dots />
+            </template>
+          </Suspense>
         </transition>
       </router-view>
     </div>
   </div>
 </template>
-<script>
-export default {};
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({});
 </script>
 <style>
 .fade-enter-active,

@@ -1,12 +1,51 @@
 <template>
   <card>
+    <slot name="header">
+      <h3 class="card-title">
+        <i :class="icon" v-if="icon" />
+        {{ title }}
+      </h3>
+    </slot>
     <div>
-      <div class="row">
-        <div class="col-5" v-if="$slots.header">
-          <slot name="header"></slot>
+      <div class="numbers">
+        <div class="row" v-if="!loading">
+          <template v-if="comparison !== ''">
+            <div
+              class="col-7 current-value"
+              :class="
+                value.length < 5
+                  ? ''
+                  : value.length < 8
+                  ? 'smaller'
+                  : value.length < 12
+                  ? 'v-small'
+                  : 'smallest'
+              "
+            >
+              {{ value }}
+            </div>
+            <div class="col-5 comparison">
+              <div class="d-flex flex-column">
+                <div
+                  :class="`comparison-${comparison < 0 ? 'lower' : 'higher'}`"
+                >
+                  {{ comparison > 0 ? "+" : "" }}{{ comparison }}%
+                  <i v-if="comparison < 0" class="el-icon-caret-bottom" />
+                  <i v-else-if="comparison > 0" class="el-icon-caret-top" />
+                </div>
+                <div style="font-size: 0.8em">
+                  {{ `previous days: ${numDays}` }}
+                </div>
+              </div>
+            </div>
+          </template>
+          <div v-else class="col-12 current-value">{{ value }}</div>
         </div>
-        <div class="col-7" v-if="$slots.content">
-          <slot name="content"></slot>
+        <div class="row" v-else>
+          <div class="col-8"></div>
+          <div class="col-4">
+            <loader-dots></loader-dots>
+          </div>
         </div>
       </div>
       <div v-if="$slots.footer">
@@ -16,14 +55,81 @@
     </div>
   </card>
 </template>
-<script>
+<script lang="ts">
 import Card from "./Card.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import { differenceInCalendarDays, parseISO } from "date-fns";
+import { computed, defineComponent, reactive } from "vue";
 
-export default {
+export default defineComponent({
   name: "stats-card",
+  setup() {
+    const dateRange = reactive(["2020-10-01", "2020-10-10"]);
+    const numDays = computed(
+      () =>
+        differenceInCalendarDays(
+          parseISO(dateRange[1]),
+          parseISO(dateRange[0])
+        ) + 1
+    );
+    return { numDays };
+  },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: String,
+      default: ""
+    },
+    comparison: {
+      type: String,
+      default: ""
+    },
+    icon: {
+      type: String,
+      default: ""
+    }
+  },
   components: {
-    Card
+    Card,
+    LoaderDots
   }
-};
+});
 </script>
-<style></style>
+
+<style scoped>
+.card .numbers > div {
+  align-items: center;
+}
+
+.card .current-value {
+  font-size: 3rem;
+  text-align: left;
+}
+
+.card .current-value.smaller {
+  font-size: 2rem;
+}
+
+.card .current-value.v-small {
+  font-size: 1.5rem;
+}
+
+.card .current-value.smallest {
+  font-size: 1rem;
+}
+
+.comparison-higher {
+  color: #46b58a;
+}
+
+.comparison-lower {
+  color: #e33335;
+}
+</style>

@@ -8,13 +8,15 @@
     </p>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "MessageBanner",
   computed: {
     msgIcon() {
       if (this.icon) {
-        return this.icon;
+        return (this as any).icon;
       }
       switch (this.type) {
         case "default":
@@ -41,7 +43,7 @@ export default {
     type: {
       type: String,
       default: "default",
-      validator: function(value) {
+      validator: function(value: string) {
         return ["default", "success", "warning", "error"].indexOf(value) !== -1;
       }
     },
@@ -49,10 +51,10 @@ export default {
       type: String
     }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "../assets/sass/datacue/_colors.scss";
 
 .message-banner-panel.success {
   > i {
