@@ -1,9 +1,13 @@
 <template>
   <div class="content">
     <div class="container-fluid">
+      <!-- <router-view></router-view> -->
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
-          <Suspense>
+          <div v-if="error">
+            <error-msg />
+          </div>
+          <Suspense v-else>
             <template #default>
               <component :is="Component" />
             </template>
@@ -17,9 +21,18 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onErrorCaptured, ref } from "vue";
 
-export default defineComponent({});
+export default defineComponent({
+  setup() {
+    // const error = ref("");
+    // onErrorCaptured(e => {
+    //   error.value = `${e}`;
+    //   return true;
+    // });
+    return { error: ref(null) };
+  }
+});
 </script>
 <style>
 .fade-enter-active,

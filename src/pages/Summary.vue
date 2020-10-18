@@ -18,18 +18,10 @@
         <div class="col-12">
           <card>
             <DataView :value="summary.opportunities" layout="list">
-              <template #header>
-                <DataViewLayoutOptions v-model="layout"></DataViewLayoutOptions>
-              </template>
               <template #list="slotProps">
                 <div>
                   <b>{{ slotProps.data.title }}</b>
                   <b>{{ slotProps.data.description }}</b>
-                </div>
-              </template>
-              <template #grid="slotProps">
-                <div>
-                  <b>{{ slotProps.data.title }}</b>
                 </div>
               </template>
             </DataView>
@@ -43,9 +35,9 @@
 import { StatsCard } from "@/components/index";
 import ChartCard from "@/components/Cards/ChartCard.vue";
 import DataView from "primevue/dataview";
-import { defineComponent, inject, reactive, ref } from "vue";
-import { apiSymbol } from "@/api";
-import { datacueApi, summary } from "@/api/interfaces";
+import { defineComponent, reactive, ref } from "vue";
+import { getApi } from "@/api";
+import { summary } from "@/api/interfaces";
 export default defineComponent({
   name: "Summary",
   components: {
@@ -62,10 +54,7 @@ export default defineComponent({
     };
     const statTypes = ["segments", "max_aov", "max_size"];
     try {
-      const api: datacueApi | undefined = inject(apiSymbol);
-      if (!api) {
-        throw new Error("could not load data");
-      }
+      const api = getApi();
       summary = await api.getSummary("blah-blah-blah");
     } catch (err) {
       console.log("error occurred", err);

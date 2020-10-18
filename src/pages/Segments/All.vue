@@ -8,15 +8,15 @@
         <div class="col-12">
           <card>
             <DataView :value="segments.segments" layout="list">
-              <template #header>
-                <DataViewLayoutOptions v-model="layout"></DataViewLayoutOptions>
-              </template>
               <template #list="slotProps">
                 <div>
                   <b>{{ slotProps.data.name }}</b>
                   <b>{{ slotProps.data.aov }}</b>
                   <b>{{ slotProps.data.size }}</b>
                   <b>{{ slotProps.data.lifecycle }}</b>
+                  <router-link :to="`/segments/${slotProps.data.name}`"
+                    >Open</router-link
+                  >
                 </div>
               </template>
             </DataView>
@@ -28,9 +28,9 @@
 </template>
 <script lang="ts">
 import DataView from "primevue/dataview";
-import { defineComponent, inject, reactive, ref } from "vue";
-import { apiSymbol } from "@/api";
-import { datacueApi, segments } from "@/api/interfaces";
+import { defineComponent, reactive, ref } from "vue";
+import { getApi } from "@/api";
+import { segments } from "@/api/interfaces";
 export default defineComponent({
   name: "Segments",
   components: {
@@ -40,10 +40,7 @@ export default defineComponent({
     const error = ref(null);
     let segments: segments | undefined = undefined;
     try {
-      const api: datacueApi | undefined = inject(apiSymbol);
-      if (!api) {
-        throw new Error("could not load data");
-      }
+      const api = getApi();
       segments = await api.getSegments("blah-blah-blah");
     } catch (err) {
       console.log("error occurred", err);

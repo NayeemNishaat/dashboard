@@ -7,7 +7,8 @@ import Summary from "@/pages/Summary.vue";
 import Billing from "@/pages/Billing.vue";
 import AdCreatives from "@/pages/AdCreatives.vue";
 import Campaigns from "@/pages/Campaigns.vue";
-import Segments from "@/pages/Segments.vue";
+import AllSegments from "@/pages/Segments/All.vue";
+import SegmentDetail from "@/pages/Segments/Detail.vue";
 import Settings from "@/pages/Settings.vue";
 import { RouteRecordRaw } from "vue-router";
 
@@ -24,8 +25,13 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "segments",
-        name: "segments",
-        component: Segments
+        name: "all segments",
+        component: AllSegments
+      },
+      {
+        path: "segments/:segment",
+        name: "segments detail",
+        component: SegmentDetail
       },
       {
         path: "campaigns",
