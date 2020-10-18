@@ -2,6 +2,7 @@ import { App } from "vue";
 import {
   Card,
   StatsCard,
+  ChartCard,
   Button,
   LoaderDots,
   ErrorMsg,
@@ -14,6 +15,7 @@ import {
 const GlobalComponents = {
   install(app: App): void {
     app.component("stats-card", StatsCard);
+    app.component("chart-card", ChartCard);
     app.component("card", Card);
     app.component("dc-button", Button);
     app.component("loader-dots", LoaderDots);

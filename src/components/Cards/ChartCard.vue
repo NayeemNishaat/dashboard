@@ -15,9 +15,11 @@
     <div>
       <div class="chart">
         <apex-chart
-          :options="chartOptions"
-          :series="chartData"
-          :type="chartType"
+          :options="options"
+          :series="series"
+          :type="type"
+          :height="350"
+          :width="'100%'"
         ></apex-chart>
       </div>
       <div class="footer">
@@ -57,24 +59,16 @@ export default defineComponent({
       type: String,
       default: ""
     },
-    chartType: {
-      type: String,
-      default: "line" // line | pie | bar
+    options: {
+      type: Object
     },
-    chartOptions: {
-      type: Object,
-      default: () => {
-        return {};
-      }
+    type: {
+      type: String
     },
-    chartData: {
-      type: Object,
-      default: () => {
-        return {
-          labels: [],
-          series: []
-        };
-      }
+    series: {
+      type: Array,
+      required: true,
+      default: () => []
     }
   }
 });

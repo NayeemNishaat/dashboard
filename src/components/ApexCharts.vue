@@ -1,7 +1,7 @@
 <template>
   <div ref="el"></div>
 </template>
-<script>
+<script lang="ts">
 import {
   defineComponent,
   ref,
@@ -36,18 +36,18 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const el = ref(null);
-    const chart = ref(null);
+    const chart = ref<ApexCharts | null>(null);
 
-    const isObject = item => {
+    const isObject = (item: any) => {
       return (
         item && typeof item === "object" && !Array.isArray(item) && item != null
       );
     };
 
-    const extend = (target, source) => {
+    const extend = (target: any, source: any) => {
       if (typeof Object.assign !== "function") {
         (function() {
-          Object.assign = function(target) {
+          Object.assign = function(target: any) {
             // We must check against these specific cases.
             if (target === undefined || target === null) {
               throw new TypeError("Cannot convert undefined or null to object");
@@ -95,9 +95,9 @@ export default defineComponent({
 
       const newOptions = {
         chart: {
-          type: props.type || props.options.chart.type || "line",
-          height: props.height,
-          width: props.width,
+          type: props.type || (props?.options?.chart?.type ?? "line"),
+          height: props.height || "350px",
+          width: props.width || "100%",
           events: {}
         },
         series: props.series
@@ -118,89 +118,128 @@ export default defineComponent({
     };
 
     const destroy = () => {
-      chart.value.destroy();
+      if (chart.value) {
+        chart.value.destroy();
+      }
     };
 
-    const updateSeries = (newSeries, animate) => {
-      return chart.value.updateSeries(newSeries, animate);
+    const updateSeries = (newSeries: any, animate: boolean) => {
+      if (chart.value) {
+        return chart.value.updateSeries(newSeries, animate);
+      }
     };
 
     const updateOptions = (
-      newOptions,
-      redrawPaths,
-      animate,
-      updateSyncedCharts
+      newOptions: any,
+      redrawPaths: boolean,
+      animate: boolean,
+      updateSyncedCharts: boolean
     ) => {
-      return chart.value.updateOptions(
-        newOptions,
-        redrawPaths,
-        animate,
-        updateSyncedCharts
-      );
+      if (chart.value) {
+        return chart.value.updateOptions(
+          newOptions,
+          redrawPaths,
+          animate,
+          updateSyncedCharts
+        );
+      }
     };
 
-    const toggleSeries = seriesName => {
-      return chart.value.toggleSeries(seriesName);
+    const toggleSeries = (seriesName: string) => {
+      if (chart.value) {
+        return chart.value.toggleSeries(seriesName);
+      }
     };
 
-    const showSeries = seriesName => {
-      chart.value.showSeries(seriesName);
+    const showSeries = (seriesName: string) => {
+      if (chart.value) {
+        chart.value.showSeries(seriesName);
+      }
     };
 
-    const hideSeries = seriesName => {
-      chart.value.hideSeries(seriesName);
+    const hideSeries = (seriesName: string) => {
+      if (chart.value) {
+        chart.value.hideSeries(seriesName);
+      }
     };
 
-    const appendSeries = (newSeries, animate) => {
-      return chart.value.appendSeries(newSeries, animate);
+    const appendSeries = (newSeries: any, animate: boolean) => {
+      if (chart.value) {
+        return chart.value.appendSeries(newSeries, animate);
+      }
     };
 
     const resetSeries = () => {
-      chart.value.resetSeries();
+      if (chart.value) {
+        chart.value.resetSeries();
+      }
     };
 
-    const toggleDataPointSelection = (seriesIndex, dataPointIndex) => {
-      chart.value.toggleDataPointSelection(seriesIndex, dataPointIndex);
+    const toggleDataPointSelection = (
+      seriesIndex: number,
+      dataPointIndex: number
+    ) => {
+      if (chart.value) {
+        chart.value.toggleDataPointSelection(seriesIndex, dataPointIndex);
+      }
     };
 
-    const appendData = newData => {
-      return chart.value.appendData(newData);
+    const appendData = (newData: any) => {
+      if (chart.value) {
+        return chart.value.appendData(newData);
+      }
     };
 
-    const addText = options => {
-      chart.value.addText(options);
-    };
+    // const addText = (options: any) => {
+    //   if (chart.value) {
+    //     chart.value.addText(options);
+    //   }
+    // };
 
     const dataURI = () => {
-      return chart.value.dataURI();
+      if (chart.value) {
+        return chart.value.dataURI();
+      }
     };
 
-    const setLocale = localeName => {
-      return chart.value.setLocale(localeName);
+    const setLocale = (localeName: string) => {
+      if (chart.value) {
+        return chart.value.setLocale(localeName);
+      }
     };
 
-    const addXaxisAnnotation = (options, pushToMemory) => {
-      chart.value.addXaxisAnnotation(options, pushToMemory);
+    const addXaxisAnnotation = (options: any, pushToMemory: boolean) => {
+      if (chart.value) {
+        chart.value.addXaxisAnnotation(options, pushToMemory);
+      }
     };
 
-    const addYaxisAnnotation = (options, pushToMemory) => {
-      chart.value.addYaxisAnnotation(options, pushToMemory);
+    const addYaxisAnnotation = (options: any, pushToMemory: boolean) => {
+      if (chart.value) {
+        chart.value.addYaxisAnnotation(options, pushToMemory);
+      }
     };
 
-    const addPointAnnotation = (options, pushToMemory) => {
-      chart.value.addPointAnnotation(options, pushToMemory);
+    const addPointAnnotation = (options: any, pushToMemory: boolean) => {
+      if (chart.value) {
+        chart.value.addPointAnnotation(options, pushToMemory);
+      }
     };
 
-    const removeAnnotation = (id, options) => {
-      chart.value.removeAnnotation(id, options);
+    const removeAnnotation = (id: string, options: any) => {
+      if (chart.value) {
+        chart.value.removeAnnotation(id, options);
+      }
     };
 
     const clearAnnotations = () => {
-      chart.value.clearAnnotations();
+      if (chart.value) {
+        chart.value.clearAnnotations();
+      }
     };
 
     onBeforeMount(() => {
-      window.ApexCharts = ApexCharts;
+      (window as any).ApexCharts = ApexCharts;
     });
 
     onMounted(() => {
@@ -220,7 +259,9 @@ export default defineComponent({
         if (!chart.value && props.options) {
           init();
         } else {
-          chart.value.updateOptions(props.options);
+          if (chart.value) {
+            chart.value.updateOptions(props.options);
+          }
         }
       }
     );
@@ -231,7 +272,9 @@ export default defineComponent({
         if (!chart.value && props.series) {
           init();
         } else {
-          chart.value.updateSeries(props.series);
+          if (chart.value) {
+            chart.value.updateSeries(props.series as any);
+          }
         }
       }
     );

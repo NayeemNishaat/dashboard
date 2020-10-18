@@ -9,7 +9,14 @@
           <router-link :to="'/segments'">back</router-link>
           <card :title="segmentName">
             <p>Lets learn all about this segment</p>
+            <p>{{ segment }}</p>
           </card>
+          <chart-card
+            type="treemap"
+            :series="rfmMap.series"
+            :options="rfmMap.options"
+          ></chart-card>
+          <p>{{ rfmMap }}</p>
         </div>
       </div>
     </template>
@@ -17,15 +24,17 @@
 </template>
 <script lang="ts">
 import DataView from "primevue/dataview";
+
 import { computed, defineComponent, reactive, ref } from "vue";
 import { getApi } from "@/api";
 import { segment } from "@/api/interfaces";
 import { useRoute } from "vue-router";
+
 export default defineComponent({
   name: "Segments",
   components: {},
   async setup() {
-    console.log("loading segment detail");
+    const error = ref(null);
     const segmentName = computed(() => {
       const segment = useRoute()?.params?.segment ?? "";
       if (Array.isArray(segment)) {
@@ -33,7 +42,6 @@ export default defineComponent({
       }
       return segment;
     });
-    const error = ref(null);
     let segment: segment | undefined = undefined;
     try {
       const api = getApi();
@@ -47,12 +55,34 @@ export default defineComponent({
         error
       };
     }
-    console.log("got segment", segment);
     segment = reactive(segment);
+    const rfmMap = reactive({
+      series: [
+        {
+          data: Object.keys(segment.rfm).map(key => {
+            return { x: key, y: (segment as any).rfm[key] };
+          })
+        }
+      ],
+      options: {
+        legend: {
+          show: false
+        },
+        chart: {
+          height: 350,
+          type: "treemap"
+        },
+        title: {
+          text: "Basic Treemap"
+        }
+      }
+    });
+
     return {
       segment,
       segmentName,
-      error
+      error,
+      rfmMap
     };
   }
 });
