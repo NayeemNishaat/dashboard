@@ -13,25 +13,39 @@ import {
   nextTick
 } from "vue";
 import ApexCharts from "apexcharts";
-
+// const donutOptions = {
+//   responsive: [
+//     {
+//       breakpoint: 480,
+//       options: {
+//         chart: {
+//           width: 200
+//         }
+//       }
+//     }
+//   ]
+// };
 export default defineComponent({
   props: {
     options: {
-      type: Object
+      type: Object,
+      default: () => {
+        return {};
+      }
     },
     type: {
       type: String
     },
-    series: {
+    data: {
       type: Array,
       required: true,
       default: () => []
     },
     width: {
-      default: "100%"
+      type: String
     },
     height: {
-      default: "auto"
+      type: Number
     }
   },
   setup(props, ctx) {
@@ -92,20 +106,16 @@ export default defineComponent({
 
     const init = async () => {
       await nextTick();
-
+      const type = props.type || (props?.options?.chart?.type ?? "line");
       const newOptions = {
         chart: {
-          type: props.type || (props?.options?.chart?.type ?? "line"),
-          height: props.height || "350px",
-          width: props.width || "100%",
-          events: {}
+          type: type,
+          events: {} as any,
+          ...(props.width ? { width: props.width } : {}),
+          ...(props.height ? { height: props.height } : {})
         },
-        series: props.series
+        series: props.data
       };
-
-      // Object.keys(ctx.listeners).forEach((evt) => {
-      //     newOptions.chart.value.events[evt] = ctx.listeners[evt];
-      // });
 
       const config = extend(props.options, newOptions);
       chart.value = new ApexCharts(el.value, config);
@@ -267,13 +277,13 @@ export default defineComponent({
     );
 
     watch(
-      () => props.series,
+      () => props.data,
       () => {
-        if (!chart.value && props.series) {
+        if (!chart.value && props.data) {
           init();
         } else {
           if (chart.value) {
-            chart.value.updateSeries(props.series as any);
+            chart.value.updateSeries(props.data as any);
           }
         }
       }

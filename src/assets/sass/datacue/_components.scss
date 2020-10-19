@@ -1,0 +1,14 @@
+.product-list {
+  img.product-photo {
+    border-radius: 40px;
+    width: 10rem;
+  }
+  .product-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .product {
+    padding: 0.5em;
+  }
+}

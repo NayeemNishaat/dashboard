@@ -7,24 +7,67 @@
       <div class="row">
         <div class="col-12">
           <router-link :to="'/segments'">back</router-link>
-          <card :title="segmentName">
-            <p>Lets learn all about this segment</p>
-            <p>{{ segment }}</p>
+          <h1>{{ segmentName }}</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <stats-card
+            title="% of all customers"
+            :value="`${segment.pct_customers}%`"
+            icon="ti-users"
+          >
+          </stats-card>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <stats-card
+            title="% of revenue"
+            :value="`${segment.pct_revenue}%`"
+            icon="ti-money"
+          >
+          </stats-card>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <stats-card
+            title="% repurchase rate"
+            :value="`${segment.two_time_buyers}%`"
+            icon="ti-money"
+          >
+          </stats-card>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <stats-card
+            title="Average order value"
+            :value="`${segment.aov}`"
+            icon="ti-cart"
+          >
+          </stats-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <card title="Top products">
+            <ProductList :products="segment.top_products" />
           </card>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <card title="Commonly bought together">
+            <ProductList :products="segment.commonly_bought_together" />
+          </card>
+        </div>
+        <div class="col-12">
           <chart-card
             type="treemap"
-            :series="rfmMap.series"
             :options="rfmMap.options"
+            :data="rfmMap.series"
           ></chart-card>
-          <p>{{ rfmMap }}</p>
         </div>
       </div>
     </template>
   </div>
 </template>
 <script lang="ts">
-import DataView from "primevue/dataview";
-
+import ProductList from "@/components/UI/ProductList.vue";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { getApi } from "@/api";
 import { segment } from "@/api/interfaces";
@@ -32,7 +75,7 @@ import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "Segments",
-  components: {},
+  components: { ProductList },
   async setup() {
     const error = ref(null);
     const segmentName = computed(() => {
@@ -56,6 +99,7 @@ export default defineComponent({
       };
     }
     segment = reactive(segment);
+
     const rfmMap = reactive({
       series: [
         {
@@ -73,11 +117,10 @@ export default defineComponent({
           type: "treemap"
         },
         title: {
-          text: "Basic Treemap"
+          text: "Customer Lifecycles"
         }
       }
     });
-
     return {
       segment,
       segmentName,
