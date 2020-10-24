@@ -44,7 +44,7 @@
         <div class="row" v-else>
           <div class="col-8"></div>
           <div class="col-4">
-            <loader-dots></loader-dots>
+            <loading></loading>
           </div>
         </div>
       </div>
@@ -57,7 +57,6 @@
 </template>
 <script lang="ts">
 import Card from "./Card.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 import { computed, defineComponent, reactive } from "vue";
 
@@ -95,10 +94,6 @@ export default defineComponent({
       type: String,
       default: ""
     }
-  },
-  components: {
-    Card,
-    LoaderDots
   }
 });
 </script>

@@ -18,6 +18,9 @@ export default defineComponent({
     "hide-sidebar": null
   },
   inject: {
+    sidebar: {
+      default: {}
+    },
     state: {
       default: true
     },
@@ -44,7 +47,7 @@ export default defineComponent({
   methods: {
     hideSidebar() {
       if ((this as any).autoClose) {
-        (this as any).$sidebar.displaySidebar(false);
+        (this as any).sidebar.displaySidebar(false);
       }
     },
     isActive() {

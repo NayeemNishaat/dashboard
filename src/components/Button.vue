@@ -10,7 +10,7 @@
       :disabled="disabled"
       @click="handleClick"
     >
-      <loader-dots v-if="loading" />
+      <loading v-if="loading" />
       <slot v-else />
     </a>
     <button
@@ -21,21 +21,17 @@
       :disabled="disabled"
       @click="handleClick"
     >
-      <loader-dots v-if="loading" />
+      <loading v-if="loading" />
       <slot v-else />
     </button>
   </div>
 </template>
 
 <script lang="ts">
-import LoaderDots from "@/components/LoaderDots.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "DcButton",
-  components: {
-    LoaderDots
-  },
   props: {
     loading: {
       type: Boolean,

@@ -1,9 +1,6 @@
-import { datacueApi } from "./api/http";
-
 declare module "*.vue" {
-  import { defineComponent } from "vue";
-  const Component: ReturnType<typeof defineComponent>;
+  import { DefineComponent } from "vue";
+  // const Component: ReturnType<typeof defineComponent>;
+  const component: DefineComponent<any, any, any>;
   export default component;
 }
-
-declare module "chartjs-chart-treemap";

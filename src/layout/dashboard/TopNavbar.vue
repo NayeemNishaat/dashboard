@@ -9,7 +9,7 @@
             class="navbar-toggler"
             type="button"
             @click="toggleSidebar"
-            :aria-expanded="$sidebar.state.showSidebar"
+            :aria-expanded="sidebar.state.showSidebar"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-bar bar1"></span>
@@ -26,7 +26,7 @@
         data-toggle="collapse"
         data-target="#navigation"
         aria-controls="navigation-index"
-        :aria-expanded="$sidebar.state.showSidebar"
+        :aria-expanded="sidebar.state.showSidebar"
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -39,8 +39,11 @@
           <li class="nav-item">
             <a class="nav-link" @click="logout()">
               <i class="nc-icon nc-single-02"></i>
-              <p>
+              <p v-if="auth && auth.state && auth.state.isAuthenticated">
                 Logout
+              </p>
+              <p v-else>
+                Login
               </p>
             </a>
           </li>
@@ -50,42 +53,45 @@
   </nav>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { getAuth, authPlugin } from "@/auth";
+import { getSidebar } from "@/components/SidebarPlugin/state";
+import { computed, defineComponent, onMounted, Ref, ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
-  data() {
-    return {
-      activeNotifications: false
-    };
-  },
-  methods: {
-    logout() {
+  setup() {
+    const sidebar = getSidebar();
+    let auth: Ref<authPlugin> | Ref<null> = ref(null);
+    onMounted(async () => {
+      auth.value = await getAuth();
+    });
+    const logout = () => {
       console.log("hello");
-    },
-    toggleNotificationDropDown() {
-      this.activeNotifications = !this.activeNotifications;
-    },
-    closeDropDown() {
-      this.activeNotifications = false;
-    },
-    toggleSidebar() {
-      const sidebar = (this as any).$sidebar;
+    };
+    const toggleSidebar = () => {
       sidebar.displaySidebar(!sidebar.state.showSidebar);
-    },
-    hideSidebar() {
-      (this as any).$sidebar.displaySidebar(false);
-    }
-  },
-  computed: {
-    routeName() {
-      const { name } = this.$route;
+    };
+    const hideSidebar = () => {
+      sidebar.displaySidebar(false);
+    };
+    const routeName = computed(() => {
+      const route = useRoute();
+      const { name } = route;
       let newName = (name as string) || "";
       if (newName === "") {
         return "";
       }
       newName = newName.charAt(0).toUpperCase() + newName.slice(1);
       return newName;
-    }
+    });
+    return {
+      routeName,
+      sidebar,
+      logout,
+      toggleSidebar,
+      hideSidebar,
+      auth
+    };
   }
 });
 </script>

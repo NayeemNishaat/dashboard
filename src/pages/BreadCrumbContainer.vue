@@ -12,7 +12,7 @@
             <router-view></router-view>
           </template>
           <template #fallback>
-            <loader-dots />
+            <loading />
           </template>
         </Suspense>
       </div>

@@ -40,6 +40,7 @@ import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import OptionsMenu from "./OptionsMenu.vue";
 import { defineComponent } from "vue";
+import { getSidebar } from "@/components/SidebarPlugin/state";
 
 export default defineComponent({
   components: {
@@ -48,12 +49,14 @@ export default defineComponent({
     DashboardContent,
     OptionsMenu
   },
-  methods: {
-    toggleSidebar() {
-      if ((this as any).$sidebar.state.showSidebar) {
-        (this as any).$sidebar.displaySidebar(false);
+  setup() {
+    const sidebar = getSidebar();
+    const toggleSidebar = () => {
+      if (sidebar.state.showSidebar) {
+        sidebar.displaySidebar(false);
       }
-    }
+    };
+    return { toggleSidebar };
   }
 });
 </script>

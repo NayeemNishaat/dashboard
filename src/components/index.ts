@@ -3,7 +3,7 @@ import Button from "./Button.vue";
 import Card from "./Cards/Card.vue";
 import StatsCard from "./Cards/StatsCard.vue";
 import ChartCard from "./Cards/ChartCard.vue";
-import LoaderDots from "./LoaderDots.vue";
+import Loading from "./Loading.vue";
 import ErrorMsg from "./ErrorMsg.vue";
 import SuspenseWithError from "./SuspenseWithError.vue";
 
@@ -13,7 +13,7 @@ const components = {
   ChartCard,
   StatsCard,
   SidebarPlugin,
-  LoaderDots,
+  Loading,
   ErrorMsg,
   SuspenseWithError
 };
@@ -26,7 +26,7 @@ export {
   StatsCard,
   Button,
   SidebarPlugin,
-  LoaderDots,
+  Loading,
   ErrorMsg,
   SuspenseWithError
 };

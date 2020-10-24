@@ -12,7 +12,7 @@
               <component :is="Component" />
             </template>
             <template #fallback>
-              <loader-dots />
+              <loading />
             </template>
           </Suspense>
         </transition>

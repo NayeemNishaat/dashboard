@@ -10,9 +10,23 @@ import Campaigns from "@/pages/Campaigns.vue";
 import AllSegments from "@/pages/Segments/All.vue";
 import SegmentDetail from "@/pages/Segments/Detail.vue";
 import Settings from "@/pages/Settings.vue";
+import Login from "@/auth/Login.vue";
+import Auth0Callback from "@/auth/Callback.vue";
 import { RouteRecordRaw } from "vue-router";
+import { ifAuthenticated, ifNotAuthenticated } from "./guards";
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+    beforeEnter: ifNotAuthenticated
+  },
+  {
+    path: "/logging-in",
+    name: "logging-in",
+    component: Auth0Callback
+  },
   {
     path: "/",
     component: DashboardLayout,
@@ -21,37 +35,44 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "summary",
         name: "summary",
-        component: Summary
+        component: Summary,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "segments",
         name: "all segments",
-        component: AllSegments
+        component: AllSegments,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "segments/:segment",
         name: "segments detail",
-        component: SegmentDetail
+        component: SegmentDetail,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "campaigns",
         name: "campaigns",
-        component: Campaigns
+        component: Campaigns,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "creatives",
         name: "creatives",
-        component: AdCreatives
+        component: AdCreatives,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "settings",
         name: "settings",
-        component: Settings
+        component: Settings,
+        beforeEnter: ifAuthenticated
       },
       {
         path: "billing",
         name: "billing",
-        component: Billing
+        component: Billing,
+        beforeEnter: ifAuthenticated
       }
     ]
   },

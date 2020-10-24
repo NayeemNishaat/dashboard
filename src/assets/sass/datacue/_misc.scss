@@ -28,3 +28,12 @@ img {
 .animation-transition-general {
   @include transition($general-transition-time, $transition-ease);
 }
+
+.centre-on-page {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f4f3ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

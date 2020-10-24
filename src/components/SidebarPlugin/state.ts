@@ -1,17 +1,23 @@
 import { reactive, readonly, inject } from "vue";
 
-export const stateSidebar = Symbol("sidebar");
+export const sidebarSymbol = Symbol("sidebar");
 
-export const useState = (): void => inject(stateSidebar);
-// export const provideState = () => provide(stateSidebar, createState());
+export const getSidebar = (): sidebar => {
+  const sidebar: sidebar | undefined = inject(sidebarSymbol);
+  if (!sidebar) {
+    throw new Error("could not load sidebar component");
+  }
+  return sidebar;
+};
 
-export const createState = (): {
+interface sidebar {
   displaySidebar: (value: boolean) => boolean;
   state: {
     showSidebar: boolean;
-    sidebarLinks: any;
+    sidebarLinks: Readonly<Array<any>>;
   };
-} => {
+}
+export const createSidebar = (): sidebar => {
   const state = reactive({
     showSidebar: false,
     sidebarLinks: [] as Array<any>

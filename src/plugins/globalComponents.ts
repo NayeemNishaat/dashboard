@@ -4,7 +4,7 @@ import {
   StatsCard,
   ChartCard,
   Button,
-  LoaderDots,
+  Loading,
   ErrorMsg,
   SuspenseWithError
 } from "../components/index";
@@ -18,7 +18,7 @@ const GlobalComponents = {
     app.component("chart-card", ChartCard);
     app.component("card", Card);
     app.component("dc-button", Button);
-    app.component("loader-dots", LoaderDots);
+    app.component("loading", Loading);
     app.component("error-msg", ErrorMsg);
     app.component("SuspenseWithError", SuspenseWithError);
   }
