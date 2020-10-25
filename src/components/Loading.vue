@@ -7,7 +7,12 @@
       viewBox="0 0 100 100"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="50" cy="50" r="45" />
+      <circle
+        :class="{ yellow: type === 'yellow-circle' }"
+        cx="50"
+        cy="50"
+        r="45"
+      />
     </svg>
   </div>
 </template>
@@ -21,13 +26,15 @@ export default defineComponent({
       default: "dots",
       validator: function(value: string) {
         // The value must match one of these strings
-        return ["dots", "circle"].indexOf(value) !== -1;
+        return ["dots", "circle", "yellow-circle"].indexOf(value) !== -1;
       }
     }
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/sass/datacue/_colors.scss";
+
 .loader {
   display: inline-block;
   position: relative;
@@ -50,7 +57,7 @@ export default defineComponent({
   left: 21px;
   width: 6px;
   height: 6px;
-  background-color: #333;
+  background-color: $gray-dark;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-clip: padding-box;
@@ -65,7 +72,7 @@ export default defineComponent({
   left: -15px;
   width: 6px;
   height: 6px;
-  background-color: #333;
+  background-color: $gray-dark;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-clip: padding-box;
@@ -80,7 +87,7 @@ export default defineComponent({
   left: 15px;
   width: 6px;
   height: 6px;
-  background-color: #333;
+  background-color: $gray-dark;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-clip: padding-box;
@@ -98,29 +105,29 @@ export default defineComponent({
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
     filter: alpha(opacity=(70));
     opacity: 0.7;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
   25% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=(100));
     opacity: 1;
-    -webkit-box-shadow: 0px 0px 0px 4px #333;
-    box-shadow: 0px 0px 0px 4px #333;
+    -webkit-box-shadow: 0px 0px 0px 4px $gray-dark;
+    box-shadow: 0px 0px 0px 4px $gray-dark;
   }
   50% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
     filter: alpha(opacity=(70));
     opacity: 0.7;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
   100% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
     filter: alpha(opacity=(60));
     opacity: 0.6;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
 }
 @keyframes growDot {
@@ -128,29 +135,29 @@ export default defineComponent({
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
     filter: alpha(opacity=(70));
     opacity: 0.7;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
   25% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=(100));
     opacity: 1;
-    -webkit-box-shadow: 0px 0px 0px 4px #333;
-    box-shadow: 0px 0px 0px 4px #333;
+    -webkit-box-shadow: 0px 0px 0px 4px $gray-dark;
+    box-shadow: 0px 0px 0px 4px $gray-dark;
   }
   50% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
     filter: alpha(opacity=(70));
     opacity: 0.7;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
   100% {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
     filter: alpha(opacity=(60));
     opacity: 0.6;
-    -webkit-box-shadow: 0px 0px 0px 0px #333;
-    box-shadow: 0px 0px 0px 0px #333;
+    -webkit-box-shadow: 0px 0px 0px 0px $gray-dark;
+    box-shadow: 0px 0px 0px 0px $gray-dark;
   }
 }
 svg {
@@ -171,7 +178,7 @@ circle {
   animation: 1.4s ease-in-out infinite both circle-animation;
   display: block;
   fill: transparent;
-  stroke: #2f3d4c;
+  stroke: $gray-dark;
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 280;
@@ -179,6 +186,9 @@ circle {
   transform-origin: 50% 50%;
 }
 
+circle.yellow {
+  stroke: $primary;
+}
 @keyframes circle-animation {
   0%,
   25% {

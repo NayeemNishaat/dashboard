@@ -36,4 +36,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  .logo-img {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 }

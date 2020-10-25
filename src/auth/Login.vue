@@ -1,9 +1,8 @@
 <template>
-  <div class="centre-on-page">
-    <loading type="circle" />
-  </div>
+  <LoginLoading msg="Logging you in..." />
 </template>
 <script lang="ts">
+import LoginLoading from "./LoginLoading.vue";
 import { defineComponent, onMounted } from "vue";
 import { getAuth } from ".";
 
@@ -14,6 +13,9 @@ export default defineComponent({
       const auth = await getAuth();
       auth.loginWithRedirect();
     });
+  },
+  components: {
+    LoginLoading
   }
 });
 </script>

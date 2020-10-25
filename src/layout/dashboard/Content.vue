@@ -7,6 +7,7 @@
           <div v-if="error">
             <error-msg />
           </div>
+          <loading type="dots" v-else-if="!authLoaded" />
           <Suspense v-else>
             <template #default>
               <component :is="Component" />
@@ -22,15 +23,19 @@
 </template>
 <script lang="ts">
 import { defineComponent, onErrorCaptured, ref } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    // const error = ref("");
-    // onErrorCaptured(e => {
-    //   error.value = `${e}`;
-    //   return true;
-    // });
-    return { error: ref(null) };
+    const error = ref("");
+    const store = useStore();
+
+    onErrorCaptured(e => {
+      error.value = `${e}`;
+      return true;
+    });
+
+    return { error: ref(null), authLoaded: store.getters.isAuthenticated };
   }
 });
 </script>

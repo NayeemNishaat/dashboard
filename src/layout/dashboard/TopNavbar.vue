@@ -39,12 +39,7 @@
           <li class="nav-item">
             <a class="nav-link" @click="logout()">
               <i class="nc-icon nc-single-02"></i>
-              <p v-if="auth && auth.state && auth.state.isAuthenticated">
-                Logout
-              </p>
-              <p v-else>
-                Login
-              </p>
+              Logout
             </a>
           </li>
         </ul>
@@ -65,8 +60,10 @@ export default defineComponent({
     onMounted(async () => {
       auth.value = await getAuth();
     });
-    const logout = () => {
-      console.log("hello");
+    const logout = async () => {
+      if (auth.value) {
+        await auth.value.logout();
+      }
     };
     const toggleSidebar = () => {
       sidebar.displaySidebar(!sidebar.state.showSidebar);

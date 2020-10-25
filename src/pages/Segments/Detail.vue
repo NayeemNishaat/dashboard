@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !segment">
+    <template v-if="error || !segment.pct_customers">
       <error-msg />
     </template>
     <template v-else>
@@ -57,6 +57,7 @@
         </div>
         <div class="col-12">
           <chart-card
+            v-if="rfmMap.series[0].data.length > 0"
             type="treemap"
             :options="rfmMap.options"
             :data="rfmMap.series"
@@ -78,6 +79,21 @@ export default defineComponent({
   components: { ProductList },
   async setup() {
     const error = ref(null);
+    let rfmMap = reactive({
+      series: [{ data: [] as Array<{ x: string; y: number }> }],
+      options: {
+        legend: {
+          show: false
+        },
+        chart: {
+          height: 350,
+          type: "treemap"
+        },
+        title: {
+          text: "Customer Lifecycles"
+        }
+      }
+    });
     const segmentName = computed(() => {
       const segment = useRoute()?.params?.segment ?? "";
       if (Array.isArray(segment)) {
@@ -99,28 +115,15 @@ export default defineComponent({
       };
     }
     segment = reactive(segment);
-
-    const rfmMap = reactive({
-      series: [
+    if (segment && segment.rfm) {
+      rfmMap.series = [
         {
           data: Object.keys(segment.rfm).map(key => {
             return { x: key, y: (segment as any).rfm[key] };
           })
         }
-      ],
-      options: {
-        legend: {
-          show: false
-        },
-        chart: {
-          height: 350,
-          type: "treemap"
-        },
-        title: {
-          text: "Customer Lifecycles"
-        }
-      }
-    });
+      ];
+    }
     return {
       segment,
       segmentName,

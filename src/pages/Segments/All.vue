@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !segments">
+    <template v-if="error || !segments.segments">
       <error-msg />
     </template>
     <template v-else>

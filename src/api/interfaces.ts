@@ -1,3 +1,5 @@
+import { AuthenticatedClients } from "@/store/datacue_types";
+
 export interface summary {
   stats: { segments: number; max_aov: number; max_size: number };
   opportunities: Array<{ title: string; description: string }>;
@@ -32,7 +34,9 @@ interface product {
 }
 
 export interface datacueApi {
+  getClients: () => Promise<AuthenticatedClients>;
   getSummary: (clientId: string) => Promise<summary>;
   getSegments: (clientId: string) => Promise<segments>;
   getSegment: (clientId: string, segmentId: string) => Promise<segment>;
+  handleShopifyAuthentication: () => Promise<any>;
 }

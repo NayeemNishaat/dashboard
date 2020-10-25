@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !summary">
+    <template v-if="error || !summary.stats">
       <error-msg />
     </template>
     <template v-else>

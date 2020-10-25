@@ -16,7 +16,7 @@ export default {
     app.use(GlobalComponents);
     app.use(GlobalDirectives);
     app.use(SideBar);
-    const baseURL = "http://localhost:3000";
+    const baseURL = "http://localhost:8000";
     app.provide(apiSymbol, createApi(baseURL));
     app.provide(
       authSymbol,

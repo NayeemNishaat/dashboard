@@ -1,5 +1,7 @@
 import { reactive, readonly, inject } from "vue";
 export const authSymbol = Symbol("auth");
+import router from "@/router/index";
+import store from "@/store/index";
 
 import createAuth0Client, {
   Auth0Client,
@@ -7,6 +9,7 @@ import createAuth0Client, {
   GetIdTokenClaimsOptions,
   GetTokenSilentlyOptions,
   GetTokenWithPopupOptions,
+  IdToken,
   LogoutOptions,
   PopupLoginOptions,
   RedirectLoginOptions
@@ -39,10 +42,13 @@ export interface authPlugin {
   loginWithPopup: (o: PopupLoginOptions) => Promise<void>;
   handleRedirectCallback: () => Promise<void>;
   loginWithRedirect: (o?: RedirectLoginOptions) => void;
-  getIdTokenClaims: (o: GetIdTokenClaimsOptions) => void;
-  getTokenSilently: (o: GetTokenSilentlyOptions) => void;
-  getTokenWithPopup: (o: GetTokenWithPopupOptions) => void;
-  logout: (o: LogoutOptions) => void;
+  getIdTokenClaims: (
+    o?: GetIdTokenClaimsOptions
+  ) => Promise<IdToken | undefined>;
+  getTokenSilently: (o?: GetTokenSilentlyOptions) => Promise<any>;
+  getTokenWithPopup: (o?: GetTokenWithPopupOptions) => void;
+  logout: (o?: LogoutOptions) => Promise<void>;
+  logoutNoRedirect: (o?: LogoutOptions) => void;
 }
 
 export const createAuth = async (
@@ -104,7 +110,7 @@ export const createAuth = async (
   /** Handles the callback when logging in using a redirect */
   const handleRedirectCallback = async () => {
     if (!state.auth0Client) {
-      return;
+      throw new Error("no auth0 client found");
     }
     state.loading = true;
     try {
@@ -116,6 +122,11 @@ export const createAuth = async (
     } finally {
       state.loading = false;
     }
+    try {
+      await store.dispatch("fetchClients");
+    } catch (e) {
+      console.log(e);
+    }
   };
   /** Authenticates the user using the redirect method */
   const loginWithRedirect = (o?: RedirectLoginOptions) => {
@@ -125,14 +136,14 @@ export const createAuth = async (
     return state.auth0Client.loginWithRedirect(o);
   };
   /** Returns all the claims present in the ID token */
-  const getIdTokenClaims = (o?: GetIdTokenClaimsOptions) => {
+  const getIdTokenClaims = async (o?: GetIdTokenClaimsOptions) => {
     if (!state.auth0Client) return;
     return state.auth0Client.getIdTokenClaims(o);
   };
   /** Returns the access token. If the token is invalid or missing, a new one is retrieved */
-  const getTokenSilently = (o?: GetTokenSilentlyOptions) => {
+  const getTokenSilently = async (o?: GetTokenSilentlyOptions) => {
     if (!state.auth0Client) return;
-    return state.auth0Client.getTokenSilently(o);
+    return await state.auth0Client.getTokenSilently(o);
   };
   /** Gets the access token using a popup window */
 
@@ -141,7 +152,12 @@ export const createAuth = async (
     return state.auth0Client.getTokenWithPopup(o);
   };
   /** Logs the user out and removes their session on the authorization server */
-  const logout = (o?: LogoutOptions) => {
+  const logout = async (o?: LogoutOptions) => {
+    if (!state.auth0Client) return;
+    state.auth0Client.logout(o);
+    await router.push("login");
+  };
+  const logoutNoRedirect = (o?: LogoutOptions) => {
     if (!state.auth0Client) return;
     return state.auth0Client.logout(o);
   };
@@ -153,6 +169,7 @@ export const createAuth = async (
     getTokenSilently,
     getTokenWithPopup,
     logout,
+    logoutNoRedirect,
     state: readonly(state)
   };
   return instance;
