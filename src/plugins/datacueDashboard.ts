@@ -16,14 +16,14 @@ export default {
     app.use(GlobalComponents);
     app.use(GlobalDirectives);
     app.use(SideBar);
-    const baseURL = "http://localhost:8000";
+    const baseURL = `${process.env.VUE_APP_BACKEND_URL}`;
     app.provide(apiSymbol, createApi(baseURL));
     app.provide(
       authSymbol,
       createAuth({
-        domain: "datacue-dev.auth0.com",
-        client_id: "90kQ7H0ze0tfYWkgd3dub22XrGUYmkms",
-        redirect_uri: "http://localhost:8080/logging-in"
+        domain: `${process.env.VUE_APP_AUTH_DOMAIN}`,
+        client_id: `${process.env.VUE_APP_AUTH_CLIENTID}`,
+        redirect_uri: `${process.env.VUE_APP_URL}/logging-in`
       })
     );
   }
