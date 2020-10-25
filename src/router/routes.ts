@@ -10,8 +10,12 @@ import Campaigns from "@/pages/Campaigns.vue";
 import AllSegments from "@/pages/Segments/All.vue";
 import SegmentDetail from "@/pages/Segments/Detail.vue";
 import Settings from "@/pages/Settings.vue";
+
+//auth pages
 import Login from "@/auth/Login.vue";
 import Auth0Callback from "@/auth/Callback.vue";
+import Loading from "@/auth/Loading.vue";
+
 import { RouteRecordRaw } from "vue-router";
 import { ifAuthenticated, ifNotAuthenticated } from "./guards";
 
@@ -26,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/logging-in",
     name: "logging-in",
     component: Auth0Callback
+  },
+  {
+    path: "/loading",
+    name: "loading",
+    component: Loading
   },
   {
     path: "/",

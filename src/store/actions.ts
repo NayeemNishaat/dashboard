@@ -5,7 +5,6 @@ import { rootState } from "./store_types";
 
 export const actions: ActionTree<rootState, rootState> = {
   fetchClients({ commit, dispatch }: ActionContext<rootState, rootState>) {
-    console.log("fetching clients...");
     return new Promise((resolve, reject) => {
       if (!api) {
         reject("api not ready");
@@ -15,7 +14,6 @@ export const actions: ActionTree<rootState, rootState> = {
         .getClients()
         .then(response => {
           const clients = response.clients;
-          console.log(response);
           commit("setClients", clients);
           if (response.user) {
             commit("setUser", response.user);

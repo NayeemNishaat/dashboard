@@ -1,8 +1,14 @@
 import { instance as auth } from "@/auth";
 import { NavigationGuard } from "vue-router";
+import store from "@/store";
 
 function isLoggedIn() {
+  //authenticated by auth0
   return auth?.state?.isAuthenticated ?? false;
+}
+function isAuthenticated() {
+  //authorized by our api
+  return store.getters.isAuthenticated ?? false;
 }
 
 export const ifNotAuthenticated: NavigationGuard = (to, from, next) => {
@@ -14,9 +20,12 @@ export const ifNotAuthenticated: NavigationGuard = (to, from, next) => {
 };
 
 export const ifAuthenticated: NavigationGuard = (to, from, next) => {
-  if (isLoggedIn()) {
+  if (isAuthenticated()) {
     next();
     return;
+  } else if (isLoggedIn()) {
+    next("loading");
+    return;
   }
-  next("/login");
+  next("login");
 };

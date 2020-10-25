@@ -15,8 +15,6 @@ export const getters: GetterTree<rootState, rootState> = {
     return state.nextPage;
   },
   isAuthenticated(state: rootState, getters) {
-    console.log("auth is ", auth);
-    console.log("client is ", getters.client);
     return getters.client && auth?.state.isAuthenticated;
   }
 };

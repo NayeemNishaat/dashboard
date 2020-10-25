@@ -1,7 +1,6 @@
 import { reactive, readonly, inject } from "vue";
 export const authSymbol = Symbol("auth");
 import router from "@/router/index";
-import store from "@/store/index";
 
 import createAuth0Client, {
   Auth0Client,
@@ -69,7 +68,8 @@ export const createAuth = async (
   state.auth0Client = await createAuth0Client({
     domain: options.domain,
     client_id: options.client_id,
-    redirect_uri: options.redirect_uri
+    redirect_uri: options.redirect_uri,
+    cacheLocation: "localstorage"
   });
 
   try {
@@ -121,11 +121,6 @@ export const createAuth = async (
       state.error = e;
     } finally {
       state.loading = false;
-    }
-    try {
-      await store.dispatch("fetchClients");
-    } catch (e) {
-      console.log(e);
     }
   };
   /** Authenticates the user using the redirect method */

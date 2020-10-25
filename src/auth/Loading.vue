@@ -4,21 +4,23 @@
 <script lang="ts">
 import LoginLoading from "./LoginLoading.vue";
 import { defineComponent, onMounted } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { getAuth } from ".";
 
 export default defineComponent({
-  name: "Callback",
+  name: "Loading",
   setup() {
+    const store = useStore();
     const router = useRouter();
-
     onMounted(async () => {
       try {
-        const auth = await getAuth();
-        await auth.handleRedirectCallback();
-        await router.push("summary");
-      } catch (err) {
-        console.log("callback error: ", err);
+        if (!store.getters.isAuthenticated) {
+          await store.dispatch("fetchClients");
+          const nextPage = store.getters.nextPage || "summary";
+          await router.push(nextPage);
+        }
+      } catch (e) {
+        console.log(e);
       }
     });
   },
