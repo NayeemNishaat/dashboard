@@ -1,15 +1,13 @@
 <template>
   <footer class="footer">
     <div class="container-fluid d-flex flex-wrap justify-content-between">
-      <nav>
-        <ul>
-          <li>
-            <router-link :to="{ path: '/admin' }">Dashboard</router-link>
-          </li>
-        </ul>
-      </nav>
       <div class="copyright d-flex flex-wrap">
-        DataCue
+        <span>Made with&nbsp;</span>
+        <i class="ti-heart"></i>
+        <span>&nbsp;in Singapore</span>
+      </div>
+      <div class="copyright d-flex flex-wrap">
+        <span>&copy; {{ new Date().getFullYear() }} DataCue (PTE. LTD.)</span>
       </div>
     </div>
   </footer>

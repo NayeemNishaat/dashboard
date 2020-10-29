@@ -16,13 +16,13 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <card>
+          <card title="Recommended campaigns">
             <DataView :value="summary.opportunities" layout="list">
               <template #list="slotProps">
                 <div>
                   <b>{{ slotProps.data.title }}</b>
-                  <b>{{ slotProps.data.description }}</b>
                 </div>
+                <span>{{ slotProps.data.description }}</span>
               </template>
             </DataView>
           </card>
