@@ -19,10 +19,11 @@ jobs:
           npm install
           npm run build:master
 
-      - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
+      - name: Deploy to netlify
+        uses: netlify/actions/cli@master
         env:
-          REPO: self
-          BRANCH: dist
-          FOLDER: dist
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+        with:
+          args: deploy --dir=dist --prod
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
