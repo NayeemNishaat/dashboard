@@ -1,0 +1,13 @@
+name: dashboard-staging
+region: nyc
+domains:
+- domain: my-staging.datacue.co
+  type: PRIMARY
+static_sites:
+- name: dashboard-staging
+  environment_slug: html
+  catchall_document: index.html
+  github:
+    branch: dist-staging
+    deploy_on_push: true
+    repo: DataCueCo/dashboard

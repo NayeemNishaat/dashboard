@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean
+name: Deploy to Netlify
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Digital Ocean
+    name: Deploy to Netlify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -19,7 +19,7 @@ jobs:
           npm install
           npm run build:master
 
-      - name: Deploy to netlify
+      - name: Deploy to Netlify
         uses: netlify/actions/cli@master
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
