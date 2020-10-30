@@ -6,7 +6,7 @@ import { createAuth, authSymbol } from "@/auth";
 import {} from "@/auth";
 
 //css assets
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-css-only/css/bootstrap.css";
 import "@/assets/sass/datacue/main.scss";
 import "@/assets/css/themify-icons.css";
 import { App } from "vue";

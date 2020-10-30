@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import LoginLoading from "./LoginLoading.vue";
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, ref, Ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -12,10 +12,13 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const error: Ref<any | null> = ref(null);
     onMounted(async () => {
       try {
         if (!store.getters.isAuthenticated) {
           await store.dispatch("fetchClients");
+        }
+        if (!store.getters.isAuthenticated) {
           const nextPage = store.getters.nextPage || "summary";
           await router.push(nextPage);
         }
@@ -23,6 +26,9 @@ export default defineComponent({
         console.log(e);
       }
     });
+    return {
+      error
+    };
   },
   components: {
     LoginLoading
