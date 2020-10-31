@@ -4,63 +4,10 @@
 @import "colors.scss";
 @import "components.scss";
 @import "cards.scss";
+@import "dropdown.scss";
 @import "buttons.scss";
 @import "footers.scss";
 @import "navbar.scss";
 @import "nucleo-outline.scss";
 @import "sidebar-and-main-panel.scss";
 @import "responsive.scss";
-
-.centered-box {
-  display: flex;
-  align-items: center;
-  background-color: #f4f3ef;
-  justify-content: center;
-  height: 100vh;
-}
-.centered-box .card {
-  max-width: 80%;
-}
-
-.fa-spin-reverse {
-  -webkit-animation: fa-spin-reverse 2s infinite linear;
-  animation: fa-spin-reverse 2s infinite linear;
-}
-@-webkit-keyframes fa-spin-reverse {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(-359deg);
-  }
-}
-@keyframes fa-spin-reverse {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(-359deg);
-  }
-}
-
-button.text-btn {
-  text-transform: uppercase;
-  color: #555;
-  font-weight: 600;
-  text-decoration: none;
-  background: none;
-  border: none;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}

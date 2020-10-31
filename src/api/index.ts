@@ -1,4 +1,4 @@
-import { AuthenticatedClients, Clients } from "@/store/datacue_types";
+import { AuthenticatedClients } from "@/store/datacue_types";
 import { inject } from "vue";
 import { getHttpApi } from "./http";
 import { summary, segments, segment, datacueApi } from "./interfaces";
@@ -19,16 +19,14 @@ export const createApi = (baseURL: string): datacueApi => {
     return instance;
   }
   const http = getHttpApi(baseURL);
-  const getSummary = async (clientId: string): Promise<summary> => {
+  const getSummary = async (): Promise<summary> => {
     return await http.get("/ads/summary");
   };
-  const getSegments = (clientId: string): Promise<segments> => {
-    return http.get("/ads/segments");
+  const getSegments = async (): Promise<Array<segments>> => {
+    const data = await http.get("/ads/segments");
+    return data.segments;
   };
-  const getSegment = (
-    clientId: string,
-    segmentId: string
-  ): Promise<segment> => {
+  const getSegment = (segmentId: string): Promise<segment> => {
     return http.get(`/ads/segments/${segmentId}`);
   };
   const handleShopifyAuthentication = (): Promise<any> => {

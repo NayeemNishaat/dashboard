@@ -36,12 +36,33 @@
 
       <div class="navbar-collapse justify-content-end collapse" id="navigation">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <drop-down
+            class="nav-item"
+            :title="client && client.name"
+            title-classes="nav-link"
+            icon="nc-icon nc-store"
+            data-id="navbar:menu-btn"
+          >
+            <a
+              v-if="multipleWebsites"
+              data-id="navbar:switch-websites-btn"
+              class="dropdown-item"
+              @click="switchToNewWebsite()"
+              >Switch website</a
+            >
+            <a
+              data-id="navbar:logout-btn"
+              class="dropdown-item"
+              @click="logout()"
+              >Logout</a
+            >
+          </drop-down>
+          <!-- <li class="nav-item">
             <a class="nav-link" @click="logout()">
               <i class="nc-icon nc-single-02"></i>
               Logout
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -51,11 +72,14 @@
 import { getAuth, authPlugin } from "@/auth";
 import { getSidebar } from "@/components/SidebarPlugin/state";
 import { computed, defineComponent, onMounted, Ref, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     const sidebar = getSidebar();
+    const store = useStore();
+    const router = useRouter();
     let auth: Ref<authPlugin> | Ref<null> = ref(null);
     onMounted(async () => {
       auth.value = await getAuth();
@@ -81,7 +105,19 @@ export default defineComponent({
       newName = newName.charAt(0).toUpperCase() + newName.slice(1);
       return newName;
     });
+
+    const client = computed(() => store.getters.client);
+    const multipleWebsites = computed(
+      () => Object.keys(store.getters.clients || {}).length > 1
+    );
+    const switchToNewWebsite = async () => {
+      store.dispatch("setApikey", "");
+      await router.push({ name: "authorizing" });
+    };
     return {
+      client,
+      multipleWebsites,
+      switchToNewWebsite,
       routeName,
       sidebar,
       logout,

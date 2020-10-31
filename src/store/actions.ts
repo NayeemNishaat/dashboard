@@ -4,7 +4,14 @@ import { ActionContext, ActionTree } from "vuex";
 import { rootState } from "./store_types";
 
 export const actions: ActionTree<rootState, rootState> = {
-  fetchClients({ commit, dispatch }: ActionContext<rootState, rootState>) {
+  setApikey({ commit }: ActionContext<rootState, rootState>, payload: string) {
+    return new Promise(resolve => {
+      localStorage.setItem("dashboard:apikey", payload);
+      commit("setApikey", payload);
+      resolve();
+    });
+  },
+  fetchClients({ commit }: ActionContext<rootState, rootState>) {
     return new Promise((resolve, reject) => {
       if (!api) {
         reject("api not ready");

@@ -35,8 +35,8 @@ interface product {
 
 export interface datacueApi {
   getClients: () => Promise<AuthenticatedClients>;
-  getSummary: (clientId: string) => Promise<summary>;
-  getSegments: (clientId: string) => Promise<segments>;
-  getSegment: (clientId: string, segmentId: string) => Promise<segment>;
+  getSummary: () => Promise<summary>;
+  getSegments: () => Promise<Array<segments>>;
+  getSegment: (segmentId: string) => Promise<segment>;
   handleShopifyAuthentication: () => Promise<any>;
 }

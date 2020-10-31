@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "../assets/sass/datacue/_colors.scss";
 .alert {
   display: flex;
   border-radius: 0 15px 15px 0;

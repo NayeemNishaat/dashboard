@@ -16,5 +16,11 @@ export const getters: GetterTree<rootState, rootState> = {
   },
   isAuthenticated(state: rootState, getters) {
     return getters.client && auth?.state.isAuthenticated;
+  },
+  hasActiveClients(state: rootState) {
+    return Object.keys(state.clients).length > 0;
+  },
+  clients(state: rootState) {
+    return state.clients;
   }
 };

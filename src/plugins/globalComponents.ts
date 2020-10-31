@@ -1,11 +1,12 @@
 import { App } from "vue";
 import {
-  Card,
-  StatsCard,
-  ChartCard,
   Button,
-  Loading,
+  Card,
+  ChartCard,
+  DropDown,
   ErrorMsg,
+  Loading,
+  StatsCard,
   SuspenseWithError
 } from "../components/index";
 /**
@@ -16,6 +17,7 @@ const GlobalComponents = {
   install(app: App): void {
     app.component("stats-card", StatsCard);
     app.component("chart-card", ChartCard);
+    app.component("drop-down", DropDown);
     app.component("card", Card);
     app.component("dc-button", Button);
     app.component("loading", Loading);

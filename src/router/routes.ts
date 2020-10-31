@@ -14,7 +14,7 @@ import Settings from "@/pages/Settings.vue";
 //auth pages
 import Login from "@/auth/Login.vue";
 import Auth0Callback from "@/auth/Callback.vue";
-import Loading from "@/auth/Loading.vue";
+import Authorizing from "@/auth/Authorizing.vue";
 
 import { RouteRecordRaw } from "vue-router";
 import { ifAuthenticated, ifNotAuthenticated } from "./guards";
@@ -33,8 +33,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/loading",
-    name: "loading",
-    component: Loading
+    name: "authorizing",
+    component: Authorizing
   },
   {
     path: "/",

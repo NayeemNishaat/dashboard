@@ -5,9 +5,19 @@
     </template>
     <template v-else>
       <div class="row">
-        <div class="col-12">
-          <router-link :to="'/segments'">back</router-link>
-          <h1>{{ segmentName }}</h1>
+        <div class="col-12 title">
+          <div class="row">
+            <div class="col-9">
+              <h1>{{ segmentName }}</h1>
+            </div>
+            <div class="col-3 right-align">
+              <router-link :to="'/segments'"
+                ><dc-button
+                  ><i class="ti-arrow-left" />&nbsp; back</dc-button
+                ></router-link
+              >
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -104,7 +114,7 @@ export default defineComponent({
     let segment: segment | undefined = undefined;
     try {
       const api = getApi();
-      segment = await api.getSegment("blah-blah-blah", "12312");
+      segment = await api.getSegment("12312");
     } catch (err) {
       console.log("error occurred", err);
       error.value = err;
@@ -133,4 +143,11 @@ export default defineComponent({
   }
 });
 </script>
-<style></style>
+<style>
+.title {
+  margin-bottom: 1rem;
+}
+.right-align {
+  align-items: center;
+}
+</style>

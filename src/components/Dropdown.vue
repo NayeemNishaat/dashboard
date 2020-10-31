@@ -37,6 +37,7 @@ export default defineComponent({
     icon: String,
     titleClasses: [String, Object, Array]
   },
+  emits: ["change"],
   data() {
     return {
       isOpen: false

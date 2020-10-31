@@ -32,7 +32,6 @@
   </div>
 </template>
 <script lang="ts">
-import { StatsCard } from "@/components/index";
 import ChartCard from "@/components/Cards/ChartCard.vue";
 import DataView from "primevue/dataview";
 import { defineComponent, reactive, ref } from "vue";
@@ -41,7 +40,6 @@ import { summary } from "@/api/interfaces";
 export default defineComponent({
   name: "Summary",
   components: {
-    StatsCard,
     DataView
   },
   async setup() {
@@ -55,7 +53,7 @@ export default defineComponent({
     const statTypes = ["segments", "max_aov", "max_size"];
     try {
       const api = getApi();
-      summary = await api.getSummary("blah-blah-blah");
+      summary = await api.getSummary();
     } catch (err) {
       console.log("error occurred", err);
       error.value = err;
