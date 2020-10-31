@@ -40,7 +40,7 @@
             class="nav-item"
             :title="client && client.name"
             title-classes="nav-link"
-            icon="nc-icon nc-store"
+            icon="nc-icon nc-shop"
             data-id="navbar:menu-btn"
           >
             <a

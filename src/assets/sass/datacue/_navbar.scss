@@ -127,6 +127,9 @@
     }
 
     .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-transform: uppercase;
       font-size: $font-size-mini;
       padding: $padding-base-vertical $padding-base-horizontal;
@@ -142,13 +145,11 @@
       i.nc-icon {
         font-size: 18px;
         position: relative;
-        top: 3px;
         text-align: center;
         width: 21px;
       }
 
       i.nc-icon {
-        top: 4px;
         font-size: 16px;
       }
 
