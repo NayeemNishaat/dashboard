@@ -20,14 +20,14 @@ export const createApi = (baseURL: string): datacueApi => {
   }
   const http = getHttpApi(baseURL);
   const getSummary = async (): Promise<summary> => {
-    return await http.get("/ads/summary");
+    return await http.get("/segments/summary");
   };
   const getSegments = async (): Promise<Array<segments>> => {
-    const data = await http.get("/ads/segments");
+    const data = await http.get("/segments/segments");
     return data.segments;
   };
   const getSegment = (segmentId: string): Promise<segment> => {
-    return http.get(`/ads/segments/${segmentId}`);
+    return http.get(`/segments/segments/${segmentId}`);
   };
   const handleShopifyAuthentication = (): Promise<any> => {
     const token = window.location.hash.replace(/^#/, "");
