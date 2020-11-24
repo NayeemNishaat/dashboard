@@ -55,7 +55,6 @@ export default defineComponent({
       const api = getApi();
       summary = await api.getSummary();
     } catch (err) {
-      console.log("error occurred", err);
       error.value = err;
       return {
         summary: null,

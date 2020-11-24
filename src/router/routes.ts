@@ -13,6 +13,8 @@ import Settings from "@/pages/Settings.vue";
 
 //auth pages
 import Login from "@/auth/Login.vue";
+import LoginFailed from "@/auth/LoginFailed.vue";
+import ShopifyLogin from "@/auth/ShopifyLogin.vue";
 import Auth0Callback from "@/auth/Callback.vue";
 import Authorizing from "@/auth/Authorizing.vue";
 
@@ -35,6 +37,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/loading",
     name: "authorizing",
     component: Authorizing
+  },
+  {
+    path: "/shopify-login/:name",
+    name: "shopify-login",
+    component: ShopifyLogin
+  },
+  {
+    path: "/login-failed",
+    name: "login-failed",
+    component: LoginFailed
   },
   {
     path: "/",

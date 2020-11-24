@@ -2,16 +2,26 @@ import { instance as auth } from "@/auth";
 import store from "@/store";
 
 export const getHttpApi = (
-  baseURL: string
+  base_url: string
 ): {
-  get: (url: string, headers?: any) => Promise<any>;
-  post: (url: string, body: any, headers?: any) => Promise<any>;
+  get: (url: string, headers?: any, with_token?: boolean) => Promise<any>;
+  post: (
+    url: string,
+    body: any,
+    headers?: any,
+    with_token?: boolean
+  ) => Promise<any>;
 } => {
-  const get = (url: string, headers: any = {}) => {
-    return http(baseURL, url, "GET", null, headers);
+  const get = (url: string, headers: any = {}, with_token = true) => {
+    return http(base_url, url, "GET", null, headers, with_token);
   };
-  const post = (url: string, data: any, headers: any = {}) => {
-    return http(baseURL, url, "GET", data, headers);
+  const post = (
+    url: string,
+    data: any,
+    headers: any = {},
+    with_token = true
+  ) => {
+    return http(base_url, url, "POST", data, headers, with_token);
   };
   return { get, post };
 };
@@ -21,7 +31,8 @@ const http = async (
   url: string,
   method: string,
   body: any,
-  headers: any = {}
+  headers: any = {},
+  with_token = true
 ) => {
   if (!("fetch" in window)) {
     throw new Error("browser is too old, fetch is not supported");
@@ -29,11 +40,14 @@ const http = async (
   if (!auth) {
     throw new Error("not logged in");
   }
-  const claims = await auth.getIdTokenClaims();
-  if (!claims) {
-    throw new Error("could not get id token");
+  let authHeader = {};
+  if (with_token) {
+    const token = (await auth.getIdToken()) || "";
+    if (!token) {
+      throw new Error("could not get id token");
+    }
+    authHeader = { Authorization: `Bearer ${token}` };
   }
-  const id_token = claims.__raw;
   if (store.getters.apikey) {
     headers["X-Client"] = btoa(store.getters.apikey);
   }
@@ -42,7 +56,7 @@ const http = async (
     method: method,
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${id_token}`,
+      ...authHeader,
       ...headers
     }
   };

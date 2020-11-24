@@ -29,13 +29,12 @@ export const createApi = (baseURL: string): datacueApi => {
   const getSegment = (segmentId: string): Promise<segment> => {
     return http.get(`/segments/segments/${segmentId}`);
   };
-  const handleShopifyAuthentication = (): Promise<any> => {
-    const token = window.location.hash.replace(/^#/, "");
-
+  const shopifyLogin = (token: string): Promise<AuthenticatedClients> => {
     return http.post(
-      "/client/shopify-login",
+      "/v1/client/shopify/login",
       { token },
-      { "X-APP": "dashboard" }
+      { "X-APP": "dashboard" },
+      false
     );
   };
   const getClients = (): Promise<AuthenticatedClients> => {
@@ -46,7 +45,7 @@ export const createApi = (baseURL: string): datacueApi => {
     getSummary,
     getSegments,
     getSegment,
-    handleShopifyAuthentication
+    shopifyLogin
   };
   return instance;
 };

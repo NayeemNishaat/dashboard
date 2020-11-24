@@ -108,7 +108,7 @@ export default defineComponent({
   }
 
   .message-panel-contents {
-    text-align: center;
+    text-align: left;
     margin: 0 0 0 1em;
     font-size: 1rem;
     > a {

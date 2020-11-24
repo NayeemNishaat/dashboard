@@ -91,6 +91,9 @@ button.text-btn {
     -ms-transform: translate(0, -1px);
     transform: translate(0, -1px);
   }
+  i:hover {
+    text-decoration: none;
+  }
 }
 
 .primary,

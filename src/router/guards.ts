@@ -4,7 +4,7 @@ import store from "@/store";
 
 function isLoggedIn() {
   //authenticated by auth0
-  return auth?.state?.isAuthenticated ?? false;
+  return auth?.isAuthenticated() ?? false;
 }
 function isAuthenticated() {
   //authorized by our api

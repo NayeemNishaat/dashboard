@@ -1,11 +1,13 @@
 <template>
-  <LoginLoading msg="Logging you in..." />
+  <LoginLoading
+    :msg="name ? `hello ${name}! we're logging you in` : 'Logging you in...'"
+  />
 </template>
 
 <script lang="ts">
-import { getApi } from "@/api";
-import { defineComponent, onMounted, ref, Ref } from "vue";
-import { getAuth } from ".";
+import { computed, defineComponent, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 import LoginLoading from "./LoginLoading.vue";
 export default defineComponent({
   name: "ShopifyLogin",
@@ -13,33 +15,44 @@ export default defineComponent({
     LoginLoading
   },
   setup() {
-    const error: Ref<null> | Ref<any> = ref(null);
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+    const name = computed(() => {
+      const name = route?.params?.name ?? "";
+      if (Array.isArray(name)) {
+        return atob(name[0]);
+      }
+      return atob(name);
+    });
+
     onMounted(async () => {
       try {
-        const api = getApi();
-        const auth = await getAuth();
-        const res = await api.handleShopifyAuthentication();
-        auth.logoutNoRedirect();
-        await this.setAccessToken(res.data.token);
-        await this.fetchClients();
-        await this.setApikey(res.data.apikey);
-        if (this.hasFinishedOnboarding) {
-          this.$router.push({ name: "loading" });
-        } else {
-          this.$router.push({
-            name: "onboarding",
-            params: { platform: "shopify" }
-          });
+        const token = window.location.hash.replace(/^#/, "");
+        if (!token) {
+          console.error("no token found");
+          await router.push({ name: "login-failed" });
+          return;
         }
+        await store.dispatch("shopifyLogin", token);
+        console.log("client: ", store.getters.client);
+        console.log("client: ", store.getters.client);
+        if (!store.getters.isAuthenticated) {
+          console.error("not authenticated");
+          await router.push({ name: "login-failed" });
+          return;
+        }
+        console.log("heading to summary page...");
+        await router.push({ name: "summary" });
       } catch (err) {
-        Sentry.captureException(err);
-        await this.$router.push({
+        console.error(err);
+        await router.push({
           name: "login-failed"
         });
       }
     });
     return {
-      error
+      name
     };
   }
 });

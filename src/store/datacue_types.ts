@@ -1,7 +1,9 @@
 export interface AuthenticatedClients {
   clients: Clients;
   user: User;
+  shopify_token?: string;
 }
+
 export interface Clients {
   [key: string]: Client;
 }
@@ -30,6 +32,8 @@ export interface User {
   name: string;
   email: string;
   token: string;
+  is_partner: boolean;
+  is_owner: boolean;
 }
 
 export interface PlanFeatures {

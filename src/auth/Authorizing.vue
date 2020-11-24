@@ -90,7 +90,6 @@ export default defineComponent({
         loading.value = false;
       } catch (e) {
         error.value = e;
-        console.log(e);
       }
     });
     return {

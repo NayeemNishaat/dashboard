@@ -12,7 +12,11 @@ export default defineComponent({
     const user: Ref<null> | Ref<any> = ref(null);
     onMounted(async () => {
       const auth = await getAuth();
-      user.value = auth.state.user;
+      if (auth.state.shopify.raw_token) {
+        user.value = auth.state.shopify.user;
+        return;
+      }
+      user.value = auth.state.auth0.user;
     });
     return { user };
   }

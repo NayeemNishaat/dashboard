@@ -15,7 +15,11 @@ export const getters: GetterTree<rootState, rootState> = {
     return state.nextPage;
   },
   isAuthenticated(state: rootState, getters) {
-    return getters.client && auth?.state.isAuthenticated;
+    if (!auth) {
+      console.error("error processing auth");
+      return;
+    }
+    return (getters.client && auth.isAuthenticated()) || false;
   },
   hasActiveClients(state: rootState) {
     return Object.keys(state.clients).length > 0;

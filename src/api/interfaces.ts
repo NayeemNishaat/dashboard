@@ -38,5 +38,5 @@ export interface datacueApi {
   getSummary: () => Promise<summary>;
   getSegments: () => Promise<Array<segments>>;
   getSegment: (segmentId: string) => Promise<segment>;
-  handleShopifyAuthentication: () => Promise<any>;
+  shopifyLogin: (token: string) => Promise<AuthenticatedClients>;
 }

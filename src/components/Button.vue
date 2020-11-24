@@ -5,7 +5,7 @@
       :href="href"
       target="_blank"
       type="button"
-      class="dc-button"
+      class="dc-button d-flex justify-content-center align-items-center"
       :class="type"
       :disabled="disabled"
       @click="handleClick"
@@ -16,7 +16,7 @@
     <button
       v-else
       type="button"
-      class="dc-button"
+      class="dc-button d-flex justify-content-center align-items-center"
       :class="[small ? 'small' : '', type]"
       :disabled="disabled"
       @click="handleClick"
