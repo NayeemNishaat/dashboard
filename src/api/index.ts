@@ -38,7 +38,7 @@ export const createApi = (baseURL: string): datacueApi => {
     );
   };
   const getClients = (): Promise<AuthenticatedClients> => {
-    return http.get("/clients");
+    return http.get("/v1/client/");
   };
   instance = {
     getClients,
