@@ -1,13 +1,14 @@
 import { instance as auth } from "@/auth";
 import { instance as api } from "@/api";
-import { ActionContext, ActionTree, Commit } from "vuex";
+import { ActionContext, ActionTree, Commit, Dispatch } from "vuex";
 import { rootState } from "./store_types";
-import { _ } from "chart.js/dist/chunks";
 import { AuthenticatedClients } from "./datacue_types";
+import { localStorageKeys } from "./enums";
 
 const setClientUserFromReponse = (
   response: AuthenticatedClients,
-  commit: Commit
+  commit: Commit,
+  dispatch: Dispatch
 ) => {
   const clients = response.clients;
   commit("setClients", clients);
@@ -16,18 +17,21 @@ const setClientUserFromReponse = (
   }
   //if only one client, just set that as the current apikey
   if (Object.keys(clients).length === 1) {
-    commit("setApikey", Object.keys(clients)[0]);
+    dispatch("setApikey", Object.keys(clients)[0]);
   }
 };
 export const actions: ActionTree<rootState, rootState> = {
   setApikey({ commit }: ActionContext<rootState, rootState>, payload: string) {
     return new Promise(resolve => {
-      localStorage.setItem("dashboard:apikey", payload);
+      localStorage.setItem(localStorageKeys.apikey, payload);
       commit("setApikey", payload);
       resolve();
     });
   },
-  shopifyLogin({ commit }: ActionContext<rootState, rootState>, token: string) {
+  shopifyLogin(
+    { commit, dispatch }: ActionContext<rootState, rootState>,
+    token: string
+  ) {
     return new Promise((resolve, reject) => {
       if (!api) {
         reject("api not ready");
@@ -45,7 +49,7 @@ export const actions: ActionTree<rootState, rootState> = {
             return;
           }
           auth.initShopifyAuth(response.shopify_token, response.user);
-          setClientUserFromReponse(response, commit);
+          setClientUserFromReponse(response, commit, dispatch);
           resolve();
         })
         .catch(err => {
@@ -54,7 +58,7 @@ export const actions: ActionTree<rootState, rootState> = {
         });
     });
   },
-  fetchClients({ commit }: ActionContext<rootState, rootState>) {
+  fetchClients({ commit, dispatch }: ActionContext<rootState, rootState>) {
     return new Promise((resolve, reject) => {
       if (!api) {
         reject("api not ready");
@@ -63,7 +67,7 @@ export const actions: ActionTree<rootState, rootState> = {
       api
         .getClients()
         .then(response => {
-          setClientUserFromReponse(response, commit);
+          setClientUserFromReponse(response, commit, dispatch);
           resolve();
         })
         .catch((error: unknown) => {

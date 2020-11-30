@@ -14,6 +14,9 @@ export const getters: GetterTree<rootState, rootState> = {
   nextPage(state: rootState) {
     return state.nextPage;
   },
+  isShopify(state: rootState, getters) {
+    return getters.apikey == "" || getters.apikey.includes("myshopify.com");
+  },
   isAuthenticated(state: rootState, getters) {
     if (!auth) {
       console.error("error processing auth");

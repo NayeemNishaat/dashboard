@@ -62,7 +62,7 @@ export default defineComponent({
       //is an apikey set and a client selected?
       if (store.getters.isAuthenticated) {
         //proceed
-        const nextPage = store.getters.nextPage || "summary";
+        const nextPage = store.getters.nextPage || "overview";
         router.push(nextPage);
       }
     };
@@ -75,7 +75,7 @@ export default defineComponent({
         //is an apikey set and a client selected?
         if (store.getters.isAuthenticated) {
           //proceed
-          const nextPage = store.getters.nextPage || "summary";
+          const nextPage = store.getters.nextPage || "overview";
           await router.push(nextPage);
           return;
         }

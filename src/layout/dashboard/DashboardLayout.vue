@@ -2,19 +2,18 @@
   <div class="wrapper">
     <side-bar>
       <template v-slot:links>
-        <sidebar-link to="/summary" name="Overview" icon="ti-info" />
-        <sidebar-link
-          to="/recommendations"
-          name="Recommendations"
-          icon="ti-check"
-        />
-        <sidebar-link to="/segments" name="Segments" icon="ti-user" />
+        <sidebar-link to="/overview" name="Overview" icon="ti-info" />
         <sidebar-link
           to="/campaigns"
           name="Campaigns"
           icon="ti-view-list-alt"
         />
-        <sidebar-link to="/creatives" name="Creatives" icon="ti-image" />
+        <sidebar-link
+          to="/recommendations/summary"
+          name="Recommendations"
+          icon="ti-check"
+        />
+        <sidebar-link to="/reports" name="Reports" icon="ti-image" />
       </template>
       <options-menu>
         <sidebar-link

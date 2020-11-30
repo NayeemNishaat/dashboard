@@ -48,10 +48,10 @@ function isTokenExpired(token: any): boolean {
 //   window.history.replaceState({}, document.title, "/");
 interface authState {
   loading: boolean;
-  isAuthenticated: boolean;
   auth0: {
     user: any;
     client: Readonly<Auth0Client> | null;
+    isAuthenticated: boolean;
     popupOpen: boolean;
   };
   shopify: {
@@ -86,13 +86,13 @@ export const createAuth = async (
   }
   const state = reactive({
     loading: true,
-    isAuthenticated: false,
     shopify: {
       raw_token: "",
       token: {},
       user: {} as User
     },
     auth0: {
+      isAuthenticated: false,
       user: {} as any,
       raw_token: "",
       client: null as Readonly<Auth0Client> | null,
@@ -121,7 +121,7 @@ export const createAuth = async (
     state.error = e;
   } finally {
     // Initialize the internal authentication state
-    state.isAuthenticated = await state.auth0.client.isAuthenticated();
+    state.auth0.isAuthenticated = await state.auth0.client.isAuthenticated();
     state.auth0.user = await state.auth0.client.getUser();
     state.loading = false;
   }
@@ -135,12 +135,11 @@ export const createAuth = async (
 
   const isAuthenticated = (): boolean => {
     //is it Shopify?
-    console.log("shopify token", state.shopify.token);
-    if (state.shopify.token) {
+    if (state.shopify.raw_token) {
       return !isTokenExpired(state.shopify.token);
     }
     if (state.auth0.client) {
-      return state.isAuthenticated;
+      return state.auth0.isAuthenticated;
     }
     return false;
   };
@@ -154,7 +153,10 @@ export const createAuth = async (
     try {
       await state.auth0.client.handleRedirectCallback();
       state.auth0.user = await state.auth0.client.getUser();
-      state.isAuthenticated = true;
+      state.auth0.isAuthenticated = true;
+      console.log(
+        `user: ${state.auth0.user} authenticated?:${state.auth0.isAuthenticated}`
+      );
     } catch (e) {
       state.error = e;
     } finally {

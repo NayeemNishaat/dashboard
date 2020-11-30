@@ -30,20 +30,15 @@ export default defineComponent({
       try {
         const token = window.location.hash.replace(/^#/, "");
         if (!token) {
-          console.error("no token found");
           await router.push({ name: "login-failed" });
           return;
         }
         await store.dispatch("shopifyLogin", token);
-        console.log("client: ", store.getters.client);
-        console.log("client: ", store.getters.client);
         if (!store.getters.isAuthenticated) {
-          console.error("not authenticated");
           await router.push({ name: "login-failed" });
           return;
         }
-        console.log("heading to summary page...");
-        await router.push({ name: "summary" });
+        await router.push({ name: "overview" });
       } catch (err) {
         console.error(err);
         await router.push({

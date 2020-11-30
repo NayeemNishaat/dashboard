@@ -3,29 +3,29 @@ import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 import NotFound from "@/pages/NotFoundPage.vue";
 
 // Admin pages
-import Summary from "@/pages/Summary.vue";
-import Billing from "@/pages/Billing.vue";
-import AdCreatives from "@/pages/AdCreatives.vue";
+import Overview from "@/pages/Overview.vue";
 import Campaigns from "@/pages/Campaigns.vue";
-import AllSegments from "@/pages/Segments/All.vue";
-import SegmentDetail from "@/pages/Segments/Detail.vue";
+import RecommendationsSummary from "@/pages/Recommendations/Summary.vue";
+import RecommendationsDetail from "@/pages/Recommendations/Detail.vue";
+import Reports from "@/pages/Reports.vue";
+import Billing from "@/pages/Billing.vue";
 import Settings from "@/pages/Settings.vue";
 
 //auth pages
-import Login from "@/auth/Login.vue";
+import LoginPage from "@/auth/LoginPage.vue";
 import LoginFailed from "@/auth/LoginFailed.vue";
 import ShopifyLogin from "@/auth/ShopifyLogin.vue";
 import Auth0Callback from "@/auth/Callback.vue";
 import Authorizing from "@/auth/Authorizing.vue";
 
 import { RouteRecordRaw } from "vue-router";
-import { ifAuthenticated, ifNotAuthenticated } from "./guards";
+import { ifAuthenticated, ifLoggedIn, ifNotAuthenticated } from "./guards";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "login",
-    component: Login,
+    component: LoginPage,
     beforeEnter: ifNotAuthenticated
   },
   {
@@ -36,7 +36,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/loading",
     name: "authorizing",
-    component: Authorizing
+    component: Authorizing,
+    beforeEnter: ifLoggedIn
   },
   {
     path: "/shopify-login/:name",
@@ -51,24 +52,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/summary",
+    redirect: "/overview",
     children: [
       {
-        path: "summary",
-        name: "summary",
-        component: Summary,
-        beforeEnter: ifAuthenticated
-      },
-      {
-        path: "segments",
-        name: "all segments",
-        component: AllSegments,
-        beforeEnter: ifAuthenticated
-      },
-      {
-        path: "segments/:segment",
-        name: "segments detail",
-        component: SegmentDetail,
+        path: "overview",
+        name: "overview",
+        component: Overview,
         beforeEnter: ifAuthenticated
       },
       {
@@ -78,9 +67,21 @@ const routes: Array<RouteRecordRaw> = [
         beforeEnter: ifAuthenticated
       },
       {
-        path: "creatives",
-        name: "creatives",
-        component: AdCreatives,
+        path: "recommendations/summary",
+        name: "recommendations-summary",
+        component: RecommendationsSummary,
+        beforeEnter: ifAuthenticated
+      },
+      {
+        path: "recommendations/:segment",
+        name: "recommendations-detail",
+        component: RecommendationsDetail,
+        beforeEnter: ifAuthenticated
+      },
+      {
+        path: "reports",
+        name: "reports",
+        component: Reports,
         beforeEnter: ifAuthenticated
       },
       {

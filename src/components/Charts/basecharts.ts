@@ -1,30 +1,28 @@
 import {
-  Arc,
+  ArcElement,
   Chart,
   LineController as chLineController,
   BarController as chBar,
-  Line as chLine,
-  Point as chPoint,
+  LineElement as chLine,
+  PointElement as chPoint,
   DoughnutController,
   LinearScale as chLinearScale,
   CategoryScale as chCategoryScale,
   Title as chTitle,
   Tooltip as chTooltip,
   Filler as chFiller,
-  Legend as chLegend,
-  Rectangle
+  Legend as chLegend
 } from "chart.js";
 import { computed, h, onBeforeUnmount, onMounted, ref } from "vue";
 
 Chart.register(
-  Arc,
+  ArcElement,
   chLineController,
   chBar,
   chLine,
   chPoint,
   chLinearScale,
   chCategoryScale,
-  Rectangle,
   DoughnutController,
   chTitle,
   chTooltip,

@@ -16,7 +16,7 @@ export default defineComponent({
       try {
         const auth = await getAuth();
         await auth.handleRedirectCallback();
-        await router.push("summary");
+        await router.push({ name: "overview" });
       } catch (err) {
         console.log("callback error: ", err);
       }
