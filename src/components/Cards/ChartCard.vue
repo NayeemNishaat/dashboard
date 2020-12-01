@@ -2,7 +2,7 @@
   <card>
     <template v-slot:header>
       <h3 v-if="$slots.title || title" class="card-title">
-        <slot name="title">{{ $t(title) }}</slot>
+        <slot name="title">{{ title }}</slot>
       </h3>
       <p class="card-category">
         <slot name="subTitle">{{ subTitle }}</slot>
@@ -17,7 +17,7 @@
           <i :class="noDataIcon"></i>
         </div>
         <div class="col-10 align-self-center chart-nodata">
-          <p>{{ $t(noDataText) }}</p>
+          <p>{{ noDataText }}</p>
         </div>
       </div>
       <div class="row" v-else>
@@ -31,6 +31,7 @@
           />
           <Charts
             v-else
+            @chart-click="handleClick"
             :data="data"
             :type="type"
             :options="options"
@@ -52,7 +53,7 @@
 import Card from "./Card.vue";
 import Charts from "@/components/Charts/basecharts";
 import ApexChart from "../ApexCharts.vue";
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "chart-card",
@@ -117,15 +118,19 @@ export default defineComponent({
       default: "100%"
     }
   },
-  setup(props) {
+  emits: ["chart-click"],
+  setup(props, { emit }) {
     const chartWidth = ref("300");
+    const handleClick = (payload: unknown) => {
+      emit("chart-click", payload);
+    };
     onMounted(() => {
       //force apex charts to re-render TODO: remove when we have a better solution
       setTimeout(() => {
         chartWidth.value = props.width;
       }, 1000);
     });
-    return { chartWidth };
+    return { chartWidth, handleClick };
   }
 });
 </script>

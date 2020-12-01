@@ -8,7 +8,9 @@ import {} from "@/auth";
 //css assets
 import "@/assets/sass/bootstrap/custom.scss";
 import "@/assets/sass/datacue/main.scss";
+import "@/assets/sass/datacue/primevue.scss";
 import "@/assets/css/themify-icons.css";
+import "primevue/resources/primevue.min.css";
 import { App } from "vue";
 
 //set bootstrap colours

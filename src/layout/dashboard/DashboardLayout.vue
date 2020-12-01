@@ -9,7 +9,7 @@
           icon="ti-view-list-alt"
         />
         <sidebar-link
-          to="/recommendations/summary"
+          to="/segments/recommendations"
           name="Recommendations"
           icon="ti-check"
         />

@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <card><h1>AdCreatives</h1></card>
-  </div>
+  <ComingSoon name="reports" />
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-export default defineComponent({});
+import ComingSoon from "@/components/ComingSoon.vue";
+export default defineComponent({
+  components: { ComingSoon }
+});
 </script>
 <style></style>

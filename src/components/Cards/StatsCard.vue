@@ -1,6 +1,11 @@
 <template>
   <card>
     <slot name="header">
+      <div v-if="tag" class="row d-flex justify-content-end">
+        <div class="rmargin p-tag p-tag-rounded p-tag-success">
+          {{ tag }}
+        </div>
+      </div>
       <h3 class="card-title">
         <i :class="icon" v-if="icon" />
         {{ title }}
@@ -74,6 +79,10 @@ export default defineComponent({
     return { numDays };
   },
   props: {
+    tag: {
+      type: String,
+      default: ""
+    },
     loading: {
       type: Boolean,
       default: false
@@ -126,5 +135,8 @@ export default defineComponent({
 
 .comparison-lower {
   color: #e33335;
+}
+.rmargin {
+  margin-right: 1rem;
 }
 </style>

@@ -1,7 +1,7 @@
 import { AuthenticatedClients } from "@/store/datacue_types";
 import { inject } from "vue";
 import { getHttpApi } from "./http";
-import { summary, segments, segment, datacueApi } from "./interfaces";
+import { overview, segments, segment, datacueApi } from "./interfaces";
 
 export const apiSymbol = Symbol("datacue-api");
 
@@ -19,8 +19,8 @@ export const createApi = (baseURL: string): datacueApi => {
     return instance;
   }
   const http = getHttpApi(baseURL);
-  const getSummary = async (): Promise<summary> => {
-    return await http.get("/segments/summary");
+  const getOverview = async (): Promise<overview> => {
+    return await http.get("/segments/overview");
   };
   const getSegments = async (): Promise<Array<segments>> => {
     const data = await http.get("/segments/segments");
@@ -42,7 +42,7 @@ export const createApi = (baseURL: string): datacueApi => {
   };
   instance = {
     getClients,
-    getSummary,
+    getOverview,
     getSegments,
     getSegment,
     shopifyLogin

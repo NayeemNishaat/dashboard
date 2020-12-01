@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !summary.stats">
+    <template v-if="error || !overview.stats">
       <error-msg />
     </template>
     <template v-else>
@@ -8,8 +8,9 @@
         <div class="col-md-4 col-sm-6" v-for="stat in statTypes" :key="stat">
           <stats-card
             :title="stats[stat].title"
-            :value="summary.stats[stat]"
+            :value="new Intl.NumberFormat().format(overview.stats[stat])"
             :icon="stats[stat].icon"
+            tag="coming soon"
           >
           </stats-card>
         </div>
@@ -17,7 +18,7 @@
       <div class="row">
         <div class="col-12">
           <card title="Recommended campaigns">
-            <DataView :value="summary.opportunities" layout="list">
+            <DataView :value="overview.opportunities" layout="list">
               <template #list="slotProps">
                 <div>
                   <b>{{ slotProps.data.title }}</b>
@@ -36,7 +37,7 @@ import ChartCard from "@/components/Cards/ChartCard.vue";
 import DataView from "primevue/dataview";
 import { defineComponent, reactive, ref } from "vue";
 import { getApi } from "@/api";
-import { summary } from "@/api/interfaces";
+import { overview } from "@/api/interfaces";
 export default defineComponent({
   name: "Summary",
   components: {
@@ -44,16 +45,16 @@ export default defineComponent({
   },
   async setup() {
     const error = ref(null);
-    let summary: summary | undefined = undefined;
+    let overview: overview | undefined = undefined;
     const stats = {
-      segments: { title: "# of segments", icon: "ti-image" },
-      max_aov: { title: "AOV of most valuable segment", icon: "ti-image" },
-      max_size: { title: "Size of largest segment", icon: "ti-image" }
+      dc_revenue: { title: "Revenue", icon: "ti-money" },
+      ad_spend: { title: "Ad Spend", icon: "ti-wallet" },
+      roi: { title: "Return on Investment", icon: "ti-bar-chart" }
     };
-    const statTypes = ["segments", "max_aov", "max_size"];
+    const statTypes = ["dc_revenue", "ad_spend", "roi"];
     try {
       const api = getApi();
-      summary = await api.getSummary();
+      overview = await api.getOverview();
     } catch (err) {
       error.value = err;
       return {
@@ -63,9 +64,9 @@ export default defineComponent({
         error
       };
     }
-    summary = reactive(summary);
+    overview = reactive(overview);
     return {
-      summary,
+      overview,
       stats,
       statTypes,
       error

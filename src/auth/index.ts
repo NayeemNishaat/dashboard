@@ -2,6 +2,7 @@ import { reactive, readonly, inject } from "vue";
 export const authSymbol = Symbol("auth");
 import router from "@/router/index";
 import decode from "jwt-decode";
+const shopifyTokenLocalStorage = "dashboard:shopify_token";
 
 import createAuth0Client, {
   Auth0Client,
@@ -108,29 +109,15 @@ export const createAuth = async (
     cacheLocation: "localstorage"
   });
 
-  try {
-    // If the user is returning to the app after authentication..
-    if (
-      window.location.search.includes("code=") &&
-      window.location.search.includes("state=")
-    ) {
-      // handle the redirect and retrieve tokens
-      const { appState } = await state.auth0.client.handleRedirectCallback();
-    }
-  } catch (e) {
-    state.error = e;
-  } finally {
-    // Initialize the internal authentication state
-    state.auth0.isAuthenticated = await state.auth0.client.isAuthenticated();
-    state.auth0.user = await state.auth0.client.getUser();
-    state.loading = false;
-  }
-
   const initShopifyAuth = (token: string, user: User) => {
     state.auth0.client = null;
     state.shopify.raw_token = token;
     state.shopify.token = decode(token) as any;
     state.shopify.user = user;
+    localStorage.setItem(
+      shopifyTokenLocalStorage,
+      JSON.stringify({ token, user })
+    );
   };
 
   const isAuthenticated = (): boolean => {
@@ -224,5 +211,40 @@ export const createAuth = async (
     logoutNoRedirect,
     state: readonly(state)
   };
+
+  //** INIT **/
+  //is this a Shopify client?
+  const shopifyToken = window.localStorage.getItem(shopifyTokenLocalStorage);
+  if (shopifyToken) {
+    try {
+      const { token, user } = JSON.parse(shopifyToken);
+      initShopifyAuth(token, user);
+      if (!isAuthenticated()) {
+        localStorage.removeItem(shopifyTokenLocalStorage);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    return instance;
+  }
+  //auth0 client
+  try {
+    // If the user is returning to the app after authentication..
+    if (
+      window.location.search.includes("code=") &&
+      window.location.search.includes("state=")
+    ) {
+      // handle the redirect and retrieve tokens
+      const { appState } = await state.auth0.client.handleRedirectCallback();
+    }
+  } catch (e) {
+    state.error = e;
+  } finally {
+    // Initialize the internal authentication state
+    state.auth0.isAuthenticated = await state.auth0.client.isAuthenticated();
+    state.auth0.user = await state.auth0.client.getUser();
+    state.loading = false;
+  }
+
   return instance;
 };

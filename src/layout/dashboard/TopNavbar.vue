@@ -38,7 +38,7 @@
         <ul class="navbar-nav ml-auto">
           <drop-down
             class="nav-item"
-            :title="client && client.name"
+            :title="(client && client.name) || (client && client.domain)"
             title-classes="nav-link"
             icon="nc-icon nc-shop"
             data-id="navbar:menu-btn"

@@ -5,8 +5,8 @@ import NotFound from "@/pages/NotFoundPage.vue";
 // Admin pages
 import Overview from "@/pages/Overview.vue";
 import Campaigns from "@/pages/Campaigns.vue";
-import RecommendationsSummary from "@/pages/Recommendations/Summary.vue";
-import RecommendationsDetail from "@/pages/Recommendations/Detail.vue";
+import SegmentsSummary from "@/pages/Recommendations/Summary.vue";
+import SegmentDetails from "@/pages/Recommendations/SegmentDetail.vue";
 import Reports from "@/pages/Reports.vue";
 import Billing from "@/pages/Billing.vue";
 import Settings from "@/pages/Settings.vue";
@@ -67,15 +67,15 @@ const routes: Array<RouteRecordRaw> = [
         beforeEnter: ifAuthenticated
       },
       {
-        path: "recommendations/summary",
-        name: "recommendations-summary",
-        component: RecommendationsSummary,
+        path: "segments/recommendations",
+        name: "recommendations summary",
+        component: SegmentsSummary,
         beforeEnter: ifAuthenticated
       },
       {
-        path: "recommendations/:segment",
-        name: "recommendations-detail",
-        component: RecommendationsDetail,
+        path: "segments/:segment",
+        name: "Segment details",
+        component: SegmentDetails,
         beforeEnter: ifAuthenticated
       },
       {

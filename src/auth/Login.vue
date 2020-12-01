@@ -4,7 +4,7 @@
       <img src="@/assets/img/datacue-logo-dark.svg" style="width:10rem" />
     </div>
     <div>
-      <MessageBanner type="default">
+      <MessageBanner type="default" icon="nc-icon nc-key-25">
         <div class="row">
           <div class="col-12">
             <h4>Login to DataCue from Shopify</h4>
