@@ -10,7 +10,7 @@
             title="Segment Overview"
             sub-title="A quick breakdown of your major customer segments in the last 6 months"
             type="bubble"
-            @chart-click="getElement"
+            @chart-click="handleSegmentChartClick"
             :data="segmentChart"
             :options="{
               tooltips: {
@@ -72,33 +72,60 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <card title="Acquisition Segments (?)" sub-title="Description Text">
+          <card
+            title="Acquisition Segments"
+            sub-title="Find more people like your most valuable customers with lookalike audiences."
+          >
             <dc-table
-              :colnames="['Name', 'AOV', 'Size', 'Lifecycle']"
-              :data="segments"
-              linkcol="link"
+              :colnames="['cluster_id', 'customers', 'rev_per_customer']"
+              :friendly-col-names="[
+                'Segment',
+                '# of customers',
+                'Revenue per Customer'
+              ]"
+              :data="segments.acquisition"
+              :action-button="{
+                type: 'primary',
+                icon: 'ti-download',
+                label: 'audience'
+              }"
             />
           </card>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <card title="Retargeting Segments" sub-title="Description Text">
-            <dc-table
-              :colnames="['Name', 'AOV', 'Size', 'Lifecycle']"
-              :data="segments"
-              linkcol="link"
-            />
+          <card
+            title="Retargeting Segments"
+            sub-title="Build audiences based on their last visit"
+          >
+            <div class="row d-flex justify-content-start">
+              <div class="lmargin p-tag p-tag-rounded p-tag-success">
+                coming soon
+              </div>
+            </div>
           </card>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <card title="Retention Segments" sub-title="Description Text">
+          <card
+            title="Retention Segments"
+            sub-title="Find more people like your most valuable customers with lookalike audiences."
+          >
             <dc-table
-              :colnames="['Name', 'AOV', 'Size', 'Lifecycle']"
-              :data="segments"
-              linkcol="link"
+              :colnames="['cluster_id', 'customers', 'rev_per_customer']"
+              :friendly-col-names="[
+                'Segment',
+                '# of customers',
+                'Revenue per Customer'
+              ]"
+              :data="segments.retention"
+              :action-button="{
+                type: 'primary',
+                icon: 'ti-download',
+                label: 'audience'
+              }"
             />
           </card>
         </div>
@@ -108,13 +135,12 @@
 </template>
 <script lang="ts">
 import DcTable from "@/components/UI/DcTable.vue";
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, Ref, ref } from "vue";
 import { getApi } from "@/api";
-import { segments } from "@/api/interfaces";
+import { segmentRecommendations } from "@/api/interfaces";
 import { bubbleChartData } from "@/components/Charts/basecharts";
-interface segmentsTable extends segments {
-  link: string;
-}
+import { useRouter } from "vue-router";
+
 export default defineComponent({
   name: "Segments",
   components: {
@@ -122,54 +148,29 @@ export default defineComponent({
   },
   async setup() {
     const error = ref(null);
-    let segments: Array<segmentsTable> | undefined = undefined;
+    const router = useRouter();
+    let segments: Ref<segmentRecommendations> = ref({
+      summary: [],
+      acquisition: [],
+      retention: []
+    });
     const segmentChart: bubbleChartData = reactive({
       datasets: []
     });
-    const getElement = (payload: unknown) => {
-      console.log(payload);
+    const handleSegmentChartClick = (payload: unknown) => {
+      const datasetIdx = payload && (payload as any).datasetIndex;
+      if (!datasetIdx || segments.value.summary.length < datasetIdx) {
+        return;
+      }
+      const label = segments.value.summary[datasetIdx].label;
+      router.push(`/segments/${label}`);
     };
 
     try {
       const api = getApi();
-      segments = (await api.getSegments()) as Array<segmentsTable>;
-      segments = segments.map(elem => {
-        elem.link = `/segments/${elem.name}`;
-        return elem;
-      });
-      const chartVals = [
-        {
-          r: 214.5346928327645051,
-          x: 1758,
-          y: 377151.99,
-          label: "accessories"
-        },
-        {
-          r: 315.3901918976545842,
-          x: 938,
-          y: 295836.0,
-          label: "cleaning equipments and cartridges"
-        },
-        {
-          r: 142.7149005772931366,
-          x: 1559,
-          y: 222492.53,
-          label: "cartridge and accessories"
-        },
-        {
-          r: 131.9045610425240055,
-          x: 1458,
-          y: 192316.85,
-          label: "cleaning equipments"
-        },
-        {
-          r: 142.1656730769230769,
-          x: 1144,
-          y: 162637.53,
-          label: "chlorinator and pumps"
-        }
-      ];
-      segmentChart.datasets = chartVals.map(series => {
+      segments.value = await api.getSegments();
+
+      segmentChart.datasets = segments.value.summary.map(series => {
         return {
           label: series.label,
           data: [{ x: series.x, y: series.y, r: series.r }]
@@ -188,7 +189,7 @@ export default defineComponent({
     return {
       segments,
       segmentChart,
-      getElement,
+      handleSegmentChartClick,
       error
     };
   }
@@ -197,5 +198,8 @@ export default defineComponent({
 <style scoped>
 .table-col {
   padding-right: 1rem;
+}
+.lmargin {
+  margin-left: 1rem;
 }
 </style>

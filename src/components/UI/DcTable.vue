@@ -2,8 +2,11 @@
   <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th scope="col" v-for="col in columnNames" :key="col">{{ col }}</th>
+        <th scope="col" v-for="(col, idx) in columnNames" :key="idx">
+          {{ col }}
+        </th>
         <th scope="col" v-if="linkcol != ''">#</th>
+        <th scope="col" v-if="actionButton != {}">#</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +29,13 @@
               ><i class="ti-angle-right"/></dc-button
           ></router-link>
         </td>
+        <td v-if="actionButton && actionButton.type">
+          <dc-button
+            :type="actionButton.type"
+            :small="actionButton.type === 'circle'"
+            ><i :class="actionButton.icon" />{{ actionButton.label }}</dc-button
+          >
+        </td>
       </tr>
     </tbody>
   </table>
@@ -39,6 +49,10 @@ export default defineComponent({
     modelValue: {
       type: Number,
       default: () => null
+    },
+    friendlyColNames: {
+      type: Array,
+      default: () => []
     },
     colnames: {
       type: Array,
@@ -55,12 +69,21 @@ export default defineComponent({
     rowclicklink: {
       type: Boolean,
       default: true
+    },
+    actionButton: {
+      type: Object,
+      default: () => {
+        return {};
+      }
     }
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const router = useRouter();
     const columnNames = computed(() => {
+      if (props.friendlyColNames.length > 0) {
+        return props.friendlyColNames;
+      }
       if (props.colnames.length > 0) {
         return props.colnames;
       }

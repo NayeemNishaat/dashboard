@@ -5,11 +5,18 @@ export interface overview {
   opportunities: Array<{ title: string; description: string }>;
 }
 
-export interface segments {
-  name: string;
-  aov: number;
-  size: number;
-  lifecycle: string;
+export interface segmentRecommendations {
+  summary: Array<{ r: number; x: number; y: number; label: string }>;
+  acquisition: Array<{
+    customers: number;
+    cluster_id: string;
+    rev_per_customer: number;
+  }>;
+  retention: Array<{
+    label: string;
+    customers: number;
+    rev_per_customer: number;
+  }>;
 }
 
 export interface segment {
@@ -36,7 +43,7 @@ interface product {
 export interface datacueApi {
   getClients: () => Promise<AuthenticatedClients>;
   getOverview: () => Promise<overview>;
-  getSegments: () => Promise<Array<segments>>;
+  getSegments: () => Promise<segmentRecommendations>;
   getSegment: (segmentId: string) => Promise<segment>;
   shopifyLogin: (token: string) => Promise<AuthenticatedClients>;
 }
