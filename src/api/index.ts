@@ -5,7 +5,8 @@ import {
   overview,
   segmentRecommendations,
   segment,
-  datacueApi
+  datacueApi,
+  productTypeGroup
 } from "./interfaces";
 
 export const apiSymbol = Symbol("datacue-api");
@@ -34,6 +35,11 @@ export const createApi = (baseURL: string): datacueApi => {
   const getSegment = (segmentId: string): Promise<segment> => {
     return http.get(`/segments/${segmentId}`);
   };
+  const getGroupToProductTypeSettings = (): Promise<Array<
+    productTypeGroup
+  >> => {
+    return http.get(`/segments/settings/product-type-groups`);
+  };
   const shopifyLogin = (token: string): Promise<AuthenticatedClients> => {
     return http.post(
       "/v1/client/shopify/login",
@@ -50,6 +56,7 @@ export const createApi = (baseURL: string): datacueApi => {
     getOverview,
     getSegments,
     getSegment,
+    getGroupToProductTypeSettings,
     shopifyLogin
   };
   return instance;

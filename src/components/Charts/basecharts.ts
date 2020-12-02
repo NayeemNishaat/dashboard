@@ -3,6 +3,7 @@ import {
   Chart,
   LineController,
   BarController,
+  BarElement,
   BubbleController,
   LineElement,
   PointElement,
@@ -19,6 +20,21 @@ export interface bubbleChartData {
   datasets: Array<bubbleChartDataSet>;
 }
 
+export interface barChartData {
+  labels: Array<string>;
+  datasets: Array<{
+    label: string;
+    barPercentage?: number;
+    barThickness?: number;
+    maxBarThickness?: number;
+    minBarLength?: number;
+    backgroundColor?: string;
+    borderColor?: string;
+    hoverBackgroundColor?: string;
+    hoverBorderColor?: string;
+    data: Array<number>;
+  }>;
+}
 interface bubbleChartDataSet {
   label: string;
   data: Array<{ x: number; y: number; r: number }>;
@@ -29,6 +45,7 @@ Chart.register(
   ArcElement,
   LineController,
   BarController,
+  BarElement,
   BubbleController,
   LineController,
   LineElement,
@@ -58,7 +75,7 @@ const chartColors = [
 const getChartColor = (idx: number, alpha: string) =>
   chartColors[idx].replace("0.4", alpha);
 
-const normalizeBubbleRatios = (data: bubbleChartData) => {
+const formatBubbleDataset = (data: bubbleChartData) => {
   const MAX_RATIO_SIZE = 20;
   const numbers = [] as Array<number>;
   data.datasets.forEach(elem => {
@@ -89,6 +106,26 @@ const normalizeBubbleRatios = (data: bubbleChartData) => {
     })
   };
 };
+
+const formatBarDataset = (data: barChartData) => {
+  return {
+    labels: data.labels,
+    datasets: data.datasets.map((elem, idx) => {
+      return {
+        ...elem,
+        barPercentage: 0.5,
+        barThickness: 15,
+        maxBarThickness: 15,
+        minBarLength: 2,
+        backgroundColor: getChartColor(idx, "0.5"),
+        borderColor: getChartColor(idx, "0.8"),
+        hoverBackgroundColor: getChartColor(idx, "0.7"),
+        hoverBorderColor: getChartColor(idx, "1")
+      };
+    })
+  };
+};
+
 // export function generateChart(chartId: string, chartType: any) {
 export default defineComponent({
   emits: ["chart-click"],
@@ -106,7 +143,10 @@ export default defineComponent({
         );
       let data = props.data;
       if (props.type === "bubble") {
-        data = normalizeBubbleRatios(data as bubbleChartData);
+        data = formatBubbleDataset(data as bubbleChartData);
+      }
+      if (props.type === "bar") {
+        data = formatBarDataset(data as barChartData);
       }
       chart.value = new Chart(canvas.value.getContext("2d"), {
         type: props.type as chartType,
@@ -130,11 +170,10 @@ export default defineComponent({
           false
         );
         try {
-          if (elements && elements.length > 0) {
-            emit("chart-click", elements[0]);
-          }
-          // eslint-disable-next-line no-empty
-        } catch {}
+          emit("chart-click", elements[0]);
+        } catch (err) {
+          console.error("could not find element", err);
+        }
       };
     };
     const refresh = () => {

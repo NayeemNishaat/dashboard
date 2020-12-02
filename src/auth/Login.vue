@@ -39,7 +39,6 @@ import { useStore } from "vuex";
 export default defineComponent({
   name: "Login",
   async setup() {
-    console.log("in setup function");
     const store = useStore();
     const isShopify = store.getters.isShopify;
     const overrideShopify = ref(false);
@@ -65,7 +64,6 @@ export default defineComponent({
       auth.loginWithRedirect();
     });
 
-    console.log("getting auth");
     auth = await getAuth();
     return {
       isShopify,

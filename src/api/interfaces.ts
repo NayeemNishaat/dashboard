@@ -19,19 +19,23 @@ export interface segmentRecommendations {
   }>;
 }
 
+export interface productTypeGroup {
+  group_id: string;
+  product_types: Array<string>;
+}
+
 export interface segment {
+  stats: { revenue: number; customers: number; aov: number };
   pct_customers: number;
   pct_revenue: number;
-  rfm: {
-    active: number;
-    champions: number;
-    new_customers: number;
-    loyal: number;
+  rfm: Array<{
+    rfm_level: string;
+    customers: number;
+  }>;
+  product_groups: {
+    [key: string]: number;
   };
   top_products: Array<product>;
-  aov: string;
-  two_time_buyers: string;
-  avg_days_between_purchase: number;
   commonly_bought_together: Array<product>;
 }
 interface product {
@@ -45,5 +49,6 @@ export interface datacueApi {
   getOverview: () => Promise<overview>;
   getSegments: () => Promise<segmentRecommendations>;
   getSegment: (segmentId: string) => Promise<segment>;
+  getGroupToProductTypeSettings: () => Promise<Array<productTypeGroup>>;
   shopifyLogin: (token: string) => Promise<AuthenticatedClients>;
 }

@@ -16,11 +16,11 @@
         <sidebar-link to="/reports" name="Reports" icon="ti-image" />
       </template>
       <options-menu>
-        <sidebar-link
+        <!-- <sidebar-link
           to="/billing"
           name="Billing"
           icon="nc-icon nc-credit-card"
-        />
+        /> -->
         <sidebar-link
           to="/settings"
           name="Settings"

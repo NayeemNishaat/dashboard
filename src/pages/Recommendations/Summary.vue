@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !segments">
+    <template v-if="error || !segments.summary">
       <error-msg />
     </template>
     <template v-else>
@@ -18,7 +18,7 @@
                 mode: 'nearest',
                 callbacks: {
                   label: function(tooltipItem, data) {
-                    return `revenue: $${
+                    return `${tooltipItem.dataset.label}\nrevenue: $${
                       tooltipItem.dataset.data[0].y
                     }, customers: ${
                       tooltipItem.dataset.data[0].x
@@ -111,7 +111,7 @@
         <div class="col-12">
           <card
             title="Retention Segments"
-            sub-title="Find more people like your most valuable customers with lookalike audiences."
+            sub-title="Identify customers that haven't bought from you in a while to encourage them to revisit."
           >
             <dc-table
               :colnames="['cluster_id', 'customers', 'rev_per_customer']"
@@ -159,7 +159,7 @@ export default defineComponent({
     });
     const handleSegmentChartClick = (payload: unknown) => {
       const datasetIdx = payload && (payload as any).datasetIndex;
-      if (!datasetIdx || segments.value.summary.length < datasetIdx) {
+      if (datasetIdx === null || segments.value.summary.length < datasetIdx) {
         return;
       }
       const label = segments.value.summary[datasetIdx].label;
@@ -184,8 +184,6 @@ export default defineComponent({
         error
       };
     }
-    segments = reactive(segments);
-
     return {
       segments,
       segmentChart,
