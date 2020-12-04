@@ -65,11 +65,23 @@
         <div class="col-md-6 col-sm-12">
           <card title="Top products">
             <ProductList :products="segment.top_products" />
+            <div
+              style="left-margin:1rem"
+              class="p-tag p-tag-rounded p-tag-success"
+            >
+              coming soon
+            </div>
           </card>
         </div>
         <div class="col-md-6 col-sm-12">
           <card title="Commonly bought together">
             <ProductList :products="segment.commonly_bought_together" />
+            <div
+              style="left-margin:1rem"
+              class="p-tag p-tag-rounded p-tag-success"
+            >
+              coming soon
+            </div>
           </card>
         </div>
         <div class="col-12">
@@ -143,9 +155,7 @@ export default defineComponent({
           item => segment.value?.product_groups[item]
         );
         if (data) {
-          groupsChart.labels = chartLabels.map(label =>
-            label.replace(/_/g, " ")
-          );
+          groupsChart.labels = chartLabels;
           groupsChart.datasets.push({
             label: "Product groups",
             data: data as any

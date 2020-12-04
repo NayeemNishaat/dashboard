@@ -5,8 +5,8 @@
         <th scope="col" v-for="(col, idx) in columnNames" :key="idx">
           {{ col }}
         </th>
-        <th scope="col" v-if="linkcol != ''">#</th>
-        <th scope="col" v-if="actionButton != {}">#</th>
+        <th scope="col" v-if="linkcol != ''">Actions</th>
+        <th scope="col" v-if="actionButton != {}">Actions</th>
       </tr>
     </thead>
     <tbody>

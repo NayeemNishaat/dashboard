@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -18,13 +19,13 @@ type User struct {
 }
 
 func main() {
-	const apikey = "test.myshopify.com"
-	const email = "soraya@datacue.co"
-
-	mySigningKey := []byte("lorem-ipsem")
+	keyStr := os.Getenv("API_SECRET")
+	apikey := os.Getenv("STORE_API_KEY")
+	email := os.Getenv("USER_EMAIL")
+	mySigningKey := []byte(keyStr)
 	sUser := User{
-		ID:        "1234",
-		FirstName: "Soraya",
+		ID:        "2020",
+		FirstName: "Shahram",
 		LastName:  "Anver",
 		Email:     email,
 		IsPartner: false,
@@ -44,5 +45,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("http://localhost:8080/shopify-login/c29yYXlh#" + ss)
+	fmt.Println("http://localhost:8080/shopify-login/c2hhaHJhbQ==#" + ss)
 }

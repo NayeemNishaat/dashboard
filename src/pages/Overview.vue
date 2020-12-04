@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="error || !overview.stats">
+    <template v-if="error || !(overview && overview.stats)">
       <error-msg />
     </template>
     <template v-else>
@@ -18,12 +18,21 @@
       <div class="row">
         <div class="col-12">
           <card title="Recommended campaigns">
-            <DataView :value="overview.opportunities" layout="list">
+            <p
+              v-if="
+                overview.opportunities && overview.opportunities.length === 0
+              "
+            >
+              No Recommendations yet (Coming soon!)
+            </p>
+            <DataView v-else :value="overview.opportunities" layout="list">
               <template #list="slotProps">
-                <div>
-                  <b>{{ slotProps.data.title }}</b>
+                <div class="rec-row">
+                  <div>
+                    <b>{{ slotProps.data.title }}</b>
+                  </div>
+                  <span>{{ slotProps.data.description }}</span>
                 </div>
-                <span>{{ slotProps.data.description }}</span>
               </template>
             </DataView>
           </card>
@@ -74,4 +83,9 @@ export default defineComponent({
   }
 });
 </script>
-<style></style>
+<style scoped>
+.rec-row {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+</style>
