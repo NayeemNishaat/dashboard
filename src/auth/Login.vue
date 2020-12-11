@@ -7,7 +7,7 @@
       <MessageBanner type="default" icon="nc-icon nc-key-25">
         <div class="row">
           <div class="col-12">
-            <h4>Login to DataCue from Shopify</h4>
+            <h4>Your session has expired</h4>
             <p>
               To access DataCue, login to your Shopify admin panel and click on
               'DataCue' from the Apps section.

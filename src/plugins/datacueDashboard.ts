@@ -6,21 +6,22 @@ import { createAuth, authSymbol } from "@/auth";
 import {} from "@/auth";
 
 //css assets
-import "@/assets/sass/bootstrap/custom.scss";
+import "@/assets/sass/bootstrap/custom.scss"; //set bootstrap colours
 import "@/assets/sass/datacue/main.scss";
 import "@/assets/sass/datacue/primevue.scss";
 import "@/assets/css/themify-icons.css";
 import "primevue/resources/primevue.min.css";
 import { App } from "vue";
 
-//set bootstrap colours
 export default {
   install: (app: App): void => {
     app.use(GlobalComponents);
     app.use(GlobalDirectives);
     app.use(SideBar);
-    const baseURL = `${process.env.VUE_APP_BACKEND_URL}`;
+
+    const baseURL = process.env.VUE_APP_BACKEND_URL || "";
     app.provide(apiSymbol, createApi(baseURL));
+
     app.provide(
       authSymbol,
       createAuth({
