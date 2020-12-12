@@ -4,7 +4,7 @@
   height: 100vh;
 
   &.wrapper-full-page {
-    min-height: 100vh;
+    min-height: 100%;
     height: auto;
   }
 }
@@ -282,12 +282,13 @@
   float: right;
   width: $sidebar-width;
   background-color: #f4f3ef;
+  overflow: hidden;
 
   @include transition(0.5s, cubic-bezier(0.685, 0.0473, 0.346, 1));
 
   > .content {
     padding: 0 30px 30px;
-    min-height: calc(100vh - 123px);
+    min-height: calc(100vh - 163px);
     margin-top: 93px;
   }
 
