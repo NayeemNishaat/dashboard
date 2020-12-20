@@ -6,50 +6,116 @@
     <template v-else>
       <div class="row">
         <div class="col-12">
-          <drag-drop-cards v-model="groupLists" />
+          <pending-settings
+            :has-unsaved-changes="hasUnsavedChanges"
+            :saving="saving"
+            @publish="save"
+          />
+          <drag-drop-cards v-model="current" />
         </div>
       </div>
     </template>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, Ref, ref } from "vue";
+import { defineComponent, Ref, ref, computed } from "vue";
 import { getApi } from "@/api";
-import { productTypeGroup } from "@/api/interfaces";
+import { datacueApi, productTypeGroup } from "@/api/interfaces";
 import DragDropCards from "@/components/UI/DragDropCards.vue";
+import PendingSettings from "@/components/UI/PendingSettings.vue";
+import isEqual from "lodash/isEqual";
+
+function isMapEqual(
+  map1: Map<string, Array<string>>,
+  map2: Map<string, Array<string>>
+) {
+  var testVal;
+  if (map1.size !== map2.size) {
+    return false;
+  }
+  for (let [key, val] of map1) {
+    if (!map2.has(key)) {
+      return false;
+    }
+    testVal = map2.get(key);
+    if (!isEqual(testVal, val)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export default defineComponent({
   name: "Settings",
   components: {
-    DragDropCards
+    DragDropCards,
+    PendingSettings
   },
   async setup() {
     const error = ref(null);
-    let groups: Ref<Array<productTypeGroup> | null> = ref([]);
-    let groupLists = reactive({} as { [key: string]: Array<string> });
-
+    const saving = ref(false);
+    let dbSettings: Ref<Array<productTypeGroup> | null> = ref([]);
+    let lastSaved = ref(new Map<string, Array<string>>());
+    let current = ref(new Map<string, Array<string>>());
+    const hasUnsavedChanges = computed(() => {
+      if (!current.value) {
+        return false;
+      }
+      //check equality
+      return !isMapEqual(current.value, lastSaved.value);
+    });
+    let api: datacueApi | undefined = undefined;
     try {
-      const api = getApi();
-      groups.value = await api.getGroupToProductTypeSettings();
-
-      groups.value.forEach(element => {
-        groupLists[element.group_id] = element.product_types;
-      });
+      api = getApi();
     } catch (err) {
       console.log("error occurred", err);
       error.value = err;
     }
+    const refresh = async () => {
+      try {
+        if (!api) {
+          console.error("no api found");
+          return;
+        }
+
+        dbSettings.value = await api.getGroupToProductTypeSettings();
+
+        dbSettings.value.forEach(element => {
+          const values = [...element.product_types].sort();
+          current.value.set(element.group_id, [...values]);
+          lastSaved.value.set(element.group_id, [...values]);
+        });
+      } catch (err) {
+        console.error("error occurred", err);
+        error.value = err;
+      }
+    };
+    const save = async () => {
+      //convert map to array of product type groups
+      let groups: Array<productTypeGroup> = [];
+      current.value.forEach((val, key) => {
+        groups.push({ product_types: val, group_id: key });
+      });
+      try {
+        if (!api) {
+          console.error("no api found");
+          return;
+        }
+        await api.saveGroupToProductTypeSettings(groups);
+        await refresh();
+      } catch (err) {
+        console.error("error occurred", err);
+        error.value = err;
+      }
+    };
+    await refresh();
     return {
-      groupLists,
-      error
+      hasUnsavedChanges,
+      current,
+      error,
+      saving,
+      save
     };
   }
 });
 </script>
-<style scoped>
-.table-col {
-  padding-right: 1rem;
-}
-.lmargin {
-  margin-left: 1rem;
-}
-</style>

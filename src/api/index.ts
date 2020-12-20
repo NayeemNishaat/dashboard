@@ -40,6 +40,11 @@ export const createApi = (baseURL: string): datacueApi => {
   >> => {
     return http.get(`/segments/settings/product-type-groups`);
   };
+  const saveGroupToProductTypeSettings = (
+    payload: Array<productTypeGroup>
+  ): Promise<void> => {
+    return http.put(`/segments/settings/product-type-groups`, payload);
+  };
   const shopifyLogin = (token: string): Promise<AuthenticatedClients> => {
     return http.post(
       "/v1/client/shopify/login",
@@ -57,6 +62,7 @@ export const createApi = (baseURL: string): datacueApi => {
     getSegments,
     getSegment,
     getGroupToProductTypeSettings,
+    saveGroupToProductTypeSettings,
     shopifyLogin
   };
   return instance;

@@ -50,5 +50,8 @@ export interface datacueApi {
   getSegments: () => Promise<segmentRecommendations>;
   getSegment: (segmentId: string) => Promise<segment>;
   getGroupToProductTypeSettings: () => Promise<Array<productTypeGroup>>;
+  saveGroupToProductTypeSettings: (
+    payload: Array<productTypeGroup>
+  ) => Promise<void>;
   shopifyLogin: (token: string) => Promise<AuthenticatedClients>;
 }

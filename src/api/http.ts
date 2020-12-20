@@ -11,6 +11,12 @@ export const getHttpApi = (
     headers?: any,
     with_token?: boolean
   ) => Promise<any>;
+  put: (
+    url: string,
+    body: any,
+    headers?: any,
+    with_token?: boolean
+  ) => Promise<any>;
 } => {
   const get = (url: string, headers: any = {}, with_token = true) => {
     return http(base_url, url, "GET", null, headers, with_token);
@@ -23,7 +29,15 @@ export const getHttpApi = (
   ) => {
     return http(base_url, url, "POST", data, headers, with_token);
   };
-  return { get, post };
+  const put = (
+    url: string,
+    data: any,
+    headers: any = {},
+    with_token = true
+  ) => {
+    return http(base_url, url, "PUT", data, headers, with_token);
+  };
+  return { get, post, put };
 };
 
 const http = async (
