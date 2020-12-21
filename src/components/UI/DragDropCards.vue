@@ -58,26 +58,33 @@
       </h3>
       <h3 v-else>Add new group</h3>
     </template>
-
-    <input
-      type="text"
-      class="form-control"
-      id="group-name"
-      v-model="groupNameEditor.new_val"
-    />
-    <span
-      style="color:red"
-      v-if="
-        groupNameEditor.new_val !== groupNameEditor.old_val &&
-          data.has(groupNameEditor.new_val)
-      "
-      >This name is already used</span
-    >
-    <template #footer>
-      <div class="d-flex justify-content-center align-items-center">
+    <form @submit.prevent="saveGroupName" autocomplete="off">
+      <input
+        type="text"
+        class="form-control"
+        id="group-name"
+        v-model="groupNameEditor.new_val"
+      />
+      <label
+        style="color:red"
+        for="group-name"
+        v-if="
+          groupNameEditor.new_val !== groupNameEditor.old_val &&
+            data.has(groupNameEditor.new_val)
+        "
+        >This name is already used</label
+      ><br />
+      <div class="d-flex justify-content-end align-items-center">
         <button
+          type="button"
+          class="dc-button outline small"
+          @click="hideGroupNameEditor"
+        >
+          <i class="ti-close" />&nbsp;&nbsp;Cancel
+        </button>
+        <button
+          type="submit"
           class="dc-button primary small"
-          @click="saveGroupName"
           :disabled="
             data.has(groupNameEditor.new_val) ||
               groupNameEditor.new_val === '' ||
@@ -86,18 +93,16 @@
         >
           <i class="ti-check" />&nbsp;&nbsp;Save
         </button>
-        <button class="dc-button outline small" @click="hideGroupNameEditor">
-          <i class="ti-close" />&nbsp;&nbsp;Cancel
-        </button>
       </div>
-    </template>
+    </form>
   </Dialog>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref, watch } from "vue";
 import draggable from "vuedraggable";
 import Dialog from "primevue/dialog";
+import cloneDeep from "lodash/cloneDeep";
 
 interface sortableEvt {
   item: HTMLDivElement; // dragged HTMLElement
@@ -141,26 +146,35 @@ export default defineComponent({
     const groupLimitReached = computed(
       () => data.value.size - 1 >= props.groupLimit
     );
-    data.value = new Map(props.modelValue as Map<string, Array<string>>);
+    watch(
+      () => props.modelValue,
+      () => {
+        data.value = cloneDeep(props.modelValue) as Map<string, Array<string>>;
+      }
+    );
+    data.value = cloneDeep(props.modelValue) as Map<string, Array<string>>;
     let groupNameEditor = reactive({
       old_val: "",
       new_val: "",
       edit_mode: true,
       show: false
     });
+
     const groupNames = computed(() => {
-      return [...data.value.keys()].filter(key => {
-        if (key !== "") {
+      return [...data.value.keys()]
+        .filter(key => {
+          if (key !== "") {
+            return true;
+          }
+          const ungrouped = data.value.get(key);
+          if (!ungrouped || ungrouped.length === 0) {
+            return false;
+          }
           return true;
-        }
-        const ungrouped = data.value.get(key);
-        if (!ungrouped || ungrouped.length === 0) {
-          return false;
-        }
-        return true;
-      });
+        })
+        .sort();
     });
-    const changeList = (evt: sortableEvt, x: unknown) => {
+    const changeList = (evt: sortableEvt) => {
       if (evt.to.isEqualNode(evt.from)) {
         return;
       }
@@ -187,6 +201,19 @@ export default defineComponent({
       groupNameEditor.show = true;
     };
     const saveGroupName = () => {
+      if (!groupNameEditor.edit_mode) {
+        //add mode
+        if (groupNameEditor.new_val === "") {
+          console.error("invalid group name!");
+          return;
+        }
+        data.value.set(groupNameEditor.new_val, []);
+        resetGroupNames();
+        groupNameEditor.show = false;
+        handleChange();
+        return;
+      }
+      //edit mode
       const { old_val, new_val } = groupNameEditor;
       if (old_val === "" || new_val === "") {
         return;
@@ -200,9 +227,9 @@ export default defineComponent({
         newData.set(newkey, val);
       });
       data.value = newData;
+      handleChange();
       resetGroupNames();
       groupNameEditor.show = false;
-      emit("update:modelValue", data);
     };
     const resetGroupNames = () => {
       groupNameEditor.old_val = "";
@@ -213,7 +240,7 @@ export default defineComponent({
       groupNameEditor.show = false;
     };
     const handleChange = () => {
-      emit("update:modelValue", data);
+      emit("update:modelValue", data.value);
     };
     const delGroup = (title: string) => {
       const valuesToDelete = data.value.get(title);
@@ -222,7 +249,7 @@ export default defineComponent({
         data.value.set("", [...(data.value.get("") || []), ...valuesToDelete]);
       }
       data.value.delete(title);
-      emit("update:modelValue", data);
+      handleChange();
     };
     return {
       handleChange,

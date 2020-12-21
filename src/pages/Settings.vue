@@ -10,6 +10,7 @@
             :has-unsaved-changes="hasUnsavedChanges"
             :saving="saving"
             @publish="save"
+            @restore="restore"
           />
           <drag-drop-cards v-model="current" />
         </div>
@@ -24,6 +25,7 @@ import { datacueApi, productTypeGroup } from "@/api/interfaces";
 import DragDropCards from "@/components/UI/DragDropCards.vue";
 import PendingSettings from "@/components/UI/PendingSettings.vue";
 import isEqual from "lodash/isEqual";
+import cloneDeep from "lodash/cloneDeep";
 
 function isMapEqual(
   map1: Map<string, Array<string>>,
@@ -90,8 +92,12 @@ export default defineComponent({
         error.value = err;
       }
     };
+    const restore = () => {
+      current.value = cloneDeep(lastSaved.value);
+    };
     const save = async () => {
       //convert map to array of product type groups
+      saving.value = true;
       let groups: Array<productTypeGroup> = [];
       current.value.forEach((val, key) => {
         groups.push({ product_types: val, group_id: key });
@@ -106,6 +112,8 @@ export default defineComponent({
       } catch (err) {
         console.error("error occurred", err);
         error.value = err;
+      } finally {
+        saving.value = false;
       }
     };
     await refresh();
@@ -114,7 +122,8 @@ export default defineComponent({
       current,
       error,
       saving,
-      save
+      save,
+      restore
     };
   }
 });

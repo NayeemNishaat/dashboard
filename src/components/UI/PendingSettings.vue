@@ -7,18 +7,27 @@
             <div class="d-flex justify-content-between align-items-center">
               <p class="message" v-if="hasUnsavedChanges">
                 <i class="ti-flag-alt-2" />
-                you have unpublished changes
+                You have unpublished changes
               </p>
               <p class="message" v-else>
-                published
+                Published
               </p>
-              <button
-                class="dc-button primary"
-                :disabled="!hasUnsavedChanges"
-                @click="publish"
-              >
-                <loading v-if="saving" /><span v-else>publish</span>
-              </button>
+              <div class="d-flex align-items-center justify-content-end">
+                <button
+                  class="dc-button outline"
+                  :disabled="!hasUnsavedChanges"
+                  @click="restore"
+                >
+                  <loading v-if="saving" /><span v-else>undo changes</span>
+                </button>
+                <button
+                  class="dc-button primary"
+                  :disabled="!hasUnsavedChanges"
+                  @click="publish"
+                >
+                  <loading v-if="saving" /><span v-else>publish</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -31,7 +40,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "PendingSettings",
-  emits: ["publish"],
+  emits: ["publish", "restore"],
   props: {
     hasUnsavedChanges: {
       type: Boolean,
@@ -46,7 +55,10 @@ export default defineComponent({
     const publish = () => {
       emit("publish");
     };
-    return { publish };
+    const restore = () => {
+      emit("restore");
+    };
+    return { publish, restore };
   }
 });
 </script>
