@@ -81,12 +81,15 @@ export default defineComponent({
         }
 
         dbSettings.value = await api.getGroupToProductTypeSettings();
-
+        const newCurrent = new Map<string, Array<string>>();
+        const newLastSaved = new Map<string, Array<string>>();
         dbSettings.value.forEach(element => {
           const values = [...element.product_types].sort();
-          current.value.set(element.group_id, [...values]);
-          lastSaved.value.set(element.group_id, [...values]);
+          newCurrent.set(element.group_id, [...values]);
+          newLastSaved.set(element.group_id, [...values]);
         });
+        current.value = newCurrent;
+        lastSaved.value = newLastSaved;
       } catch (err) {
         console.error("error occurred", err);
         error.value = err;

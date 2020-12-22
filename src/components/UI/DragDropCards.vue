@@ -5,6 +5,7 @@
       :key="idx"
       group="people"
       class="list-group"
+      :class="{ unassigned: title === '' }"
       :list="data.get(title)"
       @change="handleChange"
       :itemKey="elem => elem"
@@ -270,25 +271,24 @@ export default defineComponent({
 
 <style scoped>
 .board {
-  height: calc(100vh - 195px);
-  white-space: nowrap;
   position: relative;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.list-group.unassigned {
+  background-color: rgba(50, 50, 50, 0.2);
 }
 
 .list-group {
   min-width: 272px;
-  margin: 0 4px;
+  margin: 0.5rem;
   display: block;
-  background-color: rgba(100, 100, 100, 0.1);
+  background-color: rgba(150, 150, 150, 0.2);
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
   box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
-  height: max-content;
-  min-height: 300px;
 }
 
 .list-item {
