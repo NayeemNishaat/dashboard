@@ -20,7 +20,7 @@
               >Go to Shopify Admin</dc-button
             >
             <dc-button type="outline" @click="resetShopify"
-              >I don't use Shopify</dc-button
+              >Login with email</dc-button
             >
           </div>
         </div>
