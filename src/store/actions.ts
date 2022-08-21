@@ -1,83 +1,91 @@
-import { instance as auth } from "@/auth";
-import { instance as api } from "@/api";
-import { ActionContext, ActionTree, Commit, Dispatch } from "vuex";
-import { rootState } from "./store_types";
-import { AuthenticatedClients } from "./datacue_types";
-import { localStorageKeys } from "./enums";
+import { ActionContext, ActionTree } from "vuex";
+import router from "@/router/index";
+//backend
+import { Http } from "@/http";
 
-const setClientUserFromReponse = (
-  response: AuthenticatedClients,
-  commit: Commit,
-  dispatch: Dispatch
-) => {
-  const clients = response.clients;
-  commit("setClients", clients);
-  if (response.user) {
-    commit("setUser", response.user);
-  }
-  //if only one client, just set that as the current apikey
-  if (Object.keys(clients).length === 1) {
-    dispatch("setApikey", Object.keys(clients)[0]);
-  }
-};
-export const actions: ActionTree<rootState, rootState> = {
-  setApikey({ commit }: ActionContext<rootState, rootState>, payload: string) {
-    return new Promise(resolve => {
-      localStorage.setItem(localStorageKeys.apikey, payload);
-      commit("setApikey", payload);
-      resolve();
-    });
+//i18n
+import { i18n, supportedLanguageCodes } from "@/lang/lang";
+
+//auth
+import { logout } from "@/api/AuthService";
+
+import State from "./state";
+
+//interfaces
+import { Context, AuthToken } from "@/api/interfaces";
+
+//error reporting
+import * as Sentry from "@sentry/browser";
+
+// ActionTree<[current state], [root state]>
+const actions: ActionTree<State, State> = {
+  setAccessToken({ commit }: ActionContext<State, State>, token: AuthToken) {
+    commit("setAccessToken", token);
+    localStorage.setItem("access_token", JSON.stringify(token));
   },
-  shopifyLogin(
-    { commit, dispatch }: ActionContext<rootState, rootState>,
-    token: string
+  setNextPage({ commit }: ActionContext<State, State>, nextPage: string) {
+    commit("setNextPage", nextPage);
+  },
+  logout({ commit, getters }: ActionContext<State, State>) {
+    // Clear access token and ID token from local storage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("context");
+
+    // clear Sentry user context on log out
+    Sentry.configureScope(scope => {
+      scope.setUser({ email: undefined });
+    });
+    const authProvider = getters?.access_token?.auth_provider || "shopify";
+    commit("setAccessToken", { token: "", auth_provider: "" } as AuthToken);
+    let url = `${process.env.VUE_APP_URL}/login`;
+    if (getters.client.type === "shopify") {
+      url = `${process.env.VUE_APP_SHOPIFY_APP_URL}?shop=${getters.apikey}`
+    }
+    logout(authProvider, url);
+  },
+  setLanguageCode({ commit }: ActionContext<State, State>, lcode: string) {
+    //for now we only support english and spanish
+    if (!supportedLanguageCodes.includes(lcode)) {
+      lcode = "en";
+    }
+    commit("setLanguageCode", lcode);
+    localStorage.setItem("lang", lcode);
+    i18n.locale = lcode;
+    (window as any).locale = lcode;
+  },
+  setContext(
+    { commit, dispatch, getters }: ActionContext<State, State>,
+    context: Context
   ) {
-    return new Promise((resolve, reject) => {
-      if (!api) {
-        reject("api not ready");
-        return;
-      }
-      api
-        .shopifyLogin(token)
-        .then(response => {
-          if (!auth) {
-            reject("auth not ready");
-            return;
-          }
-          if (!response.shopify_token) {
-            reject("missing shopify token");
-            return;
-          }
-          auth.initShopifyAuth(response.shopify_token, response.user);
-          setClientUserFromReponse(response, commit, dispatch);
-          resolve();
-        })
-        .catch(err => {
-          console.error(err);
-          reject(err);
-        });
-    });
+    commit("setContext", context);
+    localStorage.setItem("context", JSON.stringify(context));
+    dispatch("onboarding/fetchSetupSummary");
   },
-  fetchClients({ commit, dispatch }: ActionContext<rootState, rootState>) {
+  setDateRange({ commit }: ActionContext<State, State>, payload: [Date, Date]) {
+    commit("setDateRange", payload);
+  },
+  getContext({ commit, dispatch }: ActionContext<State, State>) {
+    const BACKEND_URL = process.env.VUE_APP_BACKEND_URL;
     return new Promise((resolve, reject) => {
-      if (!api) {
-        reject("api not ready");
-        return;
-      }
-      api
-        .getClients()
-        .then(response => {
-          setClientUserFromReponse(response, commit, dispatch);
-          resolve();
-        })
-        .catch((error: unknown) => {
-          if (!auth) {
-            return;
+      Http.get(`${BACKEND_URL}/login`)
+        .then((response: { data: Context }) => {
+          if (!response.data.client.apikey) {
+            router.push({
+              name: "login-failed"
+            });
+            reject("invalid context");
           }
-          console.log(error);
-          auth.logout();
-          reject(error);
+          dispatch("setContext", response.data);
+          resolve(response.data);
+        })
+        .catch((error: { response: any }) => {
+          router.push({
+            name: "login-failed"
+          });
+          reject(error.response);
         });
     });
   }
 };
+
+export default actions;

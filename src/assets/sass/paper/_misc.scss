@@ -1,150 +1,159 @@
+/*     General overwrite     */
 body {
-  color: $black-color;
+  color: $font-color;
   font-size: $font-size-base;
-  font-family: $sans-serif-family;
-  // -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  font-family: 'Open Sans', Arial, sans-serif;
+  .wrapper {
+    min-height: 100vh;
+    position: relative;
+  }
 }
 
-.main {
-  position: relative;
-  background: $white-color;
+a {
+  color: $warning-bg;
+  text-decoration: none;
+  &:hover, &:focus {
+    color: $warning-states-color;
+    text-decoration: none;
+  }
 }
-/* Animations */
-.nav-pills .nav-link,
+
+a:focus, a:active,
+button::-moz-focus-inner,
+input::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+  outline: 0 !important;
+}
+
+.ui-slider-handle:focus,
+.navbar-toggle,
+input:focus,
+button:focus {
+  outline: 0 !important;
+}
+
+.navbar.navbar-default {
+  z-index: 2;
+}
+
+/*           Animations              */
+.form-control,
+.input-group-addon,
+.tagsinput,
 .navbar,
-.nav-tabs .nav-link,
+.navbar .alert {
+  @include transition($general-transition-time, $transition-linear);
+}
+
 .sidebar .nav a,
-.sidebar .nav a i,
-.animation-transition-general,
-.tag,
-.tag [data-role="remove"],
-.animation-transition-general {
-  @include transition($general-transition-time, $transition-ease);
+.table > tbody > tr .td-actions .btn {
+  @include transition($fast-transition-time, $transition-ease-in);
 }
 
-//transition for dropdown caret
-.dropdown-toggle:after,
-.bootstrap-switch-label:before,
-.caret {
-  @include transition($fast-transition-time, $transition-ease);
+.btn {
+  @include transition($ultra-fast-transition-time, $transition-ease-in);
 }
 
-.dropdown-toggle[aria-expanded="true"]:after,
-a[data-toggle="collapse"][aria-expanded="true"] .caret,
-.card-collapse .card a[data-toggle="collapse"][aria-expanded="true"] i,
-.card-collapse .card a[data-toggle="collapse"].expanded i {
-  @include rotate-180();
+.fa {
+  width: 21px;
+  text-align: center;
 }
 
-.button-bar {
-  display: block;
+.fa-base {
+  font-size: 1.25em !important;
+}
+
+.margin-top {
+  margin-top: 50px;
+}
+
+hr {
+  border-color: $medium-pale-bg;
+}
+
+.wrapper {
   position: relative;
-  width: 22px;
-  height: 1px;
-  border-radius: 1px;
-  background: $white-bg;
+  top: 0;
+  height: 100vh;
+}
 
-  & + .button-bar {
-    margin-top: 7px;
+@media (min-width: 992px) {
+  .typo-line {
+    padding-left: 140px;
+    margin-bottom: 40px;
+    position: relative;
   }
 
-  &:nth-child(2) {
-    width: 17px;
+  .typo-line .category {
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0px;
+    position: absolute;
   }
 }
 
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-top: 4px solid\9;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
+.icon-section {
+  margin: 0 0 3em;
+  clear: both;
+  overflow: hidden;
 }
 
-.pull-left {
+.icon-container {
+  width: 240px;
+  padding: .7em 0;
   float: left;
-}
-.pull-right {
-  float: right;
-}
-
-.offline-doc {
-  .navbar.navbar-transparent {
-    padding-top: 25px;
-    border-bottom: none;
-
-    .navbar-minimize {
-      display: none;
-    }
-    .navbar-brand,
-    .collapse .navbar-nav .nav-link {
-      color: $white-color !important;
-    }
-  }
-  .footer {
-    z-index: 3 !important;
-  }
-  .page-header {
-    .container {
-      z-index: 3;
-    }
-    &:after {
-      background-color: rgba(0, 0, 0, 0.5);
-      content: "";
-      display: block;
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: 2;
-    }
-  }
+  position: relative;
+  text-align: left;
 }
 
-.fixed-plugin {
-  .dropdown-menu li {
-    padding: 2px !important;
-  }
+.icon-container [class^="ti-"],
+.icon-container [class*=" ti-"] {
+  color: #000;
+  position: absolute;
+  margin-top: 3px;
+  transition: .3s;
 }
 
-// badge color
-
-.badge {
-  &.badge-default {
-    @include badge-color($default-color);
-  }
-  &.badge-primary {
-    @include badge-color($primary-color);
-  }
-  &.badge-info {
-    @include badge-color($info-color);
-  }
-  &.badge-success {
-    @include badge-color($success-color);
-  }
-  &.badge-warning {
-    @include badge-color($warning-color);
-  }
-  &.badge-danger {
-    @include badge-color($danger-color);
-  }
-  &.badge-neutral {
-    @include badge-color($white-color);
-    color: inherit;
-  }
+.icon-container:hover [class^="ti-"],
+.icon-container:hover [class*=" ti-"] {
+  font-size: 2.2em;
+  margin-top: -5px;
 }
 
-.card-user {
-  form {
-    .form-group {
-      margin-bottom: 20px;
-    }
-  }
+.icon-container:hover .icon-name {
+  color: #000;
 }
+
+.icon-name {
+  color: #aaa;
+  margin-left: 35px;
+  font-size: .8em;
+  transition: .3s;
+}
+
+.icon-container:hover .icon-name {
+  margin-left: 45px;
+}
+
+.places-buttons .btn {
+  margin-bottom: 30px
+}
+
+.sidebar .nav > li.active-pro {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+}
+
+.sidebar .nav > li.active-pro a {
+  background: rgba(255, 255, 255, 0.14);
+  opacity: 1;
+  color: #FFFFFF;
+}
+
+.table-upgrade td:nth-child(2),
+.table-upgrade td:nth-child(3) {
+  text-align: center;
+}
+

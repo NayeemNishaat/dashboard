@@ -1,73 +1,83 @@
 <template>
-  <li>
-    <router-link ref="el" v-bind="$attrs">
+  <component
+    :is="tag"
+    @click.native="hideSidebar"
+    class="nav-item"
+    v-bind="$attrs"
+    tag="li"
+  >
+    <a
+      :data-id="`sidebar:link-${name}`"
+      class="nav-link"
+      :class="{ 'nav-disabled-link': disabled }"
+    >
       <slot>
         <i v-if="icon" :class="icon"></i>
-        <p>{{ name }}</p>
+        <p :class="{ greyed: disabled }">
+          {{ translatedName || $tc(name, 2) }}
+        </p>
       </slot>
-    </router-link>
-  </li>
+    </a>
+  </component>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
+<script>
+export default {
   name: "sidebar-link",
   inheritAttrs: false,
-  emits: {
-    "hide-sidebar": null
-  },
   inject: {
-    sidebar: {
-      default: {}
-    },
-    state: {
-      default: true
-    },
     autoClose: {
       default: true
     },
     addLink: {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       default: () => {}
     },
     removeLink: {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       default: () => {}
     }
   },
   props: {
     name: String,
+    translatedName: String,
     icon: String,
     tag: {
       type: String,
       default: "router-link"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     hideSidebar() {
-      if ((this as any).autoClose) {
-        (this as any).sidebar.displaySidebar(false);
+      if (this.autoClose) {
+        this.$sidebar.displaySidebar(false);
       }
     },
     isActive() {
-      const to = (this as any).$refs?.el?.to ?? "";
-      return this.$route.path.startsWith(to);
+      return this.$el.classList.contains("active");
     }
   },
   mounted() {
-    if ((this as any).addLink) {
-      (this as any).addLink(this);
+    if (this.addLink) {
+      this.addLink(this);
     }
   },
-  beforeUnmount() {
+  beforeDestroy() {
     if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }
-    if ((this as any).removeLink) {
-      (this as any).removeLink(this);
+    if (this.removeLink) {
+      this.removeLink(this);
     }
   }
-});
+};
 </script>
-<style></style>
+<style>
+.wrapper .sidebar .nav .nav-item:hover > .nav-link.nav-disabled-link {
+  opacity: 0.5;
+}
+.wrapper .sidebar .nav .nav-item > .nav-link.nav-disabled-link {
+  opacity: 0.5;
+}
+</style>

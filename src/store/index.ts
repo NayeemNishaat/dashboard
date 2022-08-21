@@ -1,14 +1,26 @@
-import { createStore } from "vuex";
-import { state } from "./state";
-import { mutations } from "./mutations";
-import { getters } from "./getters";
-import { actions } from "./actions";
+import Vue from "vue";
+import Vuex from "vuex";
 
-const store = createStore({
-  state,
+// modules
+import onboarding from "./modules/onboarding";
+import settings from "./modules/settings";
+
+//root store
+import State from "./state";
+import getters from "./getters";
+import mutations from "./mutations";
+import actions from "./actions";
+
+Vue.use(Vuex);
+
+// configure Vuex
+export default new Vuex.Store({
+  modules: {
+    onboarding,
+    settings
+  },
+  state: new State(),
+  getters,
   mutations,
-  actions,
-  getters
+  actions
 });
-
-export default store;

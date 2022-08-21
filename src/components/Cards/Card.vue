@@ -5,7 +5,7 @@
     </div>
     <div class="card-header" v-if="$slots.header || title">
       <slot name="header">
-        <h3 class="card-title">{{ title }}</h3>
+        <h4 class="card-title-bold">{{ title }}</h4>
         <p class="card-category" v-if="subTitle">{{ subTitle }}</p>
       </slot>
     </div>
@@ -19,15 +19,18 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
+<script>
+export default {
   name: "card",
   props: {
     title: String,
     subTitle: String
   }
-});
+};
 </script>
-<style></style>
+<style>
+.card-header > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+</style>

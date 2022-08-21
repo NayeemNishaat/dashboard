@@ -24,10 +24,8 @@
     </ul>
   </component>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
+<script>
+export default {
   props: {
     tag: {
       type: String,
@@ -37,21 +35,20 @@ export default defineComponent({
     icon: String,
     titleClasses: [String, Object, Array]
   },
-  emits: ["change"],
   data() {
     return {
       isOpen: false
     };
   },
   methods: {
-    toggleDropDown(): void {
+    toggleDropDown() {
       this.isOpen = !this.isOpen;
       this.$emit("change", this.isOpen);
     },
-    closeDropDown(): void {
+    closeDropDown() {
       this.isOpen = false;
       this.$emit("change", false);
     }
   }
-});
+};
 </script>

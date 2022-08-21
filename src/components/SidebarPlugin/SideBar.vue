@@ -1,41 +1,67 @@
 <template>
-  <div class="sidebar" data-color="darkblue" data-active-color="warning">
-    <div class="logo">
-      <router-link to="/" class="simple-text">
-        <div class="logo-img">
-          <img src="@/assets/img/datacue-logo.svg" alt />
-        </div>
-      </router-link>
-    </div>
-    <div class="sidebar-wrapper">
+  <div
+    class="sidebar"
+    :data-background-color="backgroundColor"
+    :data-active-color="activeColor"
+  >
+    <div class="sidebar-wrapper" id="style-3" data-id="sidebar">
+      <div class="logo">
+        <router-link to="/" class="simple-text">
+          <div class="logo-img">
+            <img src="@/assets/img/datacue-logo.svg" alt />
+          </div>
+        </router-link>
+      </div>
+      <slot></slot>
       <ul class="nav">
-        <slot name="links">
+        <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
+        <slot name="links" data-id="sidebar:links">
           <sidebar-link
             v-for="(link, index) in sidebarLinks"
             :key="index"
             :to="link.path"
-            :name="link.name"
+            :name="$tc(link.name, 2)"
             :icon="link.icon"
-          >
-          </sidebar-link>
+          ></sidebar-link>
         </slot>
       </ul>
-      <moving-arrow :move-y="arrowMovePx" :hide="this.activeLinkIndex > 3">
-      </moving-arrow>
-      <slot> </slot>
+      <moving-arrow :move-y="arrowMovePx"></moving-arrow>
     </div>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script>
 import MovingArrow from "./MovingArrow.vue";
-import SidebarLink from "./SidebarLink.vue";
-export default defineComponent({
-  components: {
-    SidebarLink,
-    MovingArrow
-  },
+import SidebarLink from "./SidebarLink";
+import { mapGetters } from "vuex";
+
+export default {
   props: {
+    title: {
+      type: String,
+      default: "DataCue"
+    },
+    backgroundColor: {
+      type: String,
+      default: "darkblue",
+      validator: value => {
+        let acceptedValues = ["white", "black", "darkblue"];
+        return acceptedValues.indexOf(value) !== -1;
+      }
+    },
+    activeColor: {
+      type: String,
+      default: "warning",
+      validator: value => {
+        let acceptedValues = [
+          "primary",
+          "info",
+          "success",
+          "warning",
+          "danger"
+        ];
+        return acceptedValues.indexOf(value) !== -1;
+      }
+    },
     sidebarLinks: {
       type: Array,
       default: () => []
@@ -52,45 +78,43 @@ export default defineComponent({
       removeLink: this.removeLink
     };
   },
+  components: {
+    MovingArrow,
+    SidebarLink
+  },
   computed: {
+    ...mapGetters(["client"]),
     /**
      * Styles to animate the arrow near the current active sidebar link
      * @returns {{transform: string}}
      */
-    arrowMovePx(): number {
+    arrowMovePx() {
       return this.linkHeight * this.activeLinkIndex;
     }
   },
   data() {
     return {
-      linkHeight: 60,
+      linkHeight: 65,
       activeLinkIndex: 0,
       windowWidth: 0,
       isWindows: false,
       hasAutoHeight: false,
-      links: [] as Array<any>
+      links: []
     };
   },
   methods: {
     findActiveLink() {
       this.links.forEach((link, index) => {
-        if ((link as any).isActive()) {
+        if (link.isActive()) {
           this.activeLinkIndex = index;
         }
       });
     },
-    addLink(link: any) {
-      const slotLinks = (this as any).$slots
-        .links()
-        .map((elem: any) => elem.props.name);
-      const index = slotLinks.indexOf(link.name);
-      if (index < 0) {
-        this.links.push(link);
-        return;
-      }
+    addLink(link) {
+      const index = this.$slots.links.indexOf(link.$vnode);
       this.links.splice(index, 0, link);
     },
-    removeLink(link: any) {
+    removeLink(link) {
       const index = this.links.indexOf(link);
       if (index > -1) {
         this.links.splice(index, 1);
@@ -98,11 +122,10 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.findActiveLink();
-  },
-  updated() {
-    this.findActiveLink();
+    this.$watch("$route", this.findActiveLink, {
+      immediate: true
+    });
   }
-});
+};
 </script>
 <style></style>

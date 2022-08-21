@@ -1,173 +1,146 @@
-button,
-input,
-optgroup,
-select,
-textarea{
-    font-family: $sans-serif-family;
-}
-h1,h2,h3,h4,h5,h6{
-    font-weight: $font-weight-normal;
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Bariol', 'Helvetica', Arial, sans-serif;
 }
 
-a{
-    color: $primary-color;
-    &:hover,
-    &:focus{
-        color: $primary-color;
-    }
+p, .navbar, .brand, a, .td-name, td {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Open Sans', 'Helvetica', Arial, sans-serif;
 }
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+  font-weight: $font-weight-normal;
+  margin: $margin-large-vertical 0 $margin-base-vertical;
+}
+
 h1, .h1 {
-    font-size: $font-size-h1;
-    line-height: 1.15;
-    margin-bottom: $margin-base-vertical * 2;
+  font-size: $font-size-h1;
+}
 
-    small{
-        font-weight: $font-weight-bold;
-        text-transform: uppercase;
-        opacity: .8;
-    }
+h2, .h2 {
+  font-size: $font-size-h2;
 }
-h2, .h2{
-    font-size: $font-size-h2;
-    margin-bottom: $margin-base-vertical * 2;
-}
-h3, .h3{
-    font-size: $font-size-h3;
-    margin-bottom: $margin-base-vertical * 2;
-    line-height: 1.4em;
-}
-h4, .h4{
-    font-size: $font-size-h4;
-    line-height: 1.45em;
-    margin-top: $margin-base-vertical * 2;
-    margin-bottom: $margin-base-vertical;
 
-    & + .category,
-    &.title + .category{
-        margin-top: -10px;
-    }
+h3, .h3 {
+  font-size: $font-size-h3;
+  line-height: 1.4;
+  margin: 20px 0 10px;
 }
+
+h4, .h4 {
+  font-size: $font-size-h4;
+  font-weight: $font-weight-bold;
+  line-height: 1.2em;
+}
+
 h5, .h5 {
-    font-size: $font-size-h5;
-    line-height: 1.4em;
-    margin-bottom: 15px;
-}
-h6, .h6{
-    font-size: $font-size-h6;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
-}
-p{
-    &.description{
-        font-size: 1.14em;
-    }
+  font-size: $font-size-h5;
+  font-weight: $font-weight-normal;
+  line-height: 1.4em;
+  margin-bottom: 15px;
 }
 
-// i.fa{
-//     font-size: 18px;
-//     position: relative;
-//     top: 1px;
-// }
-
-.title{
-    font-weight: $font-weight-bold;
-
-    &.title-up{
-        text-transform: uppercase;
-
-        a{
-            color: $black-color;
-            text-decoration: none;
-        }
-    }
-    & + .category{
-        margin-top: -10px;
-    }
+h6, .h6 {
+  font-size: $font-size-h6;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
 }
 
-.description,
-.card-description,
-.footer-big p,
-.card .footer .stats{
-    color: $dark-gray;
-    font-weight: $font-weight-light;
-}
-.category,
-.card-category{
-    text-transform: capitalize;
-    font-weight: $font-weight-normal;
-    color: $dark-gray;
-    font-size: $font-size-mini;
+p {
+  font-size: $font-paragraph;
+  line-height: $line-height-general;
 }
 
-.card-category{
-    font-size: $font-size-h6;
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
+  color: $dark-gray;
+  font-weight: $font-weight-light;
+  line-height: $line-height-general;
 }
 
-.text-primary,
-a.text-primary:focus, a.text-primary:hover {
-  color: $brand-primary !important;
-}
-.text-info,
-a.text-info:focus, a.text-info:hover {
-  color: $brand-info !important;
-}
-.text-success,
-a.text-success:focus, a.text-success:hover {
-  color: $brand-success !important;
-}
-.text-warning,
-a.text-warning:focus, a.text-warning:hover {
-  color: $brand-warning !important;
-}
-.text-danger,
-a.text-danger:focus, a.text-danger:hover {
-  color: $brand-danger !important;
+h1 small, h2 small, h3 small, h1 .small, h2 .small, h3 .small {
+  font-size: 60%;
 }
 
-.text-gray,
-a.text-gray:focus, a.text-gray:hover{
-    color: $light-gray !important;
+.title-uppercase {
+  text-transform: uppercase;
 }
 
+blockquote {
+  font-style: italic;
+}
 
-.blockquote{
-    border-left: none;
-    border: 1px solid $default-color;
-    padding: 20px;
-    font-size: $font-size-blockquote;
-    line-height: 1.8;
+blockquote small {
+  font-style: normal;
+}
 
-    small{
-        color: $default-color;
-        font-size: $font-size-small;
-        text-transform: uppercase;
-    }
+.text-muted {
+  color: $medium-gray;
+}
 
-    &.blockquote-primary{
-        border-color: $primary-color;
-        color: $primary-color;
+.text-primary, .text-primary:hover {
+  color: $primary-states-color;
+}
 
-        small{
-            color: $primary-color;
-        }
-    }
+.text-info, .text-info:hover {
+  color: $info-states-color;
+}
 
-    &.blockquote-danger{
-        border-color: $danger-color;
-        color: $danger-color;
+.text-success, .text-success:hover {
+  color: $success-states-color;
+}
 
-        small{
-            color: $danger-color;
-        }
-    }
+.text-warning, .text-warning:hover {
+  color: $warning-states-color;
+}
 
-    &.blockquote-white{
-        border-color: $opacity-8;
-        color: $white-color;
+.text-danger, .text-danger:hover {
+  color: $danger-states-color;
+}
 
-        small{
-            color: $opacity-8;
-        }
-    }
+.glyphicon {
+  line-height: 1;
+}
+
+strong {
+  color: $default-states-color;
+}
+
+.icon-primary {
+  color: $primary-color;
+}
+
+.icon-info {
+  color: $info-color;
+}
+
+.icon-success {
+  color: $success-color;
+}
+
+.icon-warning {
+  color: $warning-color;
+}
+
+.icon-danger {
+  color: $danger-color;
+}
+
+.chart-legend {
+  .text-primary, .text-primary:hover {
+    color: $primary-color;
+  }
+  .text-info, .text-info:hover {
+    color: $info-color;
+  }
+  .text-success, .text-success:hover {
+    color: $success-color;
+  }
+  .text-warning, .text-warning:hover {
+    color: $warning-color;
+  }
+  .text-danger, .text-danger:hover {
+    color: $danger-color;
+  }
 }

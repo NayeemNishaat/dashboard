@@ -1,42 +1,57 @@
 <template>
   <card>
-    <template v-slot:header>
-      <h3 v-if="$slots.title || title" class="card-title">
-        <slot name="title">{{ title }}</slot>
-      </h3>
-      <p class="card-category">
-        <slot name="subTitle">{{ subTitle }}</slot>
-      </p>
+    <template v-if="$slots.title || title">
+      <template slot="header">
+        <h3 v-if="$slots.title || title" class="card-title">
+          <slot name="title">{{ $t(title) }}</slot>
+        </h3>
+        <p class="card-category">
+          <slot name="subTitle">{{ subTitle }}</slot>
+        </p>
+      </template>
+      <template v-if="$slots.metrics">
+        <slot name="metrics"></slot>
+      </template>
     </template>
-    <template v-if="$slots.metrics">
-      <slot name="metrics"></slot>
+    <template v-else>
+      <template v-if="$slots.metrics" slot="header">
+        <slot name="metrics"></slot>
+      </template>
     </template>
     <div class="chart-contents">
-      <div class="row" v-if="noData">
+      <div class="row" v-if="loading">
+        <div class="col-12">
+          <loader-dots></loader-dots>
+        </div>
+      </div>
+      <div class="row" v-else-if="noData">
         <div class="col-2 icon-warning icon-big text-center align-self-center">
           <i :class="noDataIcon"></i>
         </div>
         <div class="col-10 align-self-center chart-nodata">
-          <p>{{ noDataText }}</p>
+          <p>{{ $t(noDataText) }}</p>
         </div>
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <ApexChart
-            v-if="type === 'treemap'"
-            :options="options"
-            :data="data"
-            :type="type"
-            :width="chartWidth"
-          />
-          <Charts
-            v-else
-            @chart-click="handleClick"
-            :data="data"
-            :type="type"
-            :options="options"
-            :height="height"
-          ></Charts>
+          <line-chart
+            v-if="chartType === 'Line'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          ></line-chart>
+          <doughnut-chart
+            v-else-if="chartType === 'Doughnut'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          ></doughnut-chart>
+          <bar-chart
+            v-else-if="chartType === 'Bar'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          ></bar-chart>
         </div>
       </div>
       <div class="footer" v-if="$slots.footer">
@@ -49,20 +64,27 @@
     </div>
   </card>
 </template>
-<script lang="ts">
+<script>
 import Card from "./Card.vue";
-import Charts from "@/components/Charts/basecharts";
-import ApexChart from "../ApexCharts.vue";
-import { defineComponent, onMounted, ref } from "vue";
+import DoughnutChart from "@/components/Charts/DoughnutChart.js";
+import LineChart from "@/components/Charts/LineChart.js";
+import BarChart from "@/components/Charts/BarChart.js";
+import LoaderDots from "@/components/LoaderDots.vue";
 
-export default defineComponent({
+export default {
   name: "chart-card",
   components: {
     Card,
-    Charts,
-    ApexChart
+    LineChart,
+    DoughnutChart,
+    BarChart,
+    LoaderDots
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: true
+    },
     footerText: {
       type: String,
       default: ""
@@ -87,11 +109,11 @@ export default defineComponent({
       type: String,
       default: "ti-alert"
     },
-    type: {
+    chartType: {
       type: String,
-      default: "line" // "line" | "bar" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar";
+      default: "Line" // Line | Doughnut
     },
-    options: {
+    chartOptions: {
       type: Object,
       default: () => {
         return {
@@ -100,7 +122,7 @@ export default defineComponent({
         };
       }
     },
-    data: {
+    chartData: {
       type: Object,
       default: () => {
         return {
@@ -109,30 +131,17 @@ export default defineComponent({
         };
       }
     },
-    height: {
+    chartHeight: {
       type: Number,
       default: 300
-    },
-    width: {
-      type: String,
-      default: "100%"
     }
   },
-  emits: ["chart-click"],
-  setup(props, { emit }) {
-    const chartWidth = ref("300");
-    const handleClick = (payload: unknown) => {
-      emit("chart-click", payload);
+  data() {
+    return {
+      chartId: "no-id"
     };
-    onMounted(() => {
-      //force apex charts to re-render TODO: remove when we have a better solution
-      setTimeout(() => {
-        chartWidth.value = props.width;
-      }, 1000);
-    });
-    return { chartWidth, handleClick };
   }
-});
+};
 </script>
 <style>
 div.card-body > .el-tabs--border-card {

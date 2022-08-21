@@ -1,140 +1,263 @@
-.card{
+.card {
   border-radius: $border-radius-extreme;
-  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
   background-color: #FFFFFF;
   color: $card-black-color;
   margin-bottom: 20px;
   position: relative;
-  border: 0 none;
+  z-index: 1;
+  border: none;
+  h4 {
+    font-size:1.32em;
+  }
+  .card-image {
+    width: 100%;
+    overflow: hidden;
+    height: 260px;
+    border-radius: $border-radius-extreme $border-radius-extreme 0 0;
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 
-  -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
-  -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
-  -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
-  -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
-  transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
+    img {
+      width: 100%;
+    }
+  }
+  .card-body {
+    padding: 15px 15px 10px 15px;
+  }
+  .card-header {
+    padding: 20px 20px 0;
+    border-bottom: 0;
+    background-color: transparent;
+  }
+  .description {
+    font-size: $font-paragraph;
+    color: $font-color;
+  }
 
-    .card-body{
-        padding: 15px 15px 10px 15px;
+  h6 {
+    font-size: $font-size-small;
+    margin: 0;
+  }
+  .card-category,
+  label {
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    color: $dark-gray;
+    margin-bottom: 0px;
+    i {
+      font-size: $font-paragraph;
+    }
+  }
 
-        &.table-full-width{
-            padding-left: 0;
-            padding-right: 0;
-        }
+  label {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  .card-title {
+    margin: $none;
+    color: $card-black-color;
+    font-weight: $font-weight-light;
+  }
+  .card-title-bold {
+    margin: $none;
+    color: $card-black-color;
+    font-weight: $font-weight-bold;
+  }
+  .avatar {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  .footer {
+    padding: 10px;
+    line-height: 30px;
+
+    .legend {
+      padding: 5px 0;
     }
 
-    .card-header{
-      &:not([data-background-color]){
-        background-color: transparent;
+    hr {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+  .stats {
+    color: #a9a9a9;
+    font-weight: 300;
+    i {
+      margin-right: 2px;
+      min-width: 15px;
+      display: inline-block;
+    }
+  }
+  .footer div {
+    display: inline-block;
+  }
+
+  .author {
+    font-size: $font-size-small;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+  }
+  .author i {
+    font-size: $font-size-base;
+  }
+
+  &.card-separator:after {
+    height: 100%;
+    right: -15px;
+    top: 0;
+    width: 1px;
+    background-color: $medium-gray;
+    content: "";
+    position: absolute;
+  }
+
+  .ct-chart {
+    margin: 30px 0 30px;
+    height: 245px;
+  }
+
+  .table {
+    tbody td:first-child,
+    thead th:first-child {
+      padding-left: 15px;
+    }
+
+    tbody td:last-child,
+    thead th:last-child {
+      padding-right: 15px;
+    }
+  }
+
+  .alert {
+    border-radius: $border-radius-base;
+    position: relative;
+
+    &.alert-with-icon {
+      padding-left: 65px;
+    }
+  }
+  .icon-big {
+    font-size: 3em;
+    min-height: 64px;
+  }
+  .numbers {
+    font-size: 2.2em;
+    text-align: right;
+    h4 {
+      font-size: 0.6em;
+    }
+    p {
+      margin: 0;
+    }
+    .comparison {
+      font-size: 0.5em;
+      color:#555;
+    }
+  }
+  ul.team-members {
+    li {
+      padding: 10px 0px;
+      &:not(:last-child) {
+        border-bottom: 1px solid $medium-pale-bg;
       }
-      padding: 15px 15px 0;
-      border: 0;
+    }
+  }
+}
 
-      .card-title{
-          margin-top: 10px;
+.card-user {
+  .image {
+    border-radius: 8px 8px 0 0;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+  .image-plain {
+    height: 0;
+    margin-top: 110px;
+  }
+  .author {
+    text-align: center;
+    text-transform: none;
+    margin-top: -65px;
+    .title {
+      color: $default-states-color;
+      small {
+        color: $card-muted-color;
       }
     }
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: 15px;
 
-    .map{
-        border-radius: $border-radius-small;
-
-        &.map-big{
-          height: 500px;
-        }
+    &.border-white {
+      border: 5px solid $white-color;
     }
-
-    &[data-background-color="orange"]{
-        background-color: $primary-color;
-
-        .card-header{
-            background-color: $primary-color;
-        }
-
-        .card-footer{
-            .stats{
-                color: $white-color;
-            }
-        }
+    &.border-gray {
+      border: 5px solid $card-muted-color;
     }
+  }
+  .card-title {
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .description {
+    margin-top: 10px;
+  }
+  .card-body {
+    min-height: 200px;
+  }
 
-    &[data-background-color="red"]{
-        background-color: $danger-color;
+  &.card-plain {
+    .avatar {
+      height: 190px;
+      width: 190px;
     }
+  }
+}
 
-    &[data-background-color="yellow"]{
-        background-color: $warning-color;
+.card-map {
+  .map {
+    height: 500px;
+    padding-top: 20px;
+
+    > div {
+      height: 100%;
     }
+  }
+}
 
-    &[data-background-color="blue"]{
-        background-color: $info-color;
-    }
+.card-user,
+.card-price {
+  .card-footer {
+    padding: 5px 15px 10px;
+  }
+  hr {
+    margin: 5px 15px;
+  }
+}
 
-    &[data-background-color="green"]{
-        background-color: $success-color;
-    }
+.card-plain {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
 
-    .image{
-        overflow: hidden;
-        height: 200px;
-        position: relative;
-    }
-
-    .avatar{
-        width: 30px;
-        height: 30px;
-        overflow: hidden;
-        border-radius: 50%;
-        margin-bottom: 15px;
-    }
-
-    .numbers {
-      font-size: 2em;
-    }
-
-    .big-title {
-      font-size: 12px;
-      text-align: center;
-      font-weight: 500;
-      padding-bottom: 15px;
-    }
-
-    label{
-        font-size: $font-size-small;
-        margin-bottom: 5px;
-        color: $dark-gray;
-    }
-
-    .card-footer{
-        background-color: transparent;
-        border: 0;
-
-
-        .stats{
-            i{
-                margin-right: 5px;
-                position: relative;
-                top: 0px;
-                color: $default-color;
-            }
-        }
-
-        .btn{
-            margin: 0;
-        }
-    }
-
-    &.card-plain{
-        background-color: transparent;
-        box-shadow: none;
-        border-radius: 0;
-
-
-        .card-body{
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        img{
-            border-radius: $border-radius-extreme;
-        }
-    }
+  .image {
+    border-radius: 4px;
+  }
 }

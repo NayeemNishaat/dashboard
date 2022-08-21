@@ -1,0 +1,13 @@
+import State from "./state";
+import getters from "./getters";
+import mutations from "./mutations";
+import actions from "./actions";
+
+const settings = {
+  namespaced: true,
+  state: new State(),
+  getters,
+  mutations,
+  actions
+};
+export default settings;

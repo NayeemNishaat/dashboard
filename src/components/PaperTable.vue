@@ -9,10 +9,9 @@
       <tr v-for="(item, index) in data" :key="index">
         <slot :row="item">
           <td
-            v-for="(column, index) in columns.filter(elem =>
-              hasValue(item, column)
-            )"
+            v-for="(column, index) in columns"
             :key="index"
+            v-if="hasValue(item, column)"
           >
             {{ itemValue(item, column) }}
           </td>
@@ -47,16 +46,10 @@ export default {
   },
   methods: {
     hasValue(item, column) {
-      if (item && column) {
-        return item[column.toLowerCase()] !== "undefined";
-      }
-      return false;
+      return item[column.toLowerCase()] !== "undefined";
     },
     itemValue(item, column) {
-      if (item && column) {
-        return item[column.toLowerCase()];
-      }
-      return null;
+      return item[column.toLowerCase()];
     }
   }
 };

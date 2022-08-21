@@ -1,20 +1,15 @@
 <template>
   <card>
-    <slot name="header">
-      <div v-if="tag" class="row d-flex justify-content-end">
-        <div class="rmargin p-tag p-tag-rounded p-tag-success">
-          {{ tag }}
-        </div>
-      </div>
-      <h3 class="card-title">
-        <i :class="icon" v-if="icon" />
-        {{ title }}
-      </h3>
-    </slot>
+    <h3 slot="header">
+      <template v-if="icon">
+        <i :class="icon" />
+      </template>
+      {{ $tc(title, 2) }}
+    </h3>
     <div>
       <div class="numbers">
         <div class="row" v-if="!loading">
-          <template v-if="comparison !== ''">
+          <template v-if="comparison !== 'n/a'">
             <div
               class="col-7 current-value"
               :class="
@@ -39,7 +34,7 @@
                   <i v-else-if="comparison > 0" class="el-icon-caret-top" />
                 </div>
                 <div style="font-size: 0.8em">
-                  {{ `previous days: ${numDays}` }}
+                  {{ $t("previous days", { days: numDays }) }}
                 </div>
               </div>
             </div>
@@ -49,7 +44,7 @@
         <div class="row" v-else>
           <div class="col-8"></div>
           <div class="col-4">
-            <loading></loading>
+            <loader-dots></loader-dots>
           </div>
         </div>
       </div>
@@ -60,29 +55,26 @@
     </div>
   </card>
 </template>
-<script lang="ts">
+<script>
 import Card from "./Card.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import { mapGetters } from "vuex";
 import { differenceInCalendarDays, parseISO } from "date-fns";
-import { computed, defineComponent, reactive } from "vue";
 
-export default defineComponent({
+export default {
   name: "stats-card",
-  setup() {
-    const dateRange = reactive(["2020-10-01", "2020-10-10"]);
-    const numDays = computed(
-      () =>
+  computed: {
+    ...mapGetters(["dateRange"]),
+    numDays() {
+      return (
         differenceInCalendarDays(
-          parseISO(dateRange[1]),
-          parseISO(dateRange[0])
+          parseISO(this.dateRange[1]),
+          parseISO(this.dateRange[0])
         ) + 1
-    );
-    return { numDays };
+      );
+    }
   },
   props: {
-    tag: {
-      type: String,
-      default: ""
-    },
     loading: {
       type: Boolean,
       default: false
@@ -103,8 +95,12 @@ export default defineComponent({
       type: String,
       default: ""
     }
+  },
+  components: {
+    Card,
+    LoaderDots
   }
-});
+};
 </script>
 
 <style scoped>
@@ -135,8 +131,5 @@ export default defineComponent({
 
 .comparison-lower {
   color: #e33335;
-}
-.rmargin {
-  margin-right: 1rem;
 }
 </style>
