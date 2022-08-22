@@ -39,7 +39,7 @@
               receivedRevenue ? "estimated" : "guess"
             }Earning`,
             {
-              amount: lastRevenue + estimatedEarning
+              amount: lastRevenue + estimatedEarning,
             }
           )
         }}
@@ -143,14 +143,14 @@ import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
 import {
   getPageData,
   selectPlan,
-  postOnboardingNotification
+  postOnboardingNotification,
 } from "@/api/backend";
 
 export default {
   name: "OnboardingBilling",
   components: {
     DcButton,
-    OnboardingStep
+    OnboardingStep,
   },
   props: ["revenue"],
   data() {
@@ -162,7 +162,7 @@ export default {
       contactDialogOpen: false,
       contact: {
         revenue: null,
-        comment: ""
+        comment: "",
       },
       ranges: [
         "$125,000 – $200,000",
@@ -170,12 +170,12 @@ export default {
         "$300,000 – $400,000",
         "$400,000 – $500,000",
         "$500,000 – $600,000",
-        this.$t("onboarding:billing:maxRevenue")
+        this.$t("onboarding:billing:maxRevenue"),
       ],
       loading: false,
       sending: false,
       planId: null,
-      planPrice: null
+      planPrice: null,
     };
   },
   computed: {
@@ -194,7 +194,7 @@ export default {
     budget() {
       const rounded = Math.round(+this.estimatedCost);
       return Math.max(49, Math.min(rounded, 99));
-    }
+    },
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -228,7 +228,7 @@ export default {
               Sentry.captureException(err);
               this.loading = false;
             }
-          }
+          },
         }
       );
     },
@@ -249,15 +249,16 @@ export default {
             (pending && pending.plan_id === this.planId)
           ) {
             await postOnboardingNotification({
-              type: "onboarding_finish"
+              type: "onboarding_finish",
             });
 
             await this.finishOnboarding();
             if (this.client.type === "shopify") {
-              window.location = process.env.VUE_APP_SHOPIFY_INSTALL_URL.replace(
-                /install$/,
-                `?shop=${this.client.apikey}`
-              );
+              window.location =
+                import.meta.env.VITE_APP_SHOPIFY_INSTALL_URL.replace(
+                  /install$/,
+                  `?shop=${this.client.apikey}`
+                );
             } else {
               this.$emit("done");
             }
@@ -275,7 +276,7 @@ export default {
         if (await this.$refs.contactForm.validate()) {
           await postOnboardingNotification({
             type: "enterprise_plan_request",
-            details: this.contact
+            details: this.contact,
           });
 
           await this.finishOnboarding();
@@ -286,7 +287,7 @@ export default {
       } finally {
         this.sending = false;
       }
-    }
+    },
   },
   async mounted() {
     this.loading = true;
@@ -296,7 +297,7 @@ export default {
         type: "billing_step",
         details: this.receivedRevenue
           ? { revenue: this.lastRevenue.toString() }
-          : undefined
+          : undefined,
       });
     } catch (err) {
       Sentry.captureException(err);
@@ -304,21 +305,21 @@ export default {
     try {
       await this.$loadScript("https://js.chargebee.com/v2/chargebee.js");
       this.chargebee = window.Chargebee.init({
-        site: process.env.VUE_APP_CHARGEBEE_DOMAIN
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       const res = await getPageData("billing");
       if (res.subscriptions && res.subscriptions.active) {
         await postOnboardingNotification({
-          type: "onboarding_finish"
+          type: "onboarding_finish",
         });
 
         await this.finishOnboarding();
         this.$emit("done");
       } else {
         const plan = res.available_plans.find(
-          plan => +plan.commission_percent === 2
+          (plan) => +plan.commission_percent === 2
         );
 
         this.planId = plan.plan_id;
@@ -329,12 +330,12 @@ export default {
     } finally {
       this.loading = false;
     }
-  }
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .screenshot {
   width: 100%;

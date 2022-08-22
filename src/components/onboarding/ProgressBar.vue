@@ -30,13 +30,13 @@ export default {
   props: {
     value: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   computed: {
     style() {
       return {
-        width: `${this.value}%`
+        width: `${this.value}%`,
       };
     },
     title() {
@@ -47,13 +47,13 @@ export default {
         return `${part} 2/2`;
       }
       return "";
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .step-progress {
   .top-label {

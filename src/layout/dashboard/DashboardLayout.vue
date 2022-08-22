@@ -71,7 +71,7 @@ import { mapActions, mapGetters } from "vuex";
 import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
-import MobileMenu from "./MobileMenu";
+import MobileMenu from "./MobileMenu.vue";
 export default {
   name: "DashboardLayout",
   components: {

@@ -29,23 +29,23 @@
   </transition>
 </template>
 <script>
-import DcButton from "@/components/DcButton";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   name: "PendingSettings",
   components: {
-    DcButton
+    DcButton,
   },
   props: {
     hasUnsavedChanges: {
       type: Boolean,
-      default: false
+      default: false,
     },
     saving: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 };
 </script>
 <style scoped>

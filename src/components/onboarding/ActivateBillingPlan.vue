@@ -54,7 +54,7 @@ import DcButton from "@/components/DcButton.vue";
 import {
   getPageData,
   selectPlan,
-  postOnboardingNotification
+  postOnboardingNotification,
 } from "@/api/backend";
 
 export default {
@@ -63,7 +63,7 @@ export default {
     DcButton,
     PricingPlans,
     LoaderDots,
-    Card
+    Card,
   },
   props: ["revenue"],
   data() {
@@ -76,11 +76,11 @@ export default {
       loading: false,
       sending: false,
       planId: null,
-      planPrice: null
+      planPrice: null,
     };
   },
   computed: {
-    ...mapGetters(["client"])
+    ...mapGetters(["client"]),
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -117,7 +117,7 @@ export default {
             } finally {
               this.loading = false;
             }
-          }
+          },
         }
       );
     },
@@ -139,27 +139,28 @@ export default {
             (pending && pending.plan_id === this.planId)
           ) {
             const plan = this.availablePlans.find(
-              plan => plan.plan_id === this.planId
+              (plan) => plan.plan_id === this.planId
             );
 
             await postOnboardingNotification({
               type: "onboarding_finish",
-              details: { plan_info: `${plan.name} (${plan.price} /mo)` }
+              details: { plan_info: `${plan.name} (${plan.price} /mo)` },
             });
             await this.finishOnboarding();
             if (this.client.type !== "shopify") {
               this.$notify({
                 title: this.$t("success"),
                 message: this.$t("plan updated"),
-                type: "success"
+                type: "success",
               });
               this.$router.push({ name: "setup-summary" });
               return;
             }
-            window.location = process.env.VUE_APP_SHOPIFY_INSTALL_URL.replace(
-              /install$/,
-              `?shop=${this.client.apikey}`
-            );
+            window.location =
+              import.meta.env.VITE_APP_SHOPIFY_INSTALL_URL.replace(
+                /install$/,
+                `?shop=${this.client.apikey}`
+              );
           }
         }
       } catch (err) {
@@ -167,7 +168,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   async mounted() {
     this.loading = true;
@@ -177,30 +178,30 @@ export default {
         type: "billing_step",
         details: this.receivedRevenue
           ? { revenue: this.lastRevenue.toString() }
-          : undefined
+          : undefined,
       });
 
       await this.$loadScript("https://js.chargebee.com/v2/chargebee.js");
       this.chargebee = window.Chargebee.init({
-        site: process.env.VUE_APP_CHARGEBEE_DOMAIN
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       const res = await getPageData("billing");
       if (res.subscriptions && res.subscriptions.active) {
         await postOnboardingNotification({
-          type: "onboarding_finish"
+          type: "onboarding_finish",
         });
 
         await this.finishOnboarding();
         this.$router.push({ name: "loading" });
       } else {
         this.availablePlans = res.available_plans
-          .map(elem => {
+          .map((elem) => {
             elem.products = elem?.products?.personalization ?? {};
             return elem;
           })
-          .filter(plan => !plan.annual)
+          .filter((plan) => !plan.annual)
           .sort((lhs, rhs) => lhs.price - rhs.price);
       }
     } catch (err) {
@@ -208,12 +209,12 @@ export default {
     } finally {
       this.loading = false;
     }
-  }
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .screenshot {
   width: 100%;
@@ -271,7 +272,7 @@ export default {
   height: 100%;
   margin: 0 0 1.5em;
   padding: 2% 4%;
-  background: url("~@/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
 header {

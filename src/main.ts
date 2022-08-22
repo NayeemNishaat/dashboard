@@ -14,7 +14,7 @@ import { Integrations } from "@sentry/tracing";
 // vuex setup
 import store from "@/store/index";
 
-const sentryDSN = process.env.VUE_APP_SENTRY_DSN;
+const sentryDSN = import.meta.env.VITE_APP_SENTRY_DSN;
 if (sentryDSN) {
   Sentry.init({
     Vue,
@@ -22,7 +22,7 @@ if (sentryDSN) {
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-        tracingOrigins: [`${process.env.VUE_APP_URL}`.split("//")[1]]
+        tracingOrigins: [`${import.meta.env.VITE_APP_URL}`.split("//")[1]]
       })
     ],
     beforeSend: event => {

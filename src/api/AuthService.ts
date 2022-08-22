@@ -3,9 +3,9 @@ import decode from "jwt-decode";
 
 //error reporting
 export const AUTH_CONFIG = {
-  clientId: `${process.env.VUE_APP_AUTH_ID}`,
-  domain: `${process.env.VUE_APP_AUTH_DOMAIN}`,
-  callbackUrl: `${process.env.VUE_APP_URL}/callback`
+  clientId: `${import.meta.env.VITE_APP_AUTH_ID}`,
+  domain: `${import.meta.env.VITE_APP_AUTH_DOMAIN}`,
+  callbackUrl: `${import.meta.env.VITE_APP_URL}/callback`
 };
 
 const auth = new auth0.WebAuth({
@@ -30,7 +30,7 @@ export function login(
 
 export function logout(auth_provider: string, url: string) {
   if (!url) {
-    url = `${process.env.VUE_APP_URL}`;
+    url = `${import.meta.env.VITE_APP_URL}`;
   }
   if (auth_provider == "auth0") {
     auth.logout({

@@ -199,10 +199,10 @@ import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 import { getCountrySettings } from "@/api/backend";
 
-import Card from "@/components/Cards/Card";
+import Card from "@/components/Cards/Card.vue";
 
-import DcButton from "@/components/DcButton";
-import LoaderDots from "@/components/LoaderDots";
+import DcButton from "@/components/DcButton.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
 
 function currencyFormatString(format) {
   var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;

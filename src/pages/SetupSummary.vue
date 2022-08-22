@@ -6,8 +6,9 @@
           <i class="ti-panel"></i>
           &nbsp;{{
             $t(
-              `setupSummary:ActivateDataCue:${hasSelectedPlan &&
-                recommendationsReady}`
+              `setupSummary:ActivateDataCue:${
+                hasSelectedPlan && recommendationsReady
+              }`
             )
           }}
         </h3>
@@ -147,7 +148,7 @@
               <span>{{
                 $t("setupSummary:banners:uploads:insufficient:banner", {
                   name: $t(getBannerLabel("main")),
-                  count: hasEnoughBanners.main.expected
+                  count: hasEnoughBanners.main.expected,
                 })
               }}</span>
               <el-progress
@@ -159,7 +160,7 @@
               <span>{{
                 $t("setupSummary:banners:uploads:insufficient:banner", {
                   name: $t(getBannerLabel("sub")),
-                  count: hasEnoughBanners.sub.expected
+                  count: hasEnoughBanners.sub.expected,
                 })
               }}</span>
               <el-progress
@@ -239,22 +240,21 @@
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
-import LoaderDots from "@/components/LoaderDots";
-import LoadingCircle from "@/components/LoadingCircle";
+import LoadingCircle from "@/components/LoadingCircle.vue";
 import { mapGetters, mapActions } from "vuex";
 
-import Card from "@/components/Cards/Card";
-import DcButton from "@/components/DcButton";
+import Card from "@/components/Cards/Card.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   components: {
     Card,
     DcButton,
-    LoadingCircle
+    LoadingCircle,
   },
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   computed: {
@@ -282,12 +282,12 @@ export default {
           done: false,
           main: {
             count: 0,
-            expected: 2
+            expected: 2,
           },
           sub: {
             count: 0,
-            expected: 5
-          }
+            expected: 5,
+          },
         }
       );
     },
@@ -295,11 +295,11 @@ export default {
       const orders = this.setupSummary?.storeData?.orders ?? {
         done: false,
         num: 0,
-        expected: 1
+        expected: 1,
       };
       return {
         ...orders,
-        pct: (Math.min(orders.num, orders.expected) / orders.expected) * 100
+        pct: (Math.min(orders.num, orders.expected) / orders.expected) * 100,
       };
     },
     hasProductsAndCategories() {
@@ -310,7 +310,7 @@ export default {
         "shopify",
         "woocommerce",
         "prestashop",
-        "magento"
+        "magento",
       ];
 
       let platform = this?.client?.type ?? "";
@@ -325,7 +325,7 @@ export default {
       }
 
       return `https://help.datacue.co/${lang}install/${platform}.html`;
-    }
+    },
   },
   methods: {
     ...mapActions("settings", ["getPageInstallationSettings"]),
@@ -345,7 +345,7 @@ export default {
       try {
         let response = [
           this.getPageInstallationSettings("home"),
-          await this.fetchSetupSummary()
+          await this.fetchSetupSummary(),
         ];
         await Promise.allSettled(response);
         if (this.hasFinishedSetup) {
@@ -357,11 +357,11 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refresh();
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

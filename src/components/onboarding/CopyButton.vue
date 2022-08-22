@@ -6,26 +6,26 @@
   </label>
 </template>
 <script>
-import TickCircle from "@/components/icons/TickCircle";
-import CopyIcon from "@/components/icons/CopyIcon";
+import TickCircle from "@/components/icons/TickCircle.vue";
+import CopyIcon from "@/components/icons/CopyIcon.vue";
 
 export default {
   components: {
     CopyIcon,
-    TickCircle
+    TickCircle,
   },
   data() {
     return {
-      copied: false
+      copied: false,
     };
   },
   computed: {
     labelClass() {
       return {
         copy: true,
-        copied: this.copied
+        copied: this.copied,
       };
-    }
+    },
   },
   methods: {
     copy() {
@@ -34,13 +34,13 @@ export default {
         this.copied = false;
       }, 3000);
       this.$emit("copy");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 label.copy {
   cursor: pointer;

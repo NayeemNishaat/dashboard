@@ -132,7 +132,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .onboarding {
   display: flex;
@@ -223,7 +223,7 @@ export default {
 .onboarding-content {
   min-height: calc(100vh - 80px);
   padding: 2% 4%;
-  background: url("~@/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
 </style>

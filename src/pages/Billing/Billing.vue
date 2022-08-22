@@ -72,11 +72,11 @@
         <card
           :title="
             $t('current billing period') +
-              (currentSubscription
-                ? ` (${$t('since')} ${format(
-                    currentSubscription.current_period_start
-                  )})`
-                : '')
+            (currentSubscription
+              ? ` (${$t('since')} ${format(
+                  currentSubscription.current_period_start
+                )})`
+              : '')
           "
         >
           <loader-dots v-if="loading" />
@@ -91,7 +91,7 @@
                 <td>
                   ${{
                     +currentSubscription.commission_cap +
-                      +currentSubscription.price
+                    +currentSubscription.price
                   }}
                 </td>
               </tr>
@@ -139,9 +139,9 @@
       :available-plans="availablePlans"
       :disable-plan-selection="
         loading ||
-          saving ||
-          (!isShopify && !paymentsConfigured) ||
-          !!pendingSubscription
+        saving ||
+        (!isShopify && !paymentsConfigured) ||
+        !!pendingSubscription
       "
       :current-plan="currentSubscription"
       @selectplan="openBudgetDialog"
@@ -188,7 +188,7 @@ export default {
     Card,
     DcButton,
     PricingPlans,
-    LoaderDots
+    LoaderDots,
   },
   data() {
     return {
@@ -204,22 +204,22 @@ export default {
       last30DaysConversions: 0,
       availablePlans: [],
       chargebee: null,
-      paymentsConfigured: null
+      paymentsConfigured: null,
     };
   },
   computed: {
     ...mapGetters(["client"]),
-    isShopify: function() {
+    isShopify: function () {
       return this.client.type === "shopify";
     },
-    shopifyAppAdmin: function() {
+    shopifyAppAdmin: function () {
       const { apikey } = this.client;
-      return process.env.VUE_APP_SHOPIFY_INSTALL_URL.replace(
+      return import.meta.env.VITE_APP_SHOPIFY_INSTALL_URL.replace(
         /install$/,
         `?shop=${apikey}`
       );
     },
-    endsInDays: function() {
+    endsInDays: function () {
       if (!this.currentSubscription || !this.currentSubscription.until) {
         return null;
       }
@@ -229,7 +229,7 @@ export default {
         new Date()
       );
     },
-    commission: function() {
+    commission: function () {
       if (!this.currentSubscription) {
         return 0;
       }
@@ -247,7 +247,7 @@ export default {
         100
       );
     },
-    bestPlan: function() {
+    bestPlan: function () {
       if (!this.availablePlans.length) {
         return null;
       }
@@ -256,7 +256,7 @@ export default {
         return null;
       }
 
-      const cost = i =>
+      const cost = (i) =>
         +this.availablePlans[i].price +
         (this.availablePlans[i].commission_percent *
           Math.max(
@@ -283,9 +283,9 @@ export default {
       return {
         name: this.availablePlans[best].name,
         betterThan: best ? this.availablePlans[best - 1].name : null,
-        betterBy: best ? cost(best - 1) - cost(best) : null
+        betterBy: best ? cost(best - 1) - cost(best) : null,
       };
-    }
+    },
   },
   methods: {
     ...mapActions(["setBillingAccess"]),
@@ -309,7 +309,7 @@ export default {
           close: () => {
             this.chargebee.logout();
             this.refreshData();
-          }
+          },
         }
       );
     },
@@ -339,7 +339,7 @@ export default {
         message: this.$t(
           !msg ? "an unknown error occured, please try again later" : msg
         ),
-        type: "error"
+        type: "error",
       });
     },
     async selectPlan(plan) {
@@ -351,14 +351,14 @@ export default {
           this.$alert(
             this.$t("would you like to switch to {plan} at {price}", {
               plan: plan.name,
-              price: plan.price
+              price: plan.price,
             }),
             this.$t("activate subscription"),
             {
               showCancelButton: true,
               cancelButtonText: this.$t("cancel"),
               confirmButtonClass: "el-button--warning",
-              confirmButtonText: this.$t("confirm")
+              confirmButtonText: this.$t("confirm"),
             }
           ).catch(() => (skip = true));
         }
@@ -376,7 +376,7 @@ export default {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("plan updated"),
-            type: "success"
+            type: "success",
           });
           return;
         }
@@ -392,7 +392,7 @@ export default {
             showCancelButton: true,
             cancelButtonText: this.$t("cancel"),
             confirmButtonClass: "el-button--warning",
-            confirmButtonText: this.$t("open admin panel")
+            confirmButtonText: this.$t("open admin panel"),
           }
         )
           .then(() => {
@@ -409,7 +409,7 @@ export default {
     refreshData() {
       this.loading = true;
       getPageData("billing")
-        .then(res => {
+        .then((res) => {
           try {
             this.paymentsConfigured = res.payments_configured;
             this.currentSubscription = res.subscriptions.active;
@@ -419,12 +419,12 @@ export default {
             Sentry.captureException(err);
           }
           this.availablePlans = res.available_plans
-            .map(elem => {
+            .map((elem) => {
               let newelem = { ...elem };
               newelem.products = elem?.products?.personalization ?? {};
               return newelem;
             })
-            .filter(plan => !plan.annual)
+            .filter((plan) => !plan.annual)
             .sort((lhs, rhs) => lhs.price - rhs.price);
         })
         // get conversions from current billing period
@@ -437,7 +437,7 @@ export default {
 
             return getPageData(
               `billing/conversions?startdate=${periodStart}&enddate=${today}`
-            ).then(res => {
+            ).then((res) => {
               this.currentConversions = res.revenue;
             });
           }
@@ -449,25 +449,25 @@ export default {
 
           return getPageData(
             `billing/conversions?startdate=${monthAgo}&enddate=${today}`
-          ).then(res => {
+          ).then((res) => {
             this.last30DaysConversions = res.revenue;
           });
         })
         .finally(() => {
           this.loading = false;
         });
-    }
+    },
   },
   mounted() {
     this.$loadScript("https://js.chargebee.com/v2/chargebee.js").then(() => {
       this.chargebee = window.Chargebee.init({
-        site: process.env.VUE_APP_CHARGEBEE_DOMAIN
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       this.refreshData();
     });
-  }
+  },
 };
 </script>
 

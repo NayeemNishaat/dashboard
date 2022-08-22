@@ -210,7 +210,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .website-preview {
   width: 200%;
@@ -226,7 +226,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("~@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
+  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
     #fff;
   transition: opacity 0.25s ease-in-out;
   opacity: 1;

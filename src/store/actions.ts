@@ -37,9 +37,9 @@ const actions: ActionTree<State, State> = {
     });
     const authProvider = getters?.access_token?.auth_provider || "shopify";
     commit("setAccessToken", { token: "", auth_provider: "" } as AuthToken);
-    let url = `${process.env.VUE_APP_URL}/login`;
+    let url = `${import.meta.env.VITE_APP_URL}/login`;
     if (getters.client.type === "shopify") {
-      url = `${process.env.VUE_APP_SHOPIFY_APP_URL}?shop=${getters.apikey}`
+      url = `${import.meta.env.VITE_APP_SHOPIFY_APP_URL}?shop=${getters.apikey}`
     }
     logout(authProvider, url);
   },
@@ -65,7 +65,7 @@ const actions: ActionTree<State, State> = {
     commit("setDateRange", payload);
   },
   getContext({ commit, dispatch }: ActionContext<State, State>) {
-    const BACKEND_URL = process.env.VUE_APP_BACKEND_URL;
+    const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
     return new Promise((resolve, reject) => {
       Http.get(`${BACKEND_URL}/login`)
         .then((response: { data: Context }) => {

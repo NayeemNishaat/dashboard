@@ -111,26 +111,26 @@ export default {
   name: "OnboardingIntro",
   components: {
     DcButton,
-    OnboardingStep
+    OnboardingStep,
   },
   data() {
     return {
       features: [
         { id: "banners", icon: "ti-image" },
         { id: "products", icon: "ti-shopping-cart" },
-        { id: "notifications", icon: "ti-bell" }
+        { id: "notifications", icon: "ti-bell" },
       ],
-      selectedFeature: "banners"
+      selectedFeature: "banners",
     };
   },
   computed: {
-    ...mapGetters(["client"])
-  }
+    ...mapGetters(["client"]),
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 @keyframes slide-in {
   0% {
@@ -241,9 +241,9 @@ export default {
   align-items: flex-start;
   justify-content: space-between;
   padding: 14% 3% 0;
-  background: url("~@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
       no-repeat,
-    url("~@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
+    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
       no-repeat #f2f2f2;
 }
 
@@ -290,7 +290,7 @@ export default {
   flex: 0 0 50%;
   min-width: 0;
   padding-top: 6%;
-  background: url("~@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
     no-repeat #f2f2f2;
 
   &:first-child {

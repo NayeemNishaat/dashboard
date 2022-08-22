@@ -22,17 +22,17 @@
   </div>
 </template>
 <script>
-import LangPickerIcon from "@/components/icons/LangPickerIcon";
+import LangPickerIcon from "@/components/icons/LangPickerIcon.vue";
 import { mapActions } from "vuex";
 export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   components: {
-    LangPickerIcon
+    LangPickerIcon,
   },
   data() {
     return {
@@ -40,13 +40,13 @@ export default {
       locales: [
         {
           code: "en",
-          title: "English"
+          title: "English",
         },
         {
           code: "es",
-          title: "Español"
-        }
-      ]
+          title: "Español",
+        },
+      ],
     };
   },
   mounted() {
@@ -56,7 +56,7 @@ export default {
   methods: {
     ...mapActions(["setLanguageCode"]),
     getLocale(code) {
-      return this.locales.find(item => item.code === code);
+      return this.locales.find((item) => item.code === code);
     },
     togglePicker() {
       this.showPicker = !this.showPicker;
@@ -76,13 +76,13 @@ export default {
         params.lang = locale.code;
         this.$router.push({ name: name, params: params, query: query });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .lang-picker-container {
   background: $bg-primary;

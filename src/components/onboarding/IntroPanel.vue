@@ -45,7 +45,7 @@ import DcButton from "@/components/DcButton.vue";
 export default {
   name: "IntroPanel",
   components: {
-    DcButton
+    DcButton,
   },
   props: {
     title: String,
@@ -53,25 +53,25 @@ export default {
     photoURL: String,
     firstPanel: {
       type: Boolean,
-      default: false
+      default: false,
     },
     lastPanel: {
       type: Boolean,
-      default: false
+      default: false,
     },
     browserWindow: {
       type: Boolean,
-      default: false
+      default: false,
     },
     nextBtnCaption: {
       type: String,
-      default: "continue"
-    }
-  }
+      default: "continue",
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 .card-header > * {
   margin-top: 0;
   margin-bottom: 0;

@@ -179,16 +179,16 @@ import * as Sentry from "@sentry/browser";
 import { getPageData, postSendEmail } from "@/api/backend";
 import { mapActions, mapGetters } from "vuex";
 
-import BtnNext from "@/components/onboarding/BtnNext";
-import CopyButton from "@/components/onboarding/CopyButton";
-import StoreData from "@/components/onboarding/StoreData";
+import BtnNext from "@/components/onboarding/BtnNext.vue";
+import CopyButton from "@/components/onboarding/CopyButton.vue";
+import StoreData from "@/components/onboarding/StoreData.vue";
 
-import DcTip from "@/components/DcTip";
-import DcAlert from "@/components/DcAlert";
-import DcButton from "@/components/DcButton";
-import EyeHideIcon from "@/components/icons/EyeHideIcon";
-import EyeShowIcon from "@/components/icons/EyeShowIcon";
-import RefreshIcon from "@/components/icons/RefreshIcon";
+import DcTip from "@/components/DcTip.vue";
+import DcAlert from "@/components/DcAlert.vue";
+import DcButton from "@/components/DcButton.vue";
+import EyeHideIcon from "@/components/icons/EyeHideIcon.vue";
+import EyeShowIcon from "@/components/icons/EyeShowIcon.vue";
+import RefreshIcon from "@/components/icons/RefreshIcon.vue";
 
 export default {
   components: {
@@ -200,7 +200,7 @@ export default {
     EyeHideIcon,
     EyeShowIcon,
     StoreData,
-    RefreshIcon
+    RefreshIcon,
   },
   data() {
     return {
@@ -211,7 +211,7 @@ export default {
       sendingEmail: false,
       refreshed: false,
       refreshing: [], // Used to determine what type is refreshing
-      storeData: {}
+      storeData: {},
     };
   },
   computed: {
@@ -220,7 +220,7 @@ export default {
       return {
         "form-check-label": true,
         "toggle-keys": true,
-        visible: this.showKeys
+        visible: this.showKeys,
       };
     },
     noData() {
@@ -230,7 +230,7 @@ export default {
       if (this.noData) {
         return true;
       }
-      const pending = this.data.find(item => !item.done);
+      const pending = this.data.find((item) => !item.done);
       return pending ? true : false;
     },
     platform() {
@@ -248,7 +248,7 @@ export default {
         "btn-yellow": !this.platformWithPlugin,
         "btn-yellow-outline": this.platformWithPlugin,
         "btn-large": true,
-        rounded: true
+        rounded: true,
       };
     },
     afterSetupTip() {
@@ -271,7 +271,7 @@ export default {
         }
       }
       return url;
-    }
+    },
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -287,7 +287,7 @@ export default {
       const data = {
         email_type: "need_help",
         lang: this.$route.params.lang,
-        subject: this.emailSubject
+        subject: this.emailSubject,
       };
       postSendEmail(data)
         .then(() => {
@@ -296,7 +296,7 @@ export default {
             this.successHelp = false;
           }, 3000);
         })
-        .catch(err => {
+        .catch((err) => {
           Sentry.captureException(err);
         })
         .finally(() => {
@@ -316,7 +316,7 @@ export default {
         this.refreshed = false;
       }
       getPageData(url)
-        .then(responseData => {
+        .then((responseData) => {
           //check if we got a valid response
           if (responseData.hasOwnProperty("products")) {
             this.data = responseData;
@@ -331,7 +331,7 @@ export default {
             );
           }
         })
-        .catch(err => {
+        .catch((err) => {
           this.error = this.$t(
             "an unknown error occured, please try again later"
           );
@@ -340,7 +340,7 @@ export default {
         .finally(() => {
           this.loading = false;
           this.refreshed = true;
-          const idx = this.refreshing.findIndex(item => item == type);
+          const idx = this.refreshing.findIndex((item) => item == type);
           if (idx >= 0) {
             this.refreshing.splice(idx, 1);
           }
@@ -352,19 +352,19 @@ export default {
         .then(() => {
           this.$emit("submit");
         })
-        .catch(err => {
+        .catch((err) => {
           Sentry.captureException(err);
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 hr {
   border-color: $gray-light;

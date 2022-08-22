@@ -6,37 +6,35 @@
       <span @click="setLocale(locale)" :key="idx">
         {{ locale.title }}
       </span>
-      <template v-if="idx + 1 != otherLocales.length">
-        |
-      </template>
+      <template v-if="idx + 1 != otherLocales.length"> | </template>
     </template>
   </div>
 </template>
 <script>
-import LangPickerIcon from "@/components/icons/LangPickerIcon";
+import LangPickerIcon from "@/components/icons/LangPickerIcon.vue";
 import { mapActions } from "vuex";
 export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   components: {
-    LangPickerIcon
+    LangPickerIcon,
   },
   data() {
     return {
       locales: [
         {
           code: "en",
-          title: "English"
+          title: "English",
         },
         {
           code: "es",
-          title: "Español"
-        }
-      ]
+          title: "Español",
+        },
+      ],
     };
   },
   mounted() {
@@ -46,14 +44,14 @@ export default {
   computed: {
     otherLocales() {
       return this.locales.filter(
-        item => item.code !== this.selectedLocale.code
+        (item) => item.code !== this.selectedLocale.code
       );
-    }
+    },
   },
   methods: {
     ...mapActions(["setLanguageCode"]),
     getLocale(code) {
-      return this.locales.find(item => item.code === code);
+      return this.locales.find((item) => item.code === code);
     },
     setLocale(locale, redirect = true) {
       this.$i18n.locale = locale.code;
@@ -64,13 +62,13 @@ export default {
         params.lang = locale.code;
         this.$router.push({ name: name, params: params, query: query });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .lang-picker {
   fill: $primary;

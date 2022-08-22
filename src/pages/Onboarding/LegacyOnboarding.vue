@@ -4,7 +4,7 @@
       <div class="col-12 top-picker mx-auto">
         <lang-picker-mobile
           :selected-locale="selectedLocale"
-          @select="locale => (selectedLocale = locale)"
+          @select="(locale) => (selectedLocale = locale)"
         ></lang-picker-mobile>
 
         <div v-if="isLoggedIn" class="btn-logout">
@@ -14,7 +14,13 @@
     </div>
     <div class="row main-container">
       <div
-        class="d-none d-lg-block left-container col-12 col-lg-4 justify-content-center align-content-center"
+        class="
+          d-none d-lg-block
+          left-container
+          col-12 col-lg-4
+          justify-content-center
+          align-content-center
+        "
       >
         <div class="row logo-container">
           <div class="col d-flex align-content-center justify-content-center">
@@ -27,7 +33,7 @@
           <div class="d-flex col justify-content-between">
             <lang-picker
               :selected-locale="selectedLocale"
-              @select="locale => (selectedLocale = locale)"
+              @select="(locale) => (selectedLocale = locale)"
             ></lang-picker>
 
             <div v-if="isLoggedIn" class="btn-logout">
@@ -46,30 +52,30 @@
   </div>
 </template>
 <script>
-import LangPicker from "@/components/LangPicker";
-import LangPickerMobile from "@/components/LangPickerMobile";
+import LangPicker from "@/components/LangPicker.vue";
+import LangPickerMobile from "@/components/LangPickerMobile.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     LangPicker,
-    LangPickerMobile
+    LangPickerMobile,
   },
   data() {
     return {
-      selectedLocale: {}
+      selectedLocale: {},
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"])
+    ...mapGetters(["isLoggedIn"]),
   },
   methods: {
-    ...mapActions(["logout"])
-  }
+    ...mapActions(["logout"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .onboarding {
   min-height: 100vh;

@@ -158,9 +158,9 @@ const emptyCssSelectors = {
   index: null,
   product: null,
   category: null,
-  "404": null,
+  404: null,
   search: null,
-  cart: null
+  cart: null,
 };
 export default {
   name: "Developer",
@@ -168,7 +168,7 @@ export default {
     Card,
     DcButton,
     ApiSettings,
-    LoaderDots
+    LoaderDots,
   },
   data() {
     return {
@@ -178,7 +178,7 @@ export default {
       userIDs: [],
       filteredUsers: [],
       testMode: false,
-      cssSelectors: emptyCssSelectors
+      cssSelectors: emptyCssSelectors,
     };
   },
   watch: {
@@ -186,17 +186,17 @@ export default {
       if (!val) {
         this.userIDs = [];
       }
-    }
+    },
   },
   computed: {
     ...mapGetters(["client", "trustedClient"]),
-    ...mapGetters("settings", ["webSettings", "pageStatus"])
+    ...mapGetters("settings", ["webSettings", "pageStatus"]),
   },
   methods: {
     ...mapActions("settings", [
       "getWebSettings",
       "saveSettings",
-      "getPageInstallationSettings"
+      "getPageInstallationSettings",
     ]),
     async saveChanges(css) {
       this.saving = true;
@@ -215,14 +215,14 @@ export default {
         this.$notify({
           title: this.$t("success"),
           message: this.$t("saved"),
-          type: "success"
+          type: "success",
         });
       } catch (err) {
         Sentry.captureException(err);
         this.$notify({
           title: this.$t("could not save"),
           message: this.$t("an unknown error occured, please try again later"),
-          type: "warning"
+          type: "warning",
         });
       } finally {
         this.saving = false;
@@ -233,10 +233,10 @@ export default {
         return;
       }
       getPageData(`/users/emails?filter=${query}`)
-        .then(resp => {
+        .then((resp) => {
           this.filteredUsers = resp.test_users;
         })
-        .catch(err => {
+        .catch((err) => {
           Sentry.captureException(err);
         });
     },
@@ -261,18 +261,18 @@ export default {
     },
     setTestMode() {
       this.testMode = this.userIDs.length > 0;
-    }
+    },
   },
   mounted() {
     this.userIDs =
       (this.webSettings.testing && this.webSettings.testing.user_ids) || [];
     this.setTestMode();
     this.refreshData();
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 .developer-settings .el-select {
   width: 100%;
 }

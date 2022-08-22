@@ -4,7 +4,7 @@
       <div class="col-12 top-picker mx-auto">
         <lang-picker-mobile
           :selected-locale="selectedLocale"
-          @select="locale => (selectedLocale = locale)"
+          @select="(locale) => (selectedLocale = locale)"
         ></lang-picker-mobile>
 
         <div class="btn-login">
@@ -111,7 +111,7 @@
               <div class="col">
                 <lang-picker
                   :selected-locale="selectedLocale"
-                  @select="locale => (selectedLocale = locale)"
+                  @select="(locale) => (selectedLocale = locale)"
                   class="float-right"
                 ></lang-picker>
               </div>
@@ -136,16 +136,16 @@
 </template>
 
 <script>
-import DcButton from "@/components/DcButton";
-import LangPicker from "@/components/LangPicker";
-import LangPickerMobile from "@/components/LangPickerMobile";
+import DcButton from "@/components/DcButton.vue";
+import LangPicker from "@/components/LangPicker.vue";
+import LangPickerMobile from "@/components/LangPickerMobile.vue";
 
 export default {
   name: "login",
   components: {
     DcButton,
     LangPicker,
-    LangPickerMobile
+    LangPickerMobile,
   },
   data() {
     return {
@@ -154,7 +154,7 @@ export default {
       error: false,
       selectedPlatform: "",
       selectedLocale: {},
-      platforms: ["shopify", "magento", "woocommerce", "prestashop", "other"]
+      platforms: ["shopify", "magento", "woocommerce", "prestashop", "other"],
     };
   },
   methods: {
@@ -163,7 +163,7 @@ export default {
         left: idx % 2 == 0,
         right: idx % 2 == 1,
         "platform-container": true,
-        active: platform === this.selectedPlatform
+        active: platform === this.selectedPlatform,
       };
     },
     getPlatformImg(platform) {
@@ -174,18 +174,18 @@ export default {
       const name = "onboarding";
 
       if (platform === "shopify") {
-        window.location = process.env.VUE_APP_URL.includes("staging")
-          ? process.env.VUE_APP_SHOPIFY_INSTALL_URL
+        window.location = import.meta.env.VITE_APP_URL.includes("staging")
+          ? import.meta.env.VITE_APP_SHOPIFY_INSTALL_URL
           : "https://apps.shopify.com/datacue";
       } else {
         this.$router.push({ name: name, params: { platform } });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .signup-page > .row {
   margin: 0px;

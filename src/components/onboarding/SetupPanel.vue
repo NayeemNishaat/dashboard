@@ -29,23 +29,23 @@ import DcButton from "@/components/DcButton.vue";
 export default {
   name: "SetupPanel",
   components: {
-    DcButton
+    DcButton,
   },
   props: {
     title: String,
     lastPanel: {
       type: Boolean,
-      default: false
+      default: false,
     },
     nextBtnCaption: {
       type: String,
-      default: "continue"
-    }
-  }
+      default: "continue",
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 header {
   text-align: center;
   padding-bottom: 10px;

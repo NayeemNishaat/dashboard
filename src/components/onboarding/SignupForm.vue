@@ -109,10 +109,10 @@ import * as Sentry from "@sentry/browser";
 import { mapActions } from "vuex";
 
 import { signUp, verifyWebsite } from "@/api/backend.js";
-import BtnNext from "@/components/onboarding/BtnNext";
-import DcAlert from "@/components/DcAlert";
-import PasswordStrength from "@/components/auth/PasswordStrength";
-import PasswordToggle from "@/components/auth/PasswordToggle";
+import BtnNext from "@/components/onboarding/BtnNext.vue";
+import DcAlert from "@/components/DcAlert.vue";
+import PasswordStrength from "@/components/auth/PasswordStrength.vue";
+import PasswordToggle from "@/components/auth/PasswordToggle.vue";
 export default {
   props: {
     platform: {

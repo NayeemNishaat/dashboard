@@ -41,36 +41,36 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import DcTip from "@/components/DcTip";
-import CopyButton from "@/components/onboarding/CopyButton";
-import DcButton from "@/components/DcButton";
+import DcTip from "@/components/DcTip.vue";
+import CopyButton from "@/components/onboarding/CopyButton.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   name: "ApiSettings",
   components: {
     DcTip,
     DcButton,
-    CopyButton
+    CopyButton,
   },
   computed: {
     ...mapGetters(["apikey", "client"]),
     apisecret() {
       return atob(this.client.apisecret);
-    }
+    },
   },
   props: {
     readOnly: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {};
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 hr {
   border-color: $gray-light;

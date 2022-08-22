@@ -138,7 +138,7 @@ export default {
   name: "OnboardingSetupShopify",
   components: {
     DcButton,
-    OnboardingStep
+    OnboardingStep,
   },
   data() {
     return {
@@ -148,26 +148,26 @@ export default {
           "categories",
           "recent",
           "userRelated",
-          "notificationWidget"
+          "notificationWidget",
         ],
         category: ["recent", "top", "notificationWidget"],
         product: ["related", "similar", "recent", "notificationWidget"],
         cart: ["recent", "userRelated", "notificationWidget"],
         search: ["recent", "userRelated", "notificationWidget"],
-        404: ["recent", "userRelated", "notificationWidget"]
-      }
+        404: ["recent", "userRelated", "notificationWidget"],
+      },
     };
   },
   computed: {
     pages() {
       return Object.keys(this.features);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .carousel {
   height: 100%;

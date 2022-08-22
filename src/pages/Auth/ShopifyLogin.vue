@@ -8,10 +8,7 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import { handleShopifyAuthentication } from "@/api/backend.js";
-
 import LoaderDots from "@/components/LoaderDots.vue";
-import { logoutNoRedirect } from "@/api/AuthService";
 export default {
   name: "ShopifyLogin",
   components: {

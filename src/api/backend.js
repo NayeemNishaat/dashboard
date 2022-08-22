@@ -9,7 +9,7 @@ import router from "@/router/index";
 // event bus setup
 const bus = new Vue();
 
-const BACKEND = process.env.VUE_APP_BACKEND_URL;
+const BACKEND = import.meta.env.VITE_APP_BACKEND_URL;
 
 axios.defaults.baseURL = `${BACKEND}/v1`;
 axios.defaults.timeout = 15000;

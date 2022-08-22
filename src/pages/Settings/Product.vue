@@ -916,10 +916,10 @@ import { mapActions, mapGetters } from "vuex";
 import { supportedLanguages } from "@/lang/lang";
 import { nilDefaultsDeep } from "@/api/utils";
 
-import Card from "@/components/Cards/Card";
-import PendingSettings from "@/components/Settings/PendingSettings";
-import LoaderDots from "@/components/LoaderDots";
-import ProductsPreview from "@/components/ProductsPreview";
+import Card from "@/components/Cards/Card.vue";
+import PendingSettings from "@/components/Settings/PendingSettings.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import ProductsPreview from "@/components/ProductsPreview.vue";
 import {
   userGuideLinks,
   titlePlaceholders,
@@ -1093,7 +1093,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 /* TODO: move this to global styles */
 .card >>> .card-header h3 {
   margin: 0;

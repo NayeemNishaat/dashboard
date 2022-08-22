@@ -44,13 +44,13 @@
                   @node-click="categoryTreeClick"
                 >
                   <span class="category-tree" slot-scope="{ node, data }">
-                    <span style="width:10em">{{ node.label.text }}</span>
+                    <span style="width: 10em">{{ node.label.text }}</span>
                     <span>
                       <small>
                         {{ node.label.orders }}&nbsp;{{ $tc("sales", 2) }}
                       </small>
                     </span>
-                    <span style="width:8em;">
+                    <span style="width: 8em">
                       <span
                         v-if="node.label.banner"
                         class="dc-tag dc-tag--warning"
@@ -66,7 +66,7 @@
                       >
                       <span
                         v-else
-                        style="visibility:hidden"
+                        style="visibility: hidden"
                         class="dc-tag"
                       ></span>
                       <!-- <div v-else>&nbsp;</div> -->
@@ -152,7 +152,7 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import DcButton from "@/components/DcButton";
+import DcButton from "@/components/DcButton.vue";
 import BannerUpload from "@/components/BannerUpload.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
 
@@ -163,7 +163,7 @@ export default {
   components: {
     DcButton,
     BannerUpload,
-    LoaderDots
+    LoaderDots,
   },
 
   data() {
@@ -176,26 +176,26 @@ export default {
       error: false,
       uploadedPhoto: {
         uploadURL: null,
-        id: null
+        id: null,
       },
       editBannerform: {
-        photoURL: "" //fixed, user cannot modify the image when editing the banner
+        photoURL: "", //fixed, user cannot modify the image when editing the banner
       },
       bannerform: {
         // values of create new banner
         type: "main",
         category: {},
         categoryJSON: "",
-        link: null
+        link: null,
       },
       validatingCategoryLink: false,
-      invalidCategoryLink: false
+      invalidCategoryLink: false,
     };
   },
   watch: {
     filterText(val) {
       this.$refs.categorytree.filter(val);
-    }
+    },
   },
   computed: {
     ...mapGetters(["client"]),
@@ -223,7 +223,7 @@ export default {
         link = this.bannerform.link;
       }
       return this.$t("category link {link} is invalid, please edit it", {
-        link
+        link,
       });
     },
     categories() {
@@ -231,8 +231,8 @@ export default {
         return [];
       }
       let categories = [];
-      this.categoriestree.forEach(elem => {
-        elem.children.forEach(child => {
+      this.categoriestree.forEach((elem) => {
+        elem.children.forEach((child) => {
           child.json = JSON.stringify(child.label);
           categories.push(child);
         });
@@ -256,7 +256,7 @@ export default {
     },
     isBannerLayoutCustom() {
       return this.bannerLayout === "custom";
-    }
+    },
   },
   methods: {
     ...mapActions("settings", ["getSettings"]),
@@ -319,7 +319,7 @@ export default {
         this.$notify({
           title: this.$t("incomplete form"),
           message: this.$t("please fill in the product category and link"),
-          type: "warning"
+          type: "warning",
         });
         return;
       }
@@ -327,7 +327,7 @@ export default {
         this.$notify({
           title: this.$t("No banner image"),
           message: this.$t("please upload a banner image first"),
-          type: "warning"
+          type: "warning",
         });
         return;
       }
@@ -343,27 +343,27 @@ export default {
         photo_url: photoURL,
         type: this.bannerform.type,
         category_1: this.bannerform.category.category_id,
-        link: this.bannerform.link
+        link: this.bannerform.link,
       })
         .then(() => {
           // clear form
           this.$notify({
             title: this.$t("success"),
             message: this.$t("banner uploaded"),
-            type: "success"
+            type: "success",
           });
 
           this.bannerform.category = {};
           this.bannerform.link = null;
           this.uploadedPhoto = {
             uploadURL: null,
-            id: null
+            id: null,
           };
 
           this.refreshData();
           this.bannerUploading = false;
         })
-        .catch(e => {
+        .catch((e) => {
           this.bannerUploading = false;
           if (e.response && e.response.data) {
             const data = e.response.data;
@@ -378,7 +378,7 @@ export default {
             message: this.$t(
               "an unknown error occured, please try again later"
             ),
-            type: "warning"
+            type: "warning",
           });
         });
     },
@@ -388,19 +388,19 @@ export default {
       const banner = {
         type: this.bannerform.type,
         category_id: category.category_id,
-        link: this.bannerform.link
+        link: this.bannerform.link,
       };
       updateBanner(this.$route.params.bannerid, banner)
         .then(() => {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("banner updated"),
-            type: "success"
+            type: "success",
           });
           this.bannerUpdating = false;
           this.$router.push({ name: "banners" });
         })
-        .catch(e => {
+        .catch((e) => {
           this.bannerUpdating = false;
           Sentry.captureException(e);
           this.$notify({
@@ -408,7 +408,7 @@ export default {
             message: this.$t(
               "we could not update the banner, please try again later"
             ),
-            type: "warning"
+            type: "warning",
           });
         });
     },
@@ -432,14 +432,14 @@ export default {
           let resp = [
             await reqSettings,
             await reqCategories,
-            await reqBannerData
+            await reqBannerData,
           ];
           categories = resp[1];
           bannerToEdit = resp[2];
           this.editBannerform.photoURL = bannerToEdit.photo_url;
           this.bannerform.type = bannerToEdit.type;
           this.bannerform.category = {
-            category_id: bannerToEdit.category_id
+            category_id: bannerToEdit.category_id,
           };
           this.bannerform.link = bannerToEdit.link;
         } else {
@@ -453,7 +453,7 @@ export default {
         this.$notify({
           title: this.$t("incomplete form"),
           message: this.$t("please select your banner layout first"),
-          type: "warning"
+          type: "warning",
         });
         this.$router.push({ name: "banners settings" });
       }
@@ -466,7 +466,7 @@ export default {
         categorytree.push({
           id: "category_id",
           label: { text: this.$t("category") },
-          children: categories.map(item => {
+          children: categories.map((item) => {
             return {
               id: item.id,
               label: {
@@ -475,15 +475,15 @@ export default {
                 link: item.link,
                 recommended: item.recommended,
                 orders: item.orders,
-                banner: item.banner
-              }
+                banner: item.banner,
+              },
             };
-          })
+          }),
         });
 
         this.categoriestree = categorytree;
         let filteredCategories = this.categories.filter(
-          elem => elem.id === this.bannerform.category.category_id
+          (elem) => elem.id === this.bannerform.category.category_id
         );
 
         // match banner details to bannerform
@@ -514,15 +514,15 @@ export default {
         .replace(/-+/g, "-"); // collapse dashes
 
       return str;
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>
 <style lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 .el-form-item__label {
   text-align: left;
 }

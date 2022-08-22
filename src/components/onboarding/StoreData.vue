@@ -33,25 +33,25 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlassIcon";
-import RefreshIcon from "@/components/icons/RefreshIcon";
-import TickCheck from "@/components/icons/TickCheck";
+import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlassIcon.vue";
+import RefreshIcon from "@/components/icons/RefreshIcon.vue";
+import TickCheck from "@/components/icons/TickCheck.vue";
 
 export default {
   props: {
     displayOnly: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
     refreshing: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     storeData: {
       type: Object,
       default: () => {
         return {};
-      }
+      },
     },
     minimumData: {
       type: Object,
@@ -60,10 +60,10 @@ export default {
           products: 10,
           orders: 50,
           users: 10,
-          categories: 2
+          categories: 2,
         };
-      }
-    }
+      },
+    },
   },
   computed: {
     ...mapGetters("onboarding", ["setupSummary"]),
@@ -73,7 +73,7 @@ export default {
       if (!storeData || Object.keys(storeData).length === 0) {
         return data;
       }
-      Object.keys(storeData).forEach(key => {
+      Object.keys(storeData).forEach((key) => {
         if (!["categories", "products", "orders", "users"].includes(key)) {
           return;
         }
@@ -83,22 +83,22 @@ export default {
           title: key,
           value: value,
           pct: (value / this.minimumData[key]) * 100,
-          done: value >= this.minimumData
+          done: value >= this.minimumData,
         };
         data.push(item);
       });
       return data;
-    }
+    },
   },
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   components: {
     MagnifyingGlassIcon,
     RefreshIcon,
-    TickCheck
+    TickCheck,
   },
   methods: {
     help(type) {
@@ -114,14 +114,14 @@ export default {
     },
     getIconClass(type) {
       return {
-        "fa-spin-reverse": this.refreshing.includes(type)
+        "fa-spin-reverse": this.refreshing.includes(type),
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .row {
   margin-bottom: 10px;

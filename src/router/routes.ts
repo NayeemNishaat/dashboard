@@ -1,66 +1,47 @@
 import { RouteConfig } from "vue-router";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 const FeaturePage = () =>
-  import(
-    /* webpackChunkName: "feature_page" */ "@/layout/dashboard/FeaturePage.vue"
-  );
+  import("@/layout/dashboard/FeaturePage.vue");
 
 //Onboarding
 import Loading from "@/pages/Onboarding/Loading.vue";
 const LegacyOnboarding = () =>
-  import(
-    /* webpackChunkName: "legacy_onboarding" */ "@/pages/Onboarding/LegacyOnboarding.vue"
-  );
+  import("@/pages/Onboarding/LegacyOnboarding.vue");
 const OnboardingOther = () =>
-  import(
-    /* webpackChunkName: "onboarding_other" */ "@/pages/Onboarding/OnboardingOther.vue"
-  );
+  import("@/pages/Onboarding/OnboardingOther.vue");
 
 const Onboarding = () =>
-  import(
-    /* webpackChunkName: "onboarding" */ "@/pages/Onboarding/Onboarding.vue"
-  );
+  import("@/pages/Onboarding/Onboarding.vue");
 
 const LoginError = () =>
-  import(/* webpackChunkName: "login_error" */ "@/pages/Auth/LoginError.vue");
+  import("@/pages/Auth/LoginError.vue");
 
 const OnboardingSignup = () =>
-  import(
-    /* webpackChunkName: "onboardingsignup" */ "@/components/onboarding/OnboardingSignup.vue"
-  );
+  import("@/components/onboarding/OnboardingSignup.vue");
 const Intro = () =>
-  import(
-    /* webpackChunkName: "onboarding-intro" */ "@/components/onboarding/Intro.vue"
-  );
+  import("@/components/onboarding/Intro.vue");
 const Setup = () =>
-  import(
-    /* webpackChunkName: "onboarding-setup" */ "@/components/onboarding/Setup.vue"
-  );
+  import("@/components/onboarding/Setup.vue");
 const ActivateBillingPlan = () =>
-  import(
-    /* webpackChunkName: "onboarding-billing" */ "@/components/onboarding/ActivateBillingPlan.vue"
-  );
+  import("@/components/onboarding/ActivateBillingPlan.vue");
 
 const DeveloperSettings = () =>
-  import(
-    /* webpackChunkName: "developer_settings" */ "@/pages/Settings/Developer.vue"
+  import("@/pages/Settings/Developer.vue"
   );
 const SetupSummary = () =>
-  import(/* webpackChunkName: "setup-summary" */ "@/pages/SetupSummary.vue");
+  import("@/pages/SetupSummary.vue");
 
 // GeneralViews
 const NotFound = () =>
-  import(/* webpackChunkName: "not_found" */ "@/pages/NotFoundPage.vue");
+  import("@/pages/NotFoundPage.vue");
 
 import Summary from "@/pages/Summary.vue";
 
 const Billing = () =>
-  import(/* webpackChunkName: "billing" */ "@/pages/Billing/Billing.vue");
+  import("@/pages/Billing/Billing.vue");
 
 const UpgradePlan = () =>
-  import(
-    /* webpackChunkName: "upgrade_plan" */ "@/pages/Billing/UpgradePlan.vue"
-  );
+  import("@/pages/Billing/UpgradePlan.vue");
 
 //settings
 import SettingsPanel from "@/pages/Settings/Panel.vue";
@@ -68,35 +49,26 @@ import GeneralSettings from "@/pages/Settings/General.vue";
 
 //banners
 const BannerForm = () =>
-  import(/* webpackChunkName: "bannerform" */ "@/pages/Banners/BannerForm.vue");
+  import("@/pages/Banners/BannerForm.vue");
 import BannerSettings from "@/pages/Settings/Banner.vue";
 
 const ViewBanners = () =>
-  import(
-    /* webpackChunkName: "viewbanners" */ "@/pages/Banners/ViewBanners.vue"
+  import("@/pages/Banners/ViewBanners.vue"
   );
 
 //products
 const ViewProducts = () =>
-  import(
-    /* webpackChunkName: "viewproducts" */ "@/pages/Products/ViewProducts.vue"
-  );
+  import("@/pages/Products/ViewProducts.vue");
 import ProductSettings from "@/pages/Settings/Product.vue";
 
 //notifications
 const ViewNotifications = () =>
-  import(
-    /* webpackChunkName: "viewnotifications" */ "@/pages/Notifications/ViewNotifications.vue"
-  );
+  import("@/pages/Notifications/ViewNotifications.vue");
 const NotificationSettings = () =>
-  import(
-    /* webpackChunkName: "notificationsettings" */ "@/pages/Settings/Notification.vue"
-  );
+  import("@/pages/Settings/Notification.vue");
 
 const CategorySettings = () =>
-  import(
-    /* webpackChunkName: "categorysettings" */ "@/pages/Settings/Category.vue"
-  );
+  import("@/pages/Settings/Category.vue");
 
 // authentication
 import Login from "@/pages/Auth/Login.vue";
@@ -404,14 +376,5 @@ const routes: Array<RouteConfig> = [
     }
   }
 ];
-
-/**
- * Asynchronously load view (Webpack Lazy loading compatible)
- * The specified component must be inside the Views folder
- * @param  {string} name  the filename (basename) of the view to load.
-function view(name) {
-   var res= require('../Webs/Dashboard/Views/' + name + '.vue');
-   return res;
-};**/
 
 export default routes;

@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/browser";
 import store from "@/store";
 import router from "@/router/index";
 
-const BACKEND_URL = process.env.VUE_APP_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const API_VERSION = "v1";
 const BUS = new Vue();
 

@@ -14,10 +14,10 @@
 <script>
 import { mapActions } from "vuex";
 
-import OnboardingHeader from "@/components/onboarding/OnboardingHeader";
-import SignupForm from "@/components/onboarding/SignupForm";
-import OtherStep2 from "@/components/onboarding/OtherStep2";
-import OtherSuccess from "@/components/onboarding/OtherSuccess";
+import OnboardingHeader from "@/components/onboarding/OnboardingHeader.vue";
+import SignupForm from "@/components/onboarding/SignupForm.vue";
+import OtherStep2 from "@/components/onboarding/OtherStep2.vue";
+import OtherSuccess from "@/components/onboarding/OtherSuccess.vue";
 
 import * as Sentry from "@sentry/browser";
 
@@ -25,18 +25,18 @@ export default {
   props: {
     platform: {
       type: String,
-      default: "custom"
-    }
+      default: "custom",
+    },
   },
   components: {
     OnboardingHeader,
     OtherStep2,
     OtherSuccess,
-    SignupForm
+    SignupForm,
   },
   data() {
     return {
-      step: 1
+      step: 1,
     };
   },
   async mounted() {
@@ -62,7 +62,7 @@ export default {
       return {
         "form-container": true,
         "col-12": true,
-        "col-sm-10": this.step === 1
+        "col-sm-10": this.step === 1,
       };
     },
     title() {
@@ -74,18 +74,18 @@ export default {
         default:
           return this.$t("hooray");
       }
-    }
+    },
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
     next() {
       this.step += 1;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .password-rules {
   color: $gray-dark;

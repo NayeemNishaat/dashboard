@@ -10,31 +10,31 @@
   </dc-button>
 </template>
 <script>
-import ArrowRightIcon from "@/components/icons/ArrowRightIcon";
-import DcButton from "@/components/DcButton";
+import ArrowRightIcon from "@/components/icons/ArrowRightIcon.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   components: {
-    DcButton
+    DcButton,
   },
   props: {
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     loading: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    ArrowRightIcon
-  }
+    ArrowRightIcon,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .btn-next {
   padding: 0 20px 0 50px;
