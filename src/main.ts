@@ -25,7 +25,7 @@ if (sentryDSN) {
         tracingOrigins: [`${import.meta.env.VITE_APP_URL}`.split("//")[1]]
       })
     ],
-    beforeSend: event => {
+    beforeSend: (event) => {
       const user = { id: "", email: "" };
       try {
         user.email = store.getters.user.email;
@@ -55,6 +55,7 @@ if (sentryDSN) {
 
 // Element and Vue i18n setup
 import { i18n } from "./lang/lang";
+import ElementPlus from "element-plus";
 
 Vue.use(DataCueDashboard);
 Vue.use(Clipboard);
@@ -74,5 +75,5 @@ new Vue({
   i18n,
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount("#app");
