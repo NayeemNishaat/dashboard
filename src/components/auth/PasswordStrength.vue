@@ -2,7 +2,7 @@
   <div class="password-strength">
     <password
       v-model="password"
-      @score="score => (this.score = score)"
+      @score="(score) => (this.score = score)"
       :strength-meter-only="true"
       :secure-length="minLength"
       v-show="false"
@@ -91,7 +91,7 @@ export default {
     margin-left: 1em;
   }
 
-  ::v-deep {
+  :deep {
     .el-progress {
       flex: 0 0 130px;
 

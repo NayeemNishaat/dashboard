@@ -47,18 +47,18 @@ import DcButton from "@/components/DcButton.vue";
 export default {
   name: "OnboardingStep",
   components: {
-    DcButton,
+    DcButton
   },
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     showBackButton: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
 
@@ -71,7 +71,7 @@ export default {
   position: relative;
   height: 100%;
 
-  ::v-deep {
+  :deep {
     .v-modal {
       background: white;
       opacity: 0.75;

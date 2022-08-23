@@ -34,18 +34,18 @@ import DcButton from "@/components/DcButton.vue";
 export default {
   name: "PendingSettings",
   components: {
-    DcButton,
+    DcButton
   },
   props: {
     hasUnsavedChanges: {
       type: Boolean,
-      default: false,
+      default: false
     },
     saving: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
 <style scoped>
@@ -71,12 +71,12 @@ p.message {
   font-size: 1rem;
 }
 
-.status-bar >>> .card-body {
+.status-bar :deep(.card-body) {
   display: flex;
   align-items: center;
 }
 
-.status-bar >>> .card-body >>> p {
+.status-bar :deep(.card-body :deep(p)) {
   display: flex;
   align-items: center;
 }

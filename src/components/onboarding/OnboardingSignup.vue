@@ -89,7 +89,7 @@ export default {
   components: {
     DcButton,
     PasswordStrength,
-    OnboardingStep,
+    OnboardingStep
   },
   data() {
     return {
@@ -100,14 +100,14 @@ export default {
         firstName: "",
         lastName: "",
         email: "",
-        password: "",
+        password: ""
       },
       rules: {
         website: [
           {
             required: true,
             message: this.$t("please enter your website address"),
-            trigger: "blur",
+            trigger: "blur"
           },
           {
             validator: (rule, value, callback) => {
@@ -126,28 +126,28 @@ export default {
                   )
                 );
             },
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         firstName: [
           {
             required: true,
             message: this.$t("please enter your first name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         lastName: [
           {
             required: true,
             message: this.$t("please enter your last name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         email: [
           {
             required: true,
             message: this.$t("please enter your email"),
-            trigger: "blur",
+            trigger: "blur"
           },
           {
             validator: (rule, value, callback) => {
@@ -157,24 +157,24 @@ export default {
                 callback(new Error(this.$t("please enter a valid email")));
               }
             },
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         password: [
           {
             required: true,
             message: this.$t("please enter a password"),
-            trigger: "blur",
-          },
-        ],
+            trigger: "blur"
+          }
+        ]
       },
-      loading: false,
+      loading: false
     };
   },
   computed: {
     filled() {
       return Object.values(this.account).every(Boolean);
-    },
+    }
   },
   methods: {
     ...mapActions(["getContext", "setAccessToken"]),
@@ -190,7 +190,7 @@ export default {
         if (await this.$refs.signupForm.validate()) {
           const res = await signUp({
             ...this.account,
-            type: this.$route.params.platform,
+            type: this.$route.params.platform
           });
           this.handleSignup(res.data);
           // this.$emit("done", res.data);
@@ -204,8 +204,8 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -243,7 +243,7 @@ export default {
   max-width: 600px;
   margin: 1em 0;
 
-  ::v-deep .el-form-item {
+  :deep .el-form-item {
     margin-bottom: 2em;
   }
 }

@@ -94,7 +94,7 @@ i.el-collapse-item__arrow.el-icon-arrow-right {
   word-break: normal;
 }
 
-.el-tabs ::v-deep {
+.el-tabs :deep {
   .el-tabs__item {
     &:hover,
     &.is-active {
@@ -104,7 +104,7 @@ i.el-collapse-item__arrow.el-icon-arrow-right {
   }
 }
 
-.el-checkbox ::v-deep {
+.el-checkbox :deep {
   color: $gray;
   margin-right: 15px;
 
@@ -194,7 +194,7 @@ i.el-collapse-item__arrow.el-icon-arrow-right {
   font-weight: bold;
 }
 
-.el-tabs ::v-deep {
+.el-tabs :deep {
   .el-tabs__item {
     &:hover,
     &.is-active {
@@ -204,7 +204,7 @@ i.el-collapse-item__arrow.el-icon-arrow-right {
   }
 }
 
-.el-form ::v-deep {
+.el-form :deep {
   :not(output):-moz-ui-invalid {
     box-shadow: none;
   }

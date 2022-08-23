@@ -54,7 +54,7 @@ import DcButton from "@/components/DcButton.vue";
 import {
   getPageData,
   selectPlan,
-  postOnboardingNotification,
+  postOnboardingNotification
 } from "@/api/backend";
 
 export default {
@@ -63,7 +63,7 @@ export default {
     DcButton,
     PricingPlans,
     LoaderDots,
-    Card,
+    Card
   },
   props: ["revenue"],
   data() {
@@ -76,11 +76,11 @@ export default {
       loading: false,
       sending: false,
       planId: null,
-      planPrice: null,
+      planPrice: null
     };
   },
   computed: {
-    ...mapGetters(["client"]),
+    ...mapGetters(["client"])
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -117,7 +117,7 @@ export default {
             } finally {
               this.loading = false;
             }
-          },
+          }
         }
       );
     },
@@ -144,14 +144,14 @@ export default {
 
             await postOnboardingNotification({
               type: "onboarding_finish",
-              details: { plan_info: `${plan.name} (${plan.price} /mo)` },
+              details: { plan_info: `${plan.name} (${plan.price} /mo)` }
             });
             await this.finishOnboarding();
             if (this.client.type !== "shopify") {
               this.$notify({
                 title: this.$t("success"),
                 message: this.$t("plan updated"),
-                type: "success",
+                type: "success"
               });
               this.$router.push({ name: "setup-summary" });
               return;
@@ -168,7 +168,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
   async mounted() {
     this.loading = true;
@@ -178,19 +178,19 @@ export default {
         type: "billing_step",
         details: this.receivedRevenue
           ? { revenue: this.lastRevenue.toString() }
-          : undefined,
+          : undefined
       });
 
       await this.$loadScript("https://js.chargebee.com/v2/chargebee.js");
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       const res = await getPageData("billing");
       if (res.subscriptions && res.subscriptions.active) {
         await postOnboardingNotification({
-          type: "onboarding_finish",
+          type: "onboarding_finish"
         });
 
         await this.finishOnboarding();
@@ -209,7 +209,7 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
+  }
 };
 </script>
 
@@ -229,7 +229,7 @@ export default {
     width: 72px;
   }
 
-  ::v-deep {
+  :deep {
     .el-input--small {
       font-size: inherit;
     }

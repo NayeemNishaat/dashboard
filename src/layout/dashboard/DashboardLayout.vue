@@ -78,7 +78,7 @@ export default {
     TopNavbar,
     ContentFooter,
     DashboardContent,
-    MobileMenu,
+    MobileMenu
   },
   computed: {
     ...mapGetters(["client"]),
@@ -86,8 +86,8 @@ export default {
       "setupSummary",
       "numberOfSteps",
       "finishedSteps",
-      "hasFinishedSetup",
-    ]),
+      "hasFinishedSetup"
+    ])
   },
   methods: {
     ...mapActions(["switchWebsite", "logout"]),
@@ -102,7 +102,7 @@ export default {
     getStepClass(idx) {
       return {
         step: true,
-        done: idx <= this.finishedSteps,
+        done: idx <= this.finishedSteps
       };
     },
     toggleSidebar() {
@@ -113,13 +113,13 @@ export default {
     async logout() {
       this.$Tawk.$endChat();
       await this.logout();
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.wrapper::v-deep {
+.wrapper:deep {
   .setup {
     .nav-link {
       margin-top: 0 !important;

@@ -3,10 +3,12 @@
 import { createI18n } from "vue-i18n";
 import messages from "@/lang/messages";
 // import ElementPlus from "element-plus";
-import "element-ui/lib/theme-chalk/index.css";
+// import "element-ui/lib/theme-chalk/index.css";
 
-import enLocale from "element-ui/lib/locale/lang/en";
-import esLocale from "element-ui/lib/locale/lang/es";
+// import enLocale from "element-ui/lib/locale/lang/en";
+// import esLocale from "element-ui/lib/locale/lang/es";
+import enLocale from "element-plus/es/locale/lang/en";
+import esLocale from "element-plus/es/locale/lang/es";
 
 Object.assign(messages.en, enLocale);
 Object.assign(messages.es, esLocale);

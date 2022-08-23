@@ -14,13 +14,7 @@
     </div>
     <div class="row main-container">
       <div
-        class="
-          d-none d-lg-block
-          left-container
-          col-12 col-lg-4
-          justify-content-center
-          align-content-center
-        "
+        class="d-none d-lg-block left-container col-12 col-lg-4 justify-content-center align-content-center"
       >
         <div class="row logo-container">
           <div class="col d-flex align-content-center justify-content-center">
@@ -58,19 +52,19 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     LangPicker,
-    LangPickerMobile,
+    LangPickerMobile
   },
   data() {
     return {
-      selectedLocale: {},
+      selectedLocale: {}
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn"])
   },
   methods: {
-    ...mapActions(["logout"]),
-  },
+    ...mapActions(["logout"])
+  }
 };
 </script>
 
@@ -109,7 +103,7 @@ export default {
   }
 }
 
-.lang-picker-container::v-deep {
+.lang-picker-container:deep {
   margin-top: 30px;
   font-size: 14px;
 

@@ -925,7 +925,7 @@ import {
   titlePlaceholders,
   productFields,
   aspectRatios,
-  defaultProductSettings,
+  defaultProductSettings
 } from "./product";
 
 export default {
@@ -934,14 +934,14 @@ export default {
     Card,
     LoaderDots,
     ProductsPreview,
-    PendingSettings,
+    PendingSettings
   },
   data() {
     return {
       saving: false,
       currentSection: {
         context: "",
-        custom_styles: "",
+        custom_styles: ""
       },
       userGuideLinks: userGuideLinks,
       titlePlaceholders: titlePlaceholders,
@@ -949,7 +949,7 @@ export default {
       aspectRatios: aspectRatios,
       default: defaultProductSettings,
       lastSaved: {},
-      current: null,
+      current: null
     };
   },
   computed: {
@@ -957,7 +957,7 @@ export default {
     ...mapGetters("settings", [
       "webSettings",
       "pageInstallationSettings",
-      "pageStatus",
+      "pageStatus"
     ]),
     productAccess() {
       if (!this.apikey) {
@@ -987,7 +987,7 @@ export default {
         this.current.pct_promote_discounts = v
           ? this.lastSaved.pct_promote_discounts || 50
           : 0;
-      },
+      }
     },
     hideOutOfStock: {
       get() {
@@ -995,7 +995,7 @@ export default {
       },
       set(v) {
         this.current.hide_out_of_stock = v || false;
-      },
+      }
     },
     styles() {
       return this.current.custom_styles;
@@ -1013,13 +1013,13 @@ export default {
     },
     pageCheckEnabled() {
       return ["shopify"].includes(this.client.type);
-    },
+    }
   },
   methods: {
     ...mapActions("settings", [
       "getWebSettings",
       "saveSettings",
-      "getPageInstallationSettings",
+      "getPageInstallationSettings"
     ]),
     handleCurrentSectionChange(collapse, section) {
       if (section && this.current[collapse][section]) {
@@ -1078,7 +1078,7 @@ export default {
       } finally {
         this.saving = false;
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
@@ -1086,24 +1086,24 @@ export default {
   props: {
     onboarding: {
       type: Boolean,
-      default: false,
-    },
-  },
+      default: false
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/sass/datacue/_colors.scss";
 /* TODO: move this to global styles */
-.card >>> .card-header h3 {
+.card > .card-header h3 {
   margin: 0;
 }
 
-.card >>> .card-body {
+.card > .card-body {
   padding: 20px;
 }
 
-.card >>> label {
+.card > label {
   margin-bottom: 0;
 }
 
@@ -1113,7 +1113,7 @@ export default {
   align-items: center;
 }
 
-.card >>> .card-header .flex-header > * {
+.card > .card-header .flex-header > * {
   margin: 0 1rem 0 0;
 }
 
@@ -1136,7 +1136,7 @@ export default {
   margin-left: auto;
 }
 
->>> .collapse-item-reset + * {
+.collapse-item-reset + * {
   margin-left: 1rem;
 }
 
@@ -1172,8 +1172,8 @@ small.el-form-item--small {
   margin-left: auto;
 }
 
-.page-switch-wrapper .el-switch >>> .el-switch__label,
-.page-switch-wrapper .el-switch >>> .el-switch__label.is-active {
+.page-switch-wrapper .el-switch > .el-switch__label,
+.page-switch-wrapper .el-switch > .el-switch__label.is-active {
   color: #999;
 }
 
@@ -1197,7 +1197,7 @@ small.el-form-item--small {
   margin: 0 0.25em;
 }
 
-.inline-input >>> .el-input {
+.inline-input > .el-input {
   font-size: inherit;
 }
 
@@ -1209,12 +1209,12 @@ small.el-form-item--small {
   width: 72px;
 }
 
-.narrow-input.is-controls-right >>> .el-input__inner {
+.narrow-input.is-controls-right > .el-input__inner {
   padding-left: 4px;
   padding-right: 32px;
 }
 
-.aspect-ratio-radio >>> .el-radio-button__inner {
+.aspect-ratio-radio > .el-radio-button__inner {
   padding-left: 6px;
   padding-right: 6px;
 }

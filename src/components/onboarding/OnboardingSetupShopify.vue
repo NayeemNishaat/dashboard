@@ -138,7 +138,7 @@ export default {
   name: "OnboardingSetupShopify",
   components: {
     DcButton,
-    OnboardingStep,
+    OnboardingStep
   },
   data() {
     return {
@@ -148,21 +148,21 @@ export default {
           "categories",
           "recent",
           "userRelated",
-          "notificationWidget",
+          "notificationWidget"
         ],
         category: ["recent", "top", "notificationWidget"],
         product: ["related", "similar", "recent", "notificationWidget"],
         cart: ["recent", "userRelated", "notificationWidget"],
         search: ["recent", "userRelated", "notificationWidget"],
-        404: ["recent", "userRelated", "notificationWidget"],
-      },
+        404: ["recent", "userRelated", "notificationWidget"]
+      }
     };
   },
   computed: {
     pages() {
       return Object.keys(this.features);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -173,7 +173,7 @@ export default {
   height: 100%;
 }
 
-.el-carousel ::v-deep .el-carousel__indicators {
+.el-carousel :deep .el-carousel__indicators {
   display: none;
 
   @media (min-width: 1024px) {

@@ -50,23 +50,23 @@ export default {
   components: {
     DcTip,
     DcButton,
-    CopyButton,
+    CopyButton
   },
   computed: {
     ...mapGetters(["apikey", "client"]),
     apisecret() {
       return atob(this.client.apisecret);
-    },
+    }
   },
   props: {
     readOnly: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   data() {
     return {};
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -118,7 +118,7 @@ p.info {
   margin-top: 30px;
 }
 
-.el-form.api-info ::v-deep {
+.el-form.api-info :deep {
   .el-form-item {
     margin-bottom: 0;
   }

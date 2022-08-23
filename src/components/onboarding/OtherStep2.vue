@@ -200,7 +200,7 @@ export default {
     EyeHideIcon,
     EyeShowIcon,
     StoreData,
-    RefreshIcon,
+    RefreshIcon
   },
   data() {
     return {
@@ -211,7 +211,7 @@ export default {
       sendingEmail: false,
       refreshed: false,
       refreshing: [], // Used to determine what type is refreshing
-      storeData: {},
+      storeData: {}
     };
   },
   computed: {
@@ -220,7 +220,7 @@ export default {
       return {
         "form-check-label": true,
         "toggle-keys": true,
-        visible: this.showKeys,
+        visible: this.showKeys
       };
     },
     noData() {
@@ -248,7 +248,7 @@ export default {
         "btn-yellow": !this.platformWithPlugin,
         "btn-yellow-outline": this.platformWithPlugin,
         "btn-large": true,
-        rounded: true,
+        rounded: true
       };
     },
     afterSetupTip() {
@@ -271,7 +271,7 @@ export default {
         }
       }
       return url;
-    },
+    }
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -287,7 +287,7 @@ export default {
       const data = {
         email_type: "need_help",
         lang: this.$route.params.lang,
-        subject: this.emailSubject,
+        subject: this.emailSubject
       };
       postSendEmail(data)
         .then(() => {
@@ -358,8 +358,8 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -412,7 +412,7 @@ p.info {
   margin-top: 30px;
 }
 
-.el-form.api-info::v-deep {
+.el-form.api-info:deep {
   .el-form-item {
     margin-bottom: 0;
   }

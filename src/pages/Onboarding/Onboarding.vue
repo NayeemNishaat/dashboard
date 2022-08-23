@@ -39,7 +39,7 @@ export default {
   components: {
     LoaderDots,
     DcSteps,
-    DcStep,
+    DcStep
   },
   data() {
     const steps = ["signup", "intro", "setup", "billing"];
@@ -51,12 +51,12 @@ export default {
     return {
       steps,
       loading: false,
-      revenue: null,
+      revenue: null
     };
   },
   computed: {
     ...mapGetters(["client", "isLoggedIn"]),
-    ...mapGetters("onboarding", ["hasFinishedOnboarding"]),
+    ...mapGetters("onboarding", ["hasFinishedOnboarding"])
   },
   methods: {
     ...mapActions(["getContext", "setAccessToken"]),
@@ -69,18 +69,18 @@ export default {
       try {
         await this.setAccessToken({
           token: data.token,
-          auth_provider: "auth0",
+          auth_provider: "auth0"
         });
         await this.getContext();
         const platform = this.$route.params.platform;
         await this.$router.push({
           name: "onboarding-intro",
-          params: { platform },
+          params: { platform }
         });
       } catch (err) {
         Sentry.captureException(err);
       }
-    },
+    }
   },
   async mounted() {
     this.loading = true;
@@ -119,7 +119,7 @@ export default {
         const platform = this.$route.params.platform;
         await this.$router.push({
           name: "onboarding-intro",
-          params: { platform },
+          params: { platform }
         });
       }
     } catch (err) {
@@ -127,7 +127,7 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
+  }
 };
 </script>
 
@@ -140,7 +140,7 @@ export default {
   overflow: hidden;
   color: $dark;
 
-  ::v-deep {
+  :deep {
     h1 {
       margin: 0;
       font-family: inherit;
