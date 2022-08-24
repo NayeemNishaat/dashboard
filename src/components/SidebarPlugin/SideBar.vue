@@ -22,7 +22,8 @@
             :to="link.path"
             :name="$tc(link.name, 2)"
             :icon="link.icon"
-          ></sidebar-link>
+          >
+          </sidebar-link>
         </slot>
       </ul>
       <moving-arrow :move-y="arrowMovePx"></moving-arrow>
