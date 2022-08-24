@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <transition name="fade" mode="out-in">
         <!-- your content here -->
-        <router-view></router-view>
+        <router-view v-slot="{}"> </router-view>
       </transition>
     </div>
   </div>
