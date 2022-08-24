@@ -3,8 +3,8 @@ import ModuleState from "./state";
 import RootState from "../../state";
 // import Vue from "vue";
 //backend
-import { Http } from "@/http";
-import { AuthToken, SetupSummary } from "@/api/interfaces";
+import { Http } from "../../../http";
+import { AuthToken, SetupSummary } from "../../../api/interfaces";
 
 const actions: ActionTree<ModuleState, RootState> = {
   setAccessToken(

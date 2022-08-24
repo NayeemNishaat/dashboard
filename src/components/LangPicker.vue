@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import LangPickerIcon from "@/components/icons/LangPickerIcon.vue";
+import LangPickerIcon from "/src/components/icons/LangPickerIcon.vue";
 import { mapActions } from "vuex";
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .lang-picker {
   fill: $primary;

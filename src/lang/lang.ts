@@ -1,7 +1,7 @@
 // import Vue from "vue";
 // import VueI18n from "vue-i18n";
 import { createI18n } from "vue-i18n";
-import messages from "@/lang/messages";
+import messages from "./messages";
 // import ElementPlus from "element-plus";
 // import "element-ui/lib/theme-chalk/index.css";
 

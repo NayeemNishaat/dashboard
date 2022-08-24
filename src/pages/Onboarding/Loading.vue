@@ -34,18 +34,18 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import LoaderDots from "@/components/LoaderDots.vue";
-import DcButton from "@/components/DcButton.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import DcButton from "/src/components/DcButton.vue";
 export default {
   name: "Loading",
   components: {
     DcButton,
-    LoaderDots,
+    LoaderDots
   },
   data() {
     return {
       selectedClient: null,
-      selectedApikey: null,
+      selectedApikey: null
     };
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
           Sentry.captureException(err);
         }
       }
-    },
+    }
   },
   computed: {
     ...mapGetters(["client", "nextPage", "user", "context"]),
@@ -111,7 +111,7 @@ export default {
     },
     loading() {
       return !this.client?.apikey;
-    },
+    }
   },
   async mounted() {
     if (this.context?.client?.apikey) {
@@ -128,7 +128,7 @@ export default {
       console.error(err);
       Sentry.captureException(err);
     }
-  },
+  }
 };
 </script>
 <style scoped>

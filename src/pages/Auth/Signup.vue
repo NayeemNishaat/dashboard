@@ -21,14 +21,14 @@
               <div class="logo-container">
                 <img
                   class="logo"
-                  src="@/assets/img/datacue-logo-dark.svg"
+                  src="../../assets/img/datacue-logo-dark.svg"
                   alt
                 />
               </div>
               <div class="d-none d-lg-flex justify-content-center">
                 <img
                   class="supergirl"
-                  src="@/assets/img/sign-up/supergirl-layout-4-5.svg"
+                  src="../../assets/img/sign-up/supergirl-layout-4-5.svg"
                   alt
                 />
               </div>
@@ -70,7 +70,7 @@
                 <img
                   class="tick"
                   alt
-                  src="@/assets/img/sign-up/yellow-tick.svg"
+                  src="../../assets/img/sign-up/yellow-tick.svg"
                 />
                 <div class="other" v-if="platform === 'other'">
                   {{ $t("other") }}
@@ -120,7 +120,7 @@
             <div class="col-12 text-center d-lg-none">
               <img
                 class="supergirl-bottom"
-                src="@/assets/img/sign-up/supergirl-layout-1-2-3.svg"
+                src="../../assets/img/sign-up/supergirl-layout-1-2-3.svg"
                 alt
               />
             </div>
@@ -136,16 +136,16 @@
 </template>
 
 <script>
-import DcButton from "@/components/DcButton.vue";
-import LangPicker from "@/components/LangPicker.vue";
-import LangPickerMobile from "@/components/LangPickerMobile.vue";
+import DcButton from "../../components/DcButton.vue";
+import LangPicker from "../../components/LangPicker.vue";
+import LangPickerMobile from "../../components/LangPickerMobile.vue";
 
 export default {
   name: "login",
   components: {
     DcButton,
     LangPicker,
-    LangPickerMobile,
+    LangPickerMobile
   },
   data() {
     return {
@@ -154,7 +154,7 @@ export default {
       error: false,
       selectedPlatform: "",
       selectedLocale: {},
-      platforms: ["shopify", "magento", "woocommerce", "prestashop", "other"],
+      platforms: ["shopify", "magento", "woocommerce", "prestashop", "other"]
     };
   },
   methods: {
@@ -163,7 +163,7 @@ export default {
         left: idx % 2 == 0,
         right: idx % 2 == 1,
         "platform-container": true,
-        active: platform === this.selectedPlatform,
+        active: platform === this.selectedPlatform
       };
     },
     getPlatformImg(platform) {
@@ -180,12 +180,12 @@ export default {
       } else {
         this.$router.push({ name: name, params: { platform } });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "../../assets/sass/datacue/_colors.scss";
 
 .signup-page > .row {
   margin: 0px;

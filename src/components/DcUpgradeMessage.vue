@@ -9,7 +9,7 @@
   </dc-message-banner>
 </template>
 <script>
-import DcMessageBanner from "@/components/DcMessageBanner.vue";
+import DcMessageBanner from "/src/components/DcMessageBanner.vue";
 export default {
   name: "UpgradeMessage",
   components: {

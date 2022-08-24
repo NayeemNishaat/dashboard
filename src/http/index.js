@@ -3,8 +3,8 @@ import axios from "axios";
 import TinyEmitter from "tiny-emitter";
 import * as Sentry from "@sentry/browser";
 
-import store from "@/store";
-import router from "@/router/index";
+import store from "../store";
+import router from "../router/index";
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const API_VERSION = "v1";

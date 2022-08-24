@@ -1,5 +1,5 @@
 // import { app } from "@/main";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 
 // modules
 import onboarding from "./modules/onboarding";
@@ -14,7 +14,7 @@ import actions from "./actions";
 // app.use(Vuex as any);
 
 // configure Vuex
-export default new Vuex.Store({
+export default createStore({
   modules: {
     onboarding,
     settings

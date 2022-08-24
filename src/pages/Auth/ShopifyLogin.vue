@@ -8,23 +8,23 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import LoaderDots from "@/components/LoaderDots.vue";
+import LoaderDots from "../../components/LoaderDots.vue";
 export default {
   name: "ShopifyLogin",
   components: {
-    LoaderDots,
+    LoaderDots
   },
   data() {
     return {
-      error: false,
+      error: false
     };
   },
   computed: {
     ...mapGetters(["context"]),
-    ...mapGetters("onboarding", ["hasFinishedOnboarding"]),
+    ...mapGetters("onboarding", ["hasFinishedOnboarding"])
   },
   methods: {
-    ...mapActions(["getContext", "setAccessToken"]),
+    ...mapActions(["getContext", "setAccessToken"])
   },
   async mounted() {
     try {
@@ -36,15 +36,15 @@ export default {
       } else {
         this.$router.push({
           name: "onboarding",
-          params: { platform: "shopify" },
+          params: { platform: "shopify" }
         });
       }
     } catch (err) {
       Sentry.captureException(err);
       await this.$router.push({
-        name: "login-failed",
+        name: "login-failed"
       });
     }
-  },
+  }
 };
 </script>

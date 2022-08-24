@@ -1,6 +1,12 @@
 import { GetterTree } from "vuex";
-import { Client, User, Subscription, AuthToken, Context } from "@/api/interfaces";
-import { isTokenExpired } from "@/api/AuthService";
+import {
+  Client,
+  User,
+  Subscription,
+  AuthToken,
+  Context
+} from "../api/interfaces";
+import { isTokenExpired } from "../api/AuthService";
 import State from "./state";
 
 // GetterTree<[current state], [root state]>
@@ -12,7 +18,9 @@ const getters: GetterTree<State, State> = {
     return state.accessToken;
   },
   isLoggedIn(state: State): boolean | null {
-    return !!state.accessToken?.token && !isTokenExpired(state.accessToken?.token);
+    return (
+      !!state.accessToken?.token && !isTokenExpired(state.accessToken?.token)
+    );
   },
   languageCode(state: State): string {
     return state.languageCode;
@@ -33,11 +41,11 @@ const getters: GetterTree<State, State> = {
     return state.context?.client?.apikey || "";
   },
   trustedClient(state: State, getters): boolean {
-    return getters?.client?.type === "shopify"
+    return getters?.client?.type === "shopify";
   },
   subscription(state: State, getters): Subscription {
-    return state.context?.subscription || {} as Subscription;
-  },
+    return state.context?.subscription || ({} as Subscription);
+  }
 };
 
 export default getters;

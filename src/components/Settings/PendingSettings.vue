@@ -29,7 +29,7 @@
   </transition>
 </template>
 <script>
-import DcButton from "@/components/DcButton.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   name: "PendingSettings",

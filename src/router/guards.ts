@@ -1,6 +1,6 @@
 import multiguard from "vue-router-multiguard";
 import { NavigationGuard } from "vue-router";
-import store from "@/store/index";
+import store from "../store/index";
 
 function isLoggedIn() {
   return store.getters.isLoggedIn;

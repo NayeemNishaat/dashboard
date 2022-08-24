@@ -156,11 +156,14 @@
               <i class="el-icon-star-on" />
               {{ $t("recommended") }}
             </el-tag>
-            <img svg-inline src="@/assets/img/settings/layout-grid.svg" />
+            <img svg-inline src="../../assets/img/settings/layout-grid.svg" />
           </div>
           <div class="col-6">
             <el-radio label="slider">{{ $t("slider") }}</el-radio>
-            <img svg-inline src="@/assets/img/settings/layout-carousel.svg" />
+            <img
+              svg-inline
+              src="../../assets/img/settings/layout-carousel.svg"
+            />
           </div>
         </el-radio-group>
 
@@ -248,37 +251,37 @@
           <img
             v-if="current.pct_promote_discounts === 0"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-0.svg"
+            src="../../assets/img/settings/promote-discounts-0.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 40"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-40.svg"
+            src="../../assets/img/settings/promote-discounts-40.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 50"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-50.svg"
+            src="../../assets/img/settings/promote-discounts-50.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 70"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-70.svg"
+            src="../../assets/img/settings/promote-discounts-70.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 80"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-80.svg"
+            src="../../assets/img/settings/promote-discounts-80.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 90"
             svg-inline
-            src="@/assets/img/settings/promote-discounts-90.svg"
+            src="../../assets/img/settings/promote-discounts-90.svg"
           />
           <img
             v-else
             svg-inline
-            src="@/assets/img/settings/promote-discounts-0.svg"
+            src="../../assets/img/settings/promote-discounts-0.svg"
           />
         </div>
 
@@ -913,13 +916,13 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { supportedLanguages } from "@/lang/lang";
-import { nilDefaultsDeep } from "@/api/utils";
+import { supportedLanguages } from "../../lang/lang";
+import { nilDefaultsDeep } from "../../api/utils";
 
-import Card from "@/components/Cards/Card.vue";
-import PendingSettings from "@/components/Settings/PendingSettings.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
-import ProductsPreview from "@/components/ProductsPreview.vue";
+import Card from "../../components/Cards/Card.vue";
+import PendingSettings from "../../components/Settings/PendingSettings.vue";
+import LoaderDots from "../../components/LoaderDots.vue";
+import ProductsPreview from "../../components/ProductsPreview.vue";
 import {
   userGuideLinks,
   titlePlaceholders,
@@ -1093,7 +1096,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "../../assets/sass/datacue/_colors.scss";
 /* TODO: move this to global styles */
 .card > .card-header h3 {
   margin: 0;

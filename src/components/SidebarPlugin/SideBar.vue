@@ -8,7 +8,7 @@
       <div class="logo">
         <router-link to="/" class="simple-text">
           <div class="logo-img">
-            <img src="@/assets/img/datacue-logo.svg" alt />
+            <img src="../assets/img/datacue-logo.svg" alt />
           </div>
         </router-link>
       </div>

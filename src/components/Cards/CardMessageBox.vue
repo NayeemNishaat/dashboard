@@ -14,24 +14,24 @@
   </card>
 </template>
 <script>
-import Card from "@/components/Cards/Card.vue";
+import Card from "/src/components/Cards/Card.vue";
 export default {
   name: "CardNoData",
   components: {
-    Card,
+    Card
   },
   props: {
     title: String,
     icon: {
-      type: String,
+      type: String
     },
     type: {
       type: String,
       default: "default",
       validator: function (value) {
         return ["default", "success", "warning", "error"].indexOf(value) !== -1;
-      },
-    },
+      }
+    }
   },
   computed: {
     messageWidth() {
@@ -56,12 +56,12 @@ export default {
         default:
           return "";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 .message-banner-panel.success {
   i {
     color: $green;

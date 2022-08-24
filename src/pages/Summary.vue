@@ -48,11 +48,11 @@
                 data: conversionContribution,
                 backgroundColor: [
                   'rgba(243, 187, 69, 1)',
-                  'rgba(104, 179, 200, 1)',
-                ],
-              },
+                  'rgba(104, 179, 200, 1)'
+                ]
+              }
             ],
-            labels: ['DataCue', $t('other')],
+            labels: ['DataCue', $t('other')]
           }"
           :loading="loading"
           :chart-type="'Doughnut'"
@@ -65,15 +65,15 @@
                 left: 0,
                 right: 0,
                 top: 0,
-                bottom: 0,
-              },
+                bottom: 0
+              }
             },
             tooltips: {
               callbacks: {
                 label: (tooltipItem, data) =>
-                  data['datasets'][0]['data'][tooltipItem['index']] + '%',
-              },
-            },
+                  data['datasets'][0]['data'][tooltipItem['index']] + '%'
+              }
+            }
           }"
         ></chart-card>
       </div>
@@ -101,11 +101,11 @@
               yAxes: [
                 {
                   ticks: {
-                    beginAtZero: true,
-                  },
-                },
-              ],
-            },
+                    beginAtZero: true
+                  }
+                }
+              ]
+            }
           }"
         ></chart-card-metrics>
       </div>
@@ -114,14 +114,14 @@
 </template>
 
 <script>
-import ChartCard from "@/components/Cards/ChartCard.vue";
-import ChartCardMetrics from "@/components/Cards/ChartCardMetrics.vue";
-import StatsCard from "@/components/Cards/StatsCard.vue";
-import DateRangePicker from "@/components/DateRangePicker.vue";
+import ChartCard from "/src/components/Cards/ChartCard.vue";
+import ChartCardMetrics from "/src/components/Cards/ChartCardMetrics.vue";
+import StatsCard from "/src/components/Cards/StatsCard.vue";
+import DateRangePicker from "/src/components/DateRangePicker.vue";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import { getPageData } from "@/api/backend";
+import { getPageData } from "/src/api/backend";
 
 function pctChange(previous, today) {
   if (!previous) {
@@ -138,36 +138,36 @@ const emptyStats = [
     value: "0",
     comparison: "0",
     footer: "blocks of user activity",
-    nodata: true,
+    nodata: true
   },
   {
     title: "clicks",
     icon: "ti-mouse-alt",
     value: "0",
     comparison: "0",
-    footer: "recommendation clicks",
+    footer: "recommendation clicks"
   },
   {
     title: "conversions",
     icon: "ti-money",
     value: "0",
     comparison: "0",
-    footer: "recommendation sales",
-  },
+    footer: "recommendation sales"
+  }
 ];
 export default {
   components: {
     ChartCard,
     ChartCardMetrics,
     StatsCard,
-    DateRangePicker,
+    DateRangePicker
   },
   data() {
     return {
       error: false,
       loading: true,
       pageData: {},
-      statsCards: [],
+      statsCards: []
     };
   },
   computed: {
@@ -175,7 +175,7 @@ export default {
     ...mapGetters("settings", [
       "locale",
       "webSettings",
-      "installationSettings",
+      "installationSettings"
     ]),
     installationError() {
       if (!this.installationSettings.library) {
@@ -191,7 +191,7 @@ export default {
         return [0, 0];
       }
       return [chartData["dc"], chartData["other"]];
-    },
+    }
   },
   methods: {
     ...mapActions("settings", ["getPageInstallationSettings"]),
@@ -249,12 +249,12 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
   mounted() {
     this.statsCards = JSON.parse(JSON.stringify(emptyStats));
     this.refreshData(this.dateRange);
-  },
+  }
 };
 </script>
 <style scoped>

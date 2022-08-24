@@ -57,7 +57,7 @@
 </template>
 <script>
 import Card from "./Card.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 import { mapGetters } from "vuex";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 

@@ -37,7 +37,7 @@
   </footer>
 </template>
 <script>
-import { supportedLanguages } from "@/lang/lang";
+import { supportedLanguages } from "../../lang/lang";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -50,7 +50,9 @@ export default {
     ...mapGetters(["languageCode"]),
     currentLang() {
       let en = { code: "en", name: "English" }; // default
-      return this.languages.find(lang => lang.code === this.languageCode) || en;
+      return (
+        this.languages.find((lang) => lang.code === this.languageCode) || en
+      );
     }
   },
   methods: {

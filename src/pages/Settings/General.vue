@@ -120,7 +120,7 @@
                       v-for="separator in [
                         { name: $t('none'), value: '' },
                         { name: $t('space'), value: ' ' },
-                        { name: '.', value: '.' },
+                        { name: '.', value: '.' }
                       ]"
                       :key="separator.value"
                       :label="separator.name"
@@ -139,7 +139,7 @@
                     <el-option
                       v-for="placement in [
                         { name: $t('front'), value: 'front' },
-                        { name: $t('back'), value: 'back' },
+                        { name: $t('back'), value: 'back' }
                       ]"
                       :key="placement.value"
                       :label="placement.name"
@@ -162,7 +162,7 @@
                     <el-option
                       v-for="separator in [
                         { name: '.', value: '.' },
-                        { name: ',', value: ',' },
+                        { name: ',', value: ',' }
                       ]"
                       :key="separator.value"
                       :label="separator.name"
@@ -197,12 +197,12 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { getCountrySettings } from "@/api/backend";
+import { getCountrySettings } from "/src/api/backend";
 
-import Card from "@/components/Cards/Card.vue";
+import Card from "/src/components/Cards/Card.vue";
 
-import DcButton from "@/components/DcButton.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import DcButton from "/src/components/DcButton.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
 function currencyFormatString(format) {
   var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
@@ -259,7 +259,7 @@ export default {
   components: {
     Card,
     DcButton,
-    LoaderDots,
+    LoaderDots
   },
   data() {
     return {
@@ -277,8 +277,8 @@ export default {
       defaultCurrency: {
         code: "USD",
         format: "${{amount}}",
-        supported_codes: ["USD"],
-      },
+        supported_codes: ["USD"]
+      }
     };
   },
   computed: {
@@ -313,7 +313,7 @@ export default {
         return [];
       }
       let languages = this.currentCountry.languages || [
-        { iso639_1: "en", name: "English", nativeName: "English" },
+        { iso639_1: "en", name: "English", nativeName: "English" }
       ];
 
       return languages.map((lang) => {
@@ -322,7 +322,7 @@ export default {
           name:
             lang.name === lang.nativeName
               ? lang.name
-              : `${lang.nativeName} (${lang.name})`,
+              : `${lang.nativeName} (${lang.name})`
         };
       });
     },
@@ -390,7 +390,7 @@ export default {
         }
         countries.push({
           code: countryCode,
-          name: name,
+          name: name
         });
       });
       return countries;
@@ -400,7 +400,7 @@ export default {
         return "$1,500.00";
       }
       return formatPrice(1500, this.currency);
-    },
+    }
   },
   methods: {
     ...mapActions("settings", ["getWebSettings", "saveSettings"]),
@@ -416,13 +416,13 @@ export default {
         newProfile.locale["currency"] = this.currency;
         await this.saveSettings({
           profile: newProfile,
-          store_name: this.storeName,
+          store_name: this.storeName
         });
         this.setData();
         this.$notify({
           title: this.$t("success"),
           message: this.$t("saved"),
-          type: "success",
+          type: "success"
         });
       } catch (err) {
         Sentry.captureException(err);
@@ -486,7 +486,7 @@ export default {
       this.$notify({
         title: this.$t("could not save"),
         message: this.$t("an unknown error occured, please try again later"),
-        type: "warning",
+        type: "warning"
       });
       this.saving = false;
     },
@@ -525,10 +525,10 @@ export default {
           ? currency.placement
           : "front";
       }
-    },
+    }
   },
   async mounted() {
     await this.refreshData();
-  },
+  }
 };
 </script>

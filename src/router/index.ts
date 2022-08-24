@@ -1,5 +1,4 @@
 import { nextTick } from "vue";
-// import { app } from "@/main";
 import { createWebHistory, createRouter } from "vue-router";
 import routes from "./routes";
 // app.use(VueRouter as any);

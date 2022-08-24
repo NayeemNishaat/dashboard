@@ -8,13 +8,13 @@ import Vuex from "./store/index";
 import LoadScript from "vue-plugin-load-script";
 import Clipboard from "v-clipboard/src";
 import DataCueDashboard from "./plugins/datacueComponents";
-import Tawk from "@/plugins/tawk";
+import Tawk from "./plugins/tawk";
 // import Segment from "@/plugins/segment";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 // vuex setup
-import store from "@/store/index";
+import store from "./store/index";
 
 export const app = createApp(App as any);
 

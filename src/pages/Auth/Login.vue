@@ -19,24 +19,24 @@
 </template>
 
 <script>
-import { login } from "@/api/AuthService";
+import { login } from "/src/api/AuthService.ts";
 import { mapGetters } from "vuex";
-import DcButton from "@/components/DcButton.vue";
-import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
+import DcButton from "/src/components/DcButton.vue";
+import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
 export default {
   name: "login",
   components: {
     DcButton,
-    CardMessageBox,
+    CardMessageBox
   },
   computed: {
-    ...mapGetters(["languageCode", "client"]),
+    ...mapGetters(["languageCode", "client"])
   },
   methods: {
     auth0Login() {
       login(this.languageCode || "en", this.client.type, "personalization");
-    },
-  },
+    }
+  }
 };
 </script>
 

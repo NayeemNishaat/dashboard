@@ -28,31 +28,31 @@ export default {
         default:
           return "";
       }
-    },
+    }
   },
   props: {
     cardMode: {
       type: Boolean,
-      default: true,
+      default: true
     },
     icon: {
-      type: String,
+      type: String
     },
     type: {
       type: String,
       default: "default",
       validator: function (value) {
         return ["default", "success", "warning", "error"].indexOf(value) !== -1;
-      },
+      }
     },
     message: {
-      type: String,
-    },
-  },
+      type: String
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .message-banner-panel.success {
   > i {

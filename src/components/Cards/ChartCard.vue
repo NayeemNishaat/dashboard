@@ -66,10 +66,10 @@
 </template>
 <script>
 import Card from "./Card.vue";
-import DoughnutChart from "@/components/Charts/DoughnutChart.js";
-import LineChart from "@/components/Charts/LineChart.js";
-import BarChart from "@/components/Charts/BarChart.js";
-import LoaderDots from "@/components/LoaderDots.vue";
+import DoughnutChart from "/src/components/Charts/DoughnutChart.js";
+import LineChart from "/src/components/Charts/LineChart.js";
+import BarChart from "/src/components/Charts/BarChart.js";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
 export default {
   name: "chart-card",

@@ -28,17 +28,17 @@
 </template>
 
 <script>
-import LoaderDots from "@/components/LoaderDots.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
 export default {
   name: "DcButton",
   components: {
-    LoaderDots,
+    LoaderDots
   },
   props: {
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       type: String,
@@ -46,31 +46,31 @@ export default {
       validator: function (value) {
         // The value must match one of these strings
         return ["primary", "outline", "link", "circle"].indexOf(value) !== -1;
-      },
+      }
     },
     tag: {
       type: String,
-      default: "button",
+      default: "button"
     },
 
     href: {
-      type: String,
+      type: String
     },
     disabled: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
     handleClick(event) {
       this.$emit("click", event);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .dc-button {
   border: none;
