@@ -12,8 +12,8 @@
           </div>
         </router-link>
       </div>
-      <slot></slot>
       <ul class="nav">
+        <slot></slot>
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot name="links" data-id="sidebar:links">
           <sidebar-link
