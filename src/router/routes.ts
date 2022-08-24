@@ -1,74 +1,56 @@
 import { RouteConfig } from "vue-router";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
-const FeaturePage = () =>
-  import("@/layout/dashboard/FeaturePage.vue");
+const FeaturePage = () => import("@/layout/dashboard/FeaturePage.vue");
 
 //Onboarding
 import Loading from "@/pages/Onboarding/Loading.vue";
 const LegacyOnboarding = () =>
   import("@/pages/Onboarding/LegacyOnboarding.vue");
-const OnboardingOther = () =>
-  import("@/pages/Onboarding/OnboardingOther.vue");
+const OnboardingOther = () => import("@/pages/Onboarding/OnboardingOther.vue");
 
-const Onboarding = () =>
-  import("@/pages/Onboarding/Onboarding.vue");
+const Onboarding = () => import("@/pages/Onboarding/Onboarding.vue");
 
-const LoginError = () =>
-  import("@/pages/Auth/LoginError.vue");
+const LoginError = () => import("@/pages/Auth/LoginError.vue");
 
 const OnboardingSignup = () =>
   import("@/components/onboarding/OnboardingSignup.vue");
-const Intro = () =>
-  import("@/components/onboarding/Intro.vue");
-const Setup = () =>
-  import("@/components/onboarding/Setup.vue");
+const Intro = () => import("@/components/onboarding/Intro.vue");
+const Setup = () => import("@/components/onboarding/Setup.vue");
 const ActivateBillingPlan = () =>
   import("@/components/onboarding/ActivateBillingPlan.vue");
 
-const DeveloperSettings = () =>
-  import("@/pages/Settings/Developer.vue"
-  );
-const SetupSummary = () =>
-  import("@/pages/SetupSummary.vue");
+const DeveloperSettings = () => import("@/pages/Settings/Developer.vue");
+const SetupSummary = () => import("@/pages/SetupSummary.vue");
 
 // GeneralViews
-const NotFound = () =>
-  import("@/pages/NotFoundPage.vue");
+const NotFound = () => import("@/pages/NotFoundPage.vue");
 
 import Summary from "@/pages/Summary.vue";
 
-const Billing = () =>
-  import("@/pages/Billing/Billing.vue");
+const Billing = () => import("@/pages/Billing/Billing.vue");
 
-const UpgradePlan = () =>
-  import("@/pages/Billing/UpgradePlan.vue");
+const UpgradePlan = () => import("@/pages/Billing/UpgradePlan.vue");
 
 //settings
 import SettingsPanel from "@/pages/Settings/Panel.vue";
 import GeneralSettings from "@/pages/Settings/General.vue";
 
 //banners
-const BannerForm = () =>
-  import("@/pages/Banners/BannerForm.vue");
+const BannerForm = () => import("@/pages/Banners/BannerForm.vue");
 import BannerSettings from "@/pages/Settings/Banner.vue";
 
-const ViewBanners = () =>
-  import("@/pages/Banners/ViewBanners.vue"
-  );
+const ViewBanners = () => import("@/pages/Banners/ViewBanners.vue");
 
 //products
-const ViewProducts = () =>
-  import("@/pages/Products/ViewProducts.vue");
+const ViewProducts = () => import("@/pages/Products/ViewProducts.vue");
 import ProductSettings from "@/pages/Settings/Product.vue";
 
 //notifications
 const ViewNotifications = () =>
   import("@/pages/Notifications/ViewNotifications.vue");
-const NotificationSettings = () =>
-  import("@/pages/Settings/Notification.vue");
+const NotificationSettings = () => import("@/pages/Settings/Notification.vue");
 
-const CategorySettings = () =>
-  import("@/pages/Settings/Category.vue");
+const CategorySettings = () => import("@/pages/Settings/Category.vue");
 
 // authentication
 import Login from "@/pages/Auth/Login.vue";
@@ -159,7 +141,7 @@ const routes: Array<RouteConfig> = [
         name: "onboarding-other",
         component: OnboardingOther,
         beforeEnter: ifOnboarding,
-        props: route => {
+        props: (route) => {
           if (route.query.platform) {
             return { platform: route.query.platform };
           }

@@ -1,11 +1,11 @@
 import { User } from "@/api/interfaces";
 import _Vue from "vue";
-import { PluginObject } from "vue";
+// import { PluginObject } from "vue";
 
-const Tawk = {} as PluginObject<any>;
-Tawk.install = function (Vue: typeof _Vue, options?: any) {
-  Vue.prototype.$Tawk = {};
-  Vue.prototype.$Tawk.$createChat = function () {
+const Tawk = {} as any;
+Tawk.install = function (app: any, options?: any) {
+  app.config.globalProperties.$Tawk = {};
+  app.config.globalProperties.$Tawk.$createChat = function () {
     const Tawk_API = {};
     // const Tawk_LoadStart = new Date();
     const s1 = document.createElement("script") as HTMLScriptElement;
@@ -19,7 +19,7 @@ Tawk.install = function (Vue: typeof _Vue, options?: any) {
     }
     (window as any).Tawk_API = Tawk_API;
   };
-  Vue.prototype.$Tawk.$createChat();
+  app.config.globalProperties.$Tawk.$createChat();
   const updateUser = function (user: User, token: string) {
     try {
       if (!user || !user.first_name || !user.email || !token) {
@@ -42,18 +42,18 @@ Tawk.install = function (Vue: typeof _Vue, options?: any) {
       updateUser(user, token);
     }, 2000);
   };
-  Vue.prototype.$Tawk.$updateChatUser = updateUser;
+  app.config.globalProperties.$Tawk.$updateChatUser = updateUser;
 
-  Vue.prototype.$Tawk.$endChat = function () {
+  app.config.globalProperties.$Tawk.$endChat = function () {
     (window as any).Tawk_API.endChat();
   };
-  Vue.prototype.$Tawk.$hideWidget = function () {
+  app.config.globalProperties.$Tawk.$hideWidget = function () {
     (window as any).Tawk_API.hideWidget();
   };
-  Vue.prototype.$Tawk.$showWidget = function () {
+  app.config.globalProperties.$Tawk.$showWidget = function () {
     (window as any).Tawk_API.showWidget();
   };
-  Vue.prototype.$Tawk.$isInit = function () {
+  app.config.globalProperties.$Tawk.$isInit = function () {
     if ((window as any).Tawk_API) {
       return true;
     }

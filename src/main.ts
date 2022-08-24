@@ -2,10 +2,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
+import Vuex from "./store/index";
 // import VueCompositionAPI from "@vue/composition-api";
 
 import LoadScript from "vue-plugin-load-script";
-import Clipboard from "v-clipboard";
+import Clipboard from "v-clipboard/src";
 import DataCueDashboard from "./plugins/datacueComponents";
 import Tawk from "@/plugins/tawk";
 // import Segment from "@/plugins/segment";
@@ -15,7 +16,7 @@ import { Integrations } from "@sentry/tracing";
 // vuex setup
 import store from "@/store/index";
 
-const app = createApp(App as any);
+export const app = createApp(App as any);
 
 const sentryDSN = import.meta.env.VITE_APP_SENTRY_DSN;
 if (sentryDSN) {
@@ -66,7 +67,7 @@ app.use(ElementPlus, {
   i18n
   // i18n: (key: string, value: string) => i18n.t(key, value)
 });
-
+app.use(Vuex);
 app.use(DataCueDashboard);
 app.use(Clipboard);
 app.use(LoadScript);
@@ -82,6 +83,6 @@ app.use(Tawk, {
 
 /* eslint-disable no-new */
 app.use(i18n);
-app.use(router);
+// app.use(router);
 app.use(store);
 app.mount("#app");

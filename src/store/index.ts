@@ -1,4 +1,4 @@
-import Vue from "vue";
+// import { app } from "@/main";
 import Vuex from "vuex";
 
 // modules
@@ -11,7 +11,7 @@ import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
 
-Vue.use(Vuex);
+// app.use(Vuex as any);
 
 // configure Vuex
 export default new Vuex.Store({

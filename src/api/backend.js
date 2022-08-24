@@ -1,13 +1,14 @@
 import axios from "axios";
 import { Http } from "@/http";
-import Vue from "vue";
+// import Vue from "vue";
+import TinyEmitter from "tiny-emitter";
 import * as Sentry from "@sentry/browser";
 
 import store from "@/store/index";
 import router from "@/router/index";
 
 // event bus setup
-const bus = new Vue();
+const bus = new TinyEmitter();
 
 const BACKEND = import.meta.env.VITE_APP_BACKEND_URL;
 
@@ -26,12 +27,12 @@ function updateAuthHeader(token) {
 }
 
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error && error.response && error.response.status === 401) {
-      bus.$emit("errors:401");
+      bus.emit("errors:401");
       return Promise.reject(new Error("token expired"));
     }
     Sentry.captureException(error);
@@ -39,7 +40,7 @@ axios.interceptors.response.use(
   }
 );
 
-bus.$on("errors:401", () => {
+bus.on("errors:401", () => {
   store.dispatch("logout");
 });
 
@@ -48,28 +49,28 @@ export function getPageData(pagename, config) {
   return new Promise((resolve, reject) => {
     axios
       .get(pagename, { headers, ...config })
-      .then(response => resolve(response.data))
-      .catch(error => reject(error));
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error));
   });
 }
 
 export function GetCategories() {
   return new Promise((resolve, reject) => {
     Http.get("categories")
-      .then(response => {
+      .then((response) => {
         resolve(response.data);
       })
-      .catch(error => reject(error));
+      .catch((error) => reject(error));
   });
 }
 
 export function DeactivateCategories(categories) {
   return new Promise((resolve, reject) => {
     Http.patch("categories", categories)
-      .then(response => {
+      .then((response) => {
         resolve(response);
       })
-      .catch(error => reject(error));
+      .catch((error) => reject(error));
   });
 }
 
@@ -115,8 +116,8 @@ export function deleteBanner(bannerId) {
       data: "",
       headers
     })
-    .then(response => response)
-    .catch(error => error);
+    .then((response) => response)
+    .catch((error) => error);
 }
 
 export function updateBanner(bannerid, banner) {
@@ -141,8 +142,8 @@ export function deleteImage(bannerId) {
       data: "",
       headers
     })
-    .then(response => response)
-    .catch(error => error);
+    .then((response) => response)
+    .catch((error) => error);
 }
 
 export function setHelpWidgetPosition(data) {
@@ -167,24 +168,24 @@ export function preSign(uploadType, fileName, contentType) {
   }
   return axios
     .post(`uploads/presign`, { uploadType, fileName, contentType }, { headers })
-    .then(response => response.data)
-    .catch(error => error);
+    .then((response) => response.data)
+    .catch((error) => error);
 }
 
 export function getImages() {
   const headers = updateAuthHeader();
   return axios
     .get(`uploads`, { headers })
-    .then(response => response.data)
-    .catch(error => error);
+    .then((response) => response.data)
+    .catch((error) => error);
 }
 
 export function getCountrySettings() {
   const headers = updateAuthHeader();
   return axios
     .get(`countrylocales`, { headers })
-    .then(response => response.data)
-    .catch(error => error);
+    .then((response) => response.data)
+    .catch((error) => error);
 }
 
 function genUniqueFileName(curName) {

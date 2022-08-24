@@ -1,5 +1,6 @@
 import axios from "axios";
-import Vue from "vue";
+// import Vue from "vue";
+import TinyEmitter from "tiny-emitter";
 import * as Sentry from "@sentry/browser";
 
 import store from "@/store";
@@ -7,7 +8,7 @@ import router from "@/router/index";
 
 const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
 const API_VERSION = "v1";
-const BUS = new Vue();
+const BUS = new TinyEmitter();
 
 export const Http = axios.create({
   baseURL: `${BACKEND_URL}/${API_VERSION}`,
@@ -34,12 +35,12 @@ Http.interceptors.request.use(
 );
 
 Http.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error && error.response && error.response.status === 401) {
-      BUS.$emit("errors:401");
+      BUS.emit("errors:401");
       return Promise.reject(new Error("token expired"));
     }
     Sentry.captureException(error);
@@ -47,7 +48,7 @@ Http.interceptors.response.use(
   }
 );
 
-BUS.$on("errors:401", () => {
+BUS.on("errors:401", () => {
   store.dispatch("logout").then(() => {
     router.push({ name: "login" });
   });

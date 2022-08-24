@@ -15,9 +15,9 @@ import "@/assets/css/fa-regular.css";
 import "@/assets/css/datacue-fonts.css";
 
 export default {
-  install(Vue) {
-    Vue.use(GlobalComponents);
-    Vue.use(GlobalDirectives);
-    Vue.use(SideBar);
+  install(app) {
+    app.use(GlobalComponents);
+    app.use(GlobalDirectives);
+    app.use(SideBar);
   }
 };
