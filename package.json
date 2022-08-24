@@ -40,7 +40,7 @@
     "vue-i18n": "^9.2.2",
     "vue-password-strength-meter": "^1.7.2",
     "vue-plugin-load-script": "^2.1.1",
-    "vue-router": "^3.5.2",
+    "vue-router": "^4.1.4",
     "vue-router-multiguard": "^1.0.3",
     "vue3-click-away": "^1.2.4",
     "vuex": "^4.0.2",

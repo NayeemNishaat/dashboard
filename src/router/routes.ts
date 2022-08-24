@@ -1,4 +1,4 @@
-import { RouteConfig } from "vue-router";
+// import { RouteConfig } from "vue-router";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 const FeaturePage = () => import("@/layout/dashboard/FeaturePage.vue");
 
@@ -74,7 +74,7 @@ const createUpgradeRoute = (feature: string) => ({
   props: { feature }
 });
 
-const routes: Array<RouteConfig> = [
+const routes: any = [
   {
     path: "/login",
     name: "login",
@@ -350,7 +350,8 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
-    path: "*",
+    // path: "*",
+    path: "/:pathMatch(.*)*",
     name: "not-found",
     component: NotFound,
     meta: {

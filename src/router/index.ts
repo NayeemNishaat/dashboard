@@ -1,12 +1,13 @@
 import { nextTick } from "vue";
 // import { app } from "@/main";
-import VueRouter from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 import routes from "./routes";
 // app.use(VueRouter as any);
 
 // configure router
-const router = new VueRouter({
-  mode: "history",
+const router = createRouter({
+  // mode: "history",
+  history: createWebHistory(),
   routes, // short for routes: routes
   linkActiveClass: "active"
 });

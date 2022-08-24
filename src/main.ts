@@ -83,6 +83,6 @@ app.use(Tawk, {
 
 /* eslint-disable no-new */
 app.use(i18n);
-// app.use(router);
+app.use(router as any);
 app.use(store);
 app.mount("#app");
