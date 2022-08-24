@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
+import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
 
 export default {
   name: "LoginError",

@@ -175,12 +175,12 @@ import * as Sentry from "@sentry/browser";
 import { differenceInCalendarDays, subDays, format, parseISO } from "date-fns";
 import { mapGetters, mapActions } from "vuex";
 
-import PricingPlans from "@/components/Billing/PricingPlans.vue";
-import Card from "@/components/Cards/Card.vue";
-import DcButton from "@/components/DcButton.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import PricingPlans from "/src/components/Billing/PricingPlans.vue";
+import Card from "/src/components/Cards/Card.vue";
+import DcButton from "/src/components/DcButton.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
-import { getPageData, selectPlan } from "@/api/backend";
+import { getPageData, selectPlan } from "/src/api/backend";
 
 export default {
   name: "Billing",
@@ -188,7 +188,7 @@ export default {
     Card,
     DcButton,
     PricingPlans,
-    LoaderDots,
+    LoaderDots
   },
   data() {
     return {
@@ -204,7 +204,7 @@ export default {
       last30DaysConversions: 0,
       availablePlans: [],
       chargebee: null,
-      paymentsConfigured: null,
+      paymentsConfigured: null
     };
   },
   computed: {
@@ -283,9 +283,9 @@ export default {
       return {
         name: this.availablePlans[best].name,
         betterThan: best ? this.availablePlans[best - 1].name : null,
-        betterBy: best ? cost(best - 1) - cost(best) : null,
+        betterBy: best ? cost(best - 1) - cost(best) : null
       };
-    },
+    }
   },
   methods: {
     ...mapActions(["setBillingAccess"]),
@@ -309,7 +309,7 @@ export default {
           close: () => {
             this.chargebee.logout();
             this.refreshData();
-          },
+          }
         }
       );
     },
@@ -339,7 +339,7 @@ export default {
         message: this.$t(
           !msg ? "an unknown error occured, please try again later" : msg
         ),
-        type: "error",
+        type: "error"
       });
     },
     async selectPlan(plan) {
@@ -351,14 +351,14 @@ export default {
           this.$alert(
             this.$t("would you like to switch to {plan} at {price}", {
               plan: plan.name,
-              price: plan.price,
+              price: plan.price
             }),
             this.$t("activate subscription"),
             {
               showCancelButton: true,
               cancelButtonText: this.$t("cancel"),
               confirmButtonClass: "el-button--warning",
-              confirmButtonText: this.$t("confirm"),
+              confirmButtonText: this.$t("confirm")
             }
           ).catch(() => (skip = true));
         }
@@ -376,7 +376,7 @@ export default {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("plan updated"),
-            type: "success",
+            type: "success"
           });
           return;
         }
@@ -392,7 +392,7 @@ export default {
             showCancelButton: true,
             cancelButtonText: this.$t("cancel"),
             confirmButtonClass: "el-button--warning",
-            confirmButtonText: this.$t("open admin panel"),
+            confirmButtonText: this.$t("open admin panel")
           }
         )
           .then(() => {
@@ -456,18 +456,18 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    },
+    }
   },
   mounted() {
     this.$loadScript("https://js.chargebee.com/v2/chargebee.js").then(() => {
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       this.refreshData();
     });
-  },
+  }
 };
 </script>
 

@@ -5,7 +5,7 @@
   "description": "The main DataCue dashboard where clients can manage their personalization campaigns.",
   "author": "Shahram Anver <shahram@datacue.co>",
   "scripts": {
-    "serve": "vite --open --mode development",
+    "serve": "vite --open --mode development --port 8080",
     "preview": "vite preview --open --port 8080",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",

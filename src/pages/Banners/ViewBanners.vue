@@ -25,7 +25,7 @@
           v-if="tooManyBanners"
           :message="
             $t('reached plan limit of n banners. upgrade to add more.', {
-              count: bannerLimit,
+              count: bannerLimit
             })
           "
         />
@@ -65,13 +65,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
-import CardGrid from "@/components/Cards/CardGrid.vue";
-import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
-import DcButton from "@/components/DcButton.vue";
-import DateRangePicker from "@/components/DateRangePicker.vue";
-import DcUpgradeMessage from "@/components/DcUpgradeMessage.vue";
+import CardGrid from "/src/components/Cards/CardGrid.vue";
+import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
+import DcButton from "/src/components/DcButton.vue";
+import DateRangePicker from "/src/components/DateRangePicker.vue";
+import DcUpgradeMessage from "/src/components/DcUpgradeMessage.vue";
 
-import { getPageData, deleteBanner } from "@/api/backend";
+import { getPageData, deleteBanner } from "/src/api/backend";
 
 export default {
   name: "ViewBanners",
@@ -80,7 +80,7 @@ export default {
     CardMessageBox,
     DcButton,
     DateRangePicker,
-    DcUpgradeMessage,
+    DcUpgradeMessage
   },
   data() {
     return {
@@ -88,7 +88,7 @@ export default {
       banners: { main: [], sub: [] },
       staticBannerError: false,
       loading: false,
-      error: false,
+      error: false
     };
   },
   computed: {
@@ -126,12 +126,12 @@ export default {
     },
     bannerLayout() {
       return this.webSettings?.recommendations?.banners?.type || "";
-    },
+    }
   },
   methods: {
     ...mapActions("settings", [
       "getWebSettings",
-      "getPageInstallationSettings",
+      "getPageInstallationSettings"
     ]),
     getBannerLabel(type) {
       let labels = ["wide", "narrow"];
@@ -177,7 +177,7 @@ export default {
         [
           await getBanners,
           await getPageInstallationSettings,
-          await getWebSettings,
+          await getWebSettings
         ];
       } catch (err) {
         Sentry.captureException(err);
@@ -192,13 +192,13 @@ export default {
       this.$notify({
         title: this.$t("error"),
         message: this.$t(errorMsg),
-        type: "warning",
+        type: "warning"
       });
     },
     editBanner(bannerDetails) {
       this.$router.push({
         name: "edit banner",
-        params: { bannerid: bannerDetails.banner_id },
+        params: { bannerid: bannerDetails.banner_id }
       });
     },
     delBannerCard(bannerID, bannerType) {
@@ -220,13 +220,13 @@ export default {
           message: this.$t(
             "we could not delete the banner, please try again later"
           ),
-          type: "warning",
+          type: "warning"
         });
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
-  },
+  }
 };
 </script>

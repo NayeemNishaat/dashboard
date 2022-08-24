@@ -83,11 +83,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import BannerCard from "@/components/Cards/BannerCard.vue";
-import ProductCard from "@/components/Cards/ProductCard.vue";
-import Card from "@/components/Cards/Card.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
-import DcButton from "@/components/DcButton.vue";
+import BannerCard from "/src/components/Cards/BannerCard.vue";
+import ProductCard from "/src/components/Cards/ProductCard.vue";
+import Card from "/src/components/Cards/Card.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   name: "CardGrid",
@@ -126,7 +126,7 @@ export default {
         return this.cards;
       }
 
-      let cards = this.cards.filter(item => {
+      let cards = this.cards.filter((item) => {
         let searchstring = this.getSearchString(item);
         return searchstring.toLowerCase().includes(this.filter.toLowerCase());
       });

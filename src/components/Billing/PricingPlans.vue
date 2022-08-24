@@ -27,14 +27,14 @@
                 <li>
                   {{
                     $t(`n dynamic banners`, {
-                      count: plan.products.banners.banner_limit,
+                      count: plan.products.banners.banner_limit
                     })
                   }}
                 </li>
                 <li>
                   {{
                     $t(`n banner layouts`, {
-                      count: plan.products.banners.allowed_layouts.length,
+                      count: plan.products.banners.allowed_layouts.length
                     })
                   }}
                 </li>
@@ -51,7 +51,7 @@
                     'related',
                     'top',
                     'user_related_categories',
-                    'similar',
+                    'similar'
                   ].filter((elem) => plan.products.products[elem])"
                   :key="idx"
                 >
@@ -64,7 +64,7 @@
                     amount: +(
                       (+plan.commission_percent / 100) *
                       +plan.commission_threshold
-                    ),
+                    )
                   })
                 }}
               </p>
@@ -96,14 +96,14 @@
   </div>
 </template>
 <script>
-import PricingCard from "@/components/Cards/PricingCard.vue";
-import DcButton from "@/components/DcButton.vue";
+import PricingCard from "/src/components/Cards/PricingCard.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   name: "PricingPlans",
   components: {
     PricingCard,
-    DcButton,
+    DcButton
   },
   computed: {
     currentPlanName() {
@@ -111,26 +111,26 @@ export default {
     },
     currentPlanId() {
       return this.currentPlan && this.currentPlan.plan_id;
-    },
+    }
   },
   methods: {
     selectPlan(plan) {
       this.$emit("selectplan", plan);
-    },
+    }
   },
   props: {
     availablePlans: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     disablePlanSelection: {
       type: Boolean,
-      default: false,
+      default: false
     },
     currentPlan: {
-      type: Object,
-    },
-  },
+      type: Object
+    }
+  }
 };
 </script>
 <style scoped>
@@ -152,7 +152,7 @@ export default {
 .plan-product-list li {
   list-style: none;
   padding-left: 2em;
-  background: url("@/assets/img/tick.svg") center left / 1em 1em no-repeat;
+  background: url("/src/assets/img/tick.svg") center left / 1em 1em no-repeat;
 }
 
 .plan-price {
