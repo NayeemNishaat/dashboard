@@ -9,6 +9,7 @@
   "author": "shahram@datacue.co",
   "license": "ISC",
   "dependencies": {
+    "element-plus": "^2.2.14",
     "jsonwebtoken": "^8.5.1"
   }
 }

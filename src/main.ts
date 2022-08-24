@@ -60,13 +60,9 @@ if (sentryDSN) {
 // Element and Vue i18n setup
 import { i18n } from "./lang/lang";
 import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
-// createApp(App).mount("#app");
-
-app.use(ElementPlus, {
-  i18n
-  // i18n: (key: string, value: string) => i18n.t(key, value)
-});
+app.use(ElementPlus);
 app.use(Vuex);
 app.use(DataCueDashboard);
 app.use(Clipboard);
@@ -81,7 +77,6 @@ app.use(Tawk, {
 
 // app.config.productionTip = false;
 
-/* eslint-disable no-new */
 app.use(i18n);
 app.use(router as any);
 app.use(store);

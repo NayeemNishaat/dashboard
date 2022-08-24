@@ -10,7 +10,8 @@ module.exports = {
           ...options,
           compilerOptions: {
             compatConfig: {
-              MODE: 3
+              MODE: 3,
+              COMPONENT_V_MODEL: false
             }
           }
         };
