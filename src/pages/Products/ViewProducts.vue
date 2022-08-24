@@ -4,8 +4,13 @@
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="productFilter">
-          <el-tab-pane v-for="section in allSections" :key="section" :name="section" :label="$t(section)">
-        </el-tab-pane>
+          <el-tab-pane
+            v-for="section in allSections"
+            :key="section"
+            :name="section"
+            :label="$t(section)"
+          >
+          </el-tab-pane>
         </el-tabs>
         <card-grid
           :loading="loading"
@@ -18,10 +23,10 @@
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
-import CardGrid from "@/components/Cards/CardGrid.vue";
-import DateRangePicker from "@/components/DateRangePicker.vue";
+import CardGrid from "/src/components/Cards/CardGrid.vue";
+import DateRangePicker from "/src/components/DateRangePicker.vue";
 import { mapGetters } from "vuex";
-import { getPageData } from "@/api/backend";
+import { getPageData } from "/src/api/backend";
 export default {
   components: {
     CardGrid,
@@ -30,7 +35,14 @@ export default {
   data() {
     return {
       productFilter: "recent",
-      allSections:["recent","related","user_related","user_related_categories","top","similar"],
+      allSections: [
+        "recent",
+        "related",
+        "user_related",
+        "user_related_categories",
+        "top",
+        "similar"
+      ],
       productPerf: [],
       loading: true,
       error: false
@@ -40,7 +52,7 @@ export default {
     ...mapGetters(["dateRange"]),
     allProducts() {
       let allProducts = {};
-      this.productPerf.forEach(e => {
+      this.productPerf.forEach((e) => {
         allProducts[e.section_type] = e.products;
       });
       return allProducts;

@@ -43,11 +43,11 @@
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
-import CardGrid from "@/components/Cards/CardGrid.vue";
-import DateRangePicker from "@/components/DateRangePicker.vue";
-import StatsCard from "@/components/Cards/StatsCard.vue";
+import CardGrid from "/src/components/Cards/CardGrid.vue";
+import DateRangePicker from "/src/components/DateRangePicker.vue";
+import StatsCard from "/src/components/Cards/StatsCard.vue";
 import { mapGetters } from "vuex";
-import { getPageData } from "@/api/backend";
+import { getPageData } from "/src/api/backend";
 export default {
   components: {
     CardGrid,
@@ -92,7 +92,7 @@ export default {
     ...mapGetters(["dateRange"]),
     allNotifications() {
       let allNotifications = {};
-      this.notificationsPerf.forEach(e => {
+      this.notificationsPerf.forEach((e) => {
         allNotifications[e.reason] = e.notifications;
       });
       return allNotifications;
@@ -123,7 +123,7 @@ export default {
           //calculate card data from response
           let dbCards = response.cards || {};
           let newCards = [];
-          this.statsCards.forEach(e => {
+          this.statsCards.forEach((e) => {
             e.value = dbCards[e.title].toString();
             newCards.push(e);
           });
