@@ -6,7 +6,7 @@ import {
   HomepageSettings,
   WebSettings,
   Context
-} from "@/api/interfaces";
+} from "/src/api/interfaces";
 
 const getters: GetterTree<ModuleState, RootState> = {
   setupSummary(
@@ -87,7 +87,7 @@ const getters: GetterTree<ModuleState, RootState> = {
   },
   finishedSteps(state: ModuleState, getters): number {
     return getters.stepsKeys
-      .map(elem => {
+      .map((elem) => {
         let step = getters.setupSummary[elem];
         switch (elem) {
           case "bannersUploaded":

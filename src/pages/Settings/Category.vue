@@ -59,16 +59,16 @@
 </template>
 
 <script>
-import Card from "@/components/Cards/Card.vue";
-import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
-import PendingSettings from "@/components/Settings/PendingSettings.vue";
+import Card from "/src/components/Cards/Card.vue";
+import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
+import PendingSettings from "/src/components/Settings/PendingSettings.vue";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
-import LoaderDots from "@/components/LoaderDots.vue";
-import MultiSelectTable from "@/components/table/MultiSelect.vue";
-import { GetCategories, DeactivateCategories } from "@/api/backend";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import MultiSelectTable from "/src/components/table/MultiSelect.vue";
+import { GetCategories, DeactivateCategories } from "/src/api/backend";
 
 export default {
   name: "Category",
@@ -104,8 +104,8 @@ export default {
         //to process changes
         await DeactivateCategories(
           this.current
-            .filter(elem => !elem.active)
-            .map(elem => elem.category_id)
+            .filter((elem) => !elem.active)
+            .map((elem) => elem.category_id)
         );
         let resp = await GetCategories();
         this.lastSaved = cloneDeep(resp || []);
@@ -117,12 +117,12 @@ export default {
       }
     },
     handleSelect(id) {
-      let toggleActive = item => {
+      let toggleActive = (item) => {
         item.active = !item.active;
         return item;
       };
       try {
-        this.current[id] = this.current.map(item => {
+        this.current[id] = this.current.map((item) => {
           item.category_id === id ? toggleActive(item) : item;
         });
       } catch (err) {

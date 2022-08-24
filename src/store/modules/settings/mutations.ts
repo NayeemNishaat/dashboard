@@ -1,7 +1,7 @@
 import { MutationTree } from "vuex";
 
 //interfaces
-import { PageInstallationSettings } from "@/api/interfaces";
+import { PageInstallationSettings } from "/src/api/interfaces";
 
 import ModuleState from "./state";
 

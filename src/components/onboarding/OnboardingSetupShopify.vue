@@ -10,7 +10,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:home')"
-              src="@/assets/img/sign-up/slideshow/home.svg"
+              src="/src/assets/img/sign-up/slideshow/home.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:home") }}</p>
@@ -27,7 +27,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:category')"
-              src="@/assets/img/sign-up/slideshow/category.svg"
+              src="/src/assets/img/sign-up/slideshow/category.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:category") }}</p>
@@ -44,7 +44,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:product')"
-              src="@/assets/img/sign-up/slideshow/product.svg"
+              src="/src/assets/img/sign-up/slideshow/product.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:product") }}</p>
@@ -61,7 +61,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:cart')"
-              src="@/assets/img/sign-up/slideshow/cart.svg"
+              src="/src/assets/img/sign-up/slideshow/cart.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:cart") }}</p>
@@ -78,7 +78,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:search')"
-              src="@/assets/img/sign-up/slideshow/search.svg"
+              src="/src/assets/img/sign-up/slideshow/search.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:search") }}</p>
@@ -95,7 +95,7 @@
           <div class="page-features">
             <img
               :alt="$t('page:404')"
-              src="@/assets/img/sign-up/slideshow/404.svg"
+              src="/src/assets/img/sign-up/slideshow/404.svg"
             />
             <div class="feature-list">
               <p>{{ $t("page:404") }}</p>
@@ -131,8 +131,8 @@
 </template>
 
 <script>
-import DcButton from "@/components/DcButton.vue";
-import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
+import DcButton from "/src/components/DcButton.vue";
+import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
 
 export default {
   name: "OnboardingSetupShopify",
@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .carousel {
   height: 100%;

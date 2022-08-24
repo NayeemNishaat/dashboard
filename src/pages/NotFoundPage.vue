@@ -6,7 +6,7 @@
 
 <script>
 import * as Sentry from "@sentry/browser";
-import LoaderDots from "@/components/LoaderDots.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
 export default {
   name: "NotFound",

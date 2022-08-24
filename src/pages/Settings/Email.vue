@@ -122,8 +122,8 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 
-import Card from "@/components/Cards/Card.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import Card from "/src/components/Cards/Card.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 import * as Sentry from "@sentry/browser";
 
 export default {

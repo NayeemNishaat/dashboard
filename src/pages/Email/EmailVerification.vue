@@ -4,13 +4,13 @@
       <h1>
         <img
           class="logo"
-          src="@/assets/img/datacue-logo-dark.svg"
+          src="/src/assets/img/datacue-logo-dark.svg"
           alt="DataCue"
         />
       </h1>
       <img
         class="supergirl"
-        src="@/assets/img/sign-up/supergirl-layout-4-5.svg"
+        src="/src/assets/img/sign-up/supergirl-layout-4-5.svg"
         alt=""
       />
     </header>
@@ -39,9 +39,9 @@ export default {
   props: {
     verified: {
       type: Boolean,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
@@ -54,7 +54,7 @@ export default {
   @media (min-width: 992px) {
     flex-flow: row nowrap;
     overflow-y: hidden;
-    background: url("@/assets/img/sign-up/yellow-background-layout-5.svg")
+    background: url("/src/assets/img/sign-up/yellow-background-layout-5.svg")
       no-repeat center center / cover;
   }
 }
@@ -66,7 +66,7 @@ header {
   height: 53vw;
   max-height: 200px;
   text-align: center;
-  background: url("@/assets/img/sign-up/yellow-background-layout-1-2-3.svg")
+  background: url("/src/assets/img/sign-up/yellow-background-layout-1-2-3.svg")
     no-repeat center center / cover;
 
   @media (min-width: 576px) {

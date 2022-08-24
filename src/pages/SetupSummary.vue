@@ -240,11 +240,11 @@
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
-import LoadingCircle from "@/components/LoadingCircle.vue";
+import LoadingCircle from "/src/components/LoadingCircle.vue";
 import { mapGetters, mapActions } from "vuex";
 
-import Card from "@/components/Cards/Card.vue";
-import DcButton from "@/components/DcButton.vue";
+import Card from "/src/components/Cards/Card.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   components: {

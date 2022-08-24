@@ -59,21 +59,21 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import SetupPanel from "@/components/onboarding/SetupPanel.vue";
-import OnboardingSetupPluginInstallation from "@/components/onboarding/OnboardingSetupPluginInstallation.vue";
-import BannerSettings from "@/pages/Settings/Banner.vue";
-import ProductSettings from "@/pages/Settings/Product.vue";
+import SetupPanel from "/src/components/onboarding/SetupPanel.vue";
+import OnboardingSetupPluginInstallation from "/src/components/onboarding/OnboardingSetupPluginInstallation.vue";
+import BannerSettings from "/src/pages/Settings/Banner.vue";
+import ProductSettings from "/src/pages/Settings/Product.vue";
 export default {
   name: "Setup",
   components: {
     SetupPanel,
     BannerSettings,
     ProductSettings,
-    OnboardingSetupPluginInstallation,
+    OnboardingSetupPluginInstallation
   },
   data() {
     return {
-      pages: ["home", "category", "product", "cart", "search", "404"],
+      pages: ["home", "category", "product", "cart", "search", "404"]
     };
   },
   computed: {
@@ -84,15 +84,15 @@ export default {
       },
       set(value) {
         this.setSetupStep(value);
-      },
-    },
+      }
+    }
   },
   methods: {
     ...mapActions("onboarding", ["setSetupStep"]),
     exit() {
       this.$router.push({
         name: "onboarding-billing",
-        params: this.$route.params,
+        params: this.$route.params
       });
     },
     async next() {
@@ -107,16 +107,16 @@ export default {
       if (this.step <= 0) {
         this.$router.push({
           name: "onboarding-intro",
-          params: this.$route.params,
+          params: this.$route.params
         });
       }
       this.step = this.step - 1;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .setup-panel-container {
   min-width: 960px;

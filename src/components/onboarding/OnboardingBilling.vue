@@ -8,7 +8,7 @@
       <img
         class="screenshot"
         alt=""
-        src="@/assets/img/sign-up/slideshow/dashboard.jpg"
+        src="/src/assets/img/sign-up/slideshow/dashboard.jpg"
       />
     </template>
 
@@ -137,14 +137,14 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import DcButton from "@/components/DcButton.vue";
-import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
+import DcButton from "/src/components/DcButton.vue";
+import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
 
 import {
   getPageData,
   selectPlan,
   postOnboardingNotification
-} from "@/api/backend";
+} from "/src/api/backend";
 
 export default {
   name: "OnboardingBilling",
@@ -335,7 +335,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .screenshot {
   width: 100%;

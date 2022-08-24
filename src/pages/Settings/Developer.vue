@@ -145,15 +145,15 @@
 </template>
 
 <script>
-import Card from "@/components/Cards/Card.vue";
-import DcButton from "@/components/DcButton.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import Card from "/src/components/Cards/Card.vue";
+import DcButton from "/src/components/DcButton.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
-import ApiSettings from "@/components/onboarding/ApiSettings.vue";
+import ApiSettings from "/src/components/onboarding/ApiSettings.vue";
 import * as Sentry from "@sentry/browser";
 import { mapGetters, mapActions } from "vuex";
 
-import { getPageData } from "@/api/backend";
+import { getPageData } from "/src/api/backend";
 const emptyCssSelectors = {
   index: null,
   product: null,
@@ -272,7 +272,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 .developer-settings .el-select {
   width: 100%;
 }

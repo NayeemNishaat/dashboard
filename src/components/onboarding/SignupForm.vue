@@ -108,23 +108,23 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions } from "vuex";
 
-import { signUp, verifyWebsite } from "@/api/backend.js";
-import BtnNext from "@/components/onboarding/BtnNext.vue";
-import DcAlert from "@/components/DcAlert.vue";
-import PasswordStrength from "@/components/auth/PasswordStrength.vue";
-import PasswordToggle from "@/components/auth/PasswordToggle.vue";
+import { signUp, verifyWebsite } from "/src/api/backend.js";
+import BtnNext from "/src/components/onboarding/BtnNext.vue";
+import DcAlert from "/src/components/DcAlert.vue";
+import PasswordStrength from "/src/components/auth/PasswordStrength.vue";
+import PasswordToggle from "/src/components/auth/PasswordToggle.vue";
 export default {
   props: {
     platform: {
       type: String,
-      default: "custom",
-    },
+      default: "custom"
+    }
   },
   components: {
     BtnNext,
     DcAlert,
     PasswordStrength,
-    PasswordToggle,
+    PasswordToggle
   },
   data() {
     const validateEmail = (rule, value, callback) => {
@@ -157,7 +157,7 @@ export default {
         username: "",
         email: "",
         password: "",
-        website: "https://",
+        website: "https://"
       },
       invalidWebsite: false,
       rules: {
@@ -165,40 +165,40 @@ export default {
           {
             required: true,
             message: this.$t("please enter your first name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         lastName: [
           {
             required: true,
             message: this.$t("please enter your last name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         email: [
           {
             required: true,
             message: this.$t("please enter your email"),
-            trigger: "blur",
+            trigger: "blur"
           },
-          { validator: validateEmail, trigger: "blur" },
+          { validator: validateEmail, trigger: "blur" }
         ],
         password: [
           {
             required: true,
             message: this.$t("please enter a password"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         website: [
           {
             required: true,
             message: this.$t("please enter your website address"),
-            trigger: "blur",
+            trigger: "blur"
           },
-          { validator: validateWebsite, trigger: "blur" },
-        ],
-      },
+          { validator: validateWebsite, trigger: "blur" }
+        ]
+      }
     };
   },
   computed: {
@@ -226,7 +226,7 @@ export default {
       } else {
         return this.errors.message;
       }
-    },
+    }
   },
   methods: {
     ...mapActions(["getContext", "setAccessToken"]),
@@ -260,7 +260,7 @@ export default {
             .then((response) => {
               this.setAccessToken({
                 token: response.data.token,
-                auth_provider: "auth0",
+                auth_provider: "auth0"
               }).then(() => {
                 this.getContext().then(() => {
                   this.$emit("submit", response.data);
@@ -279,7 +279,7 @@ export default {
           return false;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

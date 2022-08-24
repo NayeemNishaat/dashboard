@@ -9,7 +9,7 @@ import LoadScript from "vue-plugin-load-script";
 import Clipboard from "v-clipboard/src";
 import DataCueDashboard from "./plugins/datacueComponents";
 import Tawk from "./plugins/tawk";
-// import Segment from "@/plugins/segment";
+// import Segment from "/src/plugins/segment";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";

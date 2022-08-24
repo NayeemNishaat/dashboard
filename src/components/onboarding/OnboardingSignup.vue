@@ -78,11 +78,11 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions } from "vuex";
 
-import DcButton from "@/components/DcButton.vue";
-import PasswordStrength from "@/components/auth/PasswordStrength.vue";
-import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
+import DcButton from "/src/components/DcButton.vue";
+import PasswordStrength from "/src/components/auth/PasswordStrength.vue";
+import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
 
-import { signUp, verifyWebsite } from "@/api/backend.js";
+import { signUp, verifyWebsite } from "/src/api/backend.js";
 
 export default {
   name: "OnboardingSignup",
@@ -210,7 +210,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .website-preview {
   width: 200%;
@@ -226,8 +226,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
-    #fff;
+  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center /
+    80% #fff;
   transition: opacity 0.25s ease-in-out;
   opacity: 1;
 }

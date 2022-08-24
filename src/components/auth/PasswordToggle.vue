@@ -9,19 +9,19 @@
 </template>
 
 <script>
-import EyeHideIcon from "@/components/icons/EyeHideIcon";
-import EyeShowIcon from "@/components/icons/EyeShowIcon";
+import EyeHideIcon from "/src/components/icons/EyeHideIcon";
+import EyeShowIcon from "/src/components/icons/EyeShowIcon";
 
 export default {
   props: {
     passwordHidden: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   components: {
     EyeHideIcon,
-    EyeShowIcon,
+    EyeShowIcon
   },
   computed: {
     iconClass() {
@@ -29,15 +29,15 @@ export default {
         fa: true,
         "fa-lg": true,
         "fa-eye": this.passwordHidden,
-        "fa-eye-slash": !this.passwordHidden,
+        "fa-eye-slash": !this.passwordHidden
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 label.show-password {
   cursor: pointer;

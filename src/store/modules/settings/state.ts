@@ -1,4 +1,4 @@
-import { PageInstallationSettings } from "@/api/interfaces";
+import { PageInstallationSettings } from "/src/api/interfaces";
 import {
   defaultHomepageSettings,
   defaultPageSettings

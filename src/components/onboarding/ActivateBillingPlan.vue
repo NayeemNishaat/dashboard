@@ -45,17 +45,17 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import Card from "@/components/Cards/Card.vue";
+import Card from "/src/components/Cards/Card.vue";
 
-import PricingPlans from "@/components/Billing/PricingPlans.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
-import DcButton from "@/components/DcButton.vue";
+import PricingPlans from "/src/components/Billing/PricingPlans.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 import {
   getPageData,
   selectPlan,
   postOnboardingNotification
-} from "@/api/backend";
+} from "/src/api/backend";
 
 export default {
   name: "ActivateBillingPlan",
@@ -214,7 +214,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .screenshot {
   width: 100%;
@@ -272,7 +272,7 @@ export default {
   height: 100%;
   margin: 0 0 1.5em;
   padding: 2% 4%;
-  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
 header {

@@ -10,22 +10,22 @@
           v-if="selectedFeature === 'banners'"
         >
           <div class="example-banner">
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1a.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1b.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1c.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1a.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1b.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1c.jpg" />
           </div>
           <div class="example-banner">
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2a.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2b.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2c.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2a.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2b.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2c.jpg" />
           </div>
           <div class="example-banner">
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3a.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3b.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3c.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3a.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3b.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3c.jpg" />
           </div>
         </figure>
 
@@ -35,13 +35,16 @@
           v-else-if="selectedFeature === 'products'"
         >
           <div class="example-page">
-            <img alt="" src="@/assets/img/sign-up/slideshow/product.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/product-recs.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/product.jpg" />
+            <img
+              alt=""
+              src="/src/assets/img/sign-up/slideshow/product-recs.jpg"
+            />
           </div>
 
           <div class="example-page">
-            <img alt="" src="@/assets/img/sign-up/slideshow/cart.jpg" />
-            <img alt="" src="@/assets/img/sign-up/slideshow/cart-recs.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/cart.jpg" />
+            <img alt="" src="/src/assets/img/sign-up/slideshow/cart-recs.jpg" />
           </div>
         </figure>
 
@@ -52,11 +55,11 @@
         >
           <img
             alt=""
-            src="@/assets/img/sign-up/slideshow/notification-page.jpg"
+            src="/src/assets/img/sign-up/slideshow/notification-page.jpg"
           />
           <img
             alt=""
-            src="@/assets/img/sign-up/slideshow/notification-widget.jpg"
+            src="/src/assets/img/sign-up/slideshow/notification-widget.jpg"
           />
         </figure>
       </transition>
@@ -104,33 +107,33 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DcButton from "@/components/DcButton.vue";
-import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
+import DcButton from "/src/components/DcButton.vue";
+import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
 
 export default {
   name: "OnboardingIntro",
   components: {
     DcButton,
-    OnboardingStep,
+    OnboardingStep
   },
   data() {
     return {
       features: [
         { id: "banners", icon: "ti-image" },
         { id: "products", icon: "ti-shopping-cart" },
-        { id: "notifications", icon: "ti-bell" },
+        { id: "notifications", icon: "ti-bell" }
       ],
-      selectedFeature: "banners",
+      selectedFeature: "banners"
     };
   },
   computed: {
-    ...mapGetters(["client"]),
-  },
+    ...mapGetters(["client"])
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 @keyframes slide-in {
   0% {
@@ -241,9 +244,9 @@ export default {
   align-items: flex-start;
   justify-content: space-between;
   padding: 14% 3% 0;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
-      no-repeat,
-    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
+  background: url("/src/assets/img/sign-up/slideshow/store-header.jpg") top /
+      100% no-repeat,
+    url("/src/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
       no-repeat #f2f2f2;
 }
 
@@ -290,8 +293,8 @@ export default {
   flex: 0 0 50%;
   min-width: 0;
   padding-top: 6%;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
-    no-repeat #f2f2f2;
+  background: url("/src/assets/img/sign-up/slideshow/store-header.jpg") top /
+    100% no-repeat #f2f2f2;
 
   &:first-child {
     animation: scroll-down 6s ease-in-out backwards alternate infinite;
@@ -370,7 +373,7 @@ export default {
   border-bottom: 1px dashed;
   font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 1q;
+  letter-spacing: 1Q;
 
   .active & {
     border-bottom-color: transparent;

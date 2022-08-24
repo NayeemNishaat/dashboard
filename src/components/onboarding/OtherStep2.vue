@@ -152,7 +152,7 @@
         <hr class="d-lg-none" />
         <div class="row">
           <div class="col-1 icon">
-            <img alt src="@/assets/img/need-help.svg" />
+            <img alt src="/src/assets/img/need-help.svg" />
           </div>
           <div class="col message">
             <span class="title">{{ $t("need a hand") }}?</span>
@@ -176,19 +176,19 @@
 
 <script>
 import * as Sentry from "@sentry/browser";
-import { getPageData, postSendEmail } from "@/api/backend";
+import { getPageData, postSendEmail } from "/src/api/backend";
 import { mapActions, mapGetters } from "vuex";
 
-import BtnNext from "@/components/onboarding/BtnNext.vue";
-import CopyButton from "@/components/onboarding/CopyButton.vue";
-import StoreData from "@/components/onboarding/StoreData.vue";
+import BtnNext from "/src/components/onboarding/BtnNext.vue";
+import CopyButton from "/src/components/onboarding/CopyButton.vue";
+import StoreData from "/src/components/onboarding/StoreData.vue";
 
-import DcTip from "@/components/DcTip.vue";
-import DcAlert from "@/components/DcAlert.vue";
-import DcButton from "@/components/DcButton.vue";
-import EyeHideIcon from "@/components/icons/EyeHideIcon.vue";
-import EyeShowIcon from "@/components/icons/EyeShowIcon.vue";
-import RefreshIcon from "@/components/icons/RefreshIcon.vue";
+import DcTip from "/src/components/DcTip.vue";
+import DcAlert from "/src/components/DcAlert.vue";
+import DcButton from "/src/components/DcButton.vue";
+import EyeHideIcon from "/src/components/icons/EyeHideIcon.vue";
+import EyeShowIcon from "/src/components/icons/EyeShowIcon.vue";
+import RefreshIcon from "/src/components/icons/RefreshIcon.vue";
 
 export default {
   components: {
@@ -364,7 +364,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 hr {
   border-color: $gray-light;

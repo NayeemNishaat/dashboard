@@ -49,7 +49,7 @@
                   'click %',
                   'converted',
                   'value'
-                ].map(n => this.$t(n))
+                ].map((n) => this.$t(n))
               "
               :actions="[
                 {
@@ -77,13 +77,13 @@
   </div>
 </template>
 <script>
-import StatsCard from "@/components/Cards/StatsCard.vue";
-import MultiTable from "@/components/MultiTable.vue";
-import DateRangePicker from "@/components/DateRangePicker.vue";
+import StatsCard from "/src/components/Cards/StatsCard.vue";
+import MultiTable from "/src/components/MultiTable.vue";
+import DateRangePicker from "/src/components/DateRangePicker.vue";
 
-import { addCampaignMixin } from "@/mixins/campaign";
+import { addCampaignMixin } from "/src/mixins/campaign";
 
-import { getPageData } from "@/api/backend";
+import { getPageData } from "/src/api/backend";
 
 export default {
   mixins: [addCampaignMixin],
@@ -147,7 +147,7 @@ export default {
       this.loading = true;
       const [startdate, enddate] = dates;
       getPageData(`campaigns?startdate=${startdate}&enddate=${enddate}`)
-        .then(response => {
+        .then((response) => {
           this.tblCampaigns = response.campaigns || [];
 
           const stats = response.stats || [];
@@ -158,7 +158,7 @@ export default {
           const statsById = {};
 
           // transform data
-          stats.forEach(item => {
+          stats.forEach((item) => {
             const { campaign_id, count, event_type } = item;
 
             statsById[campaign_id] = statsById[campaign_id] || {
@@ -187,11 +187,11 @@ export default {
           // conversion count card
           cards[3].footerText = "";
           cards[3].value = conversions
-            .map(item => item.total_value)
+            .map((item) => item.total_value)
             .reduce((s, v) => s + v, 0)
             .toLocaleString();
 
-          this.tblCampaigns.forEach(campaign => {
+          this.tblCampaigns.forEach((campaign) => {
             const id = campaign.campaign_id;
 
             if (!statsById[id]) {
@@ -226,7 +226,9 @@ export default {
               }
             }
 
-            const converted = conversions.find(item => item.campaign_id === id);
+            const converted = conversions.find(
+              (item) => item.campaign_id === id
+            );
             campaign.converted = converted ? converted.count : 0;
             campaign.conversionValue = converted
               ? converted.total_value.toLocaleString()

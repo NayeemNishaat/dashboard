@@ -13,26 +13,26 @@
   </div>
 </template>
 <script>
-import ProgressBar from "@/components/onboarding/ProgressBar.vue";
+import ProgressBar from "/src/components/onboarding/ProgressBar.vue";
 
 export default {
   props: {
     title: {
-      type: String,
+      type: String
     },
     progress: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   components: {
-    ProgressBar,
-  },
+    ProgressBar
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 h3 {
   color: $dark;

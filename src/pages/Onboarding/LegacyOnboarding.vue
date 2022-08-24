@@ -18,7 +18,7 @@
       >
         <div class="row logo-container">
           <div class="col d-flex align-content-center justify-content-center">
-            <img alt src="@/assets/img/datacue-logo-dark.svg" />
+            <img alt src="/src/assets/img/datacue-logo-dark.svg" />
           </div>
         </div>
       </div>
@@ -46,8 +46,8 @@
   </div>
 </template>
 <script>
-import LangPicker from "@/components/LangPicker.vue";
-import LangPickerMobile from "@/components/LangPickerMobile.vue";
+import LangPicker from "/src/components/LangPicker.vue";
+import LangPickerMobile from "/src/components/LangPickerMobile.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .onboarding {
   min-height: 100vh;

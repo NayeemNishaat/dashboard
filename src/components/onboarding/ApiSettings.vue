@@ -41,9 +41,9 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import DcTip from "@/components/DcTip.vue";
-import CopyButton from "@/components/onboarding/CopyButton.vue";
-import DcButton from "@/components/DcButton.vue";
+import DcTip from "/src/components/DcTip.vue";
+import CopyButton from "/src/components/onboarding/CopyButton.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   name: "ApiSettings",
@@ -70,7 +70,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 hr {
   border-color: $gray-light;

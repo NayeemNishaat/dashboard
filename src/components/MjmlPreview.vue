@@ -13,8 +13,11 @@ import throttle from "lodash/throttle";
 import mjml2html from "mjml4-in-browser";
 import * as Sentry from "@sentry/browser";
 
-import { getPageData } from "@/api/backend";
-import { isValidTemplateType, buildTemplateMjml } from "@/api/template-builder";
+import { getPageData } from "/src/api/backend";
+import {
+  isValidTemplateType,
+  buildTemplateMjml
+} from "/src/api/template-builder";
 
 function shortenToWordBoundary(originalStr, n) {
   if (originalStr.length <= n) {
@@ -26,7 +29,7 @@ function shortenToWordBoundary(originalStr, n) {
 
 export default {
   name: "MjmlPreview",
-  data: function() {
+  data: function () {
     return {
       resizeInterval: null,
       products: fill(Array(6), {
@@ -45,7 +48,7 @@ export default {
     },
     size: {
       type: String,
-      validator: v => ["mobile", "desktop"].includes(v)
+      validator: (v) => ["mobile", "desktop"].includes(v)
     },
     editorState: {
       type: Object,
@@ -59,7 +62,7 @@ export default {
     }
   },
   methods: {
-    updatePreview: throttle(function() {
+    updatePreview: throttle(function () {
       const compiled = mjml2html(
         buildTemplateMjml(this.template, {
           content: this.editorState.content,
@@ -87,7 +90,7 @@ export default {
           preview.srcdoc = html;
         }
       } else {
-        Sentry.withScope(scope => {
+        Sentry.withScope((scope) => {
           scope.setExtra("error_log", compiled.errors);
           Sentry.captureException(new Error("MJML compilation error"));
         });
@@ -108,8 +111,8 @@ export default {
     this.updatePreview();
     this.resizeInterval = window.setInterval(this.resizePreview, 200);
 
-    getPageData("products/random").then(res => {
-      this.products = res.products.map(elem => {
+    getPageData("products/random").then((res) => {
+      this.products = res.products.map((elem) => {
         elem.name = shortenToWordBoundary(elem.name, 25);
         return elem;
       });

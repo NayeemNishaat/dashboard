@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { postSendEmail, setHelpWidgetPosition } from "@/api/backend";
+import { postSendEmail, setHelpWidgetPosition } from "/src/api/backend";
 import * as Sentry from "@sentry/browser";
 export default {
   name: "HelpWidget",
@@ -132,13 +132,13 @@ export default {
     setupDraggable() {
       // Fix for firefox, this shouldn't be necessary for other browsers but still works the same
       // https://stackoverflow.com/questions/13110349/firefox-ondrag-pagex-pagey-always-zero/13110582
-      document.addEventListener("dragover", e => {
+      document.addEventListener("dragover", (e) => {
         this.clientX = e.clientX || e.pageX;
         this.clientY = e.clientY || e.pageY;
         e.preventDefault();
       });
 
-      document.addEventListener("drop", e => {
+      document.addEventListener("drop", (e) => {
         e.preventDefault();
       });
     },
@@ -177,7 +177,7 @@ export default {
         .then(() => {
           this.feedbackFormVisible = false;
         })
-        .catch(err => {
+        .catch((err) => {
           this.$notify({
             title: this.$t("error sending email"),
             message: this.$t("please send us an email to contact@datacue.co"),

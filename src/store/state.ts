@@ -1,7 +1,7 @@
-import { Client, User } from "@/api/interfaces";
+import { Client, User } from "/src/api/interfaces";
 
 import { subDays, format } from "date-fns";
-import { AuthToken, Context } from "@/api/interfaces";
+import { AuthToken, Context } from "/src/api/interfaces";
 export default class State {
   public accessToken: AuthToken;
   public dateRange: [string, string];
@@ -10,16 +10,19 @@ export default class State {
   public context: Context | null;
   constructor() {
     try {
-      this.accessToken = JSON.parse(localStorage.getItem("access_token") || `{"token":"","auth_provider":""}`);
+      this.accessToken = JSON.parse(
+        localStorage.getItem("access_token") ||
+          `{"token":"","auth_provider":""}`
+      );
     } catch (err) {
-      localStorage.removeItem("access_token")
-      this.accessToken = { "token": "", "auth_provider": "" }
+      localStorage.removeItem("access_token");
+      this.accessToken = { token: "", auth_provider: "" };
     }
     try {
       this.context = JSON.parse(localStorage.getItem("context") || "{}");
     } catch (err) {
-      localStorage.removeItem("context")
-      this.context = null
+      localStorage.removeItem("context");
+      this.context = null;
     }
     this.dateRange = [
       format(subDays(new Date(), 8), "yyyy-MM-dd"),

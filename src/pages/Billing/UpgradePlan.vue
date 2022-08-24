@@ -4,10 +4,10 @@
       :title="
         noPlanSelected
           ? $t('select a plan to activate {feature}', {
-              feature: $tc(feature, 2).toLowerCase(),
+              feature: $tc(feature, 2).toLowerCase()
             })
           : $t('upgrade your plan to activate {feature}', {
-              feature: $tc(feature, 2).toLowerCase(),
+              feature: $tc(feature, 2).toLowerCase()
             })
       "
     >
@@ -17,17 +17,17 @@
           <img
             v-if="feature == 'notifications'"
             class="feature-img"
-            src="@/assets/img/features/notifications.jpg"
+            src="/src/assets/img/features/notifications.jpg"
           />
           <img
             v-if="feature == 'banners'"
             class="feature-img"
-            src="@/assets/img/features/banners.jpg"
+            src="/src/assets/img/features/banners.jpg"
           />
           <img
             v-if="feature == 'products'"
             class="feature-img"
-            src="@/assets/img/features/products.jpg"
+            src="/src/assets/img/features/products.jpg"
           />
           <router-link class="button-link" to="/billing">{{
             $t("setupSummary:NoPlanSelected:btn")
@@ -45,20 +45,20 @@ export default {
   props: {
     feature: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     ...mapGetters(["subscription"]),
     noPlanSelected() {
       return !this.subscription?.name;
-    },
+    }
   },
   methods: {
     getImgURL(type) {
       return require(`../../assets/img/features/${this.feature}.jpg`);
-    },
-  },
+    }
+  }
 };
 </script>
 

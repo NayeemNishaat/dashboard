@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import DcButton from "@/components/DcButton.vue";
+import DcButton from "/src/components/DcButton.vue";
 
 export default {
   name: "OnboardingStep",
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 // anchoring the slideshow to the container instead of its immediate parent
 // prevents it from scrolling with overflow in desktop view
@@ -194,7 +194,7 @@ export default {
 .onboarding-step-slideshow {
   margin: 0 0 1.5em;
   padding: 6.25% 12.5%;
-  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 
   @media (min-width: 1024px) {

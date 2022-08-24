@@ -1,8 +1,8 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import VueRouter from "vue-router";
-import GeneralSettings from "@/pages/Settings/General.vue";
-import BannerSettings from "@/pages/Settings/Banner.vue";
-import ProductSettings from "@/pages/Settings/Product.vue";
+import GeneralSettings from "/src/pages/Settings/General.vue";
+import BannerSettings from "/src/pages/Settings/Banner.vue";
+import ProductSettings from "/src/pages/Settings/Product.vue";
 import { getClient, webSettings, pageInstallation } from "../mocks/store.js";
 import countryData from "../mocks/countryData.js";
 import { elementStubs, getNewObject } from "../mocks/general";
@@ -72,7 +72,7 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
   });
 };
 
-export const factoryProductSettings = accessProfile => {
+export const factoryProductSettings = (accessProfile) => {
   const newWebSettings = getNewObject(webSettings);
   const newPageInstallation = getNewObject(pageInstallation);
   const router = new VueRouter();

@@ -1,4 +1,4 @@
-// import { app } from "@/main";
+// import { app } from "/src/main";
 import { createStore } from "vuex";
 
 // modules

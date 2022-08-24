@@ -46,16 +46,16 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters, mapActions } from "vuex";
 
-import Card from "@/components/Cards/Card.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
-import UpgradePlan from "@/pages/Billing/UpgradePlan.vue";
+import Card from "/src/components/Cards/Card.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import UpgradePlan from "/src/pages/Billing/UpgradePlan.vue";
 
 export default {
   name: "Notifications",
   components: {
     Card,
     LoaderDots,
-    UpgradePlan,
+    UpgradePlan
   },
 
   data() {
@@ -64,8 +64,8 @@ export default {
       settings: {},
       notifications: {
         position: "top left",
-        color: "#f8ba00",
-      },
+        color: "#f8ba00"
+      }
     };
   },
   computed: {
@@ -76,7 +76,7 @@ export default {
         return {};
       }
       return this.subscription?.access?.personalization?.notifications;
-    },
+    }
   },
   methods: {
     ...mapActions("settings", ["getWebSettings", "saveSettings"]),
@@ -92,7 +92,7 @@ export default {
             message: this.$t(
               "an unknown error occured, please try again later"
             ),
-            type: "warning",
+            type: "warning"
           });
         })
         .finally(() => (this.saving = false));
@@ -107,13 +107,13 @@ export default {
           this.webSettings.recommendations.notifications;
         this.notifications = notifications || {
           position: "top left",
-          color: "#f8ba00",
+          color: "#f8ba00"
         };
       }
-    },
+    }
   },
   created() {
     this.refreshData();
-  },
+  }
 };
 </script>

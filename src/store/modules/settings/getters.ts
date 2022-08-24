@@ -6,7 +6,7 @@ import {
   PageInstallationSettings,
   HomepageSettings,
   Locale
-} from "@/api/interfaces";
+} from "/src/api/interfaces";
 import { defaultHomepageSettings, getPageStatus } from "../settings_helpers";
 const getters: GetterTree<ModuleState, RootState> = {
   profile(state: ModuleState, getters, rootState, rootGetters) {
@@ -41,7 +41,7 @@ const getters: GetterTree<ModuleState, RootState> = {
       pageStatus[state.pageInstallationLoading] = "checking";
     }
     if (state.pageInstallationSettings) {
-      Object.keys(state.pageInstallationSettings).forEach(page => {
+      Object.keys(state.pageInstallationSettings).forEach((page) => {
         try {
           //bail if http request is in progress
           if (pageStatus[page] === "checking") {

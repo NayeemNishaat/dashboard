@@ -145,10 +145,10 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
 
-import Card from "@/components/Cards/Card.vue";
-import DcButton from "@/components/DcButton.vue";
+import Card from "/src/components/Cards/Card.vue";
+import DcButton from "/src/components/DcButton.vue";
 
-import { getPageData, postOnboardingNotification } from "@/api/backend.js";
+import { getPageData, postOnboardingNotification } from "/src/api/backend.js";
 
 export default {
   name: "OnboardingSetupCustom",
@@ -257,8 +257,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
-@import "@/assets/css/calendly.css";
+@import "/src/assets/sass/datacue/_colors.scss";
+@import "/src/assets/css/calendly.css";
 
 .slide-logo {
   position: absolute;
@@ -266,7 +266,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
+  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
     #fff;
 }
 

@@ -13,12 +13,12 @@ export default {
   props: {
     message: {
       type: String,
-      default: "",
+      default: ""
     },
     type: {
       type: String,
-      default: "error",
-    },
+      default: "error"
+    }
   },
   computed: {
     alertClass() {
@@ -28,15 +28,15 @@ export default {
         "align-items-center": true,
         "alert-success": this.type === "success",
         "alert-warning": this.type === "warning",
-        "alert-danger": this.type === "error",
+        "alert-danger": this.type === "error"
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 .alert {
   display: flex;
   border-radius: 0 15px 15px 0;

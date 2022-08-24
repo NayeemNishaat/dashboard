@@ -1,4 +1,4 @@
-import mutations from "@/store/mutations";
+import mutations from "/src/store/mutations";
 import { mockAuthenticatedClients, webSettings } from "./mocks/store";
 
 describe("setDateRange", () => {

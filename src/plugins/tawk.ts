@@ -1,4 +1,4 @@
-import { User } from "@/api/interfaces";
+import { User } from "/src/api/interfaces";
 import _Vue from "vue";
 // import { PluginObject } from "vue";
 

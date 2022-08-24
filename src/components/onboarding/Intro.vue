@@ -14,7 +14,7 @@
           >
             <img
               class="static"
-              src="@/assets/img/onboarding-intro/personalized-homepage.png"
+              src="/src/assets/img/onboarding-intro/personalized-homepage.png"
             />
             <template v-slot:subtitle>
               <div
@@ -32,7 +32,7 @@
           >
             <img
               class="static"
-              src="@/assets/img/onboarding-intro/first-time-visitor.png"
+              src="/src/assets/img/onboarding-intro/first-time-visitor.png"
             />
             <template v-slot:subtitle>
               <div
@@ -50,7 +50,7 @@
           >
             <img
               class="static"
-              src="@/assets/img/onboarding-intro/existing-visitors.png"
+              src="/src/assets/img/onboarding-intro/existing-visitors.png"
             />
             <template v-slot:subtitle>
               <div
@@ -74,55 +74,55 @@
                 <div class="example-banner">
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-1.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1a.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-1a.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1b.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-1b.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1c.jpg"
-                  />
-                </div>
-                <div class="example-banner">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2a.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2b.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2c.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-1c.jpg"
                   />
                 </div>
                 <div class="example-banner">
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-2.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3a.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-2a.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3b.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-2b.jpg"
                   />
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3c.jpg"
+                    src="/src/assets/img/sign-up/slideshow/banner-2c.jpg"
+                  />
+                </div>
+                <div class="example-banner">
+                  <img
+                    alt=""
+                    src="/src/assets/img/sign-up/slideshow/banner-3.jpg"
+                  />
+                  <img
+                    alt=""
+                    src="/src/assets/img/sign-up/slideshow/banner-3a.jpg"
+                  />
+                  <img
+                    alt=""
+                    src="/src/assets/img/sign-up/slideshow/banner-3b.jpg"
+                  />
+                  <img
+                    alt=""
+                    src="/src/assets/img/sign-up/slideshow/banner-3c.jpg"
                   />
                 </div>
               </figure>
@@ -149,14 +149,14 @@
                 <div class="example-page">
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/product-recs.jpg"
+                    src="/src/assets/img/sign-up/slideshow/product-recs.jpg"
                   />
                 </div>
 
                 <div class="example-page">
                   <img
                     alt=""
-                    src="@/assets/img/sign-up/slideshow/cart-recs.jpg"
+                    src="/src/assets/img/sign-up/slideshow/cart-recs.jpg"
                   />
                 </div>
               </figure>
@@ -180,7 +180,7 @@
           >
             <img
               class="static"
-              src="@/assets/img/onboarding-intro/view-results.gif"
+              src="/src/assets/img/onboarding-intro/view-results.gif"
             />
             <template v-slot:subtitle>
               <div
@@ -195,7 +195,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import IntroPanel from "@/components/onboarding/IntroPanel.vue";
+import IntroPanel from "/src/components/onboarding/IntroPanel.vue";
 export default {
   name: "Intro",
   components: {
@@ -238,7 +238,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 @keyframes slide-in {
   0% {
@@ -339,9 +339,9 @@ export default {
   align-items: flex-start;
   justify-content: space-between;
   padding: 14% 3% 0;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+  background: url("/src/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
       no-repeat,
-    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
+    url("/src/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
       no-repeat #f2f2f2;
 }
 
@@ -389,7 +389,7 @@ export default {
   flex: 0 0 50%;
   min-width: 0;
   padding-top: 6%;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+  background: url("/src/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
     no-repeat #f2f2f2;
 
   &:first-child {

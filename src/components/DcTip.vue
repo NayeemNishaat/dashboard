@@ -1,7 +1,7 @@
 <template>
   <div class="row tip">
     <div class="col-1 icon">
-      <img alt="" src="@/assets/img/lightbulb.svg" />
+      <img alt="" src="/src/assets/img/lightbulb.svg" />
     </div>
     <div class="col message">
       <span class="title">{{ formattedTitle }}</span>
@@ -15,22 +15,22 @@ export default {
   props: {
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     message: {
-      type: String,
-    },
+      type: String
+    }
   },
   computed: {
     formattedTitle() {
       return this.title ? this.title : this.$t("tip!");
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .tip {
   .icon {

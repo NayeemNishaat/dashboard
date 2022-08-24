@@ -45,7 +45,7 @@
                 value="mobile"
               />
               <label for="preview-size-mobile">
-                <img svg-inline src="@/assets/img/email/icon-mobile.svg" />
+                <img svg-inline src="/src/assets/img/email/icon-mobile.svg" />
                 <span class="sr-only">{{ $t("preview:mobile") }}</span>
               </label>
               <input
@@ -56,7 +56,7 @@
                 value="desktop"
               />
               <label for="preview-size-desktop">
-                <img svg-inline src="@/assets/img/email/icon-desktop.svg" />
+                <img svg-inline src="/src/assets/img/email/icon-desktop.svg" />
                 <span class="sr-only">{{ $t("preview:desktop") }}</span>
               </label>
             </div>
@@ -77,7 +77,7 @@
             data-id="editor:content-tab-btn"
             @click="pane = 'content'"
           >
-            <img svg-inline src="@/assets/img/email/icon-content.svg" />
+            <img svg-inline src="/src/assets/img/email/icon-content.svg" />
             {{ $t("content") }}
           </button>
           <button
@@ -87,7 +87,7 @@
             data-id="editor:design-tab-btn"
             @click="pane = 'design'"
           >
-            <img svg-inline src="@/assets/img/email/icon-design.svg" />
+            <img svg-inline src="/src/assets/img/email/icon-design.svg" />
             {{ $t("design") }}
           </button>
           <button
@@ -97,7 +97,7 @@
             data-id="editor:settings-tab-btn"
             @click="pane = 'settings'"
           >
-            <img svg-inline src="@/assets/img/email/icon-settings.svg" />
+            <img svg-inline src="/src/assets/img/email/icon-settings.svg" />
             {{ $t("settings") }}
           </button>
         </nav>
@@ -152,7 +152,7 @@
             <div class="upload-hint">
               <span>{{ $t("upload logo") }}</span>
               <div v-if="uploading.logo" class="upload-spinner"></div>
-              <img v-else svg-inline src="@/assets/img/email/icon-upload.svg" />
+              <img v-else svg-inline src="/src/assets/img/email/icon-upload.svg" />
             </div>
           </el-upload>
           <label class="main-label" for="content-heading">
@@ -207,7 +207,7 @@
             <div class="upload-hint">
               <span>{{ $t("upload cover photo") }}</span>
               <div v-if="uploading.cover" class="upload-spinner"></div>
-              <img v-else svg-inline src="@/assets/img/email/icon-upload.svg" />
+              <img v-else svg-inline src="/src/assets/img/email/icon-upload.svg" />
               <small>{{ $t("recommended width 560px") }}</small>
             </div>
           </el-upload>
@@ -321,7 +321,7 @@
               data-id="editor:heading-size-small-radio"
             />
             <label for="heading-size-small">
-              <img svg-inline src="@/assets/img/email/size-small.svg" />
+              <img svg-inline src="/src/assets/img/email/size-small.svg" />
               <span class="sr-only">{{ $t("size:small") }}</span>
             </label>
             <input
@@ -333,7 +333,7 @@
               data-id="editor:heading-size-medium-radio"
             />
             <label for="heading-size-medium">
-              <img svg-inline src="@/assets/img/email/size-medium.svg" />
+              <img svg-inline src="/src/assets/img/email/size-medium.svg" />
               <span class="sr-only">{{ $t("size:medium") }}</span>
             </label>
             <input
@@ -345,7 +345,7 @@
               data-id="editor:heading-size-large-radio"
             />
             <label for="heading-size-large">
-              <img svg-inline src="@/assets/img/email/size-large.svg" />
+              <img svg-inline src="/src/assets/img/email/size-large.svg" />
               <span class="sr-only">{{ $t("size:large") }}</span>
             </label>
           </div>
@@ -374,7 +374,7 @@
               data-id="editor:heading-align-left-radio"
             />
             <label for="heading-align-left">
-              <img svg-inline src="@/assets/img/email/alignment-left.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-left.svg" />
               <span class="sr-only">{{ $t("align:left") }}</span>
             </label>
             <input
@@ -386,7 +386,7 @@
               data-id="editor:heading-align-center-radio"
             />
             <label for="heading-align-center">
-              <img svg-inline src="@/assets/img/email/alignment-center.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-center.svg" />
               <span class="sr-only">{{ $t("align:center") }}</span>
             </label>
             <input
@@ -398,7 +398,7 @@
               data-id="editor:heading-align-right-radio"
             />
             <label for="heading-align-right">
-              <img svg-inline src="@/assets/img/email/alignment-right.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-right.svg" />
               <span class="sr-only">{{ $t("align:right") }}</span>
             </label>
             <input
@@ -410,7 +410,7 @@
               data-id="editor:heading-align-justify-radio"
             />
             <label for="heading-align-justify">
-              <img svg-inline src="@/assets/img/email/alignment-justify.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-justify.svg" />
               <span class="sr-only">{{ $t("align:justify") }}</span>
             </label>
           </div>
@@ -425,7 +425,7 @@
               data-id="editor:body-align-left-radio"
             />
             <label for="body-align-left">
-              <img svg-inline src="@/assets/img/email/alignment-left.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-left.svg" />
               <span class="sr-only">{{ $t("align:left") }}</span>
             </label>
             <input
@@ -437,7 +437,7 @@
               data-id="editor:body-align-center-radio"
             />
             <label for="body-align-center">
-              <img svg-inline src="@/assets/img/email/alignment-center.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-center.svg" />
               <span class="sr-only">{{ $t("align:center") }}</span>
             </label>
             <input
@@ -449,7 +449,7 @@
               data-id="editor:body-align-right-radio"
             />
             <label for="body-align-right">
-              <img svg-inline src="@/assets/img/email/alignment-right.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-right.svg" />
               <span class="sr-only">{{ $t("align:right") }}</span>
             </label>
             <input
@@ -461,7 +461,7 @@
               data-id="editor:body-align-justify-radio"
             />
             <label for="body-align-justify">
-              <img svg-inline src="@/assets/img/email/alignment-justify.svg" />
+              <img svg-inline src="/src/assets/img/email/alignment-justify.svg" />
               <span class="sr-only">{{ $t("align:justify") }}</span>
             </label>
           </div>
@@ -539,10 +539,10 @@ import imageSize from "browser-image-size";
 import * as Sentry from "@sentry/browser";
 import { mapGetters, mapActions } from "vuex";
 
-import MjmlPreview from "@/components/MjmlPreview.vue";
+import MjmlPreview from "/src/components/MjmlPreview.vue";
 
-import { getPageData, putCampaign, preSign } from "@/api/backend";
-import { getTemplateTypes, buildTemplateMjml } from "@/api/template-builder";
+import { getPageData, putCampaign, preSign } from "/src/api/backend";
+import { getTemplateTypes, buildTemplateMjml } from "/src/api/template-builder";
 
 const SHOW_TIPS_STORAGE_KEY = "datacue-dashboard-showTips";
 

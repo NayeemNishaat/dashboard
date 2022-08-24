@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 stars">
-      <img alt src="@/assets/img/sign-up/stars-icon.svg" />
+      <img alt src="/src/assets/img/sign-up/stars-icon.svg" />
     </div>
     <div class="col-12">
       <p class="info">{{ $t("receivedAllTheData") }}</p>
@@ -18,17 +18,17 @@
       <img
         class="d-sm-none"
         alt
-        src="@/assets/img/sign-up/arrows-layout-1.svg"
+        src="/src/assets/img/sign-up/arrows-layout-1.svg"
       />
       <img
         class="d-none d-sm-block d-md-none"
         alt
-        src="@/assets/img/sign-up/arrows-layout-2.svg"
+        src="/src/assets/img/sign-up/arrows-layout-2.svg"
       />
       <img
         class="d-none d-md-block"
         alt
-        src="@/assets/img/sign-up/arrows-layout-3-4-5.svg"
+        src="/src/assets/img/sign-up/arrows-layout-3-4-5.svg"
       />
     </div>
   </div>

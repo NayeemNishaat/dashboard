@@ -152,11 +152,11 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import DcButton from "@/components/DcButton.vue";
-import BannerUpload from "@/components/BannerUpload.vue";
-import LoaderDots from "@/components/LoaderDots.vue";
+import DcButton from "/src/components/DcButton.vue";
+import BannerUpload from "/src/components/BannerUpload.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
 
-import { getPageData, postBanner, updateBanner } from "@/api/backend";
+import { getPageData, postBanner, updateBanner } from "/src/api/backend";
 
 export default {
   name: "Banners",
@@ -522,7 +522,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 .el-form-item__label {
   text-align: left;
 }

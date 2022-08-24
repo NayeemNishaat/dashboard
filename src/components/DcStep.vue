@@ -10,22 +10,22 @@ export default {
   props: {
     done: {
       type: Boolean,
-      default: false,
+      default: false
     },
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "/src/assets/sass/datacue/_colors.scss";
 
 .dc-step {
   position: relative;

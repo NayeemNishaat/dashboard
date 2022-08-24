@@ -84,12 +84,12 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
 
-import Dropzone from "@/components/Dropzone.vue";
+import Dropzone from "/src/components/Dropzone.vue";
 
-import { preSign } from "@/api/backend";
-import { getRatio } from "@/api/utils";
+import { preSign } from "/src/api/backend";
+import { getRatio } from "/src/api/utils";
 
-import CardMessageBox from "@/components/Cards/CardMessageBox";
+import CardMessageBox from "/src/components/Cards/CardMessageBox";
 
 const allowedRatios = {
   "2:3": "sub",
@@ -111,8 +111,8 @@ export default {
       dropzoneOptions: {
         maxFilesize: 1,
         maxFiles: 1,
-        init: function() {
-          this.on("addedfile", function() {
+        init: function () {
+          this.on("addedfile", function () {
             this.fileSizeExceeded = false;
             while (this.files.length > this.options.maxFiles) {
               this.removeFile(this.files[0]);
@@ -124,7 +124,7 @@ export default {
             }
           });
         },
-        accept: function(file, done) {
+        accept: function (file, done) {
           vm.validateImage(file)
             .then(() => {
               // Here we request a signed upload URL when a file being accepted
@@ -133,7 +133,7 @@ export default {
                 fileName = "static-banner.jpg";
               }
               preSign("banners", fileName, file.type)
-                .then(res => {
+                .then((res) => {
                   vm.$emit("started");
                   if (res.url && res.key) {
                     file.uploadURL = res.url;
@@ -147,12 +147,12 @@ export default {
                   // Manually process each file
                   setTimeout(() => this.processFile(file));
                 })
-                .catch(err => {
+                .catch((err) => {
                   done("Failed to get an S3 signed upload URL", err);
                   Sentry.captureException(err);
                 });
             })
-            .catch(error => {
+            .catch((error) => {
               Sentry.captureException(error);
             });
         }
@@ -184,7 +184,7 @@ export default {
     },
     validRatiosForBannerLayout() {
       if (this.bannerLayout === "low") {
-        return Object.keys(allowedRatios).filter(elem => elem === "2:3");
+        return Object.keys(allowedRatios).filter((elem) => elem === "2:3");
       }
       return this.validRatios;
     },

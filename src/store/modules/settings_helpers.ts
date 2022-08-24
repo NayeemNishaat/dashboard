@@ -1,4 +1,4 @@
-import { PageStatus, HomepageSettings } from "@/api/interfaces";
+import { PageStatus, HomepageSettings } from "/src/api/interfaces";
 
 export const defaultHomepageSettings: HomepageSettings = {
   library: true,

@@ -63,7 +63,7 @@
 
             ({{
               $t("onboarding:setup:variants", {
-                count: verificationResult.products.variants,
+                count: verificationResult.products.variants
               })
             }})
           </li>
@@ -145,29 +145,29 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
 
-import DcButton from "@/components/DcButton.vue";
-import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
+import DcButton from "/src/components/DcButton.vue";
+import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
 
-import { getPageData, postOnboardingNotification } from "@/api/backend.js";
+import { getPageData, postOnboardingNotification } from "/src/api/backend.js";
 
 export default {
   name: "OnboardingSetupCustom",
   components: {
     DcButton,
-    OnboardingStep,
+    OnboardingStep
   },
   props: {
     platform: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       skipDialogOpen: false,
       verifying: false,
       verificationResult: null,
-      calendlyLink: "https://calendly.com/shrumm/datacue-demo",
+      calendlyLink: "https://calendly.com/shrumm/datacue-demo"
     };
   },
   computed: {
@@ -194,7 +194,7 @@ export default {
       }
 
       return v.categories && v.products.products && v.orders && v.users;
-    },
+    }
   },
   methods: {
     atob(val) {
@@ -216,19 +216,19 @@ export default {
         url: this.calendlyLink,
         prefill: {
           name: this.client.user_name,
-          email: this.client.email,
-        },
+          email: this.client.email
+        }
       });
     },
     handleCalendlyEvent(event) {
       if (event.data.event === "calendly.event_scheduled") {
         postOnboardingNotification({
-          type: "call_request",
+          type: "call_request"
         });
 
         this.$emit("done");
       }
-    },
+    }
   },
   mounted() {
     this.$loadScript("https://calendly.com/assets/external/widget.js").then(
@@ -241,13 +241,13 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("message", this.handleCalendlyEvent);
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
-@import "@/assets/css/calendly.css";
+@import "/src/assets/sass/datacue/_colors.scss";
+@import "/src/assets/css/calendly.css";
 
 .slide-logo {
   position: absolute;
@@ -255,8 +255,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
-    #fff;
+  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center /
+    80% #fff;
 }
 
 .dialog-actions {
