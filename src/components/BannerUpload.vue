@@ -89,7 +89,7 @@ import Dropzone from "/src/components/Dropzone.vue";
 import { preSign } from "/src/api/backend";
 import { getRatio } from "/src/api/utils";
 
-import CardMessageBox from "/src/components/Cards/CardMessageBox";
+import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
 
 const allowedRatios = {
   "2:3": "sub",
