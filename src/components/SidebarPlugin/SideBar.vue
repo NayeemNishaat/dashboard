@@ -38,7 +38,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "DataCue",
+      default: "DataCue"
     },
     backgroundColor: {
       type: String,
@@ -46,7 +46,7 @@ export default {
       validator: (value) => {
         let acceptedValues = ["white", "black", "darkblue"];
         return acceptedValues.indexOf(value) !== -1;
-      },
+      }
     },
     activeColor: {
       type: String,
@@ -57,30 +57,30 @@ export default {
           "info",
           "success",
           "warning",
-          "danger",
+          "danger"
         ];
         return acceptedValues.indexOf(value) !== -1;
-      },
+      }
     },
     sidebarLinks: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     autoClose: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   provide() {
     return {
       autoClose: this.autoClose,
       addLink: this.addLink,
-      removeLink: this.removeLink,
+      removeLink: this.removeLink
     };
   },
   components: {
     MovingArrow,
-    SidebarLink,
+    SidebarLink
   },
   computed: {
     ...mapGetters(["client"]),
@@ -90,7 +90,7 @@ export default {
      */
     arrowMovePx() {
       return this.linkHeight * this.activeLinkIndex;
-    },
+    }
   },
   data() {
     return {
@@ -99,7 +99,7 @@ export default {
       windowWidth: 0,
       isWindows: false,
       hasAutoHeight: false,
-      links: [],
+      links: []
     };
   },
   methods: {
@@ -119,13 +119,13 @@ export default {
       if (index > -1) {
         this.links.splice(index, 1);
       }
-    },
+    }
   },
   mounted() {
     this.$watch("$route", this.findActiveLink, {
-      immediate: true,
+      immediate: true
     });
-  },
+  }
 };
 </script>
 <style></style>
