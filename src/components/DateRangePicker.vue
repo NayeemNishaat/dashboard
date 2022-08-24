@@ -39,10 +39,13 @@ export default {
 </script>
 <style>
 .datepicker .el-date-editor .el-range-separator {
-  width: auto;
-  flex: 1 0 auto;
+  padding: 0 5px;
 }
 .datepicker {
   padding-bottom: 10px;
+}
+.el-date-editor svg {
+  width: 25px;
+  height: 25px;
 }
 </style>
