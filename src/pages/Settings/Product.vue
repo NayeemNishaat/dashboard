@@ -307,7 +307,7 @@
               @change="handleCurrentSectionChange('custom_styles', $event)"
             >
               <el-collapse-item name="header">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.header.active">{{
                       $t("header styles")
@@ -325,7 +325,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.header"
                   size="small"
@@ -405,7 +405,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="photo">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.photo.active">{{
                       $t("product photo styles")
@@ -423,7 +423,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.photo"
                   size="small"
@@ -475,7 +475,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="tag">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.tag.active">{{
                       $t("discount tag styles")
@@ -493,7 +493,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.tag"
                   size="small"
@@ -522,7 +522,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="title">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.title.active">{{
                       $t("product title styles")
@@ -540,7 +540,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.title"
                   size="small"
@@ -598,7 +598,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="price">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.price.active">{{
                       $t("price styles")
@@ -616,7 +616,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.price"
                   size="small"
@@ -713,7 +713,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="layout">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.layout.active">{{
                       $t("layout styles")
@@ -731,7 +731,7 @@
                       >{{ $t("reset") }}</el-button
                     >
                   </span>
-                </template>
+                </slot>
                 <el-form
                   :model="styles.layout"
                   size="small"
@@ -796,7 +796,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="fields">
-                <template slot="title">
+                <slot name="title">
                   <el-checkbox checked disabled />
                   <span class="el-checkbox__input is-checked" />
                   <span class="el-checkbox__label">{{
@@ -812,7 +812,7 @@
                       $t("reset")
                     }}</el-button>
                   </span>
-                </template>
+                </slot>
                 <el-form
                   size="small"
                   label-width="200px"
@@ -834,7 +834,7 @@
                 </el-form>
               </el-collapse-item>
               <el-collapse-item name="cta-btn">
-                <template slot="title">
+                <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="current.cta_button.show_button">{{
                       $t(
@@ -854,7 +854,7 @@
                       $t("reset")
                     }}</el-button>
                   </span>
-                </template>
+                </slot>
                 <el-form
                   size="small"
                   label-width="200px"
