@@ -1,20 +1,3 @@
-<!-- <template>
-  <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane
-        v-for="panel in allPanels"
-        :key="panel"
-        :name="panel"
-        :label="panel"
-      >
-        <span slot="label">
-          {{ $tc(panel, 2) }}
-        </span>
-      </el-tab-pane>
-    </el-tabs>
-    <router-view></router-view>
-  </div>
-</template> -->
 <template>
   <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane
@@ -27,6 +10,7 @@
         {{ $tc(panel, 2) }}
       </span>
     </el-tab-pane>
+    <router-view></router-view>
   </el-tabs>
 </template>
 <script>
