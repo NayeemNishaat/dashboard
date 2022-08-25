@@ -8,13 +8,11 @@
     <tbody>
       <tr v-for="(item, index) in data" :key="index">
         <slot :row="item">
-          <td
-            v-for="(column, index) in columns"
-            :key="index"
-            v-if="hasValue(item, column)"
-          >
-            {{ itemValue(item, column) }}
-          </td>
+          <div v-for="(column, index) in columns" :key="index">
+            <td v-if="hasValue(item, column)">
+              {{ itemValue(item, column) }}
+            </td>
+          </div>
         </slot>
       </tr>
     </tbody>

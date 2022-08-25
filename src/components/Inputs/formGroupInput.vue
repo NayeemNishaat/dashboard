@@ -11,9 +11,9 @@
       </span>
     </slot>
     <input
+      v-bind="$attrs"
       :value="value"
       @input="$emit('input', $event.target.value)"
-      v-bind="$attrs"
       class="form-control"
       aria-describedby="addon-right addon-left"
     />

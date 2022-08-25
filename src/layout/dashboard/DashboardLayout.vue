@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <side-bar>
-      <template slot="links">
+      <slot name="links">
         <sidebar-link
           v-if="!hasFinishedSetup"
           class="setup"
@@ -24,7 +24,7 @@
         <sidebar-link to="/products" name="products" icon="ti-package" />
         <sidebar-link to="/notifications" name="notifications" icon="ti-bell" />
         <sidebar-link to="/settings" name="settings" icon="ti-settings" />
-      </template>
+      </slot>
 
       <mobile-menu>
         <li class="nav-item">

@@ -62,6 +62,7 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElTree: typeof import('element-plus/es')['ElTree']
     EyeHideIcon: typeof import('./src/components/icons/EyeHideIcon.vue')['default']
     EyeShowIcon: typeof import('./src/components/icons/EyeShowIcon.vue')['default']
     FormGroupInput: typeof import('./src/components/Inputs/formGroupInput.vue')['default']

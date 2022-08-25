@@ -1,14 +1,14 @@
 <template>
   <card>
     <template v-if="$slots.title || title">
-      <template slot="header">
+      <slot name="header">
         <h3 v-if="$slots.title || title" class="card-title">
           <slot name="title">{{ $t(title) }}</slot>
         </h3>
         <p class="card-category">
           <slot name="subTitle">{{ subTitle }}</slot>
         </p>
-      </template>
+      </slot>
       <template v-if="$slots.metrics">
         <slot name="metrics"></slot>
       </template>
