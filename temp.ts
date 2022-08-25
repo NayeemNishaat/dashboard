@@ -91,3 +91,18 @@
 //   padding-bottom: 10px;
 // }
 // </style>
+
+// Bug:
+// <template>
+//   <div class="content">
+//     <div class="container-fluid">
+//       <transition name="fade" mode="out-in">
+//         <!-- your content here -->
+//         <router-view v-slot="{}"> </router-view>
+//       </transition>
+//     </div>
+//   </div>
+// </template>
+// <script>
+// export default {};
+// </script>
