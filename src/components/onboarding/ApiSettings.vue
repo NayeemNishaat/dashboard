@@ -9,20 +9,32 @@
       <div class="col-12">
         <el-form-item label="API key:">
           <el-input :value="apikey" class="float-md-left" readonly></el-input>
-          <copy-button @copy="toClipboard(apikey)" class="float-right float-md-left"></copy-button>
+          <copy-button
+            @copy="toClipboard(apikey)"
+            class="float-right float-md-left"
+          ></copy-button>
         </el-form-item>
       </div>
       <div class="col-12">
         <el-form-item label="API secret:">
-          <el-input :value="apisecret" class="float-md-left" readonly></el-input>
-          <copy-button @copy="toClipboard(apisecret)" class="float-right float-md-left"></copy-button>
+          <el-input
+            :value="apisecret"
+            class="float-md-left"
+            readonly
+          ></el-input>
+          <copy-button
+            @copy="toClipboard(apisecret)"
+            class="float-right float-md-left"
+          ></copy-button>
           <dc-button v-if="!readOnly">{{ $t("re-generate") }}</dc-button>
         </el-form-item>
       </div>
       <div class="col-12 first-tip">
-        <dc-tip :message="
-          $t('copy and save your api key and api secret in a secure place.')
-        " />
+        <dc-tip
+          :message="
+            $t('copy and save your api key and api secret in a secure place.')
+          "
+        />
       </div>
     </el-form>
   </div>
@@ -32,8 +44,8 @@ import { mapGetters } from "vuex";
 import DcTip from "@/components/DcTip.vue";
 import CopyButton from "@/components/onboarding/CopyButton.vue";
 import DcButton from "@/components/DcButton.vue";
-import useClipboard from 'vue-clipboard3'
-const { toClipboard } = useClipboard()
+import useClipboard from "vue-clipboard3";
+const { toClipboard } = useClipboard();
 
 export default {
   name: "ApiSettings",
@@ -52,7 +64,7 @@ export default {
     async toClipboard(val) {
       await toClipboard(val);
     },
-  }
+  },
   props: {
     readOnly: {
       type: Boolean,
