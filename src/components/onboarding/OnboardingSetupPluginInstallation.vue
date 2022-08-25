@@ -250,7 +250,7 @@ export default {
 
     window.addEventListener("message", this.handleCalendlyEvent);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("message", this.handleCalendlyEvent);
   },
 };

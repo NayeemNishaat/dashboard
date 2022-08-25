@@ -109,7 +109,7 @@ export default {
     });
     window.addEventListener("resize", this.updatePosition);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("resize", this.updatePosition);
   },
   computed: {

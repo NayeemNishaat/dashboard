@@ -119,7 +119,7 @@ export default {
       this.updatePreview();
     });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.clearInterval(this.resizeInterval);
   }
 };

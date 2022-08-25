@@ -152,7 +152,11 @@
             <div class="upload-hint">
               <span>{{ $t("upload logo") }}</span>
               <div v-if="uploading.logo" class="upload-spinner"></div>
-              <img v-else svg-inline src="/src/assets/img/email/icon-upload.svg" />
+              <img
+                v-else
+                svg-inline
+                src="/src/assets/img/email/icon-upload.svg"
+              />
             </div>
           </el-upload>
           <label class="main-label" for="content-heading">
@@ -207,7 +211,11 @@
             <div class="upload-hint">
               <span>{{ $t("upload cover photo") }}</span>
               <div v-if="uploading.cover" class="upload-spinner"></div>
-              <img v-else svg-inline src="/src/assets/img/email/icon-upload.svg" />
+              <img
+                v-else
+                svg-inline
+                src="/src/assets/img/email/icon-upload.svg"
+              />
               <small>{{ $t("recommended width 560px") }}</small>
             </div>
           </el-upload>
@@ -307,8 +315,9 @@
               :key="font.name"
               :value="`'${font.name}', ${font.fallback}`"
               :style="`font-family: '${font.name}', ${font.fallback}`"
-              >{{ font.name }}</option
             >
+              {{ font.name }}
+            </option>
           </select>
           <label class="sub-label">{{ $t("heading size") }}</label>
           <div class="radio-group">
@@ -386,7 +395,10 @@
               data-id="editor:heading-align-center-radio"
             />
             <label for="heading-align-center">
-              <img svg-inline src="/src/assets/img/email/alignment-center.svg" />
+              <img
+                svg-inline
+                src="/src/assets/img/email/alignment-center.svg"
+              />
               <span class="sr-only">{{ $t("align:center") }}</span>
             </label>
             <input
@@ -410,7 +422,10 @@
               data-id="editor:heading-align-justify-radio"
             />
             <label for="heading-align-justify">
-              <img svg-inline src="/src/assets/img/email/alignment-justify.svg" />
+              <img
+                svg-inline
+                src="/src/assets/img/email/alignment-justify.svg"
+              />
               <span class="sr-only">{{ $t("align:justify") }}</span>
             </label>
           </div>
@@ -437,7 +452,10 @@
               data-id="editor:body-align-center-radio"
             />
             <label for="body-align-center">
-              <img svg-inline src="/src/assets/img/email/alignment-center.svg" />
+              <img
+                svg-inline
+                src="/src/assets/img/email/alignment-center.svg"
+              />
               <span class="sr-only">{{ $t("align:center") }}</span>
             </label>
             <input
@@ -461,7 +479,10 @@
               data-id="editor:body-align-justify-radio"
             />
             <label for="body-align-justify">
-              <img svg-inline src="/src/assets/img/email/alignment-justify.svg" />
+              <img
+                svg-inline
+                src="/src/assets/img/email/alignment-justify.svg"
+              />
               <span class="sr-only">{{ $t("align:justify") }}</span>
             </label>
           </div>
@@ -551,7 +572,7 @@ export default {
   components: {
     MjmlPreview
   },
-  data: function() {
+  data: function () {
     return {
       pane: "content",
       preview: {
@@ -624,12 +645,12 @@ export default {
   },
   computed: {
     ...mapGetters("settings", ["emailSettings"]),
-    hasErrors: function() {
+    hasErrors: function () {
       const requiredFields = ["logo", "heading", "cover", "body", "button"];
       return (
         !this.campaign.subject ||
         !this.campaign.rules.delay ||
-        requiredFields.some(field => !this.editor.content[field])
+        requiredFields.some((field) => !this.editor.content[field])
       );
     }
   },
@@ -649,7 +670,7 @@ export default {
 
       this.uploading[slot] = true;
       preSign("images", file.name, file.type)
-        .then(res =>
+        .then((res) =>
           axios
             .request({
               url: res.url,
@@ -715,19 +736,19 @@ export default {
         this.campaign.active = true;
       }
     },
-    updateEstimatedReach: debounce(function() {
+    updateEstimatedReach: debounce(function () {
       this.estimatedReachLoading = true;
       getPageData(
         `campaigns/${this.$route.params.campaignid}/reach?delay=${this.campaign.rules.delay}`
       )
-        .then(res => {
+        .then((res) => {
           this.estimatedReach = res.reach;
         })
         .finally(() => {
           this.estimatedReachLoading = false;
         });
     }, 1000),
-    autoSave: debounce(function() {
+    autoSave: debounce(function () {
       putCampaign(this.$route.params.campaignid, {
         name: "We miss you",
         subject:
@@ -771,7 +792,7 @@ export default {
         }
       }
     })();
-    getPageData(`campaigns/${this.$route.params.campaignid}`).then(res => {
+    getPageData(`campaigns/${this.$route.params.campaignid}`).then((res) => {
       this.campaign = {
         ...this.campaign,
         name: res.name,
@@ -803,9 +824,9 @@ export default {
       this.fetchEmailSettings();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup = true;
-    ["preview", "autosave"].forEach(tip => {
+    ["preview", "autosave"].forEach((tip) => {
       if (this.tips[tip]) {
         this.tips[tip].close();
       }
