@@ -107,9 +107,7 @@
               @success="bannerUploadedToS3"
             ></banner-upload>
             <card v-else-if="editMode">
-              <center>
-                <img class="bannerimg" :src="editBannerform.photoURL" />
-              </center>
+              <img class="bannerimg center" :src="editBannerform.photoURL" />
             </card>
           </el-form-item>
         </el-form>
@@ -304,7 +302,7 @@ export default {
     },
     categoryTreeClick(node) {
       this.bannerform.category.category_id = node.label.category_id;
-      this.bannerform.link = this.getLink(node.label.link);
+      if (node.label.link) this.bannerform.link = this.getLink(node.label.link);
     },
     uploadBanner() {
       if (
