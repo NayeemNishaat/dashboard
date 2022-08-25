@@ -22,24 +22,7 @@ ChartJS.register(
 export default defineComponent({
   name: "DoughnutChart",
   components: { Doughnut },
-  // props: {
-  //   chartId: {
-  //     type: String,
-  //     default: "bar-chart"
-  //   },
-  //   width: {
-  //     type: Number,
-  //     default: 400
-  //   },
-  //   height: {
-  //     type: Number,
-  //     default: 400
-  //   },
-  //   cssClasses: {
-  //     default: "",
-  //     type: String
-  //   }
-  // },
+
   setup(props) {
     return () =>
       h(Doughnut, {
