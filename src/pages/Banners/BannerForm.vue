@@ -43,39 +43,38 @@
                   :expand-on-click-node="true"
                   @node-click="categoryTreeClick"
                 >
-                  <span class="category-tree" slot-scope="{ node, data }">
-                    <span style="width: 10em">{{ node.label.text }}</span>
-                    <span>
-                      <small>
-                        {{ node.label.orders }}&nbsp;{{ $tc("sales", 2) }}
-                      </small>
-                    </span>
-                    <span style="width: 8em">
-                      <span
-                        v-if="node.label.banner"
-                        class="dc-tag dc-tag--warning"
-                      >
-                        {{ node.label.banner }}&nbsp;{{
-                          $tc("banners", node.label.banner)
-                        }}
+                  <template v-slot="{ node, data }">
+                    <span class="category-tree">
+                      <span style="width: 10em">{{ node.label.text }}</span>
+                      <span>
+                        <small>
+                          {{ node.label.orders }}&nbsp;{{ $tc("sales", 2) }}
+                        </small>
                       </span>
-                      <span
-                        v-else-if="node.label.recommended"
-                        class="dc-tag dc-tag--success"
-                        >{{ $t("recommended") }}</span
-                      >
-                      <span
-                        v-else
-                        style="visibility: hidden"
-                        class="dc-tag"
-                      ></span>
-                      <!-- <div v-else>&nbsp;</div> -->
+                      <span style="width: 8em">
+                        <span
+                          v-if="node.label.banner"
+                          class="dc-tag dc-tag--warning"
+                        >
+                          {{ node.label.banner }}&nbsp;{{
+                            $tc("banners", node.label.banner)
+                          }}
+                        </span>
+                        <span
+                          v-else-if="node.label.recommended"
+                          class="dc-tag dc-tag--success"
+                          >{{ $t("recommended") }}</span
+                        >
+                        <span
+                          v-else
+                          style="visibility: hidden"
+                          class="dc-tag"
+                        ></span>
+                        <!-- <div v-else>&nbsp;</div> -->
+                      </span>
                     </span>
-                  </span>
+                  </template>
                 </el-tree>
-              </div>
-              <div>
-                <small>{{ $t("# of sales is within the last 2 weeks") }}</small>
               </div>
             </template>
             <el-select
@@ -525,6 +524,9 @@ export default {
 @import "/src/assets/sass/datacue/_colors.scss";
 .el-form-item__label {
   text-align: left;
+}
+.el-form-item__content {
+  display: block;
 }
 .centered {
   flex: 1;
