@@ -68,8 +68,8 @@ export default {
     numDays() {
       return (
         differenceInCalendarDays(
-          parseISO(this.dateRange[1]),
-          parseISO(this.dateRange[0])
+          parseISO(this.dateRange?.[1]),
+          parseISO(this.dateRange?.[0])
         ) + 1
       );
     }
