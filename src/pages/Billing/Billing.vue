@@ -159,7 +159,7 @@
       </label>
       <p class="budget-disclaimer">{{ $t("once your budget is reached") }}</p>
       <span slot="footer">
-        <dc-button @click="budgetDialogOpen = false" type="outline">
+        <dc-button @click="budgetDialogOpen = null" type="outline">
           {{ $t("cancel") }}
         </dc-button>
         <dc-button @click="selectPlan(newPlan)" type="primary">
@@ -194,7 +194,7 @@ export default {
     return {
       loading: false,
       saving: false,
-      budgetDialogOpen: false,
+      budgetDialogOpen: null,
       budget: 0,
       budgetMin: 0,
       newPlan: null,
@@ -343,7 +343,7 @@ export default {
       });
     },
     async selectPlan(plan) {
-      this.budgetDialogOpen = false;
+      this.budgetDialogOpen = null;
       this.saving = true;
       let skip = false;
       try {

@@ -66,7 +66,7 @@
 
               ({{
                 $t("onboarding:setup:variants", {
-                  count: verificationResult.products.variants,
+                  count: verificationResult.products.variants
                 })
               }})
             </li>
@@ -127,7 +127,7 @@
 
         <template v-slot:footer>
           <div class="dialog-actions">
-            <dc-button type="outline" @click="skipDialogOpen = false">
+            <dc-button type="outline" @click="skipDialogOpen = null">
               {{ $t("onboarding:setup:continue") }}
             </dc-button>
 
@@ -154,14 +154,14 @@ export default {
   name: "OnboardingSetupCustom",
   components: {
     DcButton,
-    Card,
+    Card
   },
   data() {
     return {
-      skipDialogOpen: false,
+      skipDialogOpen: null,
       verifying: false,
       verificationResult: null,
-      calendlyLink: "https://calendly.com/get-datacue/demo",
+      calendlyLink: "https://calendly.com/get-datacue/demo"
     };
   },
   computed: {
@@ -205,7 +205,7 @@ export default {
       }
 
       return v.categories && v.products.products && v.orders && v.users;
-    },
+    }
   },
   methods: {
     atob(val) {
@@ -227,19 +227,19 @@ export default {
         url: this.calendlyLink,
         prefill: {
           name: this.client.user_name,
-          email: this.client.email,
-        },
+          email: this.client.email
+        }
       });
     },
     handleCalendlyEvent(event) {
       if (event.data.event === "calendly.event_scheduled") {
         postOnboardingNotification({
-          type: "call_request",
+          type: "call_request"
         });
 
         this.$emit("done");
       }
-    },
+    }
   },
   mounted() {
     this.$loadScript("https://calendly.com/assets/external/widget.js").then(
@@ -252,7 +252,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("message", this.handleCalendlyEvent);
-  },
+  }
 };
 </script>
 
@@ -266,8 +266,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
-    #fff;
+  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center /
+    80% #fff;
 }
 
 .dialog-actions {

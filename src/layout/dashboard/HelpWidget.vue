@@ -54,7 +54,7 @@
           @click="sendEmail()"
           >{{ $t("send") }}</el-button
         >
-        <el-button @click="feedbackFormVisible = false">
+        <el-button @click="feedbackFormVisible = null">
           {{ $t("cancel") }}
         </el-button>
       </span>
@@ -71,7 +71,7 @@ export default {
       unsubscribe: null,
       hasClientDetails: false,
       sending: false,
-      feedbackFormVisible: false,
+      feedbackFormVisible: null,
       feelings: "",
       comments: "",
       dragging: false,
@@ -175,7 +175,7 @@ export default {
       };
       postSendEmail(data)
         .then(() => {
-          this.feedbackFormVisible = false;
+          this.feedbackFormVisible = null;
         })
         .catch((err) => {
           this.$notify({

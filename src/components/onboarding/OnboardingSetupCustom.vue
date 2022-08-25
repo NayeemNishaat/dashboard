@@ -128,7 +128,7 @@
 
       <template v-slot:footer>
         <div class="dialog-actions">
-          <dc-button type="outline" @click="skipDialogOpen = false">
+          <dc-button type="outline" @click="skipDialogOpen = null">
             {{ $t("onboarding:setup:continue") }}
           </dc-button>
 
@@ -164,7 +164,7 @@ export default {
   },
   data() {
     return {
-      skipDialogOpen: false,
+      skipDialogOpen: null,
       verifying: false,
       verificationResult: null,
       calendlyLink: "https://calendly.com/shrumm/datacue-demo"
