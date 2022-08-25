@@ -34,8 +34,8 @@ export default {
     ...mapGetters(["client"])
   },
   methods: {
-    handleClick() {
-      this.$router.push({ name: `${this.activeName} settings` });
+    handleClick(tab, _e) {
+      this.$router.push({ name: `${tab.props.name} settings` });
     }
   },
   mounted() {
