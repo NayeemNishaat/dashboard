@@ -52,7 +52,7 @@ export default {
     async toClipboard(val) {
       await toClipboard(val);
     },
-  }
+  },
   props: {
     readOnly: {
       type: Boolean,

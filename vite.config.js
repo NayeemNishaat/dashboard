@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import createVuePlugin from "@vitejs/plugin-vue";
 import path from 'path';
+import checker from 'vite-plugin-checker'
 
 export default defineConfig({
-  plugins: [createVuePlugin()],
+  plugins: [createVuePlugin(), checker({ vueTsc: true })],
   server: {
     port: 8080
   },

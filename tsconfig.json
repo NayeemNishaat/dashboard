@@ -3,7 +3,9 @@
     "target": "es2020",
     "module": "esnext",
     "strict": true,
+    "allowJs": true,
     "jsx": "preserve",
+    "skipLibCheck": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "importHelpers": true,
@@ -13,8 +15,6 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
-      "jest",
       "element-plus/global"
     ],
     "paths": {
