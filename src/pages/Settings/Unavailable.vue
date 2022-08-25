@@ -15,12 +15,12 @@ import Card from "@/components/Cards/Card.vue";
 export default {
   name: "UnavailableSettings",
   components: {
-    Card
+    Card,
   },
   props: {
     title: String,
-    subTitle: String
-  }
+    subTitle: String,
+  },
 };
 </script>
 <style></style>

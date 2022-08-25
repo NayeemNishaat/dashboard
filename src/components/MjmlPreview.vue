@@ -26,7 +26,7 @@ function shortenToWordBoundary(originalStr, n) {
 
 export default {
   name: "MjmlPreview",
-  data: function() {
+  data: function () {
     return {
       resizeInterval: null,
       products: fill(Array(6), {
@@ -34,40 +34,40 @@ export default {
         name: "Example product",
         link: "https://demo.datacue.co/",
         price: "1250",
-        full_price: "2000"
-      })
+        full_price: "2000",
+      }),
     };
   },
   props: {
     template: {
       type: String,
-      validator: isValidTemplateType
+      validator: isValidTemplateType,
     },
     size: {
       type: String,
-      validator: v => ["mobile", "desktop"].includes(v)
+      validator: (v) => ["mobile", "desktop"].includes(v),
     },
     editorState: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   watch: {
     editorState: {
       handler: "updatePreview",
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
-    updatePreview: throttle(function() {
+    updatePreview: throttle(function () {
       const compiled = mjml2html(
         buildTemplateMjml(this.template, {
           content: this.editorState.content,
           settings: {
             ...this.editorState.settings,
-            ...this.$store.getters.client.web_settings.recommendations.all
+            ...this.$store.getters.client.web_settings.recommendations.all,
           },
-          products: this.products
+          products: this.products,
         })
       );
 
@@ -87,7 +87,7 @@ export default {
           preview.srcdoc = html;
         }
       } else {
-        Sentry.withScope(scope => {
+        Sentry.withScope((scope) => {
           scope.setExtra("error_log", compiled.errors);
           Sentry.captureException(new Error("MJML compilation error"));
         });
@@ -102,23 +102,23 @@ export default {
 
         preview.style.height = Math.ceil(height) + 20 + "px";
       }
-    }
+    },
   },
   mounted() {
     this.updatePreview();
     this.resizeInterval = window.setInterval(this.resizePreview, 200);
 
-    getPageData("products/random").then(res => {
-      this.products = res.products.map(elem => {
+    getPageData("products/random").then((res) => {
+      this.products = res.products.map((elem) => {
         elem.name = shortenToWordBoundary(elem.name, 25);
         return elem;
       });
       this.updatePreview();
     });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.clearInterval(this.resizeInterval);
-  }
+  },
 };
 </script>
 

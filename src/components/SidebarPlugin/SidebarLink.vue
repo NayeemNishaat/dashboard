@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    @click.native="hideSidebar"
+    @click="hideSidebar"
     class="nav-item"
     v-bind="$attrs"
     tag="li"
@@ -63,7 +63,7 @@ export default {
       this.addLink(this);
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }

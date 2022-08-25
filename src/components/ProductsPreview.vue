@@ -11,7 +11,7 @@ const exampleNames = [
   "Fancy Retro Bulbs",
   "Outdoor Armchair",
   "All Weather Sofa",
-  "Wooden Banana Hanger",
+  "Wooden Banana Hanger"
 ];
 
 const exampleBrands = [
@@ -20,7 +20,7 @@ const exampleBrands = [
   "Light & Co.",
   "Bequem GmbH",
   "Bequem GmbH",
-  "Superfluous Inc",
+  "Superfluous Inc"
 ];
 
 export default {
@@ -45,39 +45,39 @@ export default {
           photo_url: `https://cdn.datacue.co/assets/css-editor/${i}.jpg`,
           rating: 50 + 5 * i,
           brand: exampleBrands[i - 1],
-          stock: i % 2 ? 10 : 3,
+          stock: i % 2 ? 10 : 3
         }));
-    },
+    }
   },
   props: {
     styles: {
       type: Object,
-      required: true,
+      required: true
     },
     showFields: {
-      type: Array,
+      type: Array
     },
     apiKey: {
       type: String,
-      required: true,
+      required: true
     },
     productCount: {
       type: Number,
-      default: 8,
+      default: 8
     },
     type: {
       type: String,
-      default: "grid",
-    },
+      default: "grid"
+    }
   },
   watch: {
     styles: {
       handler: "updatePreview",
-      deep: true,
+      deep: true
     },
     showFields: "refreshPreview",
     productCount: "refreshPreview",
-    type: "refreshPreview",
+    type: "refreshPreview"
   },
   methods: {
     refreshPreview: throttle(function () {
@@ -156,11 +156,11 @@ export default {
           );
         }
       }
-    }, 250),
+    }, 250)
   },
   mounted() {
     this.refreshPreview();
-  },
+  }
 };
 </script>
 

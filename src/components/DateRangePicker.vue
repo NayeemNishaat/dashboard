@@ -7,8 +7,6 @@
         :range-separator="$t('to')"
         :start-placeholder="$t('start date')"
         :end-placeholder="$t('end date')"
-        format="yyyy-MM-dd"
-        value-format="yyyy-MM-dd"
         @change="dateChanged"
       >
       </el-date-picker>

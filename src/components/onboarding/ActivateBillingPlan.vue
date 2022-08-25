@@ -229,7 +229,7 @@ export default {
     width: 72px;
   }
 
-  ::v-deep {
+  :deep {
     .el-input--small {
       font-size: inherit;
     }

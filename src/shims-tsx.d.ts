@@ -1,4 +1,5 @@
-import Vue, { VNode } from 'vue';
+import { VNode } from "vue";
+import { Vue } from "@sentry/vue/types/types";
 
 declare global {
   namespace JSX {

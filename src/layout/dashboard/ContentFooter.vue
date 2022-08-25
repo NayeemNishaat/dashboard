@@ -19,16 +19,9 @@
               <span>&nbsp;&nbsp;{{ currentLang.name }}</span>
               <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
-            <el-dropdown-menu
-              slot="dropdown"
-              data-id="footer:language-switcher-options"
-            >
-              <el-dropdown-item
-                v-for="(lang, idx) in languages"
-                :key="idx"
-                :command="lang.code"
-                >{{ lang.name }}</el-dropdown-item
-              >
+            <el-dropdown-menu slot="dropdown" data-id="footer:language-switcher-options">
+              <el-dropdown-item v-for="(lang, idx) in languages" :key="idx" :command="lang.code">{{ lang.name }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -50,7 +43,9 @@ export default {
     ...mapGetters(["languageCode"]),
     currentLang() {
       let en = { code: "en", name: "English" }; // default
-      return this.languages.find(lang => lang.code === this.languageCode) || en;
+      return (
+        this.languages.find((lang) => lang.code === this.languageCode) || en
+      );
     }
   },
   methods: {

@@ -2,7 +2,13 @@ import { MutationTree } from "vuex";
 import Vue from "vue";
 
 //interfaces
-import { WebSettings, AuthToken, Context, AlgoSettings, ClientProfile } from "@/api/interfaces";
+import {
+  WebSettings,
+  AuthToken,
+  Context,
+  AlgoSettings,
+  ClientProfile
+} from "@/api/interfaces";
 
 import State from "./state";
 
@@ -33,7 +39,7 @@ const mutations: MutationTree<State> = {
     // This sets the settings keys in the client
     // everytime we save new settings value
     // this is called in `setSettings` action from settings module
-    if (!(state.context?.client.apikey)) {
+    if (!state.context?.client.apikey) {
       return;
     }
     const context = state.context;

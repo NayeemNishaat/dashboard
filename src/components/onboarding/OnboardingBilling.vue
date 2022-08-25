@@ -159,7 +159,7 @@ export default {
       lastRevenue:
         this.revenue === null ? 10000 : 10 * Math.round(this.revenue / 10),
       paymentsConfigured: null,
-      contactDialogOpen: false,
+      contactDialogOpen: null,
       contact: {
         revenue: null,
         comment: "",
@@ -350,7 +350,7 @@ export default {
     width: 72px;
   }
 
-  ::v-deep {
+  :deep {
     .el-input--small {
       font-size: inherit;
     }

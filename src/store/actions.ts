@@ -1,18 +1,18 @@
 import { ActionContext, ActionTree } from "vuex";
-import router from "@/router/index";
+import router from "../router/index";
 //backend
-import { Http } from "@/http";
+import { Http } from "../http";
 
 //i18n
-import { i18n, supportedLanguageCodes } from "@/lang/lang";
+import { i18n, supportedLanguageCodes } from "../lang/lang";
 
 //auth
-import { logout } from "@/api/AuthService";
+import { logout } from "../api/AuthService";
 
 import State from "./state";
 
 //interfaces
-import { Context, AuthToken } from "@/api/interfaces";
+import { Context, AuthToken } from "../api/interfaces";
 
 //error reporting
 import * as Sentry from "@sentry/browser";
@@ -32,14 +32,16 @@ const actions: ActionTree<State, State> = {
     localStorage.removeItem("context");
 
     // clear Sentry user context on log out
-    Sentry.configureScope(scope => {
+    Sentry.configureScope((scope) => {
       scope.setUser({ email: undefined });
     });
     const authProvider = getters?.access_token?.auth_provider || "shopify";
     commit("setAccessToken", { token: "", auth_provider: "" } as AuthToken);
     let url = `${import.meta.env.VITE_APP_URL}/login`;
     if (getters.client.type === "shopify") {
-      url = `${import.meta.env.VITE_APP_SHOPIFY_APP_URL}?shop=${getters.apikey}`
+      url = `${import.meta.env.VITE_APP_SHOPIFY_APP_URL}?shop=${
+        getters.apikey
+      }`;
     }
     logout(authProvider, url);
   },

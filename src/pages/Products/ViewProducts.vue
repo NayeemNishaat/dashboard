@@ -4,8 +4,13 @@
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="productFilter">
-          <el-tab-pane v-for="section in allSections" :key="section" :name="section" :label="$t(section)">
-        </el-tab-pane>
+          <el-tab-pane
+            v-for="section in allSections"
+            :key="section"
+            :name="section"
+            :label="$t(section)"
+          >
+          </el-tab-pane>
         </el-tabs>
         <card-grid
           :loading="loading"
@@ -25,22 +30,29 @@ import { getPageData } from "@/api/backend";
 export default {
   components: {
     CardGrid,
-    DateRangePicker
+    DateRangePicker,
   },
   data() {
     return {
       productFilter: "recent",
-      allSections:["recent","related","user_related","user_related_categories","top","similar"],
+      allSections: [
+        "recent",
+        "related",
+        "user_related",
+        "user_related_categories",
+        "top",
+        "similar",
+      ],
       productPerf: [],
       loading: true,
-      error: false
+      error: false,
     };
   },
   computed: {
     ...mapGetters(["dateRange"]),
     allProducts() {
       let allProducts = {};
-      this.productPerf.forEach(e => {
+      this.productPerf.forEach((e) => {
         allProducts[e.section_type] = e.products;
       });
       return allProducts;
@@ -50,7 +62,7 @@ export default {
         return [];
       }
       return this.allProducts[this.productFilter] || [];
-    }
+    },
   },
   methods: {
     async refreshData() {
@@ -70,11 +82,11 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>
 <style>

@@ -1,19 +1,17 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { nextTick } from "vue";
+import { createWebHistory, createRouter } from "vue-router";
 import routes from "./routes";
-Vue.use(VueRouter);
 
 // configure router
-const router = new VueRouter({
-  mode: "history",
+const router = createRouter({
+  history: createWebHistory(),
   routes, // short for routes: routes
   linkActiveClass: "active"
 });
 
-router.afterEach((to, from) => {
-  Vue.nextTick(() => {
-    const componentTitle = to && to.meta && to.meta.title;
-    document.title = `${componentTitle ? componentTitle + " | " : ""}DataCue`;
-  });
+router.afterEach(async (to, from) => {
+  await nextTick();
+  const componentTitle = to && to.meta && to.meta.title;
+  document.title = `${componentTitle ? componentTitle + " | " : ""}DataCue`;
 });
 export default router;

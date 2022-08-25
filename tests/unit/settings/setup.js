@@ -72,7 +72,7 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
   });
 };
 
-export const factoryProductSettings = accessProfile => {
+export const factoryProductSettings = (accessProfile) => {
   const newWebSettings = getNewObject(webSettings);
   const newPageInstallation = getNewObject(pageInstallation);
   const router = new VueRouter();

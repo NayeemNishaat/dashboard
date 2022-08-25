@@ -1,10 +1,10 @@
 import { ActionContext, ActionTree } from "vuex";
 import ModuleState from "./state";
 import RootState from "../../state";
-import Vue from "vue";
+
 //backend
-import { Http } from "@/http";
-import { AuthToken, SetupSummary } from "@/api/interfaces";
+import { Http } from "../../../http";
+import { AuthToken, SetupSummary } from "../../../api/interfaces";
 
 const actions: ActionTree<ModuleState, RootState> = {
   setAccessToken(
@@ -18,11 +18,11 @@ const actions: ActionTree<ModuleState, RootState> = {
   }: ActionContext<ModuleState, RootState>): Promise<{ data: SetupSummary }> {
     return new Promise((resolve, reject) => {
       Http.get("/summary/setup")
-        .then(response => {
+        .then((response) => {
           commit("setSetupSummary", response.data);
           resolve(response.data);
         })
-        .catch(error => reject(error.response));
+        .catch((error) => reject(error.response));
     });
   },
   finishOnboarding({
@@ -30,7 +30,7 @@ const actions: ActionTree<ModuleState, RootState> = {
   }: ActionContext<ModuleState, RootState>): Promise<any> {
     return new Promise((resolve, reject) => {
       Http.post("client/finish-onboarding")
-        .then(resp => {
+        .then((resp) => {
           dispatch("getContext", resp, { root: true })
             .then(() => {
               resolve(resp);
@@ -39,22 +39,24 @@ const actions: ActionTree<ModuleState, RootState> = {
               reject(new Error("could not update store"));
             });
         })
-        .catch(err => {
+        .catch((err) => {
           reject(err);
         });
     });
   },
   finishSetup({
+    commit,
     rootGetters
   }: ActionContext<ModuleState, RootState>): Promise<any> {
-    const client = rootGetters.client;
-    Vue.set(client.profile, "has_finished_setup", true);
+    const context = rootGetters.context;
     return new Promise((resolve, reject) => {
       Http.post("/client/finish-setup")
-        .then(response => {
+        .then((response) => {
+          context.client.profile["has_finished_setup"] = true;
+          commit("setContext", context);
           resolve(response);
         })
-        .catch(error => reject(error));
+        .catch((error) => reject(error));
     });
   },
   setIntroStep(

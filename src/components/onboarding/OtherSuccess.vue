@@ -38,8 +38,8 @@ export default {
   methods: {
     goToSummary() {
       this.$router.push({ name: "setup-summary", params: this.$route.params });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -16,7 +16,7 @@ export const addCampaignMixin = {
         template: "<!-- empty -->",
         active: false
       })
-        .then(res => {
+        .then((res) => {
           this.$router.push({
             name: "edit campaign",
             params: { campaignid: res.data.campaign_id }

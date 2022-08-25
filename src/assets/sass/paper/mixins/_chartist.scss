@@ -1,22 +1,23 @@
 // Scales for responsive SVG containers
 $ct-scales: (
   (1),
-  calc(15/16),
-  calc(8/9),
-  calc(5/6),
-  calc(4/5),
-  calc(3/4),
-  calc(2/3),
-  calc(5/8),
-  calc(1/1.618),
-  calc(3/5),
-  calc(9/16),
-  calc(8/15),
-  calc(1/2),
-  calc(2/5),
-  calc(3/8),
-  calc(1/3),
-  calc(1/4)) !default;
+  calc(15 / 16),
+  calc(8 / 9),
+  calc(5 / 6),
+  calc(4 / 5),
+  calc(3 / 4),
+  calc(2 / 3),
+  calc(5 / 8),
+  calc(1 / 1.618),
+  calc(3 / 5),
+  calc(9 / 16),
+  calc(8 / 15),
+  calc(1 / 2),
+  calc(2 / 5),
+  calc(3 / 8),
+  calc(1 / 3),
+  calc(1 / 4)
+) !default;
 $ct-scales-names: (
   ct-square,
   ct-minor-second,
@@ -34,7 +35,8 @@ $ct-scales-names: (
   ct-major-tenth,
   ct-major-eleventh,
   ct-major-twelfth,
-  ct-double-octave) !default;
+  ct-double-octave
+) !default;
 
 // Class names to be used when generating CSS
 $ct-class-chart: ct-chart !default;
@@ -58,7 +60,7 @@ $ct-class-start: ct-start !default;
 $ct-class-end: ct-end !default;
 
 // Container ratio
-$ct-container-ratio: calc(1/1.618) !default;
+$ct-container-ratio: calc(1 / 1.618) !default;
 
 // Text styles for labels
 $ct-text-color: rgba(0, 0, 0, 0.4) !default;
@@ -93,63 +95,49 @@ $ct-include-classes: true !default;
 
 // If this is set to true the CSS will contain colored series. You can extend or change the color with the
 // properties below
-$ct-include-colored-series: $ct-include-classes  !default;
+$ct-include-colored-series: $ct-include-classes !default;
 
 // If set to true this will include all responsive container variations using the scales defined at the top of the script
-$ct-include-alternative-responsive-containers: $ct-include-classes  !default;
+$ct-include-alternative-responsive-containers: $ct-include-classes !default;
 
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
-$ct-series-names: (
-  a,
-  b,
-  c,
-  d,
-  e,
-  f,
-  g,
-  h,
-  i,
-  j,
-  k,
-  l,
-  m,
-  n,
-  o) !default;
+$ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) !default;
 $ct-series-colors: (
   $info-color,
   $warning-color,
   $danger-color,
   $success-color,
   $primary-color,
-  rgba($info-color, .8),
-  rgba($success-color, .8),
-  rgba($warning-color, .8),
-  rgba($danger-color, .8),
-  rgba($primary-color, .8),
-  rgba($info-color, .6),
-  rgba($success-color, .6),
-  rgba($warning-color, .6),
-  rgba($danger-color, .6),
-  rgba($primary-color, .6)) !default;
+  rgba($info-color, 0.8),
+  rgba($success-color, 0.8),
+  rgba($warning-color, 0.8),
+  rgba($danger-color, 0.8),
+  rgba($primary-color, 0.8),
+  rgba($info-color, 0.6),
+  rgba($success-color, 0.6),
+  rgba($warning-color, 0.6),
+  rgba($danger-color, 0.6),
+  rgba($primary-color, 0.6)
+) !default;
 
 // Paper Kit Colors
 
 .ct-blue {
-  stroke: $primary-color  !important;
+  stroke: $primary-color !important;
 }
 
 .ct-azure {
-  stroke: $info-color  !important;
+  stroke: $info-color !important;
 }
 
 .ct-green {
-  stroke: $success-color  !important;
+  stroke: $success-color !important;
 }
 
 .ct-orange {
-  stroke: $warning-color  !important;
+  stroke: $warning-color !important;
 }
 
 .ct-red {
-  stroke: $danger-color  !important;
+  stroke: $danger-color !important;
 }

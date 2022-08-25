@@ -14,17 +14,17 @@ import { mapActions } from "vuex";
 export default {
   name: "callback",
   components: {
-    LoaderDots,
+    LoaderDots
   },
   methods: {
-    ...mapActions(["getContext", "setAccessToken"]),
+    ...mapActions(["getContext", "setAccessToken"])
   },
   mounted() {
     handleAuthentication((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setAccessToken({
           token: authResult.idToken,
-          auth_provider: "auth0",
+          auth_provider: "auth0"
         })
           .then(() => {
             this.getContext()
@@ -43,6 +43,6 @@ export default {
         Sentry.captureException(err);
       }
     });
-  },
+  }
 };
 </script>

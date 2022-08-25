@@ -77,7 +77,7 @@ export default {
     MultiSelectTable,
     LoaderDots,
     PendingSettings,
-    CardMessageBox
+    CardMessageBox,
   },
   data() {
     return {
@@ -87,14 +87,14 @@ export default {
       multipleSelection: [],
       lastSaved: [],
       search: "",
-      current: null
+      current: null,
     };
   },
   computed: {
     ...mapGetters(["client"]),
     hasUnsavedChanges() {
       return !isEqual(this.current, this.lastSaved);
-    }
+    },
   },
   methods: {
     async saveChanges() {
@@ -104,8 +104,8 @@ export default {
         //to process changes
         await DeactivateCategories(
           this.current
-            .filter(elem => !elem.active)
-            .map(elem => elem.category_id)
+            .filter((elem) => !elem.active)
+            .map((elem) => elem.category_id)
         );
         let resp = await GetCategories();
         this.lastSaved = cloneDeep(resp || []);
@@ -117,12 +117,12 @@ export default {
       }
     },
     handleSelect(id) {
-      let toggleActive = item => {
+      let toggleActive = (item) => {
         item.active = !item.active;
         return item;
       };
       try {
-        this.current[id] = this.current.map(item => {
+        this.current[id] = this.current.map((item) => {
           item.category_id === id ? toggleActive(item) : item;
         });
       } catch (err) {
@@ -141,10 +141,10 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>

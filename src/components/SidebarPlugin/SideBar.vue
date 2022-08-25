@@ -8,12 +8,12 @@
       <div class="logo">
         <router-link to="/" class="simple-text">
           <div class="logo-img">
-            <img src="@/assets/img/datacue-logo.svg" alt />
+            <img src="@/assets/img/datacue-logo.svg" alt="logo" />
           </div>
         </router-link>
       </div>
-      <slot></slot>
       <ul class="nav">
+        <slot></slot>
         <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot name="links" data-id="sidebar:links">
           <sidebar-link
@@ -22,7 +22,8 @@
             :to="link.path"
             :name="$tc(link.name, 2)"
             :icon="link.icon"
-          ></sidebar-link>
+          >
+          </sidebar-link>
         </slot>
       </ul>
       <moving-arrow :move-y="arrowMovePx"></moving-arrow>
@@ -111,7 +112,7 @@ export default {
       });
     },
     addLink(link) {
-      const index = this.$slots.links.indexOf(link.$vnode);
+      const index = this.$slots.default().indexOf(link.$vnode);
       this.links.splice(index, 0, link);
     },
     removeLink(link) {

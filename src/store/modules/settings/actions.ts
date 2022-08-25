@@ -2,7 +2,7 @@ import { ActionContext, ActionTree } from "vuex";
 import ModuleState from "./state";
 import RootState from "../../state";
 //backend
-import { Http } from "@/http";
+import { Http } from "../../../http";
 
 const actions: ActionTree<ModuleState, RootState> = {
   setSettings: ({ commit }: ActionContext<ModuleState, RootState>, data) => {
@@ -12,11 +12,11 @@ const actions: ActionTree<ModuleState, RootState> = {
   getSettings({ commit, dispatch }: ActionContext<ModuleState, RootState>) {
     return new Promise((resolve, reject) => {
       Http.get("settings")
-        .then(response => {
+        .then((response) => {
           dispatch("setSettings", response.data);
           resolve(response.data);
         })
-        .catch(error => reject(error));
+        .catch((error) => reject(error));
     });
   },
   getPageInstallationSettings(
@@ -26,11 +26,11 @@ const actions: ActionTree<ModuleState, RootState> = {
     commit("setPageInstallationLoading", page);
     return new Promise((resolve, reject) => {
       Http.get("settings/installation/" + page)
-        .then(response => {
+        .then((response) => {
           commit("setPageInstallationSettings", [response.data, page]);
           resolve(response.data);
         })
-        .catch(error => reject(error.response))
+        .catch((error) => reject(error.response))
         .finally(() => commit("setPageInstallationLoading", null));
     });
   },
@@ -40,11 +40,11 @@ const actions: ActionTree<ModuleState, RootState> = {
   ): Promise<any> {
     return new Promise((resolve, reject) => {
       Http.post("settings", payload)
-        .then(response => {
+        .then((response) => {
           dispatch("setSettings", response.data);
           resolve(response);
         })
-        .catch(error => {
+        .catch((error) => {
           reject(error);
         });
     });
@@ -54,13 +54,13 @@ const actions: ActionTree<ModuleState, RootState> = {
   }: ActionContext<ModuleState, RootState>): Promise<any> {
     return new Promise((resolve, reject) => {
       Http.get("settings/web")
-        .then(response => {
+        .then((response) => {
           const data = {};
           data["web_settings"] = response.data;
           commit("updateClientSettings", data, { root: true });
           resolve(response);
         })
-        .catch(error => reject(error));
+        .catch((error) => reject(error));
     });
   }
 };

@@ -1,13 +1,8 @@
-import Vue from "vue";
-import VueI18n from "vue-i18n";
+import { createI18n } from "vue-i18n/dist/vue-i18n.esm-bundler.js";
+import messages from "./messages";
 
-import messages from "@/lang/messages";
-
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-
-import enLocale from "element-ui/lib/locale/lang/en";
-import esLocale from "element-ui/lib/locale/lang/es";
+import enLocale from "element-plus/es/locale/lang/en";
+import esLocale from "element-plus/es/locale/lang/es";
 
 Object.assign(messages.en, enLocale);
 Object.assign(messages.es, esLocale);
@@ -31,13 +26,8 @@ function browserLanguage() {
 const curLocale = localStorage.getItem("lang") || browserLanguage();
 localStorage.setItem("lang", curLocale);
 
-Vue.use(VueI18n);
-export const i18n = new VueI18n({
+export const i18n = createI18n({
   locale: curLocale,
   fallbackLocale: "en",
   messages
-});
-
-Vue.use(ElementUI, {
-  i18n: (key: string, value: string) => i18n.t(key, value)
 });

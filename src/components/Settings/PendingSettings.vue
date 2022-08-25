@@ -71,12 +71,12 @@ p.message {
   font-size: 1rem;
 }
 
-.status-bar >>> .card-body {
+.status-bar :deep(.card-body) {
   display: flex;
   align-items: center;
 }
 
-.status-bar >>> .card-body >>> p {
+.status-bar :deep(.card-body :deep(p)) {
   display: flex;
   align-items: center;
 }

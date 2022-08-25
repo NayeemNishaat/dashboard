@@ -302,13 +302,14 @@
                 { name: 'Verdana', fallback: 'sans-serif' },
                 { name: 'Times New Roman', fallback: 'serif' },
                 { name: 'Georgia', fallback: 'serif' },
-                { name: 'Courier', fallback: 'monospace' }
+                { name: 'Courier', fallback: 'monospace' },
               ]"
               :key="font.name"
               :value="`'${font.name}', ${font.fallback}`"
               :style="`font-family: '${font.name}', ${font.fallback}`"
-              >{{ font.name }}</option
             >
+              {{ font.name }}
+            </option>
           </select>
           <label class="sub-label">{{ $t("heading size") }}</label>
           <div class="radio-group">
@@ -549,26 +550,26 @@ const SHOW_TIPS_STORAGE_KEY = "datacue-dashboard-showTips";
 export default {
   name: "Editor",
   components: {
-    MjmlPreview
+    MjmlPreview,
   },
-  data: function() {
+  data: function () {
     return {
       pane: "content",
       preview: {
         template: getTemplateTypes().WE_MISS_YOU,
-        size: "desktop"
+        size: "desktop",
       },
       uploading: {
         logo: false,
-        cover: false
+        cover: false,
       },
       campaign: {
         name: "",
         subject: "",
         active: false,
         rules: {
-          delay: 0
-        }
+          delay: 0,
+        },
       },
       editor: {
         content: {
@@ -578,7 +579,7 @@ export default {
           footer: "",
           logo: null,
           cover: null,
-          unsubscribeText: this.$t("click to unsubscribe")
+          unsubscribeText: this.$t("click to unsubscribe"),
         },
         settings: {
           mainColor: "#f8d188",
@@ -588,8 +589,8 @@ export default {
           headingAlign: "center",
           headingBold: false,
           bodyAlign: "left",
-          discountColor: "#ff5c77"
-        }
+          discountColor: "#ff5c77",
+        },
       },
       validate: false,
       windowWidth: 1024,
@@ -597,41 +598,41 @@ export default {
       estimatedReachLoading: 0,
       tips: {
         preview: null,
-        autosave: null
+        autosave: null,
       },
       showTips: JSON.parse(
         window.localStorage.getItem(SHOW_TIPS_STORAGE_KEY)
       ) || {
         preview: true,
-        autosave: true
+        autosave: true,
       },
-      cleanup: false
+      cleanup: false,
     };
   },
   watch: {
     editor: {
       handler: "autoSave",
-      deep: true
+      deep: true,
     },
     campaign: {
       handler: "autoSave",
-      deep: true
+      deep: true,
     },
     "campaign.rules": {
       handler: "updateEstimatedReach",
-      deep: true
-    }
+      deep: true,
+    },
   },
   computed: {
     ...mapGetters("settings", ["emailSettings"]),
-    hasErrors: function() {
+    hasErrors: function () {
       const requiredFields = ["logo", "heading", "cover", "body", "button"];
       return (
         !this.campaign.subject ||
         !this.campaign.rules.delay ||
-        requiredFields.some(field => !this.editor.content[field])
+        requiredFields.some((field) => !this.editor.content[field])
       );
-    }
+    },
   },
   methods: {
     ...mapActions("settings", ["fetchEmailSettings"]),
@@ -649,7 +650,7 @@ export default {
 
       this.uploading[slot] = true;
       preSign("images", file.name, file.type)
-        .then(res =>
+        .then((res) =>
           axios
             .request({
               url: res.url,
@@ -657,8 +658,8 @@ export default {
               data: file,
               responseType: "text",
               headers: {
-                "Content-Type": file.type
-              }
+                "Content-Type": file.type,
+              },
             })
             .then(async () => {
               try {
@@ -666,7 +667,7 @@ export default {
                 this.editor.content[slot] = {
                   src: `https://cdn.datacue.co/${res.key}`,
                   width,
-                  height
+                  height,
                 };
               } catch (err) {
                 Sentry.captureException(err);
@@ -675,7 +676,7 @@ export default {
                   message: this.$t(
                     "an unknown error occured, please try again later"
                   ),
-                  type: "warning"
+                  type: "warning",
                 });
               }
             })
@@ -715,41 +716,41 @@ export default {
         this.campaign.active = true;
       }
     },
-    updateEstimatedReach: debounce(function() {
+    updateEstimatedReach: debounce(function () {
       this.estimatedReachLoading = true;
       getPageData(
         `campaigns/${this.$route.params.campaignid}/reach?delay=${this.campaign.rules.delay}`
       )
-        .then(res => {
+        .then((res) => {
           this.estimatedReach = res.reach;
         })
         .finally(() => {
           this.estimatedReachLoading = false;
         });
     }, 1000),
-    autoSave: debounce(function() {
+    autoSave: debounce(function () {
       putCampaign(this.$route.params.campaignid, {
         name: "We miss you",
         subject:
           this.campaign.subject.replace(/\{+%+|%+\}+/g, "") || "We miss you",
         rules: JSON.stringify({
           ...this.campaign.rules,
-          editor: this.editor
+          editor: this.editor,
         }),
         template: buildTemplateMjml(
           this.preview.template,
           this.editor,
           "jinja"
         ),
-        active: !this.hasErrors && this.campaign.active
+        active: !this.hasErrors && this.campaign.active,
       }).catch(() => {
         this.$notify({
           title: this.$t("error"),
           message: this.$t("could not save"),
-          type: "warning"
+          type: "warning",
         });
       });
-    }, 1500)
+    }, 1500),
   },
   mounted() {
     // FIXME attach event listeners properly and clean on unmount
@@ -766,12 +767,12 @@ export default {
             message: this.$t(`${tip} tip`),
             type: "info",
             duration: 0,
-            onClose: () => this.closeTip(tip)
+            onClose: () => this.closeTip(tip),
           });
         }
       }
     })();
-    getPageData(`campaigns/${this.$route.params.campaignid}`).then(res => {
+    getPageData(`campaigns/${this.$route.params.campaignid}`).then((res) => {
       this.campaign = {
         ...this.campaign,
         name: res.name,
@@ -779,20 +780,20 @@ export default {
         active: res.active || false,
         rules: {
           ...this.campaign.rules,
-          ...omit(res.rules, "editor")
-        }
+          ...omit(res.rules, "editor"),
+        },
       };
 
       if (res.rules && res.rules.editor) {
         this.editor = {
           content: {
             ...this.editor.content,
-            ...res.rules.editor.content
+            ...res.rules.editor.content,
           },
           settings: {
             ...this.editor.settings,
-            ...res.rules.editor.settings
-          }
+            ...res.rules.editor.settings,
+          },
         };
       }
 
@@ -803,14 +804,14 @@ export default {
       this.fetchEmailSettings();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup = true;
-    ["preview", "autosave"].forEach(tip => {
+    ["preview", "autosave"].forEach((tip) => {
       if (this.tips[tip]) {
         this.tips[tip].close();
       }
     });
-  }
+  },
 };
 </script>
 

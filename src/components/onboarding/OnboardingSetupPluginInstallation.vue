@@ -7,11 +7,10 @@
       <i18n tag="p" path="onboarding:setup:connect">
         <template v-slot:installLink>
           <a target="_blank" :href="guideLink">{{
-            $t(
-              `onboarding:setup:${
-                pluginAvailable ? "installPlugin" : "connectApi"
-              }`
-            )
+              $t(
+                `onboarding:setup:${pluginAvailable ? "installPlugin" : "connectApi"
+                }`
+              )
           }}</a>
         </template>
         <template v-slot:platform>
@@ -23,9 +22,9 @@
         <el-form-item label="API key">
           <el-input type="text" readonly :value="client.apikey">
             <template v-slot:append>
-              <dc-button type="outline" @click="$clipboard(client.apikey)"
-                ><i class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button
-              >
+              <dc-button type="outline" @click="toClipboard(client.apikey)"><i class="ti-files"></i>&nbsp;&nbsp;{{
+                  $t("copy")
+              }}</dc-button>
             </template>
           </el-input>
         </el-form-item>
@@ -33,11 +32,8 @@
         <el-form-item label="API secret">
           <el-input type="text" readonly :value="atob(client.apisecret)">
             <template v-slot:append>
-              <dc-button
-                type="outline"
-                @click="$clipboard(atob(client.apisecret))"
-                ><i class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button
-              >
+              <dc-button type="outline" @click="toClipboard(atob(client.apisecret))"><i
+                  class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button>
             </template>
           </el-input>
         </el-form-item>
@@ -47,49 +43,36 @@
         <div v-if="verificationResult">
           <ul class="imported">
             <li>
-              <i
-                :class="`ti-${
-                  verificationResult.categories ? 'check' : 'alert'
-                }`"
-              />
+              <i :class="`ti-${verificationResult.categories ? 'check' : 'alert'
+              }`" />
               {{ $tc("categories", 2) }}:
               <strong>{{ verificationResult.categories }}</strong>
             </li>
             <li>
-              <i
-                :class="`ti-${
-                  verificationResult.products.products ? 'check' : 'alert'
-                }`"
-              />
+              <i :class="`ti-${verificationResult.products.products ? 'check' : 'alert'
+              }`" />
               {{ $tc("products", 2) }}:
               <strong>{{ verificationResult.products.products }}</strong>
 
               ({{
-                $t("onboarding:setup:variants", {
-                  count: verificationResult.products.variants,
-                })
+                  $t("onboarding:setup:variants", {
+                    count: verificationResult.products.variants,
+                  })
               }})
             </li>
             <li>
-              <i
-                :class="`ti-${verificationResult.orders ? 'check' : 'alert'}`"
-              />
+              <i :class="`ti-${verificationResult.orders ? 'check' : 'alert'}`" />
               {{ $t("orders") }}:
               <strong>{{ verificationResult.orders }}</strong>
             </li>
             <li>
-              <i
-                :class="`ti-${verificationResult.users ? 'check' : 'alert'}`"
-              />
+              <i :class="`ti-${verificationResult.users ? 'check' : 'alert'}`" />
               {{ $tc("users", 2) }}:
               <strong>{{ verificationResult.users }}</strong>
             </li>
           </ul>
 
-          <p
-            class="setup-message"
-            :class="{ success: setupDone, error: !setupDone }"
-          >
+          <p class="setup-message" :class="{ success: setupDone, error: !setupDone }">
             {{ $t(`onboarding:setup:import${setupDone ? "Done" : "Failed"}`) }}
           </p>
         </div>
@@ -97,9 +80,9 @@
 
       <dc-button type="outline" @click="verifySetup" :disabled="verifying">
         {{
-          $t(
-            `onboarding:setup:${verificationResult ? "verifyAgain" : "verify"}`
-          )
+            $t(
+              `onboarding:setup:${verificationResult ? "verifyAgain" : "verify"}`
+            )
         }}
       </dc-button>
 
@@ -116,18 +99,14 @@
         </p>
       </div>
 
-      <el-dialog
-        :visible.sync="skipDialogOpen"
-        width="720px"
-        :modal-append-to-body="false"
-      >
+      <el-dialog :visible.sync="skipDialogOpen" width="720px" :modal-append-to-body="false">
         <template v-slot:title>
           <h2>{{ $t("onboarding:setup:areYouSure") }}</h2>
         </template>
 
         <template v-slot:footer>
           <div class="dialog-actions">
-            <dc-button type="outline" @click="skipDialogOpen = false">
+            <dc-button type="outline" @click="skipDialogOpen = null">
               {{ $t("onboarding:setup:continue") }}
             </dc-button>
 
@@ -150,6 +129,9 @@ import DcButton from "@/components/DcButton.vue";
 
 import { getPageData, postOnboardingNotification } from "@/api/backend.js";
 
+import useClipboard from 'vue-clipboard3'
+const { toClipboard } = useClipboard()
+
 export default {
   name: "OnboardingSetupCustom",
   components: {
@@ -158,7 +140,7 @@ export default {
   },
   data() {
     return {
-      skipDialogOpen: false,
+      skipDialogOpen: null,
       verifying: false,
       verificationResult: null,
       calendlyLink: "https://calendly.com/get-datacue/demo",
@@ -211,6 +193,9 @@ export default {
     atob(val) {
       return atob(val);
     },
+    async toClipboard(val) {
+      await toClipboard(val);
+    },
     async verifySetup() {
       this.verifying = true;
 
@@ -250,14 +235,14 @@ export default {
 
     window.addEventListener("message", this.handleCalendlyEvent);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("message", this.handleCalendlyEvent);
   },
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss ";
 @import "@/assets/css/calendly.css";
 
 .slide-logo {
@@ -266,8 +251,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
-    #fff;
+  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80% #fff;
 }
 
 .dialog-actions {
@@ -302,6 +286,7 @@ export default {
     background: #f9eded;
   }
 }
+
 .onboarding-step-tip {
   display: flex;
   flex-flow: row nowrap;
@@ -311,7 +296,7 @@ export default {
   padding-top: 1em;
   color: $gray-dark;
 
-  > i {
+  >i {
     font-size: 20px;
     color: $primary;
   }

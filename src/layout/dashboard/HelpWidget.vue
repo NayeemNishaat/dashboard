@@ -54,7 +54,7 @@
           @click="sendEmail()"
           >{{ $t("send") }}</el-button
         >
-        <el-button @click="feedbackFormVisible = false">
+        <el-button @click="feedbackFormVisible = null">
           {{ $t("cancel") }}
         </el-button>
       </span>
@@ -71,7 +71,7 @@ export default {
       unsubscribe: null,
       hasClientDetails: false,
       sending: false,
-      feedbackFormVisible: false,
+      feedbackFormVisible: null,
       feelings: "",
       comments: "",
       dragging: false,
@@ -81,7 +81,7 @@ export default {
       clientX: 0,
       clientY: 0,
       left: null,
-      top: null
+      top: null,
     };
   },
   destroyed() {
@@ -109,19 +109,19 @@ export default {
     });
     window.addEventListener("resize", this.updatePosition);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("resize", this.updatePosition);
   },
   computed: {
     draggableClass() {
       return {
         float: true,
-        dragging: this.dragging
+        dragging: this.dragging,
       };
     },
     client() {
       return this.$store.getters.client;
-    }
+    },
   },
   methods: {
     updatePosition() {
@@ -132,13 +132,13 @@ export default {
     setupDraggable() {
       // Fix for firefox, this shouldn't be necessary for other browsers but still works the same
       // https://stackoverflow.com/questions/13110349/firefox-ondrag-pagex-pagey-always-zero/13110582
-      document.addEventListener("dragover", e => {
+      document.addEventListener("dragover", (e) => {
         this.clientX = e.clientX || e.pageX;
         this.clientY = e.clientY || e.pageY;
         e.preventDefault();
       });
 
-      document.addEventListener("drop", e => {
+      document.addEventListener("drop", (e) => {
         e.preventDefault();
       });
     },
@@ -170,18 +170,18 @@ export default {
         body: {
           feelings: this.feelings,
           comments: this.comments,
-          path: this.$route.fullPath
-        }
+          path: this.$route.fullPath,
+        },
       };
       postSendEmail(data)
         .then(() => {
-          this.feedbackFormVisible = false;
+          this.feedbackFormVisible = null;
         })
-        .catch(err => {
+        .catch((err) => {
           this.$notify({
             title: this.$t("error sending email"),
             message: this.$t("please send us an email to contact@datacue.co"),
-            type: "warning"
+            type: "warning",
           });
           Sentry.captureException(err);
         })
@@ -220,12 +220,12 @@ export default {
       elem.style.opacity = 1;
 
       const data = {
-        position: `${cleanedLeft},${cleanedTop}`
+        position: `${cleanedLeft},${cleanedTop}`,
       };
 
       setHelpWidgetPosition(data);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

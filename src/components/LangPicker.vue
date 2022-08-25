@@ -2,8 +2,8 @@
   <div class="lang-picker">
     <lang-picker-icon></lang-picker-icon>
     <span class="active">{{ selectedLocale.title }}</span> |
-    <template v-for="(locale, idx) in otherLocales">
-      <span @click="setLocale(locale)" :key="idx">
+    <template v-for="(locale, idx) in otherLocales" :key="idx">
+      <span @click="setLocale(locale)">
         {{ locale.title }}
       </span>
       <template v-if="idx + 1 != otherLocales.length"> | </template>

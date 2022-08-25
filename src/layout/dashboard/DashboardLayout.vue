@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <side-bar>
-      <template slot="links">
+      <slot name="links">
         <sidebar-link
           v-if="!hasFinishedSetup"
           class="setup"
@@ -24,7 +24,7 @@
         <sidebar-link to="/products" name="products" icon="ti-package" />
         <sidebar-link to="/notifications" name="notifications" icon="ti-bell" />
         <sidebar-link to="/settings" name="settings" icon="ti-settings" />
-      </template>
+      </slot>
 
       <mobile-menu>
         <li class="nav-item">
@@ -58,8 +58,7 @@
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
-      <dashboard-content @click.native="toggleSidebar"></dashboard-content>
-
+      <dashboard-content @click="toggleSidebar"></dashboard-content>
       <content-footer></content-footer>
     </div>
   </div>
@@ -78,7 +77,7 @@ export default {
     TopNavbar,
     ContentFooter,
     DashboardContent,
-    MobileMenu,
+    MobileMenu
   },
   computed: {
     ...mapGetters(["client"]),
@@ -86,8 +85,8 @@ export default {
       "setupSummary",
       "numberOfSteps",
       "finishedSteps",
-      "hasFinishedSetup",
-    ]),
+      "hasFinishedSetup"
+    ])
   },
   methods: {
     ...mapActions(["switchWebsite", "logout"]),
@@ -102,7 +101,7 @@ export default {
     getStepClass(idx) {
       return {
         step: true,
-        done: idx <= this.finishedSteps,
+        done: idx <= this.finishedSteps
       };
     },
     toggleSidebar() {
@@ -113,13 +112,13 @@ export default {
     async logout() {
       this.$Tawk.$endChat();
       await this.logout();
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.wrapper::v-deep {
+.wrapper:deep {
   .setup {
     .nav-link {
       margin-top: 0 !important;

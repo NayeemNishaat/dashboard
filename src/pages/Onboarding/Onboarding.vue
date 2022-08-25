@@ -140,7 +140,7 @@ export default {
   overflow: hidden;
   color: $dark;
 
-  ::v-deep {
+  :deep {
     h1 {
       margin: 0;
       font-family: inherit;

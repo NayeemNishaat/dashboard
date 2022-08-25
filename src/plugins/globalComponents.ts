@@ -4,10 +4,10 @@ import { FormGroupInput, Card, DropDown } from "../components/index";
  */
 
 const GlobalComponents = {
-  install(Vue) {
-    Vue.component("fg-input", FormGroupInput);
-    Vue.component("drop-down", DropDown);
-    Vue.component("card", Card);
+  install(app) {
+    app.component("fg-input", FormGroupInput);
+    app.component("drop-down", DropDown);
+    app.component("card", Card);
   }
 };
 

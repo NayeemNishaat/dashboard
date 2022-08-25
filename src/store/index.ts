@@ -1,5 +1,4 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 
 // modules
 import onboarding from "./modules/onboarding";
@@ -11,10 +10,8 @@ import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
 
-Vue.use(Vuex);
-
 // configure Vuex
-export default new Vuex.Store({
+export default createStore({
   modules: {
     onboarding,
     settings

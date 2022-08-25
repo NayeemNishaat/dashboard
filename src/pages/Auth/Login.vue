@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { login } from "@/api/AuthService";
+import { login } from "@/api/AuthService.ts";
 import { mapGetters } from "vuex";
 import DcButton from "@/components/DcButton.vue";
 import CardMessageBox from "@/components/Cards/CardMessageBox.vue";

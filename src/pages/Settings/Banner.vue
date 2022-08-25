@@ -58,23 +58,23 @@
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="static"></dt>
                           <dd>{{ $t("1 static banner") }}</dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="static" />
                     </el-collapse-item>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="dynamic"></dt>
                           <dd>
                             {{ $t("dynamic banner count", { count: 2 }) }}
                           </dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="low" />
                     </el-collapse-item>
                   </el-collapse>
@@ -87,23 +87,23 @@
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="static"></dt>
                           <dd>{{ $t("1 static banner") }}</dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="static" />
                     </el-collapse-item>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="dynamic"></dt>
                           <dd>
                             {{ $t("dynamic banner count", { count: 3 }) }}
                           </dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="medium" />
                     </el-collapse-item>
                   </el-collapse>
@@ -116,23 +116,23 @@
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="static"></dt>
                           <dd>{{ $t("1 static banner") }}</dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="static" />
                     </el-collapse-item>
                     <el-collapse-item>
-                      <template slot="title">
+                      <slot name="title">
                         <dl>
                           <dt class="dynamic"></dt>
                           <dd>
                             {{ $t("dynamic banner count", { count: 4 }) }}
                           </dd>
                         </dl>
-                      </template>
+                      </slot>
                       <banner-description type="high" />
                     </el-collapse-item>
                   </el-collapse>

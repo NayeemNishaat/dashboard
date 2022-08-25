@@ -1,27 +1,30 @@
-import { PluginObject } from "vue";
+// import { PluginObjec } from "vue";
 import { User } from "@/api/interfaces";
 import _Vue from "vue";
 
-const Segment = {} as PluginObject<any>;
-Segment.install = function (Vue: typeof _Vue, options?: any) {
-  Vue.prototype.$Segment = {};
-  Vue.prototype.$Segment.$init = function () {
+const Segment = {} as any;
+Segment.install = function (app: any, options?: any) {
+  app.config.globalProperties.$Segment = {};
+  app.config.globalProperties.$Segment.$init = function () {
     if (window && (window as any).analytics) {
       (window as any).analytics.load(options.writeKey);
     }
   };
-  Vue.prototype.$Segment.$init();
-  Object.defineProperty(Vue, "$segment", {
+  app.config.globalProperties.$Segment.$init();
+  Object.defineProperty(app, "$segment", {
     get() {
       return (window as any).analytics;
     }
   });
-  Object.defineProperty(Vue.prototype, "$segment", {
+  Object.defineProperty(app.config.globalProperties, "$segment", {
     get() {
       return (window as any).analytics;
     }
   });
-  Vue.prototype.$Segment.$Identify = function (id: string, user: User) {
+  app.config.globalProperties.$Segment.$Identify = function (
+    id: string,
+    user: User
+  ) {
     try {
       if (!id || !user.first_name || !user.email) {
         return;

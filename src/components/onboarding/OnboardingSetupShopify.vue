@@ -173,7 +173,7 @@ export default {
   height: 100%;
 }
 
-.el-carousel ::v-deep .el-carousel__indicators {
+.el-carousel :deep .el-carousel__indicators {
   display: none;
 
   @media (min-width: 1024px) {

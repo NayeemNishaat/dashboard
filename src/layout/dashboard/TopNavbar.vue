@@ -97,11 +97,11 @@ export default {
       }
 
       return `https://help.datacue.co/${lang}guide/`;
-    },
+    }
   },
   data() {
     return {
-      activeNotifications: false,
+      activeNotifications: false
     };
   },
   methods: {
@@ -127,8 +127,8 @@ export default {
     },
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -160,7 +160,7 @@ export default {
   border-radius: 50%;
   box-shadow: 0 0 1px #333;
 }
-.dropdown::v-deep {
+.dropdown:deep {
   .dropdown-menu {
     left: auto;
     right: 0;

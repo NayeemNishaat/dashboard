@@ -243,7 +243,7 @@ export default {
   max-width: 600px;
   margin: 1em 0;
 
-  ::v-deep .el-form-item {
+  :deep .el-form-item {
     margin-bottom: 2em;
   }
 }

@@ -365,7 +365,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.setup-summary::v-deep {
+.setup-summary:deep {
   // .refresh {
   //   float: right;
 

@@ -38,7 +38,7 @@
                 'opened',
                 'clicked',
                 'converted',
-                'conversionValue'
+                'conversionValue',
               ]"
               :colnames="
                 [
@@ -48,15 +48,15 @@
                   'open %',
                   'click %',
                   'converted',
-                  'value'
-                ].map(n => this.$t(n))
+                  'value',
+                ].map((n) => this.$t(n))
               "
               :actions="[
                 {
                   action: 'edit',
                   icon: 'ti-pencil-alt',
-                  id: 'campaigns:edit-btn'
-                }
+                  id: 'campaigns:edit-btn',
+                },
               ]"
               @edit="openEditor"
             ></multi-table>
@@ -90,7 +90,7 @@ export default {
   components: {
     StatsCard,
     MultiTable,
-    DateRangePicker
+    DateRangePicker,
   },
 
   data() {
@@ -103,38 +103,38 @@ export default {
           icon: "ti-export",
           title: "sent",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-book",
           title: "opened",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-mouse-alt",
           title: "clicked",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-money",
           title: "converted",
           value: "0",
-          comparison: "n/a"
-        }
+          comparison: "n/a",
+        },
       ],
       tblCampaigns: [],
       campaignForm: {
         name: "",
         rules: "{}",
         subject: "",
-        template: ""
+        template: "",
       },
-      type: ["", "info", "success", "warning", "danger"]
+      type: ["", "info", "success", "warning", "danger"],
     };
   },
   watch: {},
@@ -147,7 +147,7 @@ export default {
       this.loading = true;
       const [startdate, enddate] = dates;
       getPageData(`campaigns?startdate=${startdate}&enddate=${enddate}`)
-        .then(response => {
+        .then((response) => {
           this.tblCampaigns = response.campaigns || [];
 
           const stats = response.stats || [];
@@ -158,14 +158,14 @@ export default {
           const statsById = {};
 
           // transform data
-          stats.forEach(item => {
+          stats.forEach((item) => {
             const { campaign_id, count, event_type } = item;
 
             statsById[campaign_id] = statsById[campaign_id] || {
               Send: 0,
               Delivery: 0,
               Open: 0,
-              Click: 0
+              Click: 0,
             };
 
             statsById[campaign_id][event_type] = count;
@@ -187,11 +187,11 @@ export default {
           // conversion count card
           cards[3].footerText = "";
           cards[3].value = conversions
-            .map(item => item.total_value)
+            .map((item) => item.total_value)
             .reduce((s, v) => s + v, 0)
             .toLocaleString();
 
-          this.tblCampaigns.forEach(campaign => {
+          this.tblCampaigns.forEach((campaign) => {
             const id = campaign.campaign_id;
 
             if (!statsById[id]) {
@@ -226,7 +226,9 @@ export default {
               }
             }
 
-            const converted = conversions.find(item => item.campaign_id === id);
+            const converted = conversions.find(
+              (item) => item.campaign_id === id
+            );
             campaign.converted = converted ? converted.count : 0;
             campaign.conversionValue = converted
               ? converted.total_value.toLocaleString()
@@ -241,11 +243,11 @@ export default {
     },
     openEditor(campaignid) {
       this.$router.push({ name: "edit campaign", params: { campaignid } });
-    }
+    },
   },
   mounted() {
     this.refreshData(this.$store.getters.dateRange);
-  }
+  },
 };
 </script>
 <style>

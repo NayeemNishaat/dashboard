@@ -130,7 +130,7 @@ export default {
   name: "Email",
   components: {
     Card,
-    LoaderDots
+    LoaderDots,
   },
   data() {
     return {
@@ -139,7 +139,7 @@ export default {
       savedAddress: "",
       savedAddressVerified: false,
       settings: {
-        mailing_address: ""
+        mailing_address: "",
       },
       mailchimp_apikey: "",
       mailchimp_sync_status: false,
@@ -148,14 +148,14 @@ export default {
         {
           required: true,
           message: this.$t("please input email address"),
-          trigger: "blur"
+          trigger: "blur",
         },
         {
           type: "email",
           message: this.$t("please input a valid email address"),
-          trigger: ["blur", "change"]
-        }
-      ]
+          trigger: ["blur", "change"],
+        },
+      ],
     };
   },
   mounted() {
@@ -173,14 +173,14 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     ...mapActions("settings", [
       "fetchEmailSettings",
       "saveSettings",
       "saveEmailAddress",
-      "saveMailchimp"
+      "saveMailchimp",
     ]),
     refreshEmailSettings() {
       this.fetchEmailSettings().then(() => {
@@ -188,7 +188,8 @@ export default {
       });
     },
     setEmailSettings() {
-      this.settings.mailing_address = this.savedAddress = this.emailSettings.mailing_address;
+      this.settings.mailing_address = this.savedAddress =
+        this.emailSettings.mailing_address;
       this.savedAddressVerified =
         this.emailSettings.mailing_address_status === "success";
       try {
@@ -202,14 +203,14 @@ export default {
       }
     },
     submitForm() {
-      this.$refs["email-form"].validate(valid => {
+      this.$refs["email-form"].validate((valid) => {
         if (valid) {
           this.saveEmail();
         } else {
           this.$notify({
             title: this.$t("error"),
             message: this.$t("invalid email"),
-            type: "warning"
+            type: "warning",
           });
           return false;
         }
@@ -221,14 +222,14 @@ export default {
         .then(() => {
           this.refreshEmailSettings();
         })
-        .catch(err => {
+        .catch((err) => {
           Sentry.captureException(err);
           this.$notify({
             title: this.$t("error"),
             message: this.$t(
               "an unknown error occured, please try again later"
             ),
-            type: "warning"
+            type: "warning",
           });
         });
     },
@@ -241,21 +242,21 @@ export default {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("saved"),
-            type: "success"
+            type: "success",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           Sentry.captureException(err);
           this.$notify({
             title: this.$t("error saving"),
             message: this.$t(
               "an unknown error occured, please try again later"
             ),
-            type: "warning"
+            type: "warning",
           });
         })
         .finally(() => (this.saving = false));
-    }
-  }
+    },
+  },
 };
 </script>

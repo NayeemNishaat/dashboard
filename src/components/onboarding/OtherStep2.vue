@@ -7,9 +7,9 @@
             <eye-show-icon v-show="!showKeys"></eye-show-icon>
             <eye-hide-icon v-show="showKeys"></eye-hide-icon>
             {{
-              showKeys
-                ? $t("hide api key and secret")
-                : $t("show api key and secret")
+                showKeys
+                  ? $t("hide api key and secret")
+                  : $t("show api key and secret")
             }}
           </span>
         </label>
@@ -23,75 +23,44 @@
         </div>
         <div class="col-12">
           <el-form-item label="API key:">
-            <el-input
-              :value="client.apikey"
-              class="float-md-left"
-              readonly
-            ></el-input>
-            <copy-button
-              @copy="$clipboard(client.apikey)"
-              class="float-right float-md-left"
-            ></copy-button>
+            <el-input :value="client.apikey" class="float-md-left" readonly></el-input>
+            <copy-button @copy="toClipboard(client.apikey)" class="float-right float-md-left"></copy-button>
           </el-form-item>
         </div>
         <div class="col-12">
           <el-form-item label="API secret:">
-            <el-input
-              :value="atob(client.apisecret)"
-              class="float-md-left"
-              readonly
-            ></el-input>
-            <copy-button
-              @copy="$clipboard(atob(client.apisecret))"
-              class="float-right float-md-left"
-            ></copy-button>
+            <el-input :value="atob(client.apisecret)" class="float-md-left" readonly></el-input>
+            <copy-button @copy="toClipboard(atob(client.apisecret))" class="float-right float-md-left"></copy-button>
           </el-form-item>
         </div>
         <div class="col-12 first-tip">
-          <dc-tip
-            v-if="platformWithPlugin"
-            :message="
-              $t('you can access above data later under developer settings.')
-            "
-          />
-          <dc-tip
-            v-else
-            :message="
-              $t('copy and save your api key and api secret in a secure place.')
-            "
-          />
+          <dc-tip v-if="platformWithPlugin" :message="
+            $t('you can access above data later under developer settings.')
+          " />
+          <dc-tip v-else :message="
+            $t('copy and save your api key and api secret in a secure place.')
+          " />
         </div>
       </template>
 
       <div class="col-12 col-lg-4 text-center text-lg-left">
-        <dc-button
-          v-if="platformWithPlugin"
-          type="primary"
-          @click="openApiGuide"
-          >{{ $t("install plugin") }}</dc-button
-        >
+        <dc-button v-if="platformWithPlugin" type="primary" @click="openApiGuide">{{ $t("install plugin") }}</dc-button>
         <dc-button v-else type="primary" @click="openApiGuide">{{
-          $t("launch api guide")
+            $t("launch api guide")
         }}</dc-button>
       </div>
       <div class="col-12 col-lg-8 second-tip">
-        <dc-tip
-          v-if="platformWithPlugin"
-          :message="
-            $t(
-              'paste the above api credentials in your datacue plugin settings in your {platform} store.',
-              { platform: platform }
-            )
-          "
-        />
-        <dc-tip
-          v-else
-          :message="
-            $t(
-              'replace the api key and api secret values in the api guide sample code with these.'
-            )
-          "
-        />
+        <dc-tip v-if="platformWithPlugin" :message="
+          $t(
+            'paste the above api credentials in your datacue plugin settings in your {platform} store.',
+            { platform: platform }
+          )
+        " />
+        <dc-tip v-else :message="
+          $t(
+            'replace the api key and api secret values in the api guide sample code with these.'
+          )
+        " />
       </div>
 
       <div class="col-12 data-info">
@@ -105,18 +74,11 @@
       </div>
 
       <div v-if="!noData" class="col-12 product-data">
-        <store-data
-          @refresh="refresh"
-          :refreshing="refreshing"
-          :store-data="data"
-        ></store-data>
+        <store-data @refresh="refresh" :refreshing="refreshing" :store-data="data"></store-data>
       </div>
 
       <div v-if="refreshed && noData && !error" class="col-12">
-        <dc-alert
-          class="my-2"
-          :message="$t('no data yet, please make sure it is set up correctly.')"
-        />
+        <dc-alert class="my-2" :message="$t('no data yet, please make sure it is set up correctly.')" />
       </div>
 
       <div v-if="error" class="col-12">
@@ -124,22 +86,12 @@
       </div>
 
       <div class="col-12 text-center text-lg-left">
-        <dc-button
-          v-if="noData"
-          type="refresh"
-          @click="refresh('')"
-          :loading="loading"
-        >
+        <dc-button v-if="noData" type="refresh" @click="refresh('')" :loading="loading">
           <refresh-icon v-show="!loading" />
           {{ $t("refresh") }}
         </dc-button>
 
-        <btn-next
-          v-else
-          :loading="loading"
-          :disabled="disableSubmit"
-          @click="finish"
-        />
+        <btn-next v-else :loading="loading" :disabled="disableSubmit" @click="finish" />
 
         <hr class="d-none d-lg-block" />
       </div>
@@ -157,9 +109,9 @@
           <div class="col message">
             <span class="title">{{ $t("need a hand") }}?</span>
             {{
-              $t(
-                "let us know and we'll setup a video call to walk you through the installation"
-              )
+                $t(
+                  "let us know and we'll setup a video call to walk you through the installation"
+                )
             }}.
           </div>
         </div>
@@ -167,7 +119,7 @@
 
       <div class="col-12 col-lg-4 text-center text-lg-right">
         <dc-button @click="needHelp" type="outline" :loading="sendingEmail">{{
-          $t("i need help")
+            $t("i need help")
         }}</dc-button>
       </div>
     </div>
@@ -178,7 +130,8 @@
 import * as Sentry from "@sentry/browser";
 import { getPageData, postSendEmail } from "@/api/backend";
 import { mapActions, mapGetters } from "vuex";
-
+import useClipboard from 'vue-clipboard3'
+const { toClipboard } = useClipboard()
 import BtnNext from "@/components/onboarding/BtnNext.vue";
 import CopyButton from "@/components/onboarding/CopyButton.vue";
 import StoreData from "@/components/onboarding/StoreData.vue";
@@ -280,6 +233,9 @@ export default {
     },
     openApiGuide() {
       window.open(this.apiGuideUrl, "_blank");
+    },
+    async toClipboard(val) {
+      await toClipboard(val);
     },
     needHelp() {
       this.successHelp = false;
@@ -412,10 +368,11 @@ p.info {
   margin-top: 30px;
 }
 
-.el-form.api-info::v-deep {
+.el-form.api-info:deep {
   .el-form-item {
     margin-bottom: 0;
   }
+
   .el-form-item__label {
     font-weight: bold;
     color: $dark;

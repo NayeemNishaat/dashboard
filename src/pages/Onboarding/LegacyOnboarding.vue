@@ -109,7 +109,7 @@ export default {
   }
 }
 
-.lang-picker-container::v-deep {
+.lang-picker-container:deep {
   margin-top: 30px;
   font-size: 14px;
 

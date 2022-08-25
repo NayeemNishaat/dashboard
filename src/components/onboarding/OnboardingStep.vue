@@ -71,7 +71,7 @@ export default {
   position: relative;
   height: 100%;
 
-  ::v-deep {
+  :deep {
     .v-modal {
       background: white;
       opacity: 0.75;

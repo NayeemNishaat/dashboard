@@ -1,7 +1,12 @@
 <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="panel in allPanels" :key="panel" :name="panel">
+      <el-tab-pane
+        v-for="panel in allPanels"
+        :key="panel"
+        :name="panel"
+        :label="panel.toUpperCase()"
+      >
         <span slot="label">
           {{ $tc(panel, 2) }}
         </span>

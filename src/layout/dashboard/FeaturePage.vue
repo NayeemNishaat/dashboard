@@ -54,3 +54,8 @@ export default {
   methods: {}
 };
 </script>
+<style>
+.banner-btns {
+  text-align: right;
+}
+</style>

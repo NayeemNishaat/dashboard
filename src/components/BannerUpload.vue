@@ -26,12 +26,12 @@
       <p>
         {{
           $t("your image has an invalid format of '{format}'", {
-            format: this.invalidFormat
+            format: this.invalidFormat,
           })
         }}.
         {{
           $t("the supported image formats are '{formats}'", {
-            formats: validFormats.join(", ")
+            formats: validFormats.join(", "),
           })
         }}.
       </p>
@@ -45,12 +45,12 @@
       <p>
         {{
           $t("your image has invalid dimension ratio of '{ratio}'", {
-            ratio: this.invalidRatio
+            ratio: this.invalidRatio,
           })
         }}.
         {{
           $t("the supported dimension ratios are", {
-            ratios: validRatios.join(", ")
+            ratios: validRatios.join(", "),
           })
         }}.
       </p>
@@ -66,7 +66,7 @@
           $t(
             "you selected the 'low' banner layout which doesn't support this banner size.",
             {
-              layout: $t(bannerLayout)
+              layout: $t(bannerLayout),
             }
           )
         }}
@@ -89,16 +89,16 @@ import Dropzone from "@/components/Dropzone.vue";
 import { preSign } from "@/api/backend";
 import { getRatio } from "@/api/utils";
 
-import CardMessageBox from "@/components/Cards/CardMessageBox";
+import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
 
 const allowedRatios = {
   "2:3": "sub",
-  "5:3": "main"
+  "5:3": "main",
 };
 export default {
   components: {
     CardMessageBox,
-    Dropzone
+    Dropzone,
   },
   data() {
     const vm = this;
@@ -111,8 +111,8 @@ export default {
       dropzoneOptions: {
         maxFilesize: 1,
         maxFiles: 1,
-        init: function() {
-          this.on("addedfile", function() {
+        init: function () {
+          this.on("addedfile", function () {
             this.fileSizeExceeded = false;
             while (this.files.length > this.options.maxFiles) {
               this.removeFile(this.files[0]);
@@ -124,7 +124,7 @@ export default {
             }
           });
         },
-        accept: function(file, done) {
+        accept: function (file, done) {
           vm.validateImage(file)
             .then(() => {
               // Here we request a signed upload URL when a file being accepted
@@ -133,7 +133,7 @@ export default {
                 fileName = "static-banner.jpg";
               }
               preSign("banners", fileName, file.type)
-                .then(res => {
+                .then((res) => {
                   vm.$emit("started");
                   if (res.url && res.key) {
                     file.uploadURL = res.url;
@@ -147,26 +147,26 @@ export default {
                   // Manually process each file
                   setTimeout(() => this.processFile(file));
                 })
-                .catch(err => {
+                .catch((err) => {
                   done("Failed to get an S3 signed upload URL", err);
                   Sentry.captureException(err);
                 });
             })
-            .catch(error => {
+            .catch((error) => {
               Sentry.captureException(error);
             });
-        }
-      }
+        },
+      },
     };
   },
   props: {
     bannerLayout: {
-      type: String
+      type: String,
     },
     staticBanner: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     ...mapGetters(["languageCode"]),
@@ -184,7 +184,7 @@ export default {
     },
     validRatiosForBannerLayout() {
       if (this.bannerLayout === "low") {
-        return Object.keys(allowedRatios).filter(elem => elem === "2:3");
+        return Object.keys(allowedRatios).filter((elem) => elem === "2:3");
       }
       return this.validRatios;
     },
@@ -195,7 +195,7 @@ export default {
       }
 
       return `https://help.datacue.co/${languageShortCode}guide/banners.html`;
-    }
+    },
   },
   methods: {
     validateImage(file) {
@@ -242,8 +242,8 @@ export default {
       const filename = urlParts[urlParts.length - 1];
       file["id"] = decodeURI(filename);
       this.$emit("success", { file, banner_type: this.bannerType });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
