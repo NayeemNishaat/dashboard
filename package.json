@@ -17,7 +17,6 @@
   "dependencies": {
     "@sentry/tracing": "^7.11.1",
     "@sentry/vue": "^7.11.1",
-    "@vue/compat": "^3.2.37",
     "auth0-js": "^9.19.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",

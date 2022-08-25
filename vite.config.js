@@ -1,9 +1,9 @@
 // import { defineConfig } from "vite";
 // import { createVuePlugin } from "vite-plugin-vue2";
-import vue from "@vitejs/plugin-vue";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+// import vue from "@vitejs/plugin-vue";
+// import AutoImport from "unplugin-auto-import/vite";
+// import Components from "unplugin-vue-components/vite";
+// import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // import path from "path";
 
 // export default defineConfig({
@@ -27,27 +27,35 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // });
 
 // vite.config.js
-export default {
-  resolve: {
-    alias: {
-      vue: "@vue/compat"
-    }
-  },
-  plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          compatConfig: {
-            MODE: 2
-          }
-        }
-      }
-    }),
-    AutoImport({
-      resolvers: [ElementPlusResolver()]
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()]
-    })
-  ]
-};
+// export default {
+//   resolve: {
+//     alias: {
+//       vue: "@vue/compat"
+//     }
+//   },
+//   plugins: [
+//     vue({
+//       template: {
+//         compilerOptions: {
+//           compatConfig: {
+//             MODE: 3
+//           }
+//         }
+//       }
+//     }),
+//     AutoImport({
+//       resolvers: [ElementPlusResolver()]
+//     }),
+//     Components({
+//       resolvers: [ElementPlusResolver()]
+//     })
+//   ]
+// };
+
+import { defineConfig } from "vite";
+import createVuePlugin from "@vitejs/plugin-vue";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [createVuePlugin()]
+});

@@ -16,7 +16,7 @@ Segment.install = function (app: any, options?: any) {
       return (window as any).analytics;
     }
   });
-  Object.defineProperty(app.prototype, "$segment", {
+  Object.defineProperty(app.config.globalProperties, "$segment", {
     get() {
       return (window as any).analytics;
     }
