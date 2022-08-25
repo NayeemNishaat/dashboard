@@ -1,4 +1,3 @@
-// import { RouteConfig } from "vue-router";
 import DashboardLayout from "../layout/dashboard/DashboardLayout.vue";
 const FeaturePage = () => import("../layout/dashboard/FeaturePage.vue");
 
@@ -350,7 +349,6 @@ const routes: any = [
     ]
   },
   {
-    // path: "*",
     path: "/:pathMatch(.*)*",
     name: "not-found",
     component: NotFound,

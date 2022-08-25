@@ -1,66 +1,41 @@
 <template>
   <div>
-    <pending-settings
-      :has-unsaved-changes="hasUnsavedChanges"
-      :saving="saving"
-      @save="saveChanges"
-      v-if="!onboarding"
-    />
+    <pending-settings :has-unsaved-changes="hasUnsavedChanges" :saving="saving" @save="saveChanges"
+      v-if="!onboarding" />
     <template v-if="current">
       <card v-if="!onboarding">
         <h3 slot="header">{{ $t("product recommendations") }}</h3>
         <p>{{ $t("turn each product section on/off") }}</p>
 
-        <el-collapse
-          accordion
-          v-model="currentSection.context"
-          @change="handleCurrentSectionChange('context', $event)"
-        >
-          <el-collapse-item
-            v-for="(settings, type) in current.context"
-            :key="type"
-            :name="type"
-            :disabled="!productAccess[type]"
-          >
+        <el-collapse accordion v-model="currentSection.context" @change="handleCurrentSectionChange('context', $event)">
+          <el-collapse-item v-for="(settings, type) in current.context" :key="type" :name="type"
+            :disabled="!productAccess[type]">
             <template v-if="productAccess[type]" slot="title">
               <span @click.stop @keyup.stop>
                 <el-checkbox v-model="settings.active">{{
-                  client.type == "shopify" &&
-                  ["top", "user_related_categories"].includes(type)
-                    ? $t(type + "_shopify")
-                    : $t(type)
+                    client.type == "shopify" &&
+                      ["top", "user_related_categories"].includes(type)
+                      ? $t(type + "_shopify")
+                      : $t(type)
                 }}</el-checkbox>
-                <a
-                  v-if="userGuideLinks[languageCode][type]"
-                  class="user-guide-link"
-                  target="_blank"
-                  :href="userGuideLinks[languageCode][type]"
-                >
+                <a v-if="userGuideLinks[languageCode][type]" class="user-guide-link" target="_blank"
+                  :href="userGuideLinks[languageCode][type]">
                   <i class="el-icon-info" />
                   {{ $t("see in user guide") }}
                 </a>
               </span>
-              <span
-                v-if="currentSection.context === type"
-                class="collapse-item-reset"
-                @click.stop
-                @keyup.stop
-              >
-                <el-button
-                  size="mini"
-                  @click="handleSectionReset('context', type)"
-                  >{{ $t("reset") }}</el-button
-                >
+              <span v-if="currentSection.context === type" class="collapse-item-reset" @click.stop @keyup.stop>
+                <el-button size="mini" @click="handleSectionReset('context', type)">{{ $t("reset") }}</el-button>
               </span>
             </template>
             <template v-else slot="title">
               <span @click.stop @keyup.stop>
                 <span class="el-checkbox__label">
                   {{
-                    client.type == "shopify" &&
-                    ["top", "user_related_categories"].includes(type)
-                      ? $t(type + "_shopify")
-                      : $t(type)
+                      client.type == "shopify" &&
+                        ["top", "user_related_categories"].includes(type)
+                        ? $t(type + "_shopify")
+                        : $t(type)
                   }}
                 </span>
                 <router-link to="/billing" class="user-guide-link">
@@ -70,73 +45,41 @@
               </span>
             </template>
 
-            <el-form
-              :model="settings"
-              size="small"
-              label-position="top"
-              :disabled="!settings.active"
-            >
-              <el-form-item
-                :label="$t('change title')"
-                v-if="type != 'user_related_categories'"
-              >
-                <el-input
-                  :placeholder="titlePlaceholders[language][type]"
-                  v-model="settings.title"
-                />
+            <el-form :model="settings" size="small" label-position="top" :disabled="!settings.active">
+              <el-form-item :label="$t('change title')" v-if="type != 'user_related_categories'">
+                <el-input :placeholder="titlePlaceholders[language][type]" v-model="settings.title" />
               </el-form-item>
 
-              <el-form-item
-                :label="
-                  $t(
-                    'show {sections} dynamic categories' +
-                      (client.type == 'shopify' ? '_shopify' : ''),
-                    { sections: settings.sections }
-                  )
-                "
-                v-else
-              >
-                <el-slider
-                  v-model="settings.sections"
-                  :show-tooltip="true"
-                  :min="1"
-                  :max="5"
-                />
+              <el-form-item :label="
+                $t(
+                  'show {sections} dynamic categories' +
+                  (client.type == 'shopify' ? '_shopify' : ''),
+                  { sections: settings.sections }
+                )
+              " v-else>
+                <el-slider v-model="settings.sections" :show-tooltip="true" :min="1" :max="5" />
               </el-form-item>
 
               <el-form-item :label="$t('turn on/off at following pages')">
-                <div
-                  class="page-switch-wrapper"
-                  v-for="(_, page) of settings.enabled"
-                  :key="page"
-                >
-                  <el-switch
-                    v-model="settings.enabled[page]"
-                    active-color="#fdb809"
-                    :active-text="
-                      client.type == 'shopify' && page == 'category'
-                        ? $t(`page:category_shopify`)
-                        : $t(`page:${page}`)
-                    "
-                  />
+                <div class="page-switch-wrapper" v-for="(_, page) of settings.enabled" :key="page">
+                  <el-switch v-model="settings.enabled[page]" active-color="#fdb809" :active-text="
+                    client.type == 'shopify' && page == 'category'
+                      ? $t(`page:category_shopify`)
+                      : $t(`page:${page}`)
+                  " />
 
-                  <template
-                    v-if="pageCheckEnabled && pageStatus[page] !== 'found'"
-                  >
+                  <template v-if="pageCheckEnabled && pageStatus[page] !== 'found'">
                     <i18n path="we couldnt find the snippet" tag="p">
                       <template #guide>
                         <a :href="installGuideLink" target="_blank">{{
-                          $t("install guide")
+                            $t("install guide")
                         }}</a>
                       </template>
                     </i18n>
 
-                    <el-button
-                      size="mini"
-                      :loading="pageStatus[page] === 'checking'"
-                      @click="checkPageStatus(page)"
-                      >{{ $t("refresh") }}</el-button
-                    >
+                    <el-button size="mini" :loading="pageStatus[page] === 'checking'" @click="checkPageStatus(page)">{{
+                        $t("refresh")
+                    }}</el-button>
                   </template>
                 </div>
               </el-form-item>
@@ -156,14 +99,11 @@
               <i class="el-icon-star-on" />
               {{ $t("recommended") }}
             </el-tag>
-            <img svg-inline src="../../assets/img/settings/layout-grid.svg" />
+            <img svg-inline src="@/assets/img/settings/layout-grid.svg" />
           </div>
           <div class="col-6">
             <el-radio label="slider">{{ $t("slider") }}</el-radio>
-            <img
-              svg-inline
-              src="../../assets/img/settings/layout-carousel.svg"
-            />
+            <img svg-inline src="@/assets/img/settings/layout-carousel.svg" />
           </div>
         </el-radio-group>
 
@@ -178,24 +118,12 @@
         <h3 slot="header">{{ $t("number of products in each section") }}</h3>
         <i18n path="display {size} products in each product section" tag="p">
           <template #size>
-            <el-input-number
-              size="mini"
-              class="narrow-input inline-input"
-              v-model="current.section_size"
-              controls-position="right"
-              step-strictly
-              :min="4"
-              :max="16"
-            />
+            <el-input-number size="mini" class="narrow-input inline-input" v-model="current.section_size"
+              controls-position="right" step-strictly :min="4" :max="16" />
           </template>
         </i18n>
 
-        <el-slider
-          v-model="current.section_size"
-          :show-tooltip="false"
-          :min="4"
-          :max="16"
-        />
+        <el-slider v-model="current.section_size" :show-tooltip="false" :min="4" :max="16" />
       </card>
 
       <card v-if="!onboarding">
@@ -215,123 +143,70 @@
 
         <el-collapse-transition>
           <div v-show="current.pct_promote_discounts > 0">
-            <i18n
-              path="display {discount} first in each product section"
-              tag="p"
-            >
+            <i18n path="display {discount} first in each product section" tag="p">
               <template #discount>
                 <i18n path="{percent} discount and higher" tag="strong">
                   <template #percent>
-                    <el-input-number
-                      size="mini"
-                      class="narrow-input inline-input"
-                      v-model="current.pct_promote_discounts"
-                      controls-position="right"
-                      step-strictly
-                      :min="0"
-                      :max="95"
-                      :step="5"
-                    />
+                    <el-input-number size="mini" class="narrow-input inline-input"
+                      v-model="current.pct_promote_discounts" controls-position="right" step-strictly :min="0" :max="95"
+                      :step="5" />
                   </template>
                 </i18n>
               </template>
             </i18n>
 
-            <el-slider
-              v-model="current.pct_promote_discounts"
-              :show-tooltip="false"
-              :min="0"
-              :max="95"
-              :step="5"
-            />
+            <el-slider v-model="current.pct_promote_discounts" :show-tooltip="false" :min="0" :max="95" :step="5" />
           </div>
         </el-collapse-transition>
 
         <div class="discount-preview">
-          <img
-            v-if="current.pct_promote_discounts === 0"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-0.svg"
-          />
-          <img
-            v-else-if="current.pct_promote_discounts <= 40"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-40.svg"
-          />
-          <img
-            v-else-if="current.pct_promote_discounts <= 50"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-50.svg"
-          />
-          <img
-            v-else-if="current.pct_promote_discounts <= 70"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-70.svg"
-          />
-          <img
-            v-else-if="current.pct_promote_discounts <= 80"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-80.svg"
-          />
-          <img
-            v-else-if="current.pct_promote_discounts <= 90"
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-90.svg"
-          />
-          <img
-            v-else
-            svg-inline
-            src="../../assets/img/settings/promote-discounts-0.svg"
-          />
+          <img v-if="current.pct_promote_discounts === 0" svg-inline
+            src="@/assets/img/settings/promote-discounts-0.svg" />
+          <img v-else-if="current.pct_promote_discounts <= 40" svg-inline
+            src="@/assets/img/settings/promote-discounts-40.svg" />
+          <img v-else-if="current.pct_promote_discounts <= 50" svg-inline
+            src="@/assets/img/settings/promote-discounts-50.svg" />
+          <img v-else-if="current.pct_promote_discounts <= 70" svg-inline
+            src="@/assets/img/settings/promote-discounts-70.svg" />
+          <img v-else-if="current.pct_promote_discounts <= 80" svg-inline
+            src="@/assets/img/settings/promote-discounts-80.svg" />
+          <img v-else-if="current.pct_promote_discounts <= 90" svg-inline
+            src="@/assets/img/settings/promote-discounts-90.svg" />
+          <img v-else svg-inline src="@/assets/img/settings/promote-discounts-0.svg" />
         </div>
 
         <hr />
         <p class="footnote">
           <i class="ti-info" />
           {{
-            $t("by default product recommendations are ordered by relevance")
+              $t("by default product recommendations are ordered by relevance")
           }}
         </p>
       </card>
 
       <card>
-        <a id="designer"
-          ><h3 slot="header">{{ $t("customize recommendations") }}</h3></a
-        >
+        <a id="designer">
+          <h3 slot="header">{{ $t("customize recommendations") }}</h3>
+        </a>
 
         <div class="row">
           <div class="col-xl-5">
-            <el-collapse
-              accordion
-              v-model="currentSection.custom_styles"
-              @change="handleCurrentSectionChange('custom_styles', $event)"
-            >
+            <el-collapse accordion v-model="currentSection.custom_styles"
+              @change="handleCurrentSectionChange('custom_styles', $event)">
               <el-collapse-item name="header">
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.header.active">{{
-                      $t("header styles")
+                        $t("header styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'header'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'header')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'header'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'header')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.header"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.header.active"
-                >
+                <el-form :model="styles.header" size="small" label-width="200px" :disabled="!styles.header.active">
                   <el-form-item :label="$t('alignment')">
                     <el-radio-group v-model="styles.header['text-align']">
                       <el-radio-button label="left">
@@ -354,52 +229,37 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('font size')">
-                    <el-input-number
-                      v-model="styles.header['font-size']"
-                      :min="1"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.header['font-size']" :min="1"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('font weight')">
-                    <el-input-number
-                      v-model="styles.header['font-weight']"
-                      :min="100"
-                      :max="900"
-                      :step="100"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.header['font-weight']" :min="100" :max="900" :step="100">
+                    </el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('transform')">
                     <el-radio-group v-model="styles.header['text-transform']">
                       <el-radio-button label="none">{{
-                        $t("none")
+                          $t("none")
                       }}</el-radio-button>
                       <el-radio-button label="uppercase">{{
-                        $t("uppercase")
+                          $t("uppercase")
                       }}</el-radio-button>
                     </el-radio-group>
                   </el-form-item>
 
                   <el-form-item :label="$t('decorations')">
-                    <el-checkbox
-                      v-model="styles.header.decorations.active"
-                    ></el-checkbox>
+                    <el-checkbox v-model="styles.header.decorations.active"></el-checkbox>
                   </el-form-item>
 
                   <el-form-item :label="$t('line thickness')">
-                    <el-input-number
-                      v-model="styles.header.decorations['border-bottom-width']"
-                      :min="1"
-                      :max="50"
-                      :disabled="!styles.header.decorations.active"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.header.decorations['border-bottom-width']" :min="1" :max="50"
+                      :disabled="!styles.header.decorations.active"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('line color')">
-                    <el-color-picker
-                      v-model="styles.header.decorations['border-color']"
-                      :disabled="!styles.header.decorations.active"
-                    />
+                    <el-color-picker v-model="styles.header.decorations['border-color']"
+                      :disabled="!styles.header.decorations.active" />
                   </el-form-item>
                 </el-form>
               </el-collapse-item>
@@ -408,34 +268,18 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.photo.active">{{
-                      $t("product photo styles")
+                        $t("product photo styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'photo'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'photo')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'photo'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'photo')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.photo"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.photo.active"
-                >
+                <el-form :model="styles.photo" size="small" label-width="200px" :disabled="!styles.photo.active">
                   <el-form-item :label="$t('border width')">
-                    <el-input-number
-                      v-model="styles.photo['border-width']"
-                      :min="0"
-                      :max="25"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.photo['border-width']" :min="0" :max="25"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('border color')">
@@ -443,30 +287,18 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('padding')">
-                    <el-input-number
-                      v-model="styles.photo.padding"
-                      :min="0"
-                      :max="25"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.photo.padding" :min="0" :max="25"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('keep proportions')">
-                    <el-checkbox
-                      v-model="styles.photo.proportions.active"
-                    ></el-checkbox>
+                    <el-checkbox v-model="styles.photo.proportions.active"></el-checkbox>
                   </el-form-item>
 
                   <el-form-item :label="$t('aspect ratio')">
-                    <el-radio-group
-                      v-model="styles.photo.proportions['aspect-ratio']"
-                      :disabled="!styles.photo.proportions.active"
-                    >
-                      <el-radio-button
-                        class="aspect-ratio-radio"
-                        v-for="option in aspectRatios"
-                        :key="`${option[0]}/${option[1]}`"
-                        :label="`${option[0]}/${option[1]}`"
-                      >
+                    <el-radio-group v-model="styles.photo.proportions['aspect-ratio']"
+                      :disabled="!styles.photo.proportions.active">
+                      <el-radio-button class="aspect-ratio-radio" v-for="option in aspectRatios"
+                        :key="`${option[0]}/${option[1]}`" :label="`${option[0]}/${option[1]}`">
                         {{ option[0] }}:{{ option[1] }}
                       </el-radio-button>
                     </el-radio-group>
@@ -478,35 +310,23 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.tag.active">{{
-                      $t("discount tag styles")
+                        $t("discount tag styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'tag'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'tag')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'tag'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'tag')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.tag"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.tag.active"
-                >
+                <el-form :model="styles.tag" size="small" label-width="200px" :disabled="!styles.tag.active">
                   <el-form-item :label="$t('style')">
                     <el-radio-group v-model="styles.tag.style">
                       <el-radio-button label="classic">{{
-                        $t("style:classic")
+                          $t("style:classic")
                       }}</el-radio-button>
                       <el-radio-button label="minimal">{{
-                        $t("style:minimal")
+                          $t("style:minimal")
                       }}</el-radio-button>
                     </el-radio-group>
                   </el-form-item>
@@ -525,28 +345,16 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.title.active">{{
-                      $t("product title styles")
+                        $t("product title styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'title'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'title')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'title'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'title')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.title"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.title.active"
-                >
+                <el-form :model="styles.title" size="small" label-width="200px" :disabled="!styles.title.active">
                   <el-form-item :label="$t('alignment')">
                     <el-radio-group v-model="styles.title['text-align']">
                       <el-radio-button label="left">
@@ -569,28 +377,21 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('font size')">
-                    <el-input-number
-                      v-model="styles.title['font-size']"
-                      :min="1"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.title['font-size']" :min="1"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('font weight')">
-                    <el-input-number
-                      v-model="styles.title['font-weight']"
-                      :min="100"
-                      :max="900"
-                      :step="100"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.title['font-weight']" :min="100" :max="900" :step="100">
+                    </el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('transform')">
                     <el-radio-group v-model="styles.title['text-transform']">
                       <el-radio-button label="none">{{
-                        $t("none")
+                          $t("none")
                       }}</el-radio-button>
                       <el-radio-button label="uppercase">{{
-                        $t("uppercase")
+                          $t("uppercase")
                       }}</el-radio-button>
                     </el-radio-group>
                   </el-form-item>
@@ -601,28 +402,16 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.price.active">{{
-                      $t("price styles")
+                        $t("price styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'price'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'price')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'price'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'price')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.price"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.price.active"
-                >
+                <el-form :model="styles.price" size="small" label-width="200px" :disabled="!styles.price.active">
                   <el-form-item :label="$t('alignment')">
                     <el-radio-group v-model="styles.price['text-align']">
                       <el-radio-button label="left">
@@ -641,7 +430,7 @@
                   </el-form-item>
 
                   <label class="form-subheader">{{
-                    $t("current price")
+                      $t("current price")
                   }}</label>
 
                   <el-form-item :label="$t('color')">
@@ -649,19 +438,12 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('font size')">
-                    <el-input-number
-                      v-model="styles.price.current['font-size']"
-                      :min="1"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.current['font-size']" :min="1"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('font weight')">
-                    <el-input-number
-                      v-model="styles.price.current['font-weight']"
-                      :min="100"
-                      :max="900"
-                      :step="100"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.current['font-weight']" :min="100" :max="900" :step="100">
+                    </el-input-number>
                   </el-form-item>
 
                   <label class="form-subheader">{{ $t("full price") }}</label>
@@ -671,23 +453,16 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('font size')">
-                    <el-input-number
-                      v-model="styles.price.full['font-size']"
-                      :min="1"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.full['font-size']" :min="1"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('font weight')">
-                    <el-input-number
-                      v-model="styles.price.full['font-weight']"
-                      :min="100"
-                      :max="900"
-                      :step="100"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.full['font-weight']" :min="100" :max="900" :step="100">
+                    </el-input-number>
                   </el-form-item>
 
                   <label class="form-subheader">{{
-                    $t("discount price")
+                      $t("discount price")
                   }}</label>
 
                   <el-form-item :label="$t('color')">
@@ -695,19 +470,12 @@
                   </el-form-item>
 
                   <el-form-item :label="$t('font size')">
-                    <el-input-number
-                      v-model="styles.price.discount['font-size']"
-                      :min="1"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.discount['font-size']" :min="1"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('font weight')">
-                    <el-input-number
-                      v-model="styles.price.discount['font-weight']"
-                      :min="100"
-                      :max="900"
-                      :step="100"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.price.discount['font-weight']" :min="100" :max="900" :step="100">
+                    </el-input-number>
                   </el-form-item>
                 </el-form>
               </el-collapse-item>
@@ -716,81 +484,44 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.layout.active">{{
-                      $t("layout styles")
+                        $t("layout styles")
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'layout'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
-                    <el-button
-                      size="mini"
-                      @click="handleSectionReset('custom_styles', 'layout')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                  <span v-if="currentSection.custom_styles === 'layout'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
+                    <el-button size="mini" @click="handleSectionReset('custom_styles', 'layout')">{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
-                <el-form
-                  :model="styles.layout"
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.layout.active"
-                >
-                  <el-form-item
-                    v-if="current.section_layout === 'slider'"
-                    :label="$t('show next item')"
-                  >
-                    <el-checkbox
-                      v-model="styles.layout.show_next_item"
-                    ></el-checkbox>
+                <el-form :model="styles.layout" size="small" label-width="200px" :disabled="!styles.layout.active">
+                  <el-form-item v-if="current.section_layout === 'slider'" :label="$t('show next item')">
+                    <el-checkbox v-model="styles.layout.show_next_item"></el-checkbox>
                   </el-form-item>
 
                   <el-form-item :label="$t('items per page')">
                     {{ $t("layout:between") }}
-                    <el-input-number
-                      class="narrow-input inline-input"
-                      controls-position="right"
-                      v-model="styles.layout.items_per_page.mobile"
-                      :min="1"
-                      :max="styles.layout.items_per_page.desktop"
-                      :step="1"
-                    ></el-input-number>
+                    <el-input-number class="narrow-input inline-input" controls-position="right"
+                      v-model="styles.layout.items_per_page.mobile" :min="1" :max="styles.layout.items_per_page.desktop"
+                      :step="1"></el-input-number>
                     {{ $t("layout:and") }}
-                    <el-input-number
-                      class="narrow-input inline-input"
-                      controls-position="right"
-                      v-model="styles.layout.items_per_page.desktop"
-                      :min="styles.layout.items_per_page.mobile"
-                      :max="10"
-                      :step="1"
-                    ></el-input-number>
+                    <el-input-number class="narrow-input inline-input" controls-position="right"
+                      v-model="styles.layout.items_per_page.desktop" :min="styles.layout.items_per_page.mobile"
+                      :max="10" :step="1"></el-input-number>
                     {{ $t("layout:screensize") }}
                   </el-form-item>
 
                   <el-form-item :label="$t('advanced')">
-                    <el-checkbox
-                      v-model="styles.layout.advanced.active"
-                    ></el-checkbox>
+                    <el-checkbox v-model="styles.layout.advanced.active"></el-checkbox>
                   </el-form-item>
 
                   <el-form-item :label="$t('section spacing')">
-                    <el-input-number
-                      v-model="styles.layout.advanced.spacing"
-                      :min="0"
-                      :max="4"
-                      :disabled="!styles.layout.advanced.active"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.layout.advanced.spacing" :min="0" :max="4"
+                      :disabled="!styles.layout.advanced.active"></el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('max section width')">
-                    <el-input-number
-                      v-model="styles.layout.advanced['max-width']"
-                      :min="288"
-                      :step="1"
-                      :disabled="!styles.layout.advanced.active"
-                    ></el-input-number>
+                    <el-input-number v-model="styles.layout.advanced['max-width']" :min="288" :step="1"
+                      :disabled="!styles.layout.advanced.active"></el-input-number>
                   </el-form-item>
                 </el-form>
               </el-collapse-item>
@@ -800,35 +531,20 @@
                   <el-checkbox checked disabled />
                   <span class="el-checkbox__input is-checked" />
                   <span class="el-checkbox__label">{{
-                    $t("product details")
+                      $t("product details")
                   }}</span>
-                  <span
-                    v-if="currentSection.custom_styles === 'fields'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
+                  <span v-if="currentSection.custom_styles === 'fields'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
                     <el-button size="mini" @click="handleFieldsReset()">{{
-                      $t("reset")
+                        $t("reset")
                     }}</el-button>
                   </span>
                 </slot>
-                <el-form
-                  size="small"
-                  label-width="200px"
-                  :disabled="!styles.title.active"
-                >
+                <el-form size="small" label-width="200px" :disabled="!styles.title.active">
                   <el-form-item :label="$t('show details')">
-                    <el-checkbox-group
-                      class="show-fields"
-                      v-model="current.show_fields"
-                    >
-                      <el-checkbox
-                        v-for="field in productFields"
-                        :key="field"
-                        :label="field"
-                        >{{ $t(`field:${field}`) }}</el-checkbox
-                      >
+                    <el-checkbox-group class="show-fields" v-model="current.show_fields">
+                      <el-checkbox v-for="field in productFields" :key="field" :label="field">{{ $t(`field:${field}`) }}
+                      </el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                 </el-form>
@@ -837,47 +553,30 @@
                 <slot name="title">
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="current.cta_button.show_button">{{
-                      $t(
-                        client.type === "shopify"
-                          ? "add to cart button"
-                          : "buy button"
-                      )
+                        $t(
+                          client.type === "shopify"
+                            ? "add to cart button"
+                            : "buy button"
+                        )
                     }}</el-checkbox>
                   </span>
-                  <span
-                    v-if="currentSection.custom_styles === 'cta-btn'"
-                    class="collapse-item-reset"
-                    @click.stop
-                    @keyup.stop
-                  >
+                  <span v-if="currentSection.custom_styles === 'cta-btn'" class="collapse-item-reset" @click.stop
+                    @keyup.stop>
                     <el-button size="mini" @click="handleFieldsReset()">{{
-                      $t("reset")
+                        $t("reset")
                     }}</el-button>
                   </span>
                 </slot>
-                <el-form
-                  size="small"
-                  label-width="200px"
-                  :disabled="!current.cta_button.show_button"
-                >
+                <el-form size="small" label-width="200px" :disabled="!current.cta_button.show_button">
                   <el-form-item :label="$t('add to cart caption')">
-                    <el-input
-                      v-model="current.cta_button.caption"
-                      :placeholder="
-                        $t(client.type === 'shopify' ? 'add to cart' : 'buy')
-                      "
-                    ></el-input>
+                    <el-input v-model="current.cta_button.caption" :placeholder="
+                      $t(client.type === 'shopify' ? 'add to cart' : 'buy')
+                    "></el-input>
                   </el-form-item>
-                  <el-form-item
-                    v-if="client.type === 'shopify'"
-                    :label="$t('buy btn caption')"
-                  >
-                    <el-input
-                      v-model="current.cta_button.buy_caption"
-                      :placeholder="
-                        $t(client.type === 'shopify' ? 'add to cart' : 'buy')
-                      "
-                    ></el-input>
+                  <el-form-item v-if="client.type === 'shopify'" :label="$t('buy btn caption')">
+                    <el-input v-model="current.cta_button.buy_caption" :placeholder="
+                      $t(client.type === 'shopify' ? 'add to cart' : 'buy')
+                    "></el-input>
                     <small>{{ $t("buy-btn:helper text") }}</small>
                   </el-form-item>
                   <el-form-item :label="$t('css classes')">
@@ -890,19 +589,9 @@
           </div>
 
           <div class="col-xl-7">
-            <el-alert
-              type="info"
-              show-icon
-              :closable="false"
-              :title="$t('this is a preview')"
-            />
-            <products-preview
-              :api-key="apikey"
-              :type="current.section_layout"
-              :product-count="current.section_size"
-              :show-fields="current.show_fields"
-              :styles="getPlainObject(current.custom_styles)"
-            />
+            <el-alert type="info" show-icon :closable="false" :title="$t('this is a preview')" />
+            <products-preview :api-key="apikey" :type="current.section_layout" :product-count="current.section_size"
+              :show-fields="current.show_fields" :styles="getPlainObject(current.custom_styles)" />
           </div>
         </div>
       </card>
@@ -916,13 +605,13 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { supportedLanguages } from "../../lang/lang";
-import { nilDefaultsDeep } from "../../api/utils";
+import { supportedLanguages } from "@/lang/lang";
+import { nilDefaultsDeep } from "@/api/utils";
 
-import Card from "../../components/Cards/Card.vue";
-import PendingSettings from "../../components/Settings/PendingSettings.vue";
-import LoaderDots from "../../components/LoaderDots.vue";
-import ProductsPreview from "../../components/ProductsPreview.vue";
+import Card from "@/components/Cards/Card.vue";
+import PendingSettings from "@/components/Settings/PendingSettings.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import ProductsPreview from "@/components/ProductsPreview.vue";
 import {
   userGuideLinks,
   titlePlaceholders,
@@ -1096,17 +785,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 /* TODO: move this to global styles */
-.card > .card-header h3 {
+.card>.card-header h3 {
   margin: 0;
 }
 
-.card > .card-body {
+.card>.card-body {
   padding: 20px;
 }
 
-.card > label {
+.card>label {
   margin-bottom: 0;
 }
 
@@ -1116,7 +806,7 @@ export default {
   align-items: center;
 }
 
-.card > .card-header .flex-header > * {
+.card>.card-header .flex-header>* {
   margin: 0 1rem 0 0;
 }
 
@@ -1139,7 +829,7 @@ export default {
   margin-left: auto;
 }
 
-.collapse-item-reset + * {
+.collapse-item-reset+* {
   margin-left: 1rem;
 }
 
@@ -1154,13 +844,15 @@ export default {
   min-height: 2em;
 }
 
-.page-switch-wrapper + .page-switch-wrapper {
+.page-switch-wrapper+.page-switch-wrapper {
   margin-top: 0.5em;
 }
+
 small.el-form-item--small {
   line-height: 16px;
 }
-.page-switch-wrapper > :first-child {
+
+.page-switch-wrapper> :first-child {
   flex: 0 0 200px;
 }
 
@@ -1175,8 +867,8 @@ small.el-form-item--small {
   margin-left: auto;
 }
 
-.page-switch-wrapper .el-switch > .el-switch__label,
-.page-switch-wrapper .el-switch > .el-switch__label.is-active {
+.page-switch-wrapper .el-switch>.el-switch__label,
+.page-switch-wrapper .el-switch>.el-switch__label.is-active {
   color: #999;
 }
 
@@ -1200,7 +892,7 @@ small.el-form-item--small {
   margin: 0 0.25em;
 }
 
-.inline-input > .el-input {
+.inline-input>.el-input {
   font-size: inherit;
 }
 
@@ -1212,12 +904,12 @@ small.el-form-item--small {
   width: 72px;
 }
 
-.narrow-input.is-controls-right > .el-input__inner {
+.narrow-input.is-controls-right>.el-input__inner {
   padding-left: 4px;
   padding-right: 32px;
 }
 
-.aspect-ratio-radio > .el-radio-button__inner {
+.aspect-ratio-radio>.el-radio-button__inner {
   padding-left: 6px;
   padding-right: 6px;
 }
@@ -1229,14 +921,12 @@ small.el-form-item--small {
 }
 </style>
 <style>
-.is-disabled > div > div > i.el-collapse-item__arrow.el-icon-arrow-right {
+.is-disabled>div>div>i.el-collapse-item__arrow.el-icon-arrow-right {
   background-image: none;
   font-family: "themify" !important;
 }
-.is-disabled
-  > div
-  > div
-  > i.el-collapse-item__arrow.el-icon-arrow-right::before {
+
+.is-disabled>div>div>i.el-collapse-item__arrow.el-icon-arrow-right::before {
   content: "\e62b" !important;
 }
 </style>

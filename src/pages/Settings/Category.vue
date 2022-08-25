@@ -77,7 +77,7 @@ export default {
     MultiSelectTable,
     LoaderDots,
     PendingSettings,
-    CardMessageBox
+    CardMessageBox,
   },
   data() {
     return {
@@ -87,14 +87,14 @@ export default {
       multipleSelection: [],
       lastSaved: [],
       search: "",
-      current: null
+      current: null,
     };
   },
   computed: {
     ...mapGetters(["client"]),
     hasUnsavedChanges() {
       return !isEqual(this.current, this.lastSaved);
-    }
+    },
   },
   methods: {
     async saveChanges() {
@@ -141,10 +141,10 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>

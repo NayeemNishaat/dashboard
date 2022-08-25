@@ -26,12 +26,12 @@
       <p>
         {{
           $t("your image has an invalid format of '{format}'", {
-            format: this.invalidFormat
+            format: this.invalidFormat,
           })
         }}.
         {{
           $t("the supported image formats are '{formats}'", {
-            formats: validFormats.join(", ")
+            formats: validFormats.join(", "),
           })
         }}.
       </p>
@@ -45,12 +45,12 @@
       <p>
         {{
           $t("your image has invalid dimension ratio of '{ratio}'", {
-            ratio: this.invalidRatio
+            ratio: this.invalidRatio,
           })
         }}.
         {{
           $t("the supported dimension ratios are", {
-            ratios: validRatios.join(", ")
+            ratios: validRatios.join(", "),
           })
         }}.
       </p>
@@ -66,7 +66,7 @@
           $t(
             "you selected the 'low' banner layout which doesn't support this banner size.",
             {
-              layout: $t(bannerLayout)
+              layout: $t(bannerLayout),
             }
           )
         }}
@@ -84,21 +84,21 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
 
-import Dropzone from "/src/components/Dropzone.vue";
+import Dropzone from "@/components/Dropzone.vue";
 
-import { preSign } from "/src/api/backend";
-import { getRatio } from "/src/api/utils";
+import { preSign } from "@/api/backend";
+import { getRatio } from "@/api/utils";
 
-import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
+import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
 
 const allowedRatios = {
   "2:3": "sub",
-  "5:3": "main"
+  "5:3": "main",
 };
 export default {
   components: {
     CardMessageBox,
-    Dropzone
+    Dropzone,
   },
   data() {
     const vm = this;
@@ -155,18 +155,18 @@ export default {
             .catch((error) => {
               Sentry.captureException(error);
             });
-        }
-      }
+        },
+      },
     };
   },
   props: {
     bannerLayout: {
-      type: String
+      type: String,
     },
     staticBanner: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
     ...mapGetters(["languageCode"]),
@@ -195,7 +195,7 @@ export default {
       }
 
       return `https://help.datacue.co/${languageShortCode}guide/banners.html`;
-    }
+    },
   },
   methods: {
     validateImage(file) {
@@ -242,8 +242,8 @@ export default {
       const filename = urlParts[urlParts.length - 1];
       file["id"] = decodeURI(filename);
       this.$emit("success", { file, banner_type: this.bannerType });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

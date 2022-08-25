@@ -1,7 +1,7 @@
 import { ActionContext, ActionTree } from "vuex";
 import ModuleState from "./state";
 import RootState from "../../state";
-// import Vue from "vue";
+
 //backend
 import { Http } from "../../../http";
 import { AuthToken, SetupSummary } from "../../../api/interfaces";
@@ -45,14 +45,15 @@ const actions: ActionTree<ModuleState, RootState> = {
     });
   },
   finishSetup({
+    commit,
     rootGetters
   }: ActionContext<ModuleState, RootState>): Promise<any> {
-    const client = rootGetters.client;
-    client.profile["has_finished_setup"] = true;
-    // Vue.set(client.profile, "has_finished_setup", true);
+    const context = rootGetters.context;
     return new Promise((resolve, reject) => {
       Http.post("/client/finish-setup")
         .then((response) => {
+          context.client.profile["has_finished_setup"] = true;
+          commit("setContext", context);
           resolve(response);
         })
         .catch((error) => reject(error));

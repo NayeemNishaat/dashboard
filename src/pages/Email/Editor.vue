@@ -310,7 +310,7 @@
                 { name: 'Verdana', fallback: 'sans-serif' },
                 { name: 'Times New Roman', fallback: 'serif' },
                 { name: 'Georgia', fallback: 'serif' },
-                { name: 'Courier', fallback: 'monospace' }
+                { name: 'Courier', fallback: 'monospace' },
               ]"
               :key="font.name"
               :value="`'${font.name}', ${font.fallback}`"
@@ -570,26 +570,26 @@ const SHOW_TIPS_STORAGE_KEY = "datacue-dashboard-showTips";
 export default {
   name: "Editor",
   components: {
-    MjmlPreview
+    MjmlPreview,
   },
   data: function () {
     return {
       pane: "content",
       preview: {
         template: getTemplateTypes().WE_MISS_YOU,
-        size: "desktop"
+        size: "desktop",
       },
       uploading: {
         logo: false,
-        cover: false
+        cover: false,
       },
       campaign: {
         name: "",
         subject: "",
         active: false,
         rules: {
-          delay: 0
-        }
+          delay: 0,
+        },
       },
       editor: {
         content: {
@@ -599,7 +599,7 @@ export default {
           footer: "",
           logo: null,
           cover: null,
-          unsubscribeText: this.$t("click to unsubscribe")
+          unsubscribeText: this.$t("click to unsubscribe"),
         },
         settings: {
           mainColor: "#f8d188",
@@ -609,8 +609,8 @@ export default {
           headingAlign: "center",
           headingBold: false,
           bodyAlign: "left",
-          discountColor: "#ff5c77"
-        }
+          discountColor: "#ff5c77",
+        },
       },
       validate: false,
       windowWidth: 1024,
@@ -618,30 +618,30 @@ export default {
       estimatedReachLoading: 0,
       tips: {
         preview: null,
-        autosave: null
+        autosave: null,
       },
       showTips: JSON.parse(
         window.localStorage.getItem(SHOW_TIPS_STORAGE_KEY)
       ) || {
         preview: true,
-        autosave: true
+        autosave: true,
       },
-      cleanup: false
+      cleanup: false,
     };
   },
   watch: {
     editor: {
       handler: "autoSave",
-      deep: true
+      deep: true,
     },
     campaign: {
       handler: "autoSave",
-      deep: true
+      deep: true,
     },
     "campaign.rules": {
       handler: "updateEstimatedReach",
-      deep: true
-    }
+      deep: true,
+    },
   },
   computed: {
     ...mapGetters("settings", ["emailSettings"]),
@@ -652,7 +652,7 @@ export default {
         !this.campaign.rules.delay ||
         requiredFields.some((field) => !this.editor.content[field])
       );
-    }
+    },
   },
   methods: {
     ...mapActions("settings", ["fetchEmailSettings"]),
@@ -678,8 +678,8 @@ export default {
               data: file,
               responseType: "text",
               headers: {
-                "Content-Type": file.type
-              }
+                "Content-Type": file.type,
+              },
             })
             .then(async () => {
               try {
@@ -687,7 +687,7 @@ export default {
                 this.editor.content[slot] = {
                   src: `https://cdn.datacue.co/${res.key}`,
                   width,
-                  height
+                  height,
                 };
               } catch (err) {
                 Sentry.captureException(err);
@@ -696,7 +696,7 @@ export default {
                   message: this.$t(
                     "an unknown error occured, please try again later"
                   ),
-                  type: "warning"
+                  type: "warning",
                 });
               }
             })
@@ -755,22 +755,22 @@ export default {
           this.campaign.subject.replace(/\{+%+|%+\}+/g, "") || "We miss you",
         rules: JSON.stringify({
           ...this.campaign.rules,
-          editor: this.editor
+          editor: this.editor,
         }),
         template: buildTemplateMjml(
           this.preview.template,
           this.editor,
           "jinja"
         ),
-        active: !this.hasErrors && this.campaign.active
+        active: !this.hasErrors && this.campaign.active,
       }).catch(() => {
         this.$notify({
           title: this.$t("error"),
           message: this.$t("could not save"),
-          type: "warning"
+          type: "warning",
         });
       });
-    }, 1500)
+    }, 1500),
   },
   mounted() {
     // FIXME attach event listeners properly and clean on unmount
@@ -787,7 +787,7 @@ export default {
             message: this.$t(`${tip} tip`),
             type: "info",
             duration: 0,
-            onClose: () => this.closeTip(tip)
+            onClose: () => this.closeTip(tip),
           });
         }
       }
@@ -800,20 +800,20 @@ export default {
         active: res.active || false,
         rules: {
           ...this.campaign.rules,
-          ...omit(res.rules, "editor")
-        }
+          ...omit(res.rules, "editor"),
+        },
       };
 
       if (res.rules && res.rules.editor) {
         this.editor = {
           content: {
             ...this.editor.content,
-            ...res.rules.editor.content
+            ...res.rules.editor.content,
           },
           settings: {
             ...this.editor.settings,
-            ...res.rules.editor.settings
-          }
+            ...res.rules.editor.settings,
+          },
         };
       }
 
@@ -831,7 +831,7 @@ export default {
         this.tips[tip].close();
       }
     });
-  }
+  },
 };
 </script>
 

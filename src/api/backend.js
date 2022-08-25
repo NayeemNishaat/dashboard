@@ -1,11 +1,10 @@
 import axios from "axios";
-import { Http } from "/src/http";
-// import Vue from "vue";
+import { Http } from "@/http";
 import TinyEmitter from "tiny-emitter";
 import * as Sentry from "@sentry/browser";
 
-import store from "/src/store/index";
-import router from "/src/router/index";
+import store from "@/store/index";
+import router from "@/router/index";
 
 // event bus setup
 const bus = new TinyEmitter();

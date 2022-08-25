@@ -52,7 +52,7 @@ export default {
   components: {
     CardGrid,
     DateRangePicker,
-    StatsCard
+    StatsCard,
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
           title: "notifications",
           value: "0",
           comparison: "n/a",
-          footer: "notifications generated"
+          footer: "notifications generated",
         },
         {
           type: "info",
@@ -73,7 +73,7 @@ export default {
           title: "users",
           value: "0",
           comparison: "n/a",
-          footer: "users with notifications"
+          footer: "users with notifications",
         },
         {
           type: "info",
@@ -81,11 +81,11 @@ export default {
           title: "products",
           value: "0",
           comparison: "n/a",
-          footer: "products with notifications"
-        }
+          footer: "products with notifications",
+        },
       ],
       loading: true,
-      error: false
+      error: false,
     };
   },
   computed: {
@@ -102,7 +102,7 @@ export default {
         return [];
       }
       return this.allNotifications[this.notificationsFilter];
-    }
+    },
   },
   methods: {
     async refreshData() {
@@ -135,11 +135,11 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>
 <style></style>

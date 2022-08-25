@@ -1,4 +1,3 @@
-// import { app } from "/src/main";
 import { createStore } from "vuex";
 
 // modules
@@ -10,8 +9,6 @@ import State from "./state";
 import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
-
-// app.use(Vuex as any);
 
 // configure Vuex
 export default createStore({

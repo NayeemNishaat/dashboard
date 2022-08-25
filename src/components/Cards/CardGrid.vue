@@ -96,24 +96,24 @@ export default {
     ProductCard,
     Card,
     DcButton,
-    LoaderDots
+    LoaderDots,
   },
   props: {
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     cards: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
-    cardType: String
+    cardType: String,
   },
   data() {
     return {
       maxcards: 30,
       filter: "",
-      sortField: this.cardType === "banners" ? "score" : "ctr_norm"
+      sortField: this.cardType === "banners" ? "score" : "ctr_norm",
     };
   },
   computed: {
@@ -144,7 +144,7 @@ export default {
             parseFloat(a[this.sortField] || 0)
         )
         .slice(0, this.maxcards);
-    }
+    },
   },
   methods: {
     getSearchString(item) {
@@ -174,10 +174,10 @@ export default {
       }
       const clientDomain = this.client.domain;
       return `https://${clientDomain}${link}`;
-    }
+    },
   },
 
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style>

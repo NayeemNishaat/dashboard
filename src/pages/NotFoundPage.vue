@@ -11,7 +11,7 @@ import LoaderDots from "/src/components/LoaderDots.vue";
 export default {
   name: "NotFound",
   components: {
-    LoaderDots
+    LoaderDots,
   },
   mounted() {
     Sentry.captureMessage(
@@ -19,6 +19,6 @@ export default {
       Sentry.Severity.Error
     );
     this.$router.push({ name: "summary" });
-  }
+  },
 };
 </script>

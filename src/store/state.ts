@@ -1,7 +1,7 @@
-import { Client, User } from "/src/api/interfaces";
+import { Client, User } from "@/api/interfaces";
 
 import { subDays, format } from "date-fns";
-import { AuthToken, Context } from "/src/api/interfaces";
+import { AuthToken, Context } from "@/api/interfaces";
 export default class State {
   public accessToken: AuthToken;
   public dateRange: [string, string];
@@ -12,7 +12,7 @@ export default class State {
     try {
       this.accessToken = JSON.parse(
         localStorage.getItem("access_token") ||
-          `{"token":"","auth_provider":""}`
+        `{"token":"","auth_provider":""}`
       );
     } catch (err) {
       localStorage.removeItem("access_token");

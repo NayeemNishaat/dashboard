@@ -13,13 +13,13 @@ import DcMessageBanner from "/src/components/DcMessageBanner.vue";
 export default {
   name: "UpgradeMessage",
   components: {
-    DcMessageBanner
+    DcMessageBanner,
   },
   props: {
     message: {
-      type: String
-    }
-  }
+      type: String,
+    },
+  },
 };
 </script>
 <style scoped>

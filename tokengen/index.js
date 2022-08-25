@@ -11,6 +11,6 @@ const sub = {
     "subscription_id": "123",
     "user_id": "demo"
 }
-const token = jwt.sign({ iss: SHOPIFY_APP_HOST, sub, aud: DASHBOARD_URL, ctx: {} }, "lorem-ipsem", { expiresIn: 600 });
+const token = jwt.sign({ iss: SHOPIFY_APP_HOST, sub, aud: DASHBOARD_URL, ctx: {} }, "lorem-ipsem", { expiresIn: 6000 });
 console.log("1. Run npm run serve to launch the frontend - verify that frontend is running on port 8080")
 console.log(`2. Visit http://localhost:8080/shopify-login#${token}`)
