@@ -1,11 +1,11 @@
-<template>
+<!-- <template>
   <div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane
         v-for="panel in allPanels"
         :key="panel"
         :name="panel"
-        :label="panel.toUpperCase()"
+        :label="panel"
       >
         <span slot="label">
           {{ $tc(panel, 2) }}
@@ -14,6 +14,20 @@
     </el-tabs>
     <router-view></router-view>
   </div>
+</template> -->
+<template>
+  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tab-pane
+      v-for="panel in allPanels"
+      :key="panel"
+      :name="panel"
+      :label="panel"
+    >
+      <span slot="label">
+        {{ $tc(panel, 2) }}
+      </span>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
@@ -50,3 +64,17 @@ export default {
   }
 };
 </script>
+<style>
+.el-tabs .el-tabs__item.is-active {
+  color: #f3bb45;
+}
+.el-tabs .el-tabs__item {
+  text-transform: capitalize;
+}
+.el-tabs .el-tabs__item:hover {
+  color: #f3bb45;
+}
+.el-tabs .el-tabs__active-bar {
+  background-color: #f3bb45;
+}
+</style>
