@@ -58,6 +58,7 @@ export default {
     ...mapActions(["setLanguageCode"]),
     changeLanguage(payload) {
       this.setLanguageCode(payload);
+      this.$i18n.locale = locale;
     }
   }
 };
