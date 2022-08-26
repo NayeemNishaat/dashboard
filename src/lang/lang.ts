@@ -28,7 +28,6 @@ localStorage.setItem("lang", curLocale);
 
 export const i18n = createI18n({
   locale: curLocale,
-  allowComposition: true,
   fallbackLocale: "en",
   messages
 });
