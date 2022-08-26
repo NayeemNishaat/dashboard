@@ -72,34 +72,34 @@ export default {
           parseISO(this.dateRange?.[0])
         ) + 1
       );
-    },
+    }
   },
   props: {
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     value: {
       type: String,
-      default: "",
+      default: ""
     },
     comparison: {
       type: String,
-      default: "",
+      default: ""
     },
     icon: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: {
     Card,
-    LoaderDots,
-  },
+    LoaderDots
+  }
 };
 </script>
 
