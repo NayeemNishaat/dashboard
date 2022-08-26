@@ -67,4 +67,8 @@ export default {
 .centered {
   justify-content: center;
 }
+.el-dropdown-menu__item:hover {
+  background-color: #f3bb45 !important;
+  color: white !important;
+}
 </style>
