@@ -8,7 +8,7 @@ import {
   PointElement,
   LineElement,
   CategoryScale,
-  LinearScale,
+  LinearScale
 } from "chart.js";
 
 ChartJS.register(
@@ -35,7 +35,7 @@ export default defineComponent({
         height: 400,
         cssClasses: props.cssClasses,
         styles: props.styles,
-        plugins: props.plugins,
+        plugins: props.plugins
       });
-  },
+  }
 });
