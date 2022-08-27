@@ -11,8 +11,6 @@ const Onboarding = () => import("../pages/Onboarding/Onboarding.vue");
 
 const LoginError = () => import("../pages/Auth/LoginError.vue");
 
-const OnboardingSignup = () =>
-  import("../components/onboarding/OnboardingSignup.vue");
 const Intro = () => import("../components/onboarding/Intro.vue");
 const Setup = () => import("../components/onboarding/Setup.vue");
 const ActivateBillingPlan = () =>
@@ -53,7 +51,6 @@ const CategorySettings = () => import("../pages/Settings/Category.vue");
 
 // authentication
 import Login from "../pages/Auth/Login.vue";
-import SignUp from "../pages/Auth/Signup.vue";
 import Callback from "../pages/Auth/Callback.vue";
 import ShopifyLogin from "../pages/Auth/ShopifyLogin.vue";
 
@@ -81,34 +78,10 @@ const routes: any = [
     beforeEnter: ifNotAuthenticated
   },
   {
-    path: "/:lang/sign-up",
-    name: "sign-up",
-    component: SignUp,
-    beforeEnter: ifNotAuthenticated
-  },
-  {
     path: "/onboarding/:platform",
     name: "onboarding",
     component: Onboarding,
     children: [
-      {
-        path: "",
-        name: "onboarding-signup",
-        component: OnboardingSignup,
-        beforeEnter: ifOnboarding,
-        meta: {
-          step: "signup"
-        }
-      },
-      {
-        path: "signup",
-        name: "onboarding-signup",
-        component: OnboardingSignup,
-        beforeEnter: ifOnboarding,
-        meta: {
-          step: "signup"
-        }
-      },
       {
         path: "intro",
         name: "onboarding-intro",
