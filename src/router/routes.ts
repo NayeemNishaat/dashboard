@@ -90,8 +90,16 @@ const routes: any = [
     path: "/onboarding/:platform",
     name: "onboarding",
     component: Onboarding,
-    redirect: "/onboarding/:platform/signup",
     children: [
+      {
+        path: "",
+        name: "onboarding-signup",
+        component: OnboardingSignup,
+        beforeEnter: ifOnboarding,
+        meta: {
+          step: "signup"
+        }
+      },
       {
         path: "signup",
         name: "onboarding-signup",

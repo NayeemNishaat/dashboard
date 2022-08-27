@@ -42,11 +42,12 @@ export const ifAuthenticated: NavigationGuard = (to, from, next) => {
   next("/login");
 };
 
-export const ifFinishedOnboarding: NavigationGuard = (to, from, next) => {
+export const ifFinishedOnboarding: NavigationGuard = async (to, from, next) => {
   if (isLoggedIn()) {
     const profile = store.getters["settings/profile"];
     if (!profile) {
-      store.dispatch("setNextPage", to).then(() => next({ name: "loading" }));
+      await store.dispatch("setNextPage", to);
+      next({ name: "loading" });
       return;
     }
     if (hasFinishedOnboarding()) {
@@ -70,6 +71,7 @@ export const ifOnboarding: NavigationGuard = (to, from, next) => {
   }
   if (isLoggedIn() && to.name === "onboarding-signup") {
     next({ name: "onboarding-intro", params: to.params });
+    return
   }
   next();
 };

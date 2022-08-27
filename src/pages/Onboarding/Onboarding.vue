@@ -11,8 +11,7 @@
       </a>
     </header>
 
-    <loader-dots v-if="l
-    ading" />
+    <loader-dots v-if="loading" />
     <div v-else class="onboarding-step-wrapper">
       <router-view></router-view>
     </div>
