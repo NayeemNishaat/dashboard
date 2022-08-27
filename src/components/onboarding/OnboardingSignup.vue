@@ -14,14 +14,8 @@
       {{ $t(`onboarding:signup:error_${error}`) }}
     </p>
 
-    <el-form
-      class="signup-form"
-      ref="signupForm"
-      :model="account"
-      :rules="rules"
-      label-position="top"
-      hide-required-asterisk
-    >
+    <el-form class="signup-form" ref="signupForm" :model="account" :rules="rules" label-position="top"
+      hide-required-asterisk>
       <el-form-item prop="website" :label="$t('onboarding:signup:website')">
         <el-input type="text" v-model="account.website">
           <template v-slot:prepend>http(s)://</template>
@@ -45,7 +39,7 @@
           {{ $t("onboarding:signup:password") }}
           <span class="hint">
             {{
-              $t("no weird rules, make it long enough. random words are good")
+                $t("no weird rules, make it long enough. random words are good")
             }}
           </span>
         </template>
@@ -54,20 +48,12 @@
       </el-form-item>
 
       <el-collapse-transition>
-        <password-strength
-          v-show="account.password"
-          class="password-strength"
-          :password="account.password"
-        />
+        <password-strength v-show="account.password" class="password-strength" :password="account.password" />
       </el-collapse-transition>
     </el-form>
 
     <template v-slot:actions>
-      <dc-button
-        type="primary"
-        @click="submitForm"
-        :disabled="loading || !filled"
-      >
+      <dc-button type="primary" @click="submitForm" :disabled="loading || !filled">
         {{ $t("onboarding:signup:submit") }}
       </dc-button>
     </template>
@@ -89,7 +75,7 @@ export default {
   components: {
     DcButton,
     PasswordStrength,
-    OnboardingStep,
+    OnboardingStep
   },
   data() {
     return {
@@ -100,14 +86,14 @@ export default {
         firstName: "",
         lastName: "",
         email: "",
-        password: "",
+        password: ""
       },
       rules: {
         website: [
           {
             required: true,
             message: this.$t("please enter your website address"),
-            trigger: "blur",
+            trigger: "blur"
           },
           {
             validator: (rule, value, callback) => {
@@ -126,28 +112,28 @@ export default {
                   )
                 );
             },
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         firstName: [
           {
             required: true,
             message: this.$t("please enter your first name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         lastName: [
           {
             required: true,
             message: this.$t("please enter your last name"),
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         email: [
           {
             required: true,
             message: this.$t("please enter your email"),
-            trigger: "blur",
+            trigger: "blur"
           },
           {
             validator: (rule, value, callback) => {
@@ -157,24 +143,24 @@ export default {
                 callback(new Error(this.$t("please enter a valid email")));
               }
             },
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         password: [
           {
             required: true,
             message: this.$t("please enter a password"),
-            trigger: "blur",
-          },
-        ],
+            trigger: "blur"
+          }
+        ]
       },
-      loading: false,
+      loading: false
     };
   },
   computed: {
     filled() {
       return Object.values(this.account).every(Boolean);
-    },
+    }
   },
   methods: {
     ...mapActions(["getContext", "setAccessToken"]),
@@ -190,7 +176,7 @@ export default {
         if (await this.$refs.signupForm.validate()) {
           const res = await signUp({
             ...this.account,
-            type: this.$route.params.platform,
+            type: this.$route.params.platform
           });
           this.handleSignup(res.data);
           // this.$emit("done", res.data);
@@ -204,8 +190,8 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -226,8 +212,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80%
-    #fff;
+  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80% #fff;
   transition: opacity 0.25s ease-in-out;
   opacity: 1;
 }

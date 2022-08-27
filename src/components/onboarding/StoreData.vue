@@ -3,21 +3,15 @@
     <div v-for="product in data" class="row">
       <div class="col-6 col-md-4">
         <span class="title">{{ product.title }}:</span>
-        <el-progress
-          :percentage="product.pct"
-          :status="product.done ? 'warning' : 'exception'"
-        ></el-progress>
+        <el-progress :percentage="product.pct" :status="product.done ? 'warning' : 'exception'"></el-progress>
       </div>
       <div class="col-6 col-md-8 right">
         <span v-if="product.done" class="done">
           <tick-check></tick-check>Done
         </span>
         <template v-else>
-          <el-checkbox
-            v-model="product.done"
-            :disabled="refreshing.includes(product.title)"
-            >{{ $t("mark as done") }}</el-checkbox
-          >
+          <el-checkbox v-model="product.done" :disabled="refreshing.includes(product.title)">{{ $t("mark as done") }}
+          </el-checkbox>
           <span @click="refresh(product.title)" class="icon">
             <refresh-icon :class="getIconClass(product.title)"></refresh-icon>
           </span>
@@ -41,17 +35,17 @@ export default {
   props: {
     displayOnly: {
       type: Boolean,
-      default: () => false,
+      default: () => false
     },
     refreshing: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     storeData: {
       type: Object,
       default: () => {
         return {};
-      },
+      }
     },
     minimumData: {
       type: Object,
@@ -60,10 +54,10 @@ export default {
           products: 10,
           orders: 50,
           users: 10,
-          categories: 2,
+          categories: 2
         };
-      },
-    },
+      }
+    }
   },
   computed: {
     ...mapGetters("onboarding", ["setupSummary"]),
@@ -83,22 +77,22 @@ export default {
           title: key,
           value: value,
           pct: (value / this.minimumData[key]) * 100,
-          done: value >= this.minimumData,
+          done: value >= this.minimumData
         };
         data.push(item);
       });
       return data;
-    },
+    }
   },
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   components: {
     MagnifyingGlassIcon,
     RefreshIcon,
-    TickCheck,
+    TickCheck
   },
   methods: {
     help(type) {
@@ -114,10 +108,10 @@ export default {
     },
     getIconClass(type) {
       return {
-        "fa-spin-reverse": this.refreshing.includes(type),
+        "fa-spin-reverse": this.refreshing.includes(type)
       };
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -144,6 +138,7 @@ span {
   color: $gray-light;
   fill: $gray-light;
 }
+
 .done svg {
   width: 15px;
   height: 15px;

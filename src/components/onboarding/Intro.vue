@@ -3,189 +3,83 @@
     <div class="row">
       <div class="col-12">
         <div class="intro-panel mx-auto">
-          <intro-panel
-            v-if="step === 0"
-            :title="$t('personalized homepages are the future')"
-            :firstPanel="true"
-            nextBtnCaption="continue"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
-            <img
-              class="static"
-              src="@/assets/img/onboarding-intro/personalized-homepage.png"
-            />
+          <intro-panel v-if="step === 0" :title="$t('personalized homepages are the future')" :firstPanel="true"
+            nextBtnCaption="continue" @next="next" @back="back" @skip="exit">
+            <img class="static" src="@/assets/img/onboarding-intro/personalized-homepage.png" />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('personalized homepages are the future-description')"
-              />
+              <div v-html="$t('personalized homepages are the future-description')" />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 1"
-            :title="$t('first time visitors see best sellers')"
-            nextBtnCaption="continue"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
-            <img
-              class="static"
-              src="@/assets/img/onboarding-intro/first-time-visitor.png"
-            />
+          <intro-panel v-if="step === 1" :title="$t('first time visitors see best sellers')" nextBtnCaption="continue"
+            @next="next" @back="back" @skip="exit">
+            <img class="static" src="@/assets/img/onboarding-intro/first-time-visitor.png" />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('first time visitors see best sellers-description')"
-              />
+              <div v-html="$t('first time visitors see best sellers-description')" />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 2"
-            :title="$t('each click instantly updates predictions')"
-            nextBtnCaption="continue"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
-            <img
-              class="static"
-              src="@/assets/img/onboarding-intro/existing-visitors.png"
-            />
+          <intro-panel v-if="step === 2" :title="$t('each click instantly updates predictions')"
+            nextBtnCaption="continue" @next="next" @back="back" @skip="exit">
+            <img class="static" src="@/assets/img/onboarding-intro/existing-visitors.png" />
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('each click instantly updates predictions-description')
-                "
-              />
+              <div v-html="
+                $t('each click instantly updates predictions-description')
+              " />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 3"
-            :title="$t('show different banners for each visitor')"
-            nextBtnCaption="continue"
-            :browserWindow="true"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
+          <intro-panel v-if="step === 3" :title="$t('show different banners for each visitor')"
+            nextBtnCaption="continue" :browserWindow="true" @next="next" @back="back" @skip="exit">
             <template v-slot:slideshow>
               <figure key="banners" class="feature feature-banners">
                 <div class="example-banner">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1a.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1b.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-1c.jpg"
-                  />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-1.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-1a.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-1b.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-1c.jpg" />
                 </div>
                 <div class="example-banner">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2a.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2b.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-2c.jpg"
-                  />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-2.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-2a.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-2b.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-2c.jpg" />
                 </div>
                 <div class="example-banner">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3a.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3b.jpg"
-                  />
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/banner-3c.jpg"
-                  />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-3.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-3a.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-3b.jpg" />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/banner-3c.jpg" />
                 </div>
               </figure>
             </template>
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('show different banners for each visitor-description')
-                "
-              />
+              <div v-html="
+                $t('show different banners for each visitor-description')
+              " />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 4"
-            :title="$t('different products for different folks')"
-            nextBtnCaption="continue"
-            :browserWindow="true"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
+          <intro-panel v-if="step === 4" :title="$t('different products for different folks')" nextBtnCaption="continue"
+            :browserWindow="true" @next="next" @back="back" @skip="exit">
             <template v-slot:slideshow>
               <figure key="products" class="feature feature-products">
                 <div class="example-page">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/product-recs.jpg"
-                  />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/product-recs.jpg" />
                 </div>
 
                 <div class="example-page">
-                  <img
-                    alt=""
-                    src="@/assets/img/sign-up/slideshow/cart-recs.jpg"
-                  />
+                  <img alt="" src="@/assets/img/sign-up/slideshow/cart-recs.jpg" />
                 </div>
               </figure>
             </template>
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('different products for different folks-description')
-                "
-              />
+              <div v-html="
+                $t('different products for different folks-description')
+              " />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 5"
-            :title="$t('relax, results will keep improving')"
-            nextBtnCaption="store setup"
-            :lastPanel="true"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
-            <img
-              class="static"
-              src="@/assets/img/onboarding-intro/view-results.gif"
-            />
+          <intro-panel v-if="step === 5" :title="$t('relax, results will keep improving')" nextBtnCaption="store setup"
+            :lastPanel="true" @next="next" @back="back" @skip="exit">
+            <img class="static" src="@/assets/img/onboarding-intro/view-results.gif" />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('relax, results will keep improving-description')"
-              />
+              <div v-html="$t('relax, results will keep improving-description')" />
             </template>
           </intro-panel>
         </div>
@@ -265,6 +159,7 @@ export default {
 }
 
 @keyframes fade-in-50 {
+
   0%,
   40% {
     opacity: 0;
@@ -277,6 +172,7 @@ export default {
 }
 
 @keyframes fade-in-75 {
+
   0%,
   70% {
     opacity: 0;
@@ -289,6 +185,7 @@ export default {
 }
 
 @keyframes slide-sideways {
+
   0%,
   45% {
     transform: translateX(0);
@@ -301,6 +198,7 @@ export default {
 }
 
 @keyframes scroll-down {
+
   0%,
   40% {
     transform: translateY(0);
@@ -313,6 +211,7 @@ export default {
 }
 
 @keyframes gray-out {
+
   0%,
   40% {
     filter: grayscale(0);
@@ -339,10 +238,8 @@ export default {
   align-items: flex-start;
   justify-content: space-between;
   padding: 14% 3% 0;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
-      no-repeat,
-    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
-      no-repeat #f2f2f2;
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100% no-repeat,
+    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100% no-repeat #f2f2f2;
 }
 
 .example-banner {
@@ -389,21 +286,20 @@ export default {
   flex: 0 0 50%;
   min-width: 0;
   padding-top: 6%;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
-    no-repeat #f2f2f2;
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100% no-repeat #f2f2f2;
 
   &:first-child {
     animation: scroll-down 6s ease-in-out backwards alternate infinite;
   }
 
-  &:last-child img + img {
+  &:last-child img+img {
     animation-delay: 6.5s;
   }
 
   img {
     width: 100%;
 
-    + img {
+    +img {
       animation: slide-in-small 0.25s ease-out backwards;
       animation-delay: 0.5s;
     }

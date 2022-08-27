@@ -17,24 +17,24 @@ export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => {},
-    },
+      default: () => { }
+    }
   },
   components: {
-    LangPickerIcon,
+    LangPickerIcon
   },
   data() {
     return {
       locales: [
         {
           code: "en",
-          title: "English",
+          title: "English"
         },
         {
           code: "es",
-          title: "Español",
-        },
-      ],
+          title: "Español"
+        }
+      ]
     };
   },
   mounted() {
@@ -46,7 +46,7 @@ export default {
       return this.locales.filter(
         (item) => item.code !== this.selectedLocale.code
       );
-    },
+    }
   },
   methods: {
     ...mapActions(["setLanguageCode"]),
@@ -62,8 +62,8 @@ export default {
         params.lang = locale.code;
         this.$router.push({ name: name, params: params, query: query });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

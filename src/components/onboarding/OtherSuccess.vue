@@ -9,27 +9,11 @@
       <p class="info">{{ $t("headToDashboard") }}</p>
     </div>
     <div class="col-12 action">
-      <el-button
-        @click="goToSummary"
-        type="warning"
-        class="btn-yellow btn-large rounded"
-        >{{ $t("get started") }}</el-button
-      >
-      <img
-        class="d-sm-none"
-        alt
-        src="@/assets/img/sign-up/arrows-layout-1.svg"
-      />
-      <img
-        class="d-none d-sm-block d-md-none"
-        alt
-        src="@/assets/img/sign-up/arrows-layout-2.svg"
-      />
-      <img
-        class="d-none d-md-block"
-        alt
-        src="@/assets/img/sign-up/arrows-layout-3-4-5.svg"
-      />
+      <el-button @click="goToSummary" type="warning" class="btn-yellow btn-large rounded">{{ $t("get started") }}
+      </el-button>
+      <img class="d-sm-none" alt src="@/assets/img/sign-up/arrows-layout-1.svg" />
+      <img class="d-none d-sm-block d-md-none" alt src="@/assets/img/sign-up/arrows-layout-2.svg" />
+      <img class="d-none d-md-block" alt src="@/assets/img/sign-up/arrows-layout-3-4-5.svg" />
     </div>
   </div>
 </template>
@@ -101,6 +85,7 @@ export default {
 @media (min-width: 768px) {
   .action {
     padding-top: 98px;
+
     img {
       height: 290px;
       left: 15px;

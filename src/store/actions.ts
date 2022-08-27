@@ -39,9 +39,8 @@ const actions: ActionTree<State, State> = {
     commit("setAccessToken", { token: "", auth_provider: "" } as AuthToken);
     let url = `${import.meta.env.VITE_APP_URL}/login`;
     if (getters.client.type === "shopify") {
-      url = `${import.meta.env.VITE_APP_SHOPIFY_APP_URL}?shop=${
-        getters.apikey
-      }`;
+      url = `${import.meta.env.VITE_APP_SHOPIFY_APP_URL}?shop=${getters.apikey
+        }`;
     }
     logout(authProvider, url);
   },
@@ -52,7 +51,7 @@ const actions: ActionTree<State, State> = {
     }
     commit("setLanguageCode", lcode);
     localStorage.setItem("lang", lcode);
-    i18n.locale = lcode;
+    i18n.global.locale = lcode;
     (window as any).locale = lcode;
   },
   setContext(

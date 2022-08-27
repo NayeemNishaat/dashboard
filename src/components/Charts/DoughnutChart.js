@@ -7,7 +7,7 @@ import {
   Legend,
   ArcElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
 } from "chart.js";
 
 ChartJS.register(
@@ -22,35 +22,18 @@ ChartJS.register(
 export default defineComponent({
   name: "DoughnutChart",
   components: { Doughnut },
-  // props: {
-  //   chartId: {
-  //     type: String,
-  //     default: "bar-chart"
-  //   },
-  //   width: {
-  //     type: Number,
-  //     default: 400
-  //   },
-  //   height: {
-  //     type: Number,
-  //     default: 400
-  //   },
-  //   cssClasses: {
-  //     default: "",
-  //     type: String
-  //   }
-  // },
+
   setup(props) {
     return () =>
       h(Doughnut, {
         chartData: props.chartData,
         chartOptions: props.chartOptions,
         chartId: props.chartId,
-        width: props.width,
-        height: props.height,
+        width: props.width || 400,
+        height: props.height || 400,
         cssClasses: props.cssClasses,
         styles: props.styles,
-        plugins: props.plugins
+        plugins: props.plugins,
       });
-  }
+  },
 });

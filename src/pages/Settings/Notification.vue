@@ -11,32 +11,24 @@
       </div>
       <el-form label-position="top" label-width="100px" :model="notifications">
         <el-form-item :label="$t('position')">
-          <el-radio-group
-            v-model="notifications.position"
-            :disabled="saving"
-            @change="saveChanges()"
-            fill="#e6a23c"
-          >
+          <el-radio-group v-model="notifications.position" :disabled="saving" @change="saveChanges()" fill="#e6a23c">
             <el-radio-button label="top left">{{
-              $t("top left")
+                $t("top left")
             }}</el-radio-button>
             <el-radio-button label="top right">{{
-              $t("top right")
+                $t("top right")
             }}</el-radio-button>
             <el-radio-button label="bottom left">{{
-              $t("bottom left")
+                $t("bottom left")
             }}</el-radio-button>
             <el-radio-button label="bottom right">{{
-              $t("bottom right")
+                $t("bottom right")
             }}</el-radio-button>
             <el-radio-button label="custom">{{ $t("custom") }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="$t('color')">
-          <el-color-picker
-            v-model="notifications.color"
-            @change="saveChanges()"
-          ></el-color-picker>
+          <el-color-picker v-model="notifications.color" @change="saveChanges()"></el-color-picker>
         </el-form-item>
       </el-form>
     </card>
@@ -55,7 +47,7 @@ export default {
   components: {
     Card,
     LoaderDots,
-    UpgradePlan,
+    UpgradePlan
   },
 
   data() {
@@ -64,8 +56,8 @@ export default {
       settings: {},
       notifications: {
         position: "top left",
-        color: "#f8ba00",
-      },
+        color: "#f8ba00"
+      }
     };
   },
   computed: {
@@ -76,7 +68,7 @@ export default {
         return {};
       }
       return this.subscription?.access?.personalization?.notifications;
-    },
+    }
   },
   methods: {
     ...mapActions("settings", ["getWebSettings", "saveSettings"]),
@@ -92,7 +84,7 @@ export default {
             message: this.$t(
               "an unknown error occured, please try again later"
             ),
-            type: "warning",
+            type: "warning"
           });
         })
         .finally(() => (this.saving = false));
@@ -107,13 +99,13 @@ export default {
           this.webSettings.recommendations.notifications;
         this.notifications = notifications || {
           position: "top left",
-          color: "#f8ba00",
+          color: "#f8ba00"
         };
       }
-    },
+    }
   },
   created() {
     this.refreshData();
-  },
+  }
 };
 </script>

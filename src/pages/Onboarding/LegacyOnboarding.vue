@@ -2,10 +2,8 @@
   <div class="onboarding">
     <div class="row d-md-none">
       <div class="col-12 top-picker mx-auto">
-        <lang-picker-mobile
-          :selected-locale="selectedLocale"
-          @select="(locale) => (selectedLocale = locale)"
-        ></lang-picker-mobile>
+        <lang-picker-mobile :selected-locale="selectedLocale" @select="(locale) => (selectedLocale = locale)">
+        </lang-picker-mobile>
 
         <div v-if="isLoggedIn" class="btn-logout">
           <a @click="logout">{{ $t("logout") }}</a>
@@ -13,15 +11,7 @@
       </div>
     </div>
     <div class="row main-container">
-      <div
-        class="
-          d-none d-lg-block
-          left-container
-          col-12 col-lg-4
-          justify-content-center
-          align-content-center
-        "
-      >
+      <div class="d-none d-lg-block left-container col-12 col-lg-4 justify-content-center align-content-center">
         <div class="row logo-container">
           <div class="col d-flex align-content-center justify-content-center">
             <img alt src="@/assets/img/datacue-logo-dark.svg" />
@@ -31,10 +21,8 @@
       <div class="right-container col-12 col-lg-8 mx-auto">
         <div class="row d-none d-md-block lang-picker-container">
           <div class="d-flex col justify-content-between">
-            <lang-picker
-              :selected-locale="selectedLocale"
-              @select="(locale) => (selectedLocale = locale)"
-            ></lang-picker>
+            <lang-picker :selected-locale="selectedLocale" @select="(locale) => (selectedLocale = locale)">
+            </lang-picker>
 
             <div v-if="isLoggedIn" class="btn-logout">
               <a @click="logout">{{ $t("logout") }}</a>
@@ -58,19 +46,19 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     LangPicker,
-    LangPickerMobile,
+    LangPickerMobile
   },
   data() {
     return {
-      selectedLocale: {},
+      selectedLocale: {}
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    ...mapGetters(["isLoggedIn"])
   },
   methods: {
-    ...mapActions(["logout"]),
-  },
+    ...mapActions(["logout"])
+  }
 };
 </script>
 
@@ -85,7 +73,7 @@ export default {
   }
 }
 
-.onboarding > .row {
+.onboarding>.row {
   margin: 0;
 }
 
@@ -138,6 +126,7 @@ export default {
 }
 
 @media (max-width: 575px) {
+
   .top-picker,
   .right-container {
     max-width: 350px;
@@ -145,6 +134,7 @@ export default {
 }
 
 @media (min-width: 576px) {
+
   .top-picker,
   .right-container {
     min-width: 380px;
@@ -153,6 +143,7 @@ export default {
 }
 
 @media (min-width: 768px) {
+
   .top-picker,
   .right-container {
     min-width: 490px;
@@ -164,8 +155,7 @@ export default {
   .left-container {
     flex: 0 0 36%;
     max-width: 36%;
-    background: url("../../assets/img/sign-up/left-container-background.svg")
-      no-repeat center center;
+    background: url("../../assets/img/sign-up/left-container-background.svg") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -173,11 +163,13 @@ export default {
 
     .logo-container {
       height: 100%;
+
       img {
         width: 70%;
       }
     }
   }
+
   .top-picker,
   .right-container {
     flex: 0 0 64%;
@@ -186,6 +178,7 @@ export default {
 }
 
 @media (min-width: 1200px) {
+
   .top-picker,
   .right-container {
     max-width: 550px;

@@ -1,10 +1,5 @@
 <template>
-  <dc-button
-    type="primary"
-    @click="$emit('click')"
-    :disabled="disabled"
-    :loading="loading"
-  >
+  <dc-button type="primary" @click="$emit('click')" :disabled="disabled" :loading="loading">
     {{ $t("next") }}
     <arrow-right-icon></arrow-right-icon>
   </dc-button>
@@ -15,21 +10,21 @@ import DcButton from "@/components/DcButton.vue";
 
 export default {
   components: {
-    DcButton,
+    DcButton
   },
   props: {
     disabled: {
       type: Boolean,
-      default: false,
+      default: false
     },
     loading: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   components: {
-    ArrowRightIcon,
-  },
+    ArrowRightIcon
+  }
 };
 </script>
 

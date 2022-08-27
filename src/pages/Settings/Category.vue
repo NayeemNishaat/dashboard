@@ -11,17 +11,13 @@
       </p>
     </card-message-box>
     <template v-else>
-      <pending-settings
-        :has-unsaved-changes="hasUnsavedChanges"
-        :saving="saving"
-        @save="saveChanges"
-      />
+      <pending-settings :has-unsaved-changes="hasUnsavedChanges" :saving="saving" @save="saveChanges" />
 
       <card>
         <h3 slot="header">
           <i class="ti-layout-tab"></i>
           &nbsp;{{
-            $t(`categories:About${client.type === "shopify" ? "_shopify" : ""}`)
+              $t(`categories:About${client.type === "shopify" ? "_shopify" : ""}`)
           }}
         </h3>
         <ul>
@@ -31,11 +27,10 @@
           </li>
           <li>
             {{
-              $t(
-                `user_related_categories${
-                  client.type === "shopify" ? "_shopify" : ""
-                }`
-              )
+                $t(
+                  `user_related_categories${client.type === "shopify" ? "_shopify" : ""
+                  }`
+                )
             }}
           </li>
         </ul>
@@ -43,13 +38,8 @@
         <template v-else-if="current">
           <div class="row">
             <div class="col-12">
-              <multi-select-table
-                idcol="category_id"
-                selectorcol="active"
-                :data="current"
-                :columns="['name']"
-                @select="handleSelect"
-              ></multi-select-table>
+              <multi-select-table idcol="category_id" selectorcol="active" :data="current" :columns="['name']"
+                @select="handleSelect"></multi-select-table>
             </div>
           </div>
         </template>

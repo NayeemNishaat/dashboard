@@ -1,4 +1,4 @@
-import { createI18n } from "vue-i18n/dist/vue-i18n.esm-bundler.js";
+import { createI18n } from "vue-i18n";
 import messages from "./messages";
 
 import enLocale from "element-plus/es/locale/lang/en";

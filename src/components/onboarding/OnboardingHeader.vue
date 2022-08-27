@@ -18,16 +18,16 @@ import ProgressBar from "@/components/onboarding/ProgressBar.vue";
 export default {
   props: {
     title: {
-      type: String,
+      type: String
     },
     progress: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   components: {
-    ProgressBar,
-  },
+    ProgressBar
+  }
 };
 </script>
 

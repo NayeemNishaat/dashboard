@@ -8,13 +8,13 @@
       <div class="logo">
         <router-link to="/" class="simple-text">
           <div class="logo-img">
-            <img src="@/assets/img/datacue-logo.svg" alt="logo" />
+            <img src="@/assets/img/datacue-logo.svg" alt />
           </div>
         </router-link>
       </div>
+
       <ul class="nav">
         <slot></slot>
-        <!--By default vue-router adds an active class to each route link. This way the links are colored when clicked-->
         <slot name="links" data-id="sidebar:links">
           <sidebar-link
             v-for="(link, index) in sidebarLinks"
@@ -39,7 +39,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "DataCue",
+      default: "DataCue"
     },
     backgroundColor: {
       type: String,
@@ -47,7 +47,7 @@ export default {
       validator: (value) => {
         let acceptedValues = ["white", "black", "darkblue"];
         return acceptedValues.indexOf(value) !== -1;
-      },
+      }
     },
     activeColor: {
       type: String,
@@ -58,30 +58,30 @@ export default {
           "info",
           "success",
           "warning",
-          "danger",
+          "danger"
         ];
         return acceptedValues.indexOf(value) !== -1;
-      },
+      }
     },
     sidebarLinks: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     autoClose: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   provide() {
     return {
       autoClose: this.autoClose,
       addLink: this.addLink,
-      removeLink: this.removeLink,
+      removeLink: this.removeLink
     };
   },
   components: {
     MovingArrow,
-    SidebarLink,
+    SidebarLink
   },
   computed: {
     ...mapGetters(["client"]),
@@ -91,7 +91,7 @@ export default {
      */
     arrowMovePx() {
       return this.linkHeight * this.activeLinkIndex;
-    },
+    }
   },
   data() {
     return {
@@ -100,19 +100,19 @@ export default {
       windowWidth: 0,
       isWindows: false,
       hasAutoHeight: false,
-      links: [],
+      links: []
     };
   },
   methods: {
-    findActiveLink() {
+    findActiveLink(e) {
       this.links.forEach((link, index) => {
-        if (link.isActive()) {
-          this.activeLinkIndex = index;
+        if (e.path.includes(link.name)) {
+          this.activeLinkIndex = index + 1 === 5 ? 0 : index + 1;
         }
       });
     },
     addLink(link) {
-      const index = this.$slots.default().indexOf(link.$vnode);
+      const index = this.$slots.default()[0].children.indexOf(link.$vnode);
       this.links.splice(index, 0, link);
     },
     removeLink(link) {
@@ -120,13 +120,14 @@ export default {
       if (index > -1) {
         this.links.splice(index, 1);
       }
-    },
+    }
   },
   mounted() {
     this.$watch("$route", this.findActiveLink, {
       immediate: true,
+      deep: true
     });
-  },
+  }
 };
 </script>
 <style></style>

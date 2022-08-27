@@ -2,18 +2,9 @@
   <div>
     <date-range-picker @datechange="refreshData"></date-range-picker>
     <div class="row">
-      <div
-        class="col-lg-4 col-sm-6"
-        v-for="stats in statsCards"
-        :key="stats.title"
-      >
-        <stats-card
-          :loading="loading"
-          :title="stats.title"
-          :value="stats.value.toString()"
-          :comparison="stats.comparison"
-          :icon="stats.icon"
-        >
+      <div class="col-lg-4 col-sm-6" v-for="stats in statsCards" :key="stats.title">
+        <stats-card :loading="loading" :title="stats.title" :value="stats.value.toString()"
+          :comparison="stats.comparison" :icon="stats.icon">
           <div class="stats" slot="footer">
             <i class="ti-info"></i> {{ $t(stats.footer) }}
           </div>
@@ -24,18 +15,11 @@
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="notificationsFilter">
-          <el-tab-pane
-            :label="$t('on discount')"
-            name="on discount"
-          ></el-tab-pane>
+          <el-tab-pane :label="$t('on discount')" name="on discount"></el-tab-pane>
           <el-tab-pane :label="$t('in stock')" name="in stock"></el-tab-pane>
           <el-tab-pane :label="$t('low stock')" name="low stock"></el-tab-pane>
         </el-tabs>
-        <card-grid
-          :loading="loading"
-          :cards="selNotifications"
-          card-type="notifications"
-        >
+        <card-grid :loading="loading" :cards="selNotifications" card-type="notifications">
         </card-grid>
       </div>
     </div>
@@ -142,4 +126,5 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+</style>

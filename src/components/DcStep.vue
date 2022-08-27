@@ -10,17 +10,17 @@ export default {
   props: {
     done: {
       type: Boolean,
-      default: false,
+      default: false
     },
     active: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 
@@ -41,7 +41,7 @@ export default {
     min-width: 10em;
   }
 
-  & + &::before {
+  &+&::before {
     content: "";
     position: absolute;
     bottom: -1em;

@@ -132,7 +132,7 @@ export default {
     updatePreview: throttle(function (newStyles, oldStyles) {
       const { preview } = this.$refs;
       if (
-        preview.contentWindow &&
+        preview?.contentWindow &&
         preview.contentWindow.datacueConfig &&
         this.styles
       ) {

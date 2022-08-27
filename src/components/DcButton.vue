@@ -1,26 +1,11 @@
 <template>
   <span class="button-container">
-    <a
-      v-if="tag === 'a'"
-      :href="href"
-      target="_blank"
-      type="button"
-      class="dc-button"
-      :class="type"
-      :disabled="disabled"
-      @click="handleClick"
-    >
+    <a v-if="tag === 'a'" :href="href" target="_blank" type="button" class="dc-button" :class="type"
+      :disabled="disabled" @click="handleClick">
       <loader-dots v-if="loading" />
       <slot v-else />
     </a>
-    <button
-      v-else
-      type="button"
-      class="dc-button"
-      :class="type"
-      :disabled="disabled"
-      @click="handleClick"
-    >
+    <button v-else type="button" class="dc-button" :class="type" :disabled="disabled" @click="handleClick">
       <loader-dots v-if="loading" />
       <slot v-else />
     </button>
@@ -33,12 +18,12 @@ import LoaderDots from "@/components/LoaderDots.vue";
 export default {
   name: "DcButton",
   components: {
-    LoaderDots,
+    LoaderDots
   },
   props: {
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     type: {
       type: String,
@@ -46,26 +31,26 @@ export default {
       validator: function (value) {
         // The value must match one of these strings
         return ["primary", "outline", "link", "circle"].indexOf(value) !== -1;
-      },
+      }
     },
     tag: {
       type: String,
-      default: "button",
+      default: "button"
     },
 
     href: {
-      type: String,
+      type: String
     },
     disabled: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   methods: {
     handleClick(event) {
       this.$emit("click", event);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -83,8 +68,8 @@ export default {
 
   &:disabled,
   &:disabled:hover {
-    background: $bg-disabled !important;
-    border: 1px solid $gray-light !important;
+    background: $bg-disabled  !important;
+    border: 1px solid $gray-light  !important;
     color: $gray;
     cursor: not-allowed;
     transform: none;
@@ -122,6 +107,7 @@ export default {
 .primary:hover {
   color: white;
 }
+
 .primary {
   color: $dark;
   background: $primary;

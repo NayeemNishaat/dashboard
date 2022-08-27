@@ -4,11 +4,7 @@
       <div class="col-6">
         <div class="row d-flex">
           <router-link to="/banners/add">
-            <dc-button
-              type="primary"
-              data-id="feature_page:add-banner-btn"
-              :disabled="tooManyBanners"
-            >
+            <dc-button type="primary" data-id="feature_page:add-banner-btn" :disabled="tooManyBanners">
               <i class="ti-plus"></i>
               &nbsp;&nbsp;{{ $t("add banner") }}
             </dc-button>
@@ -21,43 +17,29 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <dc-upgrade-message
-          v-if="tooManyBanners"
-          :message="
-            $t('reached plan limit of n banners. upgrade to add more.', {
-              count: bannerLimit,
-            })
-          "
-        />
-        <card-message-box v-if="!installationSettings.banners" type="error"
-          ><slot>{{ $t("banners not installed") }}</slot>
-          <template v-slot:action
-            ><dc-button tag="a" type="outline" :href="addBannersLink">{{
-              $t("add banners widget")
-            }}</dc-button></template
-          ></card-message-box
-        >
+        <dc-upgrade-message v-if="tooManyBanners" :message="
+          $t('reached plan limit of n banners. upgrade to add more.', {
+            count: bannerLimit
+          })
+        " />
+        <card-message-box v-if="!installationSettings.banners" type="error">
+          <slot>{{ $t("banners not installed") }}</slot>
+          <template v-slot:action>
+            <dc-button tag="a" type="outline" :href="addBannersLink">{{
+                $t("add banners widget")
+            }}</dc-button>
+          </template>
+        </card-message-box>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="selectedBannerType">
-          <el-tab-pane
-            :label="$t(getBannerLabel('main'))"
-            name="main"
-          ></el-tab-pane>
-          <el-tab-pane
-            :label="$t(getBannerLabel('sub'))"
-            name="sub"
-          ></el-tab-pane>
+          <el-tab-pane :label="$t(getBannerLabel('main'))" name="main"></el-tab-pane>
+          <el-tab-pane :label="$t(getBannerLabel('sub'))" name="sub"></el-tab-pane>
         </el-tabs>
-        <card-grid
-          :loading="loading"
-          :cards="selBanners"
-          @delete="delBanner"
-          @edit="editBanner"
-          card-type="banners"
-        ></card-grid>
+        <card-grid :loading="loading" :cards="selBanners" @delete="delBanner" @edit="editBanner" card-type="banners">
+        </card-grid>
       </div>
     </div>
   </div>
@@ -80,7 +62,7 @@ export default {
     CardMessageBox,
     DcButton,
     DateRangePicker,
-    DcUpgradeMessage,
+    DcUpgradeMessage
   },
   data() {
     return {
@@ -88,7 +70,7 @@ export default {
       banners: { main: [], sub: [] },
       staticBannerError: false,
       loading: false,
-      error: false,
+      error: false
     };
   },
   computed: {
@@ -126,12 +108,12 @@ export default {
     },
     bannerLayout() {
       return this.webSettings?.recommendations?.banners?.type || "";
-    },
+    }
   },
   methods: {
     ...mapActions("settings", [
       "getWebSettings",
-      "getPageInstallationSettings",
+      "getPageInstallationSettings"
     ]),
     getBannerLabel(type) {
       let labels = ["wide", "narrow"];
@@ -177,7 +159,7 @@ export default {
         [
           await getBanners,
           await getPageInstallationSettings,
-          await getWebSettings,
+          await getWebSettings
         ];
       } catch (err) {
         Sentry.captureException(err);
@@ -192,13 +174,13 @@ export default {
       this.$notify({
         title: this.$t("error"),
         message: this.$t(errorMsg),
-        type: "warning",
+        type: "warning"
       });
     },
     editBanner(bannerDetails) {
       this.$router.push({
         name: "edit banner",
-        params: { bannerid: bannerDetails.banner_id },
+        params: { bannerid: bannerDetails.banner_id }
       });
     },
     delBannerCard(bannerID, bannerType) {
@@ -220,13 +202,13 @@ export default {
           message: this.$t(
             "we could not delete the banner, please try again later"
           ),
-          type: "warning",
+          type: "warning"
         });
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
-  },
+  }
 };
 </script>

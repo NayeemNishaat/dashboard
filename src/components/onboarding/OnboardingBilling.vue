@@ -1,15 +1,7 @@
 <template>
-  <onboarding-step
-    :title="$t('onboarding:billing:title')"
-    show-back-button
-    @back="$emit('back')"
-  >
+  <onboarding-step :title="$t('onboarding:billing:title')" show-back-button @back="$emit('back')">
     <template v-slot:slideshow>
-      <img
-        class="screenshot"
-        alt=""
-        src="@/assets/img/sign-up/slideshow/dashboard.jpg"
-      />
+      <img class="screenshot" alt="" src="@/assets/img/sign-up/slideshow/dashboard.jpg" />
     </template>
 
     <p>{{ $t("onboarding:billing:intro") }}</p>
@@ -21,27 +13,20 @@
 
       <p v-else>
         <i18n tag="label" path="onboarding:billing:lastMonthGuess">
-          <el-input-number
-            place="amount"
-            :min="10"
-            :step="1000"
-            size="small"
-            controls-position="right"
-            v-model="lastRevenue"
-          />
+          <el-input-number place="amount" :min="10" :step="1000" size="small" controls-position="right"
+            v-model="lastRevenue" />
         </i18n>
       </p>
 
       <p>
         {{
-          $t(
-            `onboarding:billing:${
-              receivedRevenue ? "estimated" : "guess"
-            }Earning`,
-            {
-              amount: lastRevenue + estimatedEarning,
-            }
-          )
+            $t(
+              `onboarding:billing:${receivedRevenue ? "estimated" : "guess"
+              }Earning`,
+              {
+                amount: lastRevenue + estimatedEarning
+              }
+            )
         }}
         <br />
         {{ $t("onboarding:billing:estimatedCost", { amount: estimatedCost }) }}
@@ -64,11 +49,7 @@
     </template>
 
     <template v-slot:actions>
-      <dc-button
-        type="primary"
-        @click="handleActivateButton"
-        :disabled="loading"
-      >
+      <dc-button type="primary" @click="handleActivateButton" :disabled="loading">
         {{ $t("onboarding:billing:startTrialButton") }}
       </dc-button>
 
@@ -143,14 +124,14 @@ import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
 import {
   getPageData,
   selectPlan,
-  postOnboardingNotification,
+  postOnboardingNotification
 } from "@/api/backend";
 
 export default {
   name: "OnboardingBilling",
   components: {
     DcButton,
-    OnboardingStep,
+    OnboardingStep
   },
   props: ["revenue"],
   data() {
@@ -162,7 +143,7 @@ export default {
       contactDialogOpen: null,
       contact: {
         revenue: null,
-        comment: "",
+        comment: ""
       },
       ranges: [
         "$125,000 – $200,000",
@@ -170,12 +151,12 @@ export default {
         "$300,000 – $400,000",
         "$400,000 – $500,000",
         "$500,000 – $600,000",
-        this.$t("onboarding:billing:maxRevenue"),
+        this.$t("onboarding:billing:maxRevenue")
       ],
       loading: false,
       sending: false,
       planId: null,
-      planPrice: null,
+      planPrice: null
     };
   },
   computed: {
@@ -194,7 +175,7 @@ export default {
     budget() {
       const rounded = Math.round(+this.estimatedCost);
       return Math.max(49, Math.min(rounded, 99));
-    },
+    }
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -228,7 +209,7 @@ export default {
               Sentry.captureException(err);
               this.loading = false;
             }
-          },
+          }
         }
       );
     },
@@ -249,7 +230,7 @@ export default {
             (pending && pending.plan_id === this.planId)
           ) {
             await postOnboardingNotification({
-              type: "onboarding_finish",
+              type: "onboarding_finish"
             });
 
             await this.finishOnboarding();
@@ -276,7 +257,7 @@ export default {
         if (await this.$refs.contactForm.validate()) {
           await postOnboardingNotification({
             type: "enterprise_plan_request",
-            details: this.contact,
+            details: this.contact
           });
 
           await this.finishOnboarding();
@@ -287,7 +268,7 @@ export default {
       } finally {
         this.sending = false;
       }
-    },
+    }
   },
   async mounted() {
     this.loading = true;
@@ -297,7 +278,7 @@ export default {
         type: "billing_step",
         details: this.receivedRevenue
           ? { revenue: this.lastRevenue.toString() }
-          : undefined,
+          : undefined
       });
     } catch (err) {
       Sentry.captureException(err);
@@ -305,14 +286,14 @@ export default {
     try {
       await this.$loadScript("https://js.chargebee.com/v2/chargebee.js");
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       const res = await getPageData("billing");
       if (res.subscriptions && res.subscriptions.active) {
         await postOnboardingNotification({
-          type: "onboarding_finish",
+          type: "onboarding_finish"
         });
 
         await this.finishOnboarding();
@@ -330,7 +311,7 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
+  }
 };
 </script>
 

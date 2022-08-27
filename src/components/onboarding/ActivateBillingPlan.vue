@@ -15,26 +15,16 @@
               <p>{{ $t("onboarding:billing:activateCustom") }}</p>
 
               <el-collapse-transition>
-                <p
-                  v-if="paymentsConfigured === false"
-                  class="setup-message error"
-                >
+                <p v-if="paymentsConfigured === false" class="setup-message error">
                   {{ $t("onboarding:billing:paymentMethod") }}
                 </p>
               </el-collapse-transition>
-              <dc-button
-                type="primary"
-                @click="addPaymentMethod"
-                :disabled="loading"
-              >
+              <dc-button type="primary" @click="addPaymentMethod" :disabled="loading">
                 {{ $t("onboarding:billing:addPaymentMethod") }}
               </dc-button>
             </card>
             <template v-else>
-              <pricing-plans
-                :available-plans="availablePlans"
-                @selectplan="processPlanSection"
-              />
+              <pricing-plans :available-plans="availablePlans" @selectplan="processPlanSection" />
             </template>
           </template>
         </div>
@@ -54,7 +44,7 @@ import DcButton from "@/components/DcButton.vue";
 import {
   getPageData,
   selectPlan,
-  postOnboardingNotification,
+  postOnboardingNotification
 } from "@/api/backend";
 
 export default {
@@ -63,7 +53,7 @@ export default {
     DcButton,
     PricingPlans,
     LoaderDots,
-    Card,
+    Card
   },
   props: ["revenue"],
   data() {
@@ -76,11 +66,11 @@ export default {
       loading: false,
       sending: false,
       planId: null,
-      planPrice: null,
+      planPrice: null
     };
   },
   computed: {
-    ...mapGetters(["client"]),
+    ...mapGetters(["client"])
   },
   methods: {
     ...mapActions("onboarding", ["finishOnboarding"]),
@@ -117,7 +107,7 @@ export default {
             } finally {
               this.loading = false;
             }
-          },
+          }
         }
       );
     },
@@ -144,14 +134,14 @@ export default {
 
             await postOnboardingNotification({
               type: "onboarding_finish",
-              details: { plan_info: `${plan.name} (${plan.price} /mo)` },
+              details: { plan_info: `${plan.name} (${plan.price} /mo)` }
             });
             await this.finishOnboarding();
             if (this.client.type !== "shopify") {
               this.$notify({
                 title: this.$t("success"),
                 message: this.$t("plan updated"),
-                type: "success",
+                type: "success"
               });
               this.$router.push({ name: "setup-summary" });
               return;
@@ -168,7 +158,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
   async mounted() {
     this.loading = true;
@@ -178,19 +168,19 @@ export default {
         type: "billing_step",
         details: this.receivedRevenue
           ? { revenue: this.lastRevenue.toString() }
-          : undefined,
+          : undefined
       });
 
       await this.$loadScript("https://js.chargebee.com/v2/chargebee.js");
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       const res = await getPageData("billing");
       if (res.subscriptions && res.subscriptions.active) {
         await postOnboardingNotification({
-          type: "onboarding_finish",
+          type: "onboarding_finish"
         });
 
         await this.finishOnboarding();
@@ -209,7 +199,7 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
+  }
 };
 </script>
 
@@ -268,6 +258,7 @@ export default {
   min-width: 960px;
   max-width: 1024px;
 }
+
 .panel {
   height: 100%;
   margin: 0 0 1.5em;
@@ -275,11 +266,13 @@ export default {
   background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
+
 header {
   padding: 10px 0px;
   display: flex;
   justify-content: right;
 }
+
 .pages {
   line-height: 2;
   list-style-type: none;
@@ -288,6 +281,7 @@ header {
     margin-right: 0.5em;
   }
 }
+
 .billing-panel {
   padding: 10px;
 }

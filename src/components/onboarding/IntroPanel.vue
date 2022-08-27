@@ -45,7 +45,7 @@ import DcButton from "@/components/DcButton.vue";
 export default {
   name: "IntroPanel",
   components: {
-    DcButton,
+    DcButton
   },
   props: {
     title: String,
@@ -53,38 +53,42 @@ export default {
     photoURL: String,
     firstPanel: {
       type: Boolean,
-      default: false,
+      default: false
     },
     lastPanel: {
       type: Boolean,
-      default: false,
+      default: false
     },
     browserWindow: {
       type: Boolean,
-      default: false,
+      default: false
     },
     nextBtnCaption: {
       type: String,
-      default: "continue",
-    },
-  },
+      default: "continue"
+    }
+  }
 };
 </script>
 <style scoped lang="scss">
 @import "@/assets/sass/datacue/_colors.scss";
-.card-header > * {
+
+.card-header>* {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 section.intro-panel-image {
   text-align: center;
   max-height: 50%;
   flex: 1;
 }
+
 section.subtitle {
   font-size: 1.2em;
   padding: 10px 40px;
 }
+
 header {
   text-align: center;
   padding-bottom: 10px;
@@ -95,17 +99,19 @@ footer {
   align-items: center;
   justify-content: center;
 }
+
 .intropanel {
   min-height: 460px;
   background-color: white;
   padding: 20px 20px;
   transition: opacity 0.5s ease;
 }
+
 img.static {
   width: 80%;
 }
 
-button > div > i {
+button>div>i {
   margin-top: 3px;
 }
 
@@ -150,6 +156,7 @@ button {
   left: 0;
   right: 0;
 }
+
 button.skip {
   color: $gray-dark;
 }

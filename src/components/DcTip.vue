@@ -15,17 +15,17 @@ export default {
   props: {
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     message: {
-      type: String,
-    },
+      type: String
+    }
   },
   computed: {
     formattedTitle() {
       return this.title ? this.title : this.$t("tip!");
-    },
-  },
+    }
+  }
 };
 </script>
 

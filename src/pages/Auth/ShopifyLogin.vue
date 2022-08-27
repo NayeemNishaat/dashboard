@@ -8,7 +8,7 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import LoaderDots from "@/components/LoaderDots.vue";
+import LoaderDots from "../../components/LoaderDots.vue";
 export default {
   name: "ShopifyLogin",
   components: {

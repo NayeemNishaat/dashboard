@@ -12,20 +12,20 @@ import CopyIcon from "@/components/icons/CopyIcon.vue";
 export default {
   components: {
     CopyIcon,
-    TickCircle,
+    TickCircle
   },
   data() {
     return {
-      copied: false,
+      copied: false
     };
   },
   computed: {
     labelClass() {
       return {
         copy: true,
-        copied: this.copied,
+        copied: this.copied
       };
-    },
+    }
   },
   methods: {
     copy() {
@@ -34,8 +34,8 @@ export default {
         this.copied = false;
       }, 3000);
       this.$emit("copy");
-    },
-  },
+    }
+  }
 };
 </script>
 

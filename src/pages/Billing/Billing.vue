@@ -1,19 +1,12 @@
 <template>
   <div>
-    <div
-      class="alerts-row row"
-      v-if="!loading && pendingSubscription && isShopify"
-    >
+    <div class="alerts-row row" v-if="!loading && pendingSubscription && isShopify">
       <div class="col-sm-10">
-        <el-alert
-          :title="
+        <el-alert :title="
             $t(
-              'you have a pending billing change request that needs to be approved in Shopify'
+            'you have a pending billing change request that needs to be approved in Shopify'
             )
-          "
-          type="warning"
-          effect="dark"
-        ></el-alert>
+        " type="warning" effect="dark"></el-alert>
       </div>
       <div class="col-sm-2">
         <dc-button type="primary" @click="refreshData()" icon="ti-reload">
@@ -24,18 +17,15 @@
     <div class="row">
       <div class="col-sm-6 col-xs-12">
         <card :title="$t('your subscription')">
-          <loader-dots v-if="loading" />
+          <loader-dots v-if="l
+          ading" />
           <div v-else-if="currentSubscription" class="card-padding">
             <p class="plan-name">{{ currentSubscription.plan }}</p>
             <p>
               <strong>{{ $t("started") }}:</strong>
               {{ format(currentSubscription.since) }}
             </p>
-            <dc-button
-              v-if="!isShopify"
-              type="primary"
-              @click="openChargebeePanel()"
-            >
+            <dc-button v-if="!isShopify" type="primary" @click="openChargebeePanel()">
               {{ $t("manage billing info") }}
             </dc-button>
           </div>
@@ -43,11 +33,7 @@
             <p class="plan-name">
               {{ $t("no plan selected") }}
             </p>
-            <dc-button
-              v-if="!isShopify"
-              type="primary"
-              @click="openChargebeePanel()"
-            >
+            <dc-button v-if="!isShopify" type="primary" @click="openChargebeePanel()">
               {{ $t("manage billing info") }}
             </dc-button>
           </div>
@@ -55,11 +41,7 @@
             <p class="plan-name">
               {{ $t("pending") }}: {{ pendingSubscription.plan }}
             </p>
-            <i18n
-              tag="p"
-              path="open app in {shopifyLink} to accept and activate"
-              v-if="isShopify"
-            >
+            <i18n tag="p" path="open app in {shopifyLink} to accept and activate" v-if="isShopify">
               <a target="_blank" place="shopifyLink" :href="shopifyAppAdmin">
                 {{ $t("shopify admin panel") }}
               </a>
@@ -69,16 +51,14 @@
         </card>
       </div>
       <div class="col-sm-6 col-xs-12">
-        <card
-          :title="
-            $t('current billing period') +
-            (currentSubscription
-              ? ` (${$t('since')} ${format(
-                  currentSubscription.current_period_start
-                )})`
-              : '')
-          "
-        >
+        <card :title="
+          $t('current billing period') +
+          (currentSubscription
+            ? ` (${$t('since')} ${format(
+                currentSubscription.current_period_start
+              )})`
+            : '')
+        ">
           <loader-dots v-if="loading" />
           <div v-else-if="currentSubscription" class="card-padding">
             <table v-if="parseInt(currentSubscription.commission_percent) > 0">
@@ -90,8 +70,8 @@
                 <th>{{ $t("budget") }}</th>
                 <td>
                   ${{
-                    +currentSubscription.commission_cap +
-                    +currentSubscription.price
+                  +currentSubscription.commission_cap +
+                  +currentSubscription.price
                   }}
                 </td>
               </tr>
@@ -103,7 +83,7 @@
                 <th>
                   {{ $t("commission") }}
                   <span v-if="+currentSubscription.commission_percent > 0">{{
-                    `${+currentSubscription.commission_percent}%`
+                  `${+currentSubscription.commission_percent}%`
                   }}</span>
                 </th>
                 <td>${{ commission }}</td>
@@ -121,11 +101,7 @@
               </tr>
             </table>
 
-            <i18n
-              tag="p"
-              path="you can view your invoices in the {shopifyLink}"
-              v-if="isShopify"
-            >
+            <i18n tag="p" path="you can view your invoices in the {shopifyLink}" v-if="isShopify">
               <a target="_blank" place="shopifyLink" :href="shopifyAppAdmin">
                 {{ $t("shopify admin panel") }}
               </a>
@@ -135,24 +111,14 @@
         </card>
       </div>
     </div>
-    <pricing-plans
-      :available-plans="availablePlans"
-      :disable-plan-selection="
-        loading ||
-        saving ||
-        (!isShopify && !paymentsConfigured) ||
-        !!pendingSubscription
-      "
-      :current-plan="currentSubscription"
-      @selectplan="openBudgetDialog"
-    />
+    <pricing-plans :available-plans="availablePlans" :disable-plan-selection="
+      loading ||
+      saving ||
+      (!isShopify && !paymentsConfigured) ||
+      !!pendingSubscription
+    " :current-plan="currentSubscription" @selectplan="openBudgetDialog" />
 
-    <el-dialog
-      width="25%"
-      append-to-body
-      :title="$t('set your monthly budget')"
-      :visible.sync="budgetDialogOpen"
-    >
+    <el-dialog width="25%" append-to-body :title="$t('set your monthly budget')" :visible.sync="budgetDialogOpen">
       <label class="budget-form">
         {{ $t("budget (usd)") }}
         <el-input-number size="small" v-model="budget" :min="budgetMin" />
@@ -188,7 +154,7 @@ export default {
     Card,
     DcButton,
     PricingPlans,
-    LoaderDots,
+    LoaderDots
   },
   data() {
     return {
@@ -204,7 +170,7 @@ export default {
       last30DaysConversions: 0,
       availablePlans: [],
       chargebee: null,
-      paymentsConfigured: null,
+      paymentsConfigured: null
     };
   },
   computed: {
@@ -262,9 +228,9 @@ export default {
           Math.max(
             0,
             this.last30DaysConversions -
-              this.availablePlans[i].commission_threshold
+            this.availablePlans[i].commission_threshold
           )) /
-          100;
+        100;
 
       let best = 0;
       for (let i = 1; i < this.availablePlans.length; ++i) {
@@ -283,9 +249,9 @@ export default {
       return {
         name: this.availablePlans[best].name,
         betterThan: best ? this.availablePlans[best - 1].name : null,
-        betterBy: best ? cost(best - 1) - cost(best) : null,
+        betterBy: best ? cost(best - 1) - cost(best) : null
       };
-    },
+    }
   },
   methods: {
     ...mapActions(["setBillingAccess"]),
@@ -309,7 +275,7 @@ export default {
           close: () => {
             this.chargebee.logout();
             this.refreshData();
-          },
+          }
         }
       );
     },
@@ -339,7 +305,7 @@ export default {
         message: this.$t(
           !msg ? "an unknown error occured, please try again later" : msg
         ),
-        type: "error",
+        type: "error"
       });
     },
     async selectPlan(plan) {
@@ -351,14 +317,14 @@ export default {
           this.$alert(
             this.$t("would you like to switch to {plan} at {price}", {
               plan: plan.name,
-              price: plan.price,
+              price: plan.price
             }),
             this.$t("activate subscription"),
             {
               showCancelButton: true,
               cancelButtonText: this.$t("cancel"),
               confirmButtonClass: "el-button--warning",
-              confirmButtonText: this.$t("confirm"),
+              confirmButtonText: this.$t("confirm")
             }
           ).catch(() => (skip = true));
         }
@@ -376,7 +342,7 @@ export default {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("plan updated"),
-            type: "success",
+            type: "success"
           });
           return;
         }
@@ -392,7 +358,7 @@ export default {
             showCancelButton: true,
             cancelButtonText: this.$t("cancel"),
             confirmButtonClass: "el-button--warning",
-            confirmButtonText: this.$t("open admin panel"),
+            confirmButtonText: this.$t("open admin panel")
           }
         )
           .then(() => {
@@ -456,18 +422,18 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    },
+    }
   },
   mounted() {
     this.$loadScript("https://js.chargebee.com/v2/chargebee.js").then(() => {
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       this.refreshData();
     });
-  },
+  }
 };
 </script>
 
@@ -521,6 +487,7 @@ td {
   font-size: 14px;
   color: #80848e;
 }
+
 .alerts-row {
   margin-bottom: 10px;
 }

@@ -2,13 +2,8 @@
   <div class="onboarding">
     <header class="onboarding-header">
       <dc-steps class="onboarding-steps">
-        <dc-step
-          v-for="step in steps"
-          :key="step"
-          :title="$t(`onboarding:step:${step}`)"
-          :done="isStepDone(step)"
-          :active="step === $route.meta.step"
-        />
+        <dc-step v-for="step in steps" :key="step" :title="$t(`onboarding:step:${step}`)" :done="isStepDone(step)"
+          :active="step === $route.meta.step" />
       </dc-steps>
 
       <a class="header-logo">
@@ -16,7 +11,8 @@
       </a>
     </header>
 
-    <loader-dots v-if="loading" />
+    <loader-dots v-if="l
+    ading" />
     <div v-else class="onboarding-step-wrapper">
       <router-view></router-view>
     </div>
@@ -39,7 +35,7 @@ export default {
   components: {
     LoaderDots,
     DcSteps,
-    DcStep,
+    DcStep
   },
   data() {
     const steps = ["signup", "intro", "setup", "billing"];
@@ -51,12 +47,12 @@ export default {
     return {
       steps,
       loading: false,
-      revenue: null,
+      revenue: null
     };
   },
   computed: {
     ...mapGetters(["client", "isLoggedIn"]),
-    ...mapGetters("onboarding", ["hasFinishedOnboarding"]),
+    ...mapGetters("onboarding", ["hasFinishedOnboarding"])
   },
   methods: {
     ...mapActions(["getContext", "setAccessToken"]),
@@ -69,18 +65,18 @@ export default {
       try {
         await this.setAccessToken({
           token: data.token,
-          auth_provider: "auth0",
+          auth_provider: "auth0"
         });
         await this.getContext();
         const platform = this.$route.params.platform;
         await this.$router.push({
           name: "onboarding-intro",
-          params: { platform },
+          params: { platform }
         });
       } catch (err) {
         Sentry.captureException(err);
       }
-    },
+    }
   },
   async mounted() {
     this.loading = true;
@@ -119,7 +115,7 @@ export default {
         const platform = this.$route.params.platform;
         await this.$router.push({
           name: "onboarding-intro",
-          params: { platform },
+          params: { platform }
         });
       }
     } catch (err) {
@@ -127,7 +123,7 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
+  }
 };
 </script>
 
@@ -158,7 +154,7 @@ export default {
     p {
       margin: 1em 0;
 
-      & + p {
+      &+p {
         margin-top: 2em;
       }
     }
@@ -183,7 +179,7 @@ export default {
       }
     }
 
-    > .loader.dots {
+    >.loader.dots {
       align-self: center;
       margin: auto;
     }
@@ -210,7 +206,7 @@ export default {
   margin-left: auto;
   justify-self: end;
 
-  > img {
+  >img {
     height: 100%;
   }
 }

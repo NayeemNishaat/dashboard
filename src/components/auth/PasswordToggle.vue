@@ -16,12 +16,12 @@ export default {
   props: {
     passwordHidden: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   components: {
     EyeHideIcon,
-    EyeShowIcon,
+    EyeShowIcon
   },
   computed: {
     iconClass() {
@@ -29,10 +29,10 @@ export default {
         fa: true,
         "fa-lg": true,
         "fa-eye": this.passwordHidden,
-        "fa-eye-slash": !this.passwordHidden,
+        "fa-eye-slash": !this.passwordHidden
       };
-    },
-  },
+    }
+  }
 };
 </script>
 

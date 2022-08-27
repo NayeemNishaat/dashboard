@@ -10,25 +10,21 @@
       <div class="numbers">
         <div class="row" v-if="!loading">
           <template v-if="comparison !== 'n/a'">
-            <div
-              class="col-7 current-value"
-              :class="
-                value.length < 5
-                  ? ''
-                  : value.length < 8
+            <div class="col-7 current-value" :class="
+              value.length < 5
+                ? ''
+                : value.length < 8
+            
                   ? 'smaller'
                   : value.length < 12
-                  ? 'v-small'
-                  : 'smallest'
-              "
-            >
+                    ? 'v-small'
+                    : 'smallest'
+            ">
               {{ value }}
             </div>
             <div class="col-5 comparison">
               <div class="d-flex flex-column">
-                <div
-                  :class="`comparison-${comparison < 0 ? 'lower' : 'higher'}`"
-                >
+                <div :class="`comparison-${comparison < 0 ? 'lower' : 'higher'}`">
                   {{ comparison > 0 ? "+" : "" }}{{ comparison }}%
                   <i v-if="comparison < 0" class="el-icon-caret-bottom" />
                   <i v-else-if="comparison > 0" class="el-icon-caret-top" />
@@ -72,39 +68,39 @@ export default {
           parseISO(this.dateRange?.[0])
         ) + 1
       );
-    },
+    }
   },
   props: {
     loading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     value: {
       type: String,
-      default: "",
+      default: ""
     },
     comparison: {
       type: String,
-      default: "",
+      default: ""
     },
     icon: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: {
     Card,
-    LoaderDots,
-  },
+    LoaderDots
+  }
 };
 </script>
 
 <style scoped>
-.card .numbers > div {
+.card .numbers>div {
   align-items: center;
 }
 

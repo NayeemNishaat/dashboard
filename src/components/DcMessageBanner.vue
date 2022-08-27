@@ -28,47 +28,47 @@ export default {
         default:
           return "";
       }
-    },
+    }
   },
   props: {
     cardMode: {
       type: Boolean,
-      default: true,
+      default: true
     },
     icon: {
-      type: String,
+      type: String
     },
     type: {
       type: String,
       default: "default",
       validator: function (value) {
         return ["default", "success", "warning", "error"].indexOf(value) !== -1;
-      },
+      }
     },
     message: {
-      type: String,
-    },
-  },
+      type: String
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
 @import "@/assets/sass/datacue/_colors.scss";
 
 .message-banner-panel.success {
-  > i {
+  >i {
     color: $green;
   }
 }
 
 .message-banner-panel.error,
 .message-banner-panel.warning {
-  > i {
+  >i {
     color: $red;
   }
 }
 
 .message-banner-panel.default {
-  > i {
+  >i {
     color: $primary;
   }
 }
@@ -80,14 +80,15 @@ export default {
   margin-top: 1em;
   color: $gray-dark;
 
-  > i {
+  >i {
     font-size: 20px;
   }
 
   .message-panel-contents {
     margin: 0 0 0 1em;
     font-size: 14px;
-    > a {
+
+    >a {
       font-weight: bold;
       text-decoration: underline;
     }
