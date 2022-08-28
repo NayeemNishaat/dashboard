@@ -2,11 +2,11 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
 import Vuex from "./store/index";
-// import VueCompositionAPI from "@vue/composition-api";
 
 import LoadScript from "vue-plugin-load-script";
 import DataCueDashboard from "./plugins/datacueComponents";
 import Tawk from "./plugins/tawk";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
@@ -14,6 +14,9 @@ import { Integrations } from "@sentry/tracing";
 import store from "./store/index";
 
 export const app = createApp(App as any);
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
 
 const sentryDSN = import.meta.env.VITE_APP_SENTRY_DSN;
 if (sentryDSN) {
@@ -23,8 +26,8 @@ if (sentryDSN) {
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-        tracingOrigins: [`${import.meta.env.VITE_APP_URL}`.split("//")[1]]
-      })
+        tracingOrigins: [`${import.meta.env.VITE_APP_URL}`.split("//")[1]],
+      }),
     ],
     beforeSend: (event) => {
       const user = { id: "", email: "" };
@@ -50,7 +53,7 @@ if (sentryDSN) {
       //   // Check if it is an exception -> Show report dialog
       //   event.exception && Sentry.showReportDialog();
       //   return event;
-    }
+    },
   });
 }
 
@@ -65,7 +68,7 @@ app.use(Vuex);
 app.use(DataCueDashboard);
 app.use(LoadScript);
 app.use(Tawk, {
-  tawkSrc: "https://embed.tawk.to/5e93512169e9320caac2dc1e/default"
+  tawkSrc: "https://embed.tawk.to/5e93512169e9320caac2dc1e/default",
 });
 
 app.use(i18n);

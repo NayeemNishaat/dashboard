@@ -27,12 +27,12 @@ export default {
       type: Object,
       default: () => {
         return {};
-      }
+      },
     },
     customLayout: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   mounted() {
     const vm = this;
@@ -67,7 +67,7 @@ export default {
       dictDefaultMessage: document.querySelector("#dropzone-message").innerHTML,
 
       // We're going to process each file manually (see `accept` below)
-      autoProcessQueue: false
+      autoProcessQueue: false,
     };
 
     options = Object.assign({}, options, this.options);
@@ -76,17 +76,17 @@ export default {
     this.dropzone = new Dropzone(this.$el, options);
 
     // Set signed upload URL for each file
-    this.dropzone.on("addedfile", file => {
+    this.dropzone.on("addedfile", (file) => {
       this.$emit("addedfile", file);
     });
 
     // Set signed upload URL for each file
-    this.dropzone.on("removedfile", file => {
+    this.dropzone.on("removedfile", (file) => {
       this.$emit("removedfile", file);
     });
 
     // Set signed upload URL for each file
-    vm.dropzone.on("processing", file => {
+    vm.dropzone.on("processing", (file) => {
       vm.dropzone.options.url = file.uploadURL;
     });
 
@@ -97,7 +97,7 @@ export default {
     vm.dropzone.on("error", (file, errorMsg) => {
       this.$emit("error", errorMsg);
     });
-  }
+  },
 };
 </script>
 
@@ -111,12 +111,12 @@ form.dropzone {
   min-height: initial;
 
   &:hover {
-    border-color: primaryBlue;
+    border-color: #fab800;
     background-color: white;
 
     .dz-message {
       .dropzone-title {
-        color: primaryBlue;
+        color: #fab800;
       }
     }
   }

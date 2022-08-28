@@ -127,4 +127,8 @@ export default {
 };
 </script>
 <style>
+.el-input__wrapper.is-focus {
+  border-color: #f3bb45 !important;
+  box-shadow: 0 0 0 1px #f3bb45 !important;
+}
 </style>

@@ -1,14 +1,6 @@
 <template>
   <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-    <el-tab-pane
-      v-for="panel in allPanels"
-      :key="panel"
-      :name="panel"
-      :label="panel"
-    >
-      <span slot="label">
-        {{ $tc(panel, 2) }}
-      </span>
+    <el-tab-pane v-for="panel in allPanels" :key="panel" :name="panel" :label="panel">
     </el-tab-pane>
     <router-view></router-view>
   </el-tabs>
@@ -35,7 +27,10 @@ export default {
   },
   methods: {
     handleClick(tab, _e) {
-      this.$router.push({ name: `${tab.props.name} settings` });
+      if (tab?.props?.name) {
+        this.$router.push({ name: `${tab.props.name} settings` });
+        return
+      }
     }
   },
   mounted() {
@@ -50,14 +45,17 @@ export default {
 </script>
 <style>
 .el-tabs .el-tabs__item.is-active {
-  color: #f3bb45;
+  color: #333;
 }
+
 .el-tabs .el-tabs__item {
   text-transform: capitalize;
 }
+
 .el-tabs .el-tabs__item:hover {
   color: #f3bb45;
 }
+
 .el-tabs .el-tabs__active-bar {
   background-color: #f3bb45;
 }

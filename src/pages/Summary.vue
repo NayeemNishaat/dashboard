@@ -13,10 +13,12 @@
       <div class="col-md-4 col-sm-6" v-for="stats in statsCards" :key="stats.title">
         <stats-card :loading="loading" :title="stats.title" :value="stats.value" :comparison="stats.comparison"
           :icon="stats.icon">
-          <div class="stats" slot="footer">
-            <i class="ti-info"></i>
-            {{ $t(stats.footer) }}
-          </div>
+          <template #footer>
+            <div class="stats">
+              <i class="ti-info"></i>
+              {{ $t(stats.footer) }}
+            </div>
+          </template>
         </stats-card>
       </div>
     </div>
@@ -30,11 +32,11 @@
                 data: conversionContribution,
                 backgroundColor: [
                   'rgba(243, 187, 69, 1)',
-                  'rgba(104, 179, 200, 1)'
-                ]
-              }
+                  'rgba(104, 179, 200, 1)',
+                ],
+              },
             ],
-            labels: ['DataCue', $t('other')]
+            labels: ['DataCue', $t('other')],
           }" :loading="loading" :chart-type="'Doughnut'" :chart-options="{
   responsive: true,
   maintainAspectRatio: false,
@@ -44,15 +46,15 @@
       left: 0,
       right: 0,
       top: 0,
-      bottom: 0
-    }
+      bottom: 0,
+    },
   },
   tooltips: {
     callbacks: {
       label: (tooltipItem, data) =>
-        data['datasets'][0]['data'][tooltipItem['index']] + '%'
-    }
-  }
+        data['datasets'][0]['data'][tooltipItem['index']] + '%',
+    },
+  },
 }"></chart-card>
       </div>
       <div class="col-sm-8 col-xs-12">
@@ -71,11 +73,11 @@
               yAxes: [
                 {
                   ticks: {
-                    beginAtZero: true
-                  }
-                }
-              ]
-            }
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
           }"></chart-card-metrics>
       </div>
     </div>
@@ -107,36 +109,36 @@ const emptyStats = [
     value: "0",
     comparison: "0",
     footer: "blocks of user activity",
-    nodata: true
+    nodata: true,
   },
   {
     title: "clicks",
     icon: "ti-mouse-alt",
     value: "0",
     comparison: "0",
-    footer: "recommendation clicks"
+    footer: "recommendation clicks",
   },
   {
     title: "conversions",
     icon: "ti-money",
     value: "0",
     comparison: "0",
-    footer: "recommendation sales"
-  }
+    footer: "recommendation sales",
+  },
 ];
 export default {
   components: {
     ChartCard,
     ChartCardMetrics,
     StatsCard,
-    DateRangePicker
+    DateRangePicker,
   },
   data() {
     return {
       error: false,
       loading: true,
       pageData: {},
-      statsCards: []
+      statsCards: [],
     };
   },
   computed: {
@@ -144,7 +146,7 @@ export default {
     ...mapGetters("settings", [
       "locale",
       "webSettings",
-      "installationSettings"
+      "installationSettings",
     ]),
     installationError() {
       if (!this.installationSettings.library) {
@@ -160,7 +162,7 @@ export default {
         return [0, 0];
       }
       return [chartData["dc"], chartData["other"]];
-    }
+    },
   },
   methods: {
     ...mapActions("settings", ["getPageInstallationSettings"]),
@@ -218,16 +220,34 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.statsCards = JSON.parse(JSON.stringify(emptyStats));
     this.refreshData(this.dateRange);
-  }
+  },
 };
 </script>
 <style scoped>
 .row.summary>div>div.el-alert {
   margin-bottom: 10px;
+}
+</style>
+<style>
+.el-date-editor {
+  --el-input-focus-border-color: #f3bb45 !important;
+}
+
+.el-date-table td.end-date .el-date-table-cell__text,
+.el-date-table td.start-date .el-date-table-cell__text {
+  background-color: #f3bb45 !important;
+}
+
+.el-date-table td.today .el-date-table-cell__text {
+  color: #f3bb45 !important;
+}
+
+.el-date-table td.available:hover {
+  color: #f3bb45 !important;
 }
 </style>

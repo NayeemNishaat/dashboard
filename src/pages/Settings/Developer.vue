@@ -16,9 +16,9 @@
         </li>
         <li>
           {{
-              $t(
-                "the selected user must login to see the DataCue recommendations"
-              )
+            $t(
+              "the selected user must login to see the DataCue recommendations"
+            )
           }}
         </li>
       </ul>
@@ -27,9 +27,23 @@
           <el-switch v-model="testMode"></el-switch>
         </el-form-item>
         <el-form-item :label="$t('test users')">
-          <el-select v-model="userIDs" :disabled="!testMode" multiple clearable filterable remote
-            :remote-method="getMatchingUsers" :loading="loading" :placeholder="$t('select')">
-            <el-option v-for="item in filteredUsers" :key="item.value" :label="item.email" :value="item.user_id">
+          <el-select
+            v-model="userIDs"
+            :disabled="!testMode"
+            multiple
+            clearable
+            filterable
+            remote
+            :remote-method="getMatchingUsers"
+            :loading="loading"
+            :placeholder="$t('select')"
+          >
+            <el-option
+              v-for="item in filteredUsers"
+              :key="item.value"
+              :label="item.email"
+              :value="item.user_id"
+            >
             </el-option>
           </el-select>
         </el-form-item>
@@ -45,9 +59,9 @@
       </h3>
       <p>
         {{
-            $t(
-              "specify a CSS selector for each page type to insert production recommendations"
-            )
+          $t(
+            "specify a CSS selector for each page type to insert production recommendations"
+          )
         }}
       </p>
       <div class="row css-form">
@@ -55,27 +69,38 @@
           <el-form label-position="top">
             <el-form-item :label="$t('page:home')">
               <loader-dots v-if="pageStatus['home'] === 'checking'" />
-              <i v-else :class="
-                pageStatus['home'] === 'found' ? 'ti-check' : 'ti-alert'
-              "></i>
+              <i
+                v-else
+                :class="
+                  pageStatus['home'] === 'found' ? 'ti-check' : 'ti-alert'
+                "
+              ></i>
               <el-input v-model="cssSelectors.index"></el-input>
             </el-form-item>
-            <el-form-item :label="
-              client.type == 'shopify'
-                ? $t('page:category_shopify')
-                : $t('page:category')
-            ">
+            <el-form-item
+              :label="
+                client.type == 'shopify'
+                  ? $t('page:category_shopify')
+                  : $t('page:category')
+              "
+            >
               <loader-dots v-if="pageStatus['category'] === 'checking'" />
-              <i v-else :class="
-                pageStatus['category'] === 'found' ? 'ti-check' : 'ti-alert'
-              "></i>
+              <i
+                v-else
+                :class="
+                  pageStatus['category'] === 'found' ? 'ti-check' : 'ti-alert'
+                "
+              ></i>
               <el-input v-model="cssSelectors.category"></el-input>
             </el-form-item>
             <el-form-item :label="$t('page:product')">
               <loader-dots v-if="pageStatus['product'] === 'checking'" />
-              <i v-else :class="
-                pageStatus['product'] === 'found' ? 'ti-check' : 'ti-alert'
-              "></i>
+              <i
+                v-else
+                :class="
+                  pageStatus['product'] === 'found' ? 'ti-check' : 'ti-alert'
+                "
+              ></i>
               <el-input v-model="cssSelectors.product"></el-input>
             </el-form-item>
           </el-form>
@@ -84,21 +109,30 @@
           <el-form label-position="top">
             <el-form-item :label="$t('page:404')">
               <loader-dots v-if="pageStatus['404'] === 'checking'" />
-              <i v-else :class="pageStatus['404'] === 'found' ? 'ti-check' : 'ti-alert'"></i>
+              <i
+                v-else
+                :class="pageStatus['404'] === 'found' ? 'ti-check' : 'ti-alert'"
+              ></i>
               <el-input v-model="cssSelectors['404']"></el-input>
             </el-form-item>
             <el-form-item :label="$t('page:cart')">
               <loader-dots v-if="pageStatus['cart'] === 'checking'" />
-              <i v-else :class="
-                pageStatus['cart'] === 'found' ? 'ti-check' : 'ti-alert'
-              "></i>
+              <i
+                v-else
+                :class="
+                  pageStatus['cart'] === 'found' ? 'ti-check' : 'ti-alert'
+                "
+              ></i>
               <el-input v-model="cssSelectors.cart"></el-input>
             </el-form-item>
             <el-form-item :label="$t('page:search')">
               <loader-dots v-if="pageStatus['search'] === 'checking'" />
-              <i v-else :class="
-                pageStatus['search'] === 'found' ? 'ti-check' : 'ti-alert'
-              "></i>
+              <i
+                v-else
+                :class="
+                  pageStatus['search'] === 'found' ? 'ti-check' : 'ti-alert'
+                "
+              ></i>
               <el-input v-model="cssSelectors.search"></el-input>
             </el-form-item>
           </el-form>
@@ -256,6 +290,10 @@ export default {
 
 .css-form i.ti-alert {
   color: $red;
+}
+
+.el-select {
+  --el-select-input-focus-border-color: #fab800;
 }
 
 .css-form i.ti-check {

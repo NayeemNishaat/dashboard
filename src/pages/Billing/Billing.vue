@@ -3,9 +3,9 @@
     <div class="alerts-row row" v-if="!loading && pendingSubscription && isShopify">
       <div class="col-sm-10">
         <el-alert :title="
-            $t(
+          $t(
             'you have a pending billing change request that needs to be approved in Shopify'
-            )
+          )
         " type="warning" effect="dark"></el-alert>
       </div>
       <div class="col-sm-2">
@@ -17,8 +17,7 @@
     <div class="row">
       <div class="col-sm-6 col-xs-12">
         <card :title="$t('your subscription')">
-          <loader-dots v-if="l
-          ading" />
+          <loader-dots v-if="loading" />
           <div v-else-if="currentSubscription" class="card-padding">
             <p class="plan-name">{{ currentSubscription.plan }}</p>
             <p>
@@ -55,8 +54,8 @@
           $t('current billing period') +
           (currentSubscription
             ? ` (${$t('since')} ${format(
-                currentSubscription.current_period_start
-              )})`
+              currentSubscription.current_period_start
+            )})`
             : '')
         ">
           <loader-dots v-if="loading" />
@@ -70,8 +69,8 @@
                 <th>{{ $t("budget") }}</th>
                 <td>
                   ${{
-                  +currentSubscription.commission_cap +
-                  +currentSubscription.price
+                      +currentSubscription.commission_cap +
+                      +currentSubscription.price
                   }}
                 </td>
               </tr>
@@ -83,7 +82,7 @@
                 <th>
                   {{ $t("commission") }}
                   <span v-if="+currentSubscription.commission_percent > 0">{{
-                  `${+currentSubscription.commission_percent}%`
+                      `${+currentSubscription.commission_percent}%`
                   }}</span>
                 </th>
                 <td>${{ commission }}</td>
@@ -154,7 +153,7 @@ export default {
     Card,
     DcButton,
     PricingPlans,
-    LoaderDots
+    LoaderDots,
   },
   data() {
     return {
@@ -170,7 +169,7 @@ export default {
       last30DaysConversions: 0,
       availablePlans: [],
       chargebee: null,
-      paymentsConfigured: null
+      paymentsConfigured: null,
     };
   },
   computed: {
@@ -249,9 +248,9 @@ export default {
       return {
         name: this.availablePlans[best].name,
         betterThan: best ? this.availablePlans[best - 1].name : null,
-        betterBy: best ? cost(best - 1) - cost(best) : null
+        betterBy: best ? cost(best - 1) - cost(best) : null,
       };
-    }
+    },
   },
   methods: {
     ...mapActions(["setBillingAccess"]),
@@ -275,7 +274,7 @@ export default {
           close: () => {
             this.chargebee.logout();
             this.refreshData();
-          }
+          },
         }
       );
     },
@@ -305,7 +304,7 @@ export default {
         message: this.$t(
           !msg ? "an unknown error occured, please try again later" : msg
         ),
-        type: "error"
+        type: "error",
       });
     },
     async selectPlan(plan) {
@@ -317,14 +316,14 @@ export default {
           this.$alert(
             this.$t("would you like to switch to {plan} at {price}", {
               plan: plan.name,
-              price: plan.price
+              price: plan.price,
             }),
             this.$t("activate subscription"),
             {
               showCancelButton: true,
               cancelButtonText: this.$t("cancel"),
               confirmButtonClass: "el-button--warning",
-              confirmButtonText: this.$t("confirm")
+              confirmButtonText: this.$t("confirm"),
             }
           ).catch(() => (skip = true));
         }
@@ -342,7 +341,7 @@ export default {
           this.$notify({
             title: this.$t("success"),
             message: this.$t("plan updated"),
-            type: "success"
+            type: "success",
           });
           return;
         }
@@ -358,7 +357,7 @@ export default {
             showCancelButton: true,
             cancelButtonText: this.$t("cancel"),
             confirmButtonClass: "el-button--warning",
-            confirmButtonText: this.$t("open admin panel")
+            confirmButtonText: this.$t("open admin panel"),
           }
         )
           .then(() => {
@@ -422,18 +421,18 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    }
+    },
   },
   mounted() {
     this.$loadScript("https://js.chargebee.com/v2/chargebee.js").then(() => {
       this.chargebee = window.Chargebee.init({
-        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN
+        site: import.meta.env.VITE_APP_CHARGEBEE_DOMAIN,
       });
       this.chargebee.setPortalSession(() => getPageData("billing/portal"));
 
       this.refreshData();
     });
-  }
+  },
 };
 </script>
 
