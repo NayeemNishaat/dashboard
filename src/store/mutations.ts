@@ -8,7 +8,7 @@ import {
   Context,
   AlgoSettings,
   ClientProfile
-} from "/src/api/interfaces";
+} from "@/api/interfaces";
 
 import State from "./state";
 

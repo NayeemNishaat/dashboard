@@ -156,14 +156,11 @@
               <i class="el-icon-star-on" />
               {{ $t("recommended") }}
             </el-tag>
-            <img svg-inline src="../../assets/img/settings/layout-grid.svg" />
+            <img svg-inline src="@/assets/img/settings/layout-grid.svg" />
           </div>
           <div class="col-6">
             <el-radio label="slider">{{ $t("slider") }}</el-radio>
-            <img
-              svg-inline
-              src="../../assets/img/settings/layout-carousel.svg"
-            />
+            <img svg-inline src="@/assets/img/settings/layout-carousel.svg" />
           </div>
         </el-radio-group>
 
@@ -251,37 +248,37 @@
           <img
             v-if="current.pct_promote_discounts === 0"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-0.svg"
+            src="@/assets/img/settings/promote-discounts-0.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 40"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-40.svg"
+            src="@/assets/img/settings/promote-discounts-40.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 50"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-50.svg"
+            src="@/assets/img/settings/promote-discounts-50.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 70"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-70.svg"
+            src="@/assets/img/settings/promote-discounts-70.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 80"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-80.svg"
+            src="@/assets/img/settings/promote-discounts-80.svg"
           />
           <img
             v-else-if="current.pct_promote_discounts <= 90"
             svg-inline
-            src="../../assets/img/settings/promote-discounts-90.svg"
+            src="@/assets/img/settings/promote-discounts-90.svg"
           />
           <img
             v-else
             svg-inline
-            src="../../assets/img/settings/promote-discounts-0.svg"
+            src="@/assets/img/settings/promote-discounts-0.svg"
           />
         </div>
 
@@ -295,9 +292,9 @@
       </card>
 
       <card>
-        <a id="designer"
-          ><h3 slot="header">{{ $t("customize recommendations") }}</h3></a
-        >
+        <a id="designer">
+          <h3 slot="header">{{ $t("customize recommendations") }}</h3>
+        </a>
 
         <div class="row">
           <div class="col-xl-5">
@@ -322,8 +319,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'header')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -366,7 +363,8 @@
                       :min="100"
                       :max="900"
                       :step="100"
-                    ></el-input-number>
+                    >
+                    </el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('transform')">
@@ -420,8 +418,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'photo')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -490,8 +488,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'tag')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -537,8 +535,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'title')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -581,7 +579,8 @@
                       :min="100"
                       :max="900"
                       :step="100"
-                    ></el-input-number>
+                    >
+                    </el-input-number>
                   </el-form-item>
 
                   <el-form-item :label="$t('transform')">
@@ -613,8 +612,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'price')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -661,7 +660,8 @@
                       :min="100"
                       :max="900"
                       :step="100"
-                    ></el-input-number>
+                    >
+                    </el-input-number>
                   </el-form-item>
 
                   <label class="form-subheader">{{ $t("full price") }}</label>
@@ -683,7 +683,8 @@
                       :min="100"
                       :max="900"
                       :step="100"
-                    ></el-input-number>
+                    >
+                    </el-input-number>
                   </el-form-item>
 
                   <label class="form-subheader">{{
@@ -707,7 +708,8 @@
                       :min="100"
                       :max="900"
                       :step="100"
-                    ></el-input-number>
+                    >
+                    </el-input-number>
                   </el-form-item>
                 </el-form>
               </el-collapse-item>
@@ -728,8 +730,8 @@
                     <el-button
                       size="mini"
                       @click="handleSectionReset('custom_styles', 'layout')"
-                      >{{ $t("reset") }}</el-button
-                    >
+                      >{{ $t("reset") }}
+                    </el-button>
                   </span>
                 </slot>
                 <el-form
@@ -827,8 +829,8 @@
                         v-for="field in productFields"
                         :key="field"
                         :label="field"
-                        >{{ $t(`field:${field}`) }}</el-checkbox
-                      >
+                        >{{ $t(`field:${field}`) }}
+                      </el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                 </el-form>
@@ -916,13 +918,13 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { supportedLanguages } from "../../lang/lang";
-import { nilDefaultsDeep } from "../../api/utils";
+import { supportedLanguages } from "/src/lang/lang";
+import { nilDefaultsDeep } from "/src/api/utils";
 
-import Card from "../../components/Cards/Card.vue";
-import PendingSettings from "../../components/Settings/PendingSettings.vue";
-import LoaderDots from "../../components/LoaderDots.vue";
-import ProductsPreview from "../../components/ProductsPreview.vue";
+import Card from "/src/components/Cards/Card.vue";
+import PendingSettings from "/src/components/Settings/PendingSettings.vue";
+import LoaderDots from "/src/components/LoaderDots.vue";
+import ProductsPreview from "/src/components/ProductsPreview.vue";
 import {
   userGuideLinks,
   titlePlaceholders,
@@ -1096,7 +1098,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 /* TODO: move this to global styles */
 .card > .card-header h3 {
   margin: 0;
@@ -1104,6 +1107,11 @@ export default {
 
 .card > .card-body {
   padding: 20px;
+}
+
+.card > .card-body h3 {
+  padding-right: 20px;
+  margin: 20px 0;
 }
 
 .card > label {
@@ -1157,9 +1165,11 @@ export default {
 .page-switch-wrapper + .page-switch-wrapper {
   margin-top: 0.5em;
 }
+
 small.el-form-item--small {
   line-height: 16px;
 }
+
 .page-switch-wrapper > :first-child {
   flex: 0 0 200px;
 }
@@ -1233,6 +1243,7 @@ small.el-form-item--small {
   background-image: none;
   font-family: "themify" !important;
 }
+
 .is-disabled
   > div
   > div

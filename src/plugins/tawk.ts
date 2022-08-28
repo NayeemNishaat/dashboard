@@ -1,6 +1,5 @@
-import { User } from "/src/api/interfaces";
+import { User } from "@/api/interfaces";
 import _Vue from "vue";
-// import { PluginObject } from "vue";
 
 const Tawk = {} as any;
 Tawk.install = function (app: any, options?: any) {

@@ -78,69 +78,69 @@ export default {
     LineChart,
     DoughnutChart,
     BarChart,
-    LoaderDots
+    LoaderDots,
   },
   props: {
     loading: {
       type: Boolean,
-      default: true
+      default: true,
     },
     footerText: {
       type: String,
-      default: ""
+      default: "",
     },
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     subTitle: {
       type: String,
-      default: ""
+      default: "",
     },
     noData: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noDataText: {
       type: String,
-      default: "no data"
+      default: "no data",
     },
     noDataIcon: {
       type: String,
-      default: "ti-alert"
+      default: "ti-alert",
     },
     chartType: {
       type: String,
-      default: "Line" // Line | Doughnut
+      default: "Line", // Line | Doughnut
     },
     chartOptions: {
       type: Object,
       default: () => {
         return {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
         };
-      }
+      },
     },
     chartData: {
       type: Object,
       default: () => {
         return {
           labels: [],
-          series: []
+          series: [],
         };
-      }
+      },
     },
     chartHeight: {
       type: Number,
-      default: 300
-    }
+      default: 300,
+    },
   },
   data() {
     return {
-      chartId: "no-id"
+      chartId: "no-id",
     };
-  }
+  },
 };
 </script>
 <style>

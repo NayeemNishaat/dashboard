@@ -1,5 +1,5 @@
 // import { PluginObjec } from "vue";
-import { User } from "/src/api/interfaces";
+import { User } from "@/api/interfaces";
 import _Vue from "vue";
 
 const Segment = {} as any;

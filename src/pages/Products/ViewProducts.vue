@@ -23,14 +23,14 @@
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
-import CardGrid from "/src/components/Cards/CardGrid.vue";
-import DateRangePicker from "/src/components/DateRangePicker.vue";
+import CardGrid from "@/components/Cards/CardGrid.vue";
+import DateRangePicker from "@/components/DateRangePicker.vue";
 import { mapGetters } from "vuex";
-import { getPageData } from "/src/api/backend";
+import { getPageData } from "@/api/backend";
 export default {
   components: {
     CardGrid,
-    DateRangePicker
+    DateRangePicker,
   },
   data() {
     return {
@@ -41,11 +41,11 @@ export default {
         "user_related",
         "user_related_categories",
         "top",
-        "similar"
+        "similar",
       ],
       productPerf: [],
       loading: true,
-      error: false
+      error: false,
     };
   },
   computed: {
@@ -62,7 +62,7 @@ export default {
         return [];
       }
       return this.allProducts[this.productFilter] || [];
-    }
+    },
   },
   methods: {
     async refreshData() {
@@ -82,11 +82,11 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   mounted() {
     this.refreshData();
-  }
+  },
 };
 </script>
 <style>

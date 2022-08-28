@@ -15,12 +15,12 @@ import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
 export default {
   name: "LoginError",
   components: {
-    CardMessageBox
+    CardMessageBox,
   },
   data() {
     return {
       isSafari: false,
-      isShopify: true
+      isShopify: true,
     };
   },
   mounted() {
@@ -37,6 +37,6 @@ export default {
       platform = "shopify";
     }
     this.isShopify = platform == "shopify";
-  }
+  },
 };
 </script>

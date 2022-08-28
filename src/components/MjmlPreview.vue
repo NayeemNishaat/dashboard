@@ -13,11 +13,8 @@ import throttle from "lodash/throttle";
 import mjml2html from "mjml4-in-browser";
 import * as Sentry from "@sentry/browser";
 
-import { getPageData } from "/src/api/backend";
-import {
-  isValidTemplateType,
-  buildTemplateMjml
-} from "/src/api/template-builder";
+import { getPageData } from "@/api/backend";
+import { isValidTemplateType, buildTemplateMjml } from "@/api/template-builder";
 
 function shortenToWordBoundary(originalStr, n) {
   if (originalStr.length <= n) {
@@ -37,29 +34,29 @@ export default {
         name: "Example product",
         link: "https://demo.datacue.co/",
         price: "1250",
-        full_price: "2000"
-      })
+        full_price: "2000",
+      }),
     };
   },
   props: {
     template: {
       type: String,
-      validator: isValidTemplateType
+      validator: isValidTemplateType,
     },
     size: {
       type: String,
-      validator: (v) => ["mobile", "desktop"].includes(v)
+      validator: (v) => ["mobile", "desktop"].includes(v),
     },
     editorState: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   watch: {
     editorState: {
       handler: "updatePreview",
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     updatePreview: throttle(function () {
@@ -68,9 +65,9 @@ export default {
           content: this.editorState.content,
           settings: {
             ...this.editorState.settings,
-            ...this.$store.getters.client.web_settings.recommendations.all
+            ...this.$store.getters.client.web_settings.recommendations.all,
           },
-          products: this.products
+          products: this.products,
         })
       );
 
@@ -105,7 +102,7 @@ export default {
 
         preview.style.height = Math.ceil(height) + 20 + "px";
       }
-    }
+    },
   },
   mounted() {
     this.updatePreview();
@@ -121,7 +118,7 @@ export default {
   },
   beforeUnmount() {
     window.clearInterval(this.resizeInterval);
-  }
+  },
 };
 </script>
 

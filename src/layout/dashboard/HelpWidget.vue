@@ -81,7 +81,7 @@ export default {
       clientX: 0,
       clientY: 0,
       left: null,
-      top: null
+      top: null,
     };
   },
   destroyed() {
@@ -116,12 +116,12 @@ export default {
     draggableClass() {
       return {
         float: true,
-        dragging: this.dragging
+        dragging: this.dragging,
       };
     },
     client() {
       return this.$store.getters.client;
-    }
+    },
   },
   methods: {
     updatePosition() {
@@ -170,8 +170,8 @@ export default {
         body: {
           feelings: this.feelings,
           comments: this.comments,
-          path: this.$route.fullPath
-        }
+          path: this.$route.fullPath,
+        },
       };
       postSendEmail(data)
         .then(() => {
@@ -181,7 +181,7 @@ export default {
           this.$notify({
             title: this.$t("error sending email"),
             message: this.$t("please send us an email to contact@datacue.co"),
-            type: "warning"
+            type: "warning",
           });
           Sentry.captureException(err);
         })
@@ -220,12 +220,12 @@ export default {
       elem.style.opacity = 1;
 
       const data = {
-        position: `${cleanedLeft},${cleanedTop}`
+        position: `${cleanedLeft},${cleanedTop}`,
       };
 
       setHelpWidgetPosition(data);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

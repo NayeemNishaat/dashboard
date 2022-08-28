@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane
-        v-for="panel in allPanels"
-        :key="panel"
-        :name="panel"
-        :label="panel.toUpperCase()"
-      >
-        <span slot="label">
-          {{ $tc(panel, 2) }}
-        </span>
-      </el-tab-pane>
-    </el-tabs>
+  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tab-pane
+      v-for="panel in allPanels"
+      :key="panel"
+      :name="panel"
+      :label="panel"
+    >
+      <span slot="label">
+        {{ $tc(panel, 2) }}
+      </span>
+    </el-tab-pane>
     <router-view></router-view>
-  </div>
+  </el-tabs>
 </template>
 <script>
 import * as Sentry from "@sentry/browser";
@@ -36,8 +34,8 @@ export default {
     ...mapGetters(["client"])
   },
   methods: {
-    handleClick() {
-      this.$router.push({ name: `${this.activeName} settings` });
+    handleClick(tab, _e) {
+      this.$router.push({ name: `${tab.props.name} settings` });
     }
   },
   mounted() {
@@ -50,3 +48,17 @@ export default {
   }
 };
 </script>
+<style>
+.el-tabs .el-tabs__item.is-active {
+  color: #f3bb45;
+}
+.el-tabs .el-tabs__item {
+  text-transform: capitalize;
+}
+.el-tabs .el-tabs__item:hover {
+  color: #f3bb45;
+}
+.el-tabs .el-tabs__active-bar {
+  background-color: #f3bb45;
+}
+</style>

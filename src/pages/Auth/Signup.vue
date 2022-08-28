@@ -2,10 +2,8 @@
   <div class="signup-page no-sroll">
     <div class="row d-lg-none">
       <div class="col-12 top-picker mx-auto">
-        <lang-picker-mobile
-          :selected-locale="selectedLocale"
-          @select="(locale) => (selectedLocale = locale)"
-        ></lang-picker-mobile>
+        <lang-picker-mobile :selected-locale="selectedLocale" @select="(locale) => (selectedLocale = locale)">
+        </lang-picker-mobile>
 
         <div class="btn-login">
           <router-link :to="{ name: 'login' }">{{ $t("login") }}</router-link>
@@ -19,18 +17,10 @@
             <div class="signup-sidebar-content">
               <div class="spacer"></div>
               <div class="logo-container">
-                <img
-                  class="logo"
-                  src="../../assets/img/datacue-logo-dark.svg"
-                  alt
-                />
+                <img class="logo" src="@/assets/img/datacue-logo-dark.svg" alt />
               </div>
               <div class="d-none d-lg-flex justify-content-center">
-                <img
-                  class="supergirl"
-                  src="../../assets/img/sign-up/supergirl-layout-4-5.svg"
-                  alt
-                />
+                <img class="supergirl" src="@/assets/img/sign-up/supergirl-layout-4-5.svg" alt />
               </div>
             </div>
           </div>
@@ -61,68 +51,41 @@
 
           <div class="col-12">
             <div class="row platforms">
-              <div
-                v-for="(platform, idx) in platforms"
-                :class="platformClass(platform, idx)"
-                @click="selectedPlatform = platform"
-                :key="idx"
-              >
-                <img
-                  class="tick"
-                  alt
-                  src="../../assets/img/sign-up/yellow-tick.svg"
-                />
+              <div v-for="(platform, idx) in platforms" :class="platformClass(platform, idx)"
+                @click="selectedPlatform = platform" :key="idx">
+                <img class="tick" alt src="@/assets/img/sign-up/yellow-tick.svg" />
                 <div class="other" v-if="platform === 'other'">
                   {{ $t("other") }}
                 </div>
-                <img
-                  v-else
-                  class="platform"
-                  alt
-                  :src="getPlatformImg(platform)"
-                />
+                <img v-else class="platform" alt :src="getPlatformImg(platform)" />
               </div>
             </div>
 
             <div class="row actions">
               <div class="col-12 col-lg-4 text-center text-lg-left">
-                <dc-button
-                  type="primary"
-                  @click="goToOnboarding"
-                  :loading="loading"
-                  :disabled="!this.selectedPlatform"
-                  >{{ $t("get started") }}!</dc-button
-                >
+                <dc-button type="primary" @click="goToOnboarding" :loading="loading" :disabled="!this.selectedPlatform">
+                  {{ $t("get started") }}!</dc-button>
               </div>
 
-              <div
-                class="col-12 col-lg-8 text-center text-lg-left terms mx-auto"
-              >
+              <div class="col-12 col-lg-8 text-center text-lg-left terms mx-auto">
                 {{
-                  $t("by submitting this form, you are agreeing to DataCue's")
+                    $t("by submitting this form, you are agreeing to DataCue's")
                 }}
                 <a href="https://datacue.co/terms" target="_blank">{{
-                  $t("terms")
+                    $t("terms")
                 }}</a>
               </div>
             </div>
 
             <div class="row d-none d-lg-block lang-picker-container">
               <div class="col">
-                <lang-picker
-                  :selected-locale="selectedLocale"
-                  @select="(locale) => (selectedLocale = locale)"
-                  class="float-right"
-                ></lang-picker>
+                <lang-picker :selected-locale="selectedLocale" @select="(locale) => (selectedLocale = locale)"
+                  class="float-right"></lang-picker>
               </div>
             </div>
 
             <div class="col-12 text-center d-lg-none">
-              <img
-                class="supergirl-bottom"
-                src="../../assets/img/sign-up/supergirl-layout-1-2-3.svg"
-                alt
-              />
+              <img class="supergirl-bottom" src="@/assets/img/sign-up/supergirl-layout-1-2-3.svg" alt />
             </div>
           </div>
         </div>
@@ -136,9 +99,9 @@
 </template>
 
 <script>
-import DcButton from "../../components/DcButton.vue";
-import LangPicker from "../../components/LangPicker.vue";
-import LangPickerMobile from "../../components/LangPickerMobile.vue";
+import DcButton from "@/components/DcButton.vue";
+import LangPicker from "@/components/LangPicker.vue";
+import LangPickerMobile from "@/components/LangPickerMobile.vue";
 
 export default {
   name: "login",
@@ -185,9 +148,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
-.signup-page > .row {
+.signup-page>.row {
   margin: 0px;
 }
 
@@ -198,8 +161,7 @@ export default {
   padding: 0px;
 
   @media (max-width: 991px) {
-    background: url("../../assets/img/sign-up/yellow-background-layout-1-2-3.svg")
-      no-repeat center center;
+    background: url("../../assets/img/sign-up/yellow-background-layout-1-2-3.svg") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -324,7 +286,8 @@ export default {
 
     img.platform {
       width: 100px;
-      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      -webkit-filter: grayscale(100%);
+      /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
     }
 
@@ -338,7 +301,8 @@ export default {
       border: $primary 1px solid;
 
       img.platform {
-        -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+        -webkit-filter: grayscale(0%);
+        /* Safari 6.0 - 9.0 */
         filter: none;
       }
 
@@ -398,8 +362,7 @@ export default {
 
 @media (min-width: 992px) {
   .main-container {
-    background: url("../../assets/img/sign-up/yellow-background-layout-5.svg")
-      no-repeat center center;
+    background: url("../../assets/img/sign-up/yellow-background-layout-5.svg") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -438,6 +401,7 @@ export default {
       }
     }
   }
+
   .signup-sidebar {
     height: auto;
 
@@ -493,8 +457,7 @@ export default {
 
 @media (min-width: 1200px) {
   .main-container {
-    background: url("../../assets/img/sign-up/yellow-background-layout-5.svg")
-      no-repeat center center;
+    background: url("../../assets/img/sign-up/yellow-background-layout-5.svg") no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

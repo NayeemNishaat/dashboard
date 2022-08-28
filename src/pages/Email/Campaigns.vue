@@ -38,7 +38,7 @@
                 'opened',
                 'clicked',
                 'converted',
-                'conversionValue'
+                'conversionValue',
               ]"
               :colnames="
                 [
@@ -48,15 +48,15 @@
                   'open %',
                   'click %',
                   'converted',
-                  'value'
+                  'value',
                 ].map((n) => this.$t(n))
               "
               :actions="[
                 {
                   action: 'edit',
                   icon: 'ti-pencil-alt',
-                  id: 'campaigns:edit-btn'
-                }
+                  id: 'campaigns:edit-btn',
+                },
               ]"
               @edit="openEditor"
             ></multi-table>
@@ -77,20 +77,20 @@
   </div>
 </template>
 <script>
-import StatsCard from "/src/components/Cards/StatsCard.vue";
-import MultiTable from "/src/components/MultiTable.vue";
-import DateRangePicker from "/src/components/DateRangePicker.vue";
+import StatsCard from "@/components/Cards/StatsCard.vue";
+import MultiTable from "@/components/MultiTable.vue";
+import DateRangePicker from "@/components/DateRangePicker.vue";
 
-import { addCampaignMixin } from "/src/mixins/campaign";
+import { addCampaignMixin } from "@/mixins/campaign";
 
-import { getPageData } from "/src/api/backend";
+import { getPageData } from "@/api/backend";
 
 export default {
   mixins: [addCampaignMixin],
   components: {
     StatsCard,
     MultiTable,
-    DateRangePicker
+    DateRangePicker,
   },
 
   data() {
@@ -103,38 +103,38 @@ export default {
           icon: "ti-export",
           title: "sent",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-book",
           title: "opened",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-mouse-alt",
           title: "clicked",
           value: "0",
-          comparison: "n/a"
+          comparison: "n/a",
         },
         {
           type: "info",
           icon: "ti-money",
           title: "converted",
           value: "0",
-          comparison: "n/a"
-        }
+          comparison: "n/a",
+        },
       ],
       tblCampaigns: [],
       campaignForm: {
         name: "",
         rules: "{}",
         subject: "",
-        template: ""
+        template: "",
       },
-      type: ["", "info", "success", "warning", "danger"]
+      type: ["", "info", "success", "warning", "danger"],
     };
   },
   watch: {},
@@ -165,7 +165,7 @@ export default {
               Send: 0,
               Delivery: 0,
               Open: 0,
-              Click: 0
+              Click: 0,
             };
 
             statsById[campaign_id][event_type] = count;
@@ -243,11 +243,11 @@ export default {
     },
     openEditor(campaignid) {
       this.$router.push({ name: "edit campaign", params: { campaignid } });
-    }
+    },
   },
   mounted() {
     this.refreshData(this.$store.getters.dateRange);
-  }
+  },
 };
 </script>
 <style>

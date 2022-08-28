@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col-sm-4 col-xs-12 d-flex centered">
           <span>&copy; {{ new Date().getFullYear() }} DATACUE (PTE. LTD.)</span>
         </div>
@@ -13,23 +13,22 @@
           </div>
         </div>
         <div class="col-sm-4 col-xs-12 d-flex centered">
-          <el-dropdown @menu-item-click="changeLanguage">
+          <el-dropdown @command="changeLanguage">
             <div>
               <i class="ti-world"></i>
               <span>&nbsp;&nbsp;{{ currentLang.name }}</span>
               <i class="el-icon-arrow-down el-icon--right"></i>
             </div>
-            <el-dropdown-menu
-              slot="dropdown"
-              data-id="footer:language-switcher-options"
-            >
-              <el-dropdown-item
-                v-for="(lang, idx) in languages"
-                :key="idx"
-                :command="lang.code"
-                >{{ lang.name }}</el-dropdown-item
-              >
-            </el-dropdown-menu>
+            <template #dropdown>
+              <el-dropdown-menu data-id="footer:language-switcher-options">
+                <el-dropdown-item
+                  v-for="(lang, idx) in languages"
+                  :key="idx"
+                  :command="lang.code"
+                  >{{ lang.name }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
           </el-dropdown>
         </div>
       </div>
@@ -59,6 +58,7 @@ export default {
     ...mapActions(["setLanguageCode"]),
     changeLanguage(payload) {
       this.setLanguageCode(payload);
+      this.$i18n.locale = locale;
     }
   }
 };
@@ -66,5 +66,9 @@ export default {
 <style>
 .centered {
   justify-content: center;
+}
+.el-dropdown-menu__item:hover {
+  background-color: #f3bb45 !important;
+  color: white !important;
 }
 </style>

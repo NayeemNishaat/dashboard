@@ -40,18 +40,19 @@
       <div class="row actions">
         <div class="col-4 text-center">
           <a :href="link" target="_blank">
-            <el-button type="warning" icon="ti-link" circle></el-button>
+            <el-button type="warning" circle>
+              <i class="ti-link"></i>
+            </el-button>
           </a>
         </div>
         <div class="col-4 text-center">
-          <el-button @click="editCard" icon="ti-pencil" circle></el-button>
+          <el-button @click="editCard" circle>
+            <i class="ti-pencil"></i>
+          </el-button>
         </div>
         <div class="col-4 text-center">
-          <el-button
-            @click="delCard"
-            :disabled="deleting"
-            :icon="deleting ? 'ti-time' : 'ti-trash'"
-            circle
+          <el-button @click="delCard" :disabled="deleting" circle>
+            <i :class="deleting ? 'ti-time' : 'ti-trash'" circle></i
           ></el-button>
         </div>
       </div>
@@ -131,6 +132,12 @@ export default {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+.el-button:focus,
+.el-button:hover {
+  color: #555;
+  border-color: #f7ba2a;
+  background-color: #fcefcb;
 }
 
 img.banner-img {

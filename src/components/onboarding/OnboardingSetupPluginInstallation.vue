@@ -7,11 +7,10 @@
       <i18n tag="p" path="onboarding:setup:connect">
         <template v-slot:installLink>
           <a target="_blank" :href="guideLink">{{
-            $t(
-              `onboarding:setup:${
-                pluginAvailable ? "installPlugin" : "connectApi"
-              }`
-            )
+              $t(
+                `onboarding:setup:${pluginAvailable ? "installPlugin" : "connectApi"
+                }`
+              )
           }}</a>
         </template>
         <template v-slot:platform>
@@ -23,9 +22,9 @@
         <el-form-item label="API key">
           <el-input type="text" readonly :value="client.apikey">
             <template v-slot:append>
-              <dc-button type="outline" @click="$clipboard(client.apikey)"
-                ><i class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button
-              >
+              <dc-button type="outline" @click="toClipboard(client.apikey)"><i class="ti-files"></i>&nbsp;&nbsp;{{
+                  $t("copy")
+              }}</dc-button>
             </template>
           </el-input>
         </el-form-item>
@@ -33,11 +32,8 @@
         <el-form-item label="API secret">
           <el-input type="text" readonly :value="atob(client.apisecret)">
             <template v-slot:append>
-              <dc-button
-                type="outline"
-                @click="$clipboard(atob(client.apisecret))"
-                ><i class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button
-              >
+              <dc-button type="outline" @click="toClipboard(atob(client.apisecret))"><i
+                  class="ti-files"></i>&nbsp;&nbsp;{{ $t("copy") }}</dc-button>
             </template>
           </el-input>
         </el-form-item>
@@ -47,49 +43,36 @@
         <div v-if="verificationResult">
           <ul class="imported">
             <li>
-              <i
-                :class="`ti-${
-                  verificationResult.categories ? 'check' : 'alert'
-                }`"
-              />
+              <i :class="`ti-${verificationResult.categories ? 'check' : 'alert'
+              }`" />
               {{ $tc("categories", 2) }}:
               <strong>{{ verificationResult.categories }}</strong>
             </li>
             <li>
-              <i
-                :class="`ti-${
-                  verificationResult.products.products ? 'check' : 'alert'
-                }`"
-              />
+              <i :class="`ti-${verificationResult.products.products ? 'check' : 'alert'
+              }`" />
               {{ $tc("products", 2) }}:
               <strong>{{ verificationResult.products.products }}</strong>
 
               ({{
-                $t("onboarding:setup:variants", {
-                  count: verificationResult.products.variants
-                })
+                  $t("onboarding:setup:variants", {
+                    count: verificationResult.products.variants,
+                  })
               }})
             </li>
             <li>
-              <i
-                :class="`ti-${verificationResult.orders ? 'check' : 'alert'}`"
-              />
+              <i :class="`ti-${verificationResult.orders ? 'check' : 'alert'}`" />
               {{ $t("orders") }}:
               <strong>{{ verificationResult.orders }}</strong>
             </li>
             <li>
-              <i
-                :class="`ti-${verificationResult.users ? 'check' : 'alert'}`"
-              />
+              <i :class="`ti-${verificationResult.users ? 'check' : 'alert'}`" />
               {{ $tc("users", 2) }}:
               <strong>{{ verificationResult.users }}</strong>
             </li>
           </ul>
 
-          <p
-            class="setup-message"
-            :class="{ success: setupDone, error: !setupDone }"
-          >
+          <p class="setup-message" :class="{ success: setupDone, error: !setupDone }">
             {{ $t(`onboarding:setup:import${setupDone ? "Done" : "Failed"}`) }}
           </p>
         </div>
@@ -97,9 +80,9 @@
 
       <dc-button type="outline" @click="verifySetup" :disabled="verifying">
         {{
-          $t(
-            `onboarding:setup:${verificationResult ? "verifyAgain" : "verify"}`
-          )
+            $t(
+              `onboarding:setup:${verificationResult ? "verifyAgain" : "verify"}`
+            )
         }}
       </dc-button>
 
@@ -116,11 +99,7 @@
         </p>
       </div>
 
-      <el-dialog
-        :visible.sync="skipDialogOpen"
-        width="720px"
-        :modal-append-to-body="false"
-      >
+      <el-dialog :visible.sync="skipDialogOpen" width="720px" :modal-append-to-body="false">
         <template v-slot:title>
           <h2>{{ $t("onboarding:setup:areYouSure") }}</h2>
         </template>
@@ -145,23 +124,26 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
 
-import Card from "/src/components/Cards/Card.vue";
-import DcButton from "/src/components/DcButton.vue";
+import Card from "@/components/Cards/Card.vue";
+import DcButton from "@/components/DcButton.vue";
 
-import { getPageData, postOnboardingNotification } from "/src/api/backend.js";
+import { getPageData, postOnboardingNotification } from "@/api/backend.js";
+
+import useClipboard from 'vue-clipboard3'
+const { toClipboard } = useClipboard()
 
 export default {
   name: "OnboardingSetupCustom",
   components: {
     DcButton,
-    Card
+    Card,
   },
   data() {
     return {
       skipDialogOpen: null,
       verifying: false,
       verificationResult: null,
-      calendlyLink: "https://calendly.com/get-datacue/demo"
+      calendlyLink: "https://calendly.com/get-datacue/demo",
     };
   },
   computed: {
@@ -205,11 +187,14 @@ export default {
       }
 
       return v.categories && v.products.products && v.orders && v.users;
-    }
+    },
   },
   methods: {
     atob(val) {
       return atob(val);
+    },
+    async toClipboard(val) {
+      await toClipboard(val);
     },
     async verifySetup() {
       this.verifying = true;
@@ -227,19 +212,19 @@ export default {
         url: this.calendlyLink,
         prefill: {
           name: this.client.user_name,
-          email: this.client.email
-        }
+          email: this.client.email,
+        },
       });
     },
     handleCalendlyEvent(event) {
       if (event.data.event === "calendly.event_scheduled") {
         postOnboardingNotification({
-          type: "call_request"
+          type: "call_request",
         });
 
         this.$emit("done");
       }
-    }
+    },
   },
   mounted() {
     this.$loadScript("https://calendly.com/assets/external/widget.js").then(
@@ -252,13 +237,13 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("message", this.handleCalendlyEvent);
-  }
+  },
 };
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
-@import "/src/assets/css/calendly.css";
+@import "@/assets/sass/datacue/_colors.scss ";
+@import "@/assets/css/calendly.css";
 
 .slide-logo {
   position: absolute;
@@ -266,8 +251,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/src/assets/img/datacue-logo-dark.svg") no-repeat center /
-    80% #fff;
+  background: url("@/assets/img/datacue-logo-dark.svg") no-repeat center / 80% #fff;
 }
 
 .dialog-actions {
@@ -302,6 +286,7 @@ export default {
     background: #f9eded;
   }
 }
+
 .onboarding-step-tip {
   display: flex;
   flex-flow: row nowrap;
@@ -311,7 +296,7 @@ export default {
   padding-top: 1em;
   color: $gray-dark;
 
-  > i {
+  >i {
     font-size: 20px;
     color: $primary;
   }

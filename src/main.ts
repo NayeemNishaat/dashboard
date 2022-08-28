@@ -1,4 +1,3 @@
-// import Vue from "vue";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
@@ -6,10 +5,8 @@ import Vuex from "./store/index";
 // import VueCompositionAPI from "@vue/composition-api";
 
 import LoadScript from "vue-plugin-load-script";
-import Clipboard from "v-clipboard/src";
 import DataCueDashboard from "./plugins/datacueComponents";
 import Tawk from "./plugins/tawk";
-import Segment from "/src/plugins/segment";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
@@ -66,14 +63,11 @@ app.use(store);
 app.use(ElementPlus);
 app.use(Vuex);
 app.use(DataCueDashboard);
-app.use(Clipboard);
 app.use(LoadScript);
 app.use(Tawk, {
   tawkSrc: "https://embed.tawk.to/5e93512169e9320caac2dc1e/default"
 });
-app.use(Segment, {
-  writeKey: "PJc2vKobVgVMXUKZZctaGH4aDyo8zk1D"
-});
+
 app.use(i18n);
 app.use(router as any);
 app.mount("#app");

@@ -10,7 +10,7 @@
         <el-form-item label="API key:">
           <el-input :value="apikey" class="float-md-left" readonly></el-input>
           <copy-button
-            @copy="$clipboard(apikey)"
+            @copy="toClipboard(apikey)"
             class="float-right float-md-left"
           ></copy-button>
         </el-form-item>
@@ -23,7 +23,7 @@
             readonly
           ></el-input>
           <copy-button
-            @copy="$clipboard(apisecret)"
+            @copy="toClipboard(apisecret)"
             class="float-right float-md-left"
           ></copy-button>
           <dc-button v-if="!readOnly">{{ $t("re-generate") }}</dc-button>
@@ -41,36 +41,43 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import DcTip from "/src/components/DcTip.vue";
-import CopyButton from "/src/components/onboarding/CopyButton.vue";
-import DcButton from "/src/components/DcButton.vue";
+import DcTip from "@/components/DcTip.vue";
+import CopyButton from "@/components/onboarding/CopyButton.vue";
+import DcButton from "@/components/DcButton.vue";
+import useClipboard from "vue-clipboard3";
+const { toClipboard } = useClipboard();
 
 export default {
   name: "ApiSettings",
   components: {
     DcTip,
     DcButton,
-    CopyButton
+    CopyButton,
   },
   computed: {
     ...mapGetters(["apikey", "client"]),
     apisecret() {
       return atob(this.client.apisecret);
-    }
+    },
+  },
+  methods: {
+    async toClipboard(val) {
+      await toClipboard(val);
+    },
   },
   props: {
     readOnly: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {};
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 hr {
   border-color: $gray-light;
@@ -122,6 +129,7 @@ p.info {
   .el-form-item {
     margin-bottom: 0;
   }
+
   .el-form-item__label {
     font-weight: bold;
     color: $dark;

@@ -1,7 +1,34 @@
 import { defineConfig } from "vite";
 import createVuePlugin from "@vitejs/plugin-vue";
+import path from "path";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [createVuePlugin()]
+  plugins: [
+    createVuePlugin({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("globals")
+        }
+      }
+    })
+  ],
+  server: {
+    port: 8080
+  },
+  resolve: {
+    alias: [
+      {
+        find: "@",
+        replacement: path.resolve(__dirname, "src")
+      },
+      {
+        find: "vue-i18n",
+        replacement: "vue-i18n/dist/vue-i18n.cjs.js"
+      }
+    ]
+  },
+  build: {
+    chunkSizeWarningLimit: 600,
+    cssCodeSplit: false
+  }
 });
