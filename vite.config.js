@@ -8,29 +8,32 @@ export default defineConfig({
     createVuePlugin({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => tag.startsWith("globals"),
-        },
-      },
+          isCustomElement: (tag) => tag.startsWith("globals")
+        }
+      }
     }),
-    checker({ vueTsc: true }),
+    checker({ vueTsc: true })
   ],
   server: {
-    port: 8080,
+    port: 8080
   },
   resolve: {
     alias: [
       {
         find: "@",
-        replacement: path.resolve(__dirname, "src"),
+        replacement: path.resolve(__dirname, "src")
       },
       {
         find: "vue-i18n",
-        replacement: "vue-i18n/dist/vue-i18n.cjs.js",
-      },
-    ],
+        replacement: "vue-i18n/dist/vue-i18n.cjs.js"
+      }
+    ]
   },
   build: {
     chunkSizeWarningLimit: 600,
-    cssCodeSplit: false,
+    cssCodeSplit: false
   },
+  test: {
+    environment: "happy-dom"
+  }
 });
