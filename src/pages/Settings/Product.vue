@@ -824,7 +824,7 @@ export default defineComponent({
 .footnote {
   margin: 0;
   font-size: 12px;
-  color: #999;
+  color: $gray;
 }
 
 .user-guide-link {
@@ -871,7 +871,7 @@ small.el-form-item--small {
   display: inline;
   margin: 0 0.5em;
   font-size: 12px;
-  color: #999;
+  color: $gray;
 }
 
 .page-switch-wrapper .el-button {
@@ -880,11 +880,11 @@ small.el-form-item--small {
 
 .page-switch-wrapper .el-switch>.el-switch__label,
 .page-switch-wrapper .el-switch>.el-switch__label.is-active {
-  color: #999;
+  color: $gray;
 }
 
 .layout-picker svg {
-  fill: #c7c7c7;
+  fill: $gray-light;
 }
 
 .layout-picker .el-radio {
@@ -896,7 +896,7 @@ small.el-form-item--small {
 }
 
 .discount-preview svg {
-  fill: #c7c7c7;
+  fill: $gray-light;
 }
 
 .inline-input {
@@ -930,45 +930,44 @@ small.el-form-item--small {
   flex-flow: column;
   align-items: flex-start;
 }
-</style>
-<style>
+
 .el-slider__bar {
-  background-color: #e6a23c !important;
+  background-color: $primary-dark  !important;
 }
 
 .el-slider__button {
-  border: 2px solid #e6a23c !important;
+  border: 2px solid $primary-dark  !important;
 }
 
 .el-button:focus,
 .el-button:hover {
   color: #555 !important;
-  border-color: #fab800 !important;
+  border-color: $primary  !important;
   background-color: #fcefcb !important;
 }
 
 .el-checkbox__input.is-checked+.el-checkbox__label {
-  color: #fab800 !important;
+  color: $primary  !important;
 }
 
 .el-switch__label.is-active {
-  color: #999 !important;
+  color: $gray  !important;
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #fab800 !important;
-  border-color: #fab800 !important;
+  background-color: $primary  !important;
+  border-color: $primary  !important;
 }
 
 .el-radio__input.is-checked .el-radio__inner,
 .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-  background-color: #fab800 !important;
-  border-color: #fab800 !important;
+  background-color: $primary  !important;
+  border-color: $primary  !important;
 }
 
 .el-radio.is-checked .el-radio__label {
-  color: #fab800 !important;
+  color: $primary  !important;
 }
 
 .el-radio-group {
@@ -989,7 +988,7 @@ small.el-form-item--small {
 }
 
 .el-radio-button__inner:hover {
-  color: #fab800 !important;
+  color: $primary  !important;
 }
 
 .el-radio-button.is-active .el-radio-button__inner:hover {
@@ -1001,18 +1000,18 @@ small.el-form-item--small {
 }
 
 .el-radio-button__original-radio:checked+.el-radio-button__inner {
-  background-color: #fab800 !important;
-  border-color: #fab800 !important;
+  background-color: $primary  !important;
+  border-color: $primary  !important;
   box-shadow: none !important;
 }
 
 .el-input__wrapper.is-focus {
-  box-shadow: 0 0 0 1px #fab800 !important;
+  box-shadow: 0 0 0 1px $primary  !important;
 }
 
 .el-input-number__decrease:hover,
 .el-input-number__increase:hover {
-  color: #fab800 !important;
+  color: $primary  !important;
 }
 
 .is-disabled>div>div>i.el-collapse-item__arrow.el-icon-arrow-right {
