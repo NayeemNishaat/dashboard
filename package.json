@@ -12,7 +12,9 @@
     "build:master": "vite build --out-dir dist --mode production",
     "build:staging": "vite build --out-dir dist --mode staging",
     "deploy:master": "bash deploy.sh",
-    "deploy:staging": "bash deploy.sh staging"
+    "deploy:staging": "bash deploy.sh staging",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@sentry/tracing": "^7.11.1",
@@ -61,6 +63,7 @@
     "unplugin-vue-components": "^0.22.4",
     "vite": "^3.0.9",
     "vite-plugin-checker": "^0.5.0",
+    "vitest": "^0.22.1",
     "vue-loader": "^17.0.0",
     "vue-tsc": "^0.40.1"
   },
