@@ -50,7 +50,9 @@ Tawk.install = function (app: any, options?: any) {
     (window as any).Tawk_API.hideWidget();
   };
   app.config.globalProperties.$Tawk.$showWidget = function () {
-    (window as any).Tawk_API.showWidget();
+    (window as any).Tawk_API.onLoad = function () {
+      (window as any).Tawk_API.showWidget();
+    };
   };
   app.config.globalProperties.$Tawk.$isInit = function () {
     if ((window as any).Tawk_API) {

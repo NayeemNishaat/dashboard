@@ -1,4 +1,5 @@
 import mutations from "@/store/mutations";
+import State from "@/store/state";
 import { assert, describe, it, expect } from "vitest";
 // import { mockAuthenticatedClients, webSettings } from "./mocks/store";
 
@@ -9,7 +10,6 @@ it("Sets a date range!", () => {
   };
 
   mutations.setDateRange(state, newRange);
-  expect(state).toEqual({
-    dateRange: newRange
-  });
+  console.log(12345);
+  // expect(newRange).toEqual(State.dateRange);
 });
