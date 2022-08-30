@@ -2,12 +2,7 @@
   <div class="wrapper">
     <side-bar>
       <slot name="links">
-        <sidebar-link
-          v-if="!hasFinishedSetup"
-          class="setup"
-          to="/setup"
-          :translatedName="$t('finish setup process')"
-        >
+        <sidebar-link v-if="!hasFinishedSetup" class="setup" to="/setup" :translatedName="$t('finish setup process')">
           <p class="sidebar-setup-summary">
             {{ $t("finish setup process") }}: {{ finishedSteps
             }}<span>/{{ numberOfSteps }}</span>
@@ -28,29 +23,19 @@
 
       <mobile-menu>
         <li class="nav-item">
-          <a
-            href="https://help.datacue.co/guide"
-            class="nav-link"
-            target="”_blank”"
-            data-id="navbar:mobile-help-btn"
-          >
+          <a href="https://help.datacue.co/guide" class="nav-link" target="”_blank”" data-id="navbar:mobile-help-btn">
             {{ $t("help") }}
           </a>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/billing">{{
-            $t("billing")
+              $t("billing")
           }}</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" @click="logout()">{{ $t("logout") }}</a>
         </li>
-        <drop-down
-          class="nav-item"
-          :title="$t('notifications')"
-          title-classes="nav-link"
-          icon="ti-bell"
-        >
+        <drop-down class="nav-item" :title="$t('notifications')" title-classes="nav-link" icon="ti-bell">
           <a class="dropdown-item">{{ $t("no notifications") }}</a>
         </drop-down>
         <li class="divider"></li>
@@ -113,6 +98,9 @@ export default {
       this.$Tawk.$endChat();
       await this.logout();
     }
+  },
+  mounted() {
+    this.$Tawk.$showWidget();
   }
 };
 </script>

@@ -69,7 +69,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["subscription"]),
+    ...mapGetters(["client", "subscription"]),
     ...mapGetters("settings", ["webSettings"]),
     notificationsAccess() {
       if (!this.client?.apikey) {

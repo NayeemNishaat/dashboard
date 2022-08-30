@@ -1,23 +1,22 @@
 <template>
   <div class="upgrade-page">
     <card :title="
-        noPlanSelected
+      noPlanSelected
         ? $t('select a plan to activate {feature}', {
-              feature: $tc(feature, 2).toLowerCase()
-          })
-          : $t('upgrade your plan to activate {feature}', {
-            feature: $tc(feature, 2).toLowerCase()
-            })
+          feature: $tc(feature, 2).toLowerCase(),
+        })
+        : $t('upgrade your plan to activate {feature}', {
+          feature: $tc(feature, 2).toLowerCase(),
+        })
     ">
       <div class="row">
         <div class="col-12 align-self-center">
           <p>{{ $t(`upgradeText:${feature}`) }}</p>
           <img v-if="feature == 'notifications'" class="feature-img" src="@/assets/img/features/notifications.jpg" />
-          <img v-if="f
-          ature == 'banners'" class="feature-img" src="@/assets/img/features/banners.jpg" />
+          <img v-if="feature == 'banners'" class="feature-img" src="@/assets/img/features/banners.jpg" />
           <img v-if="feature == 'products'" class="feature-img" src="@/assets/img/features/products.jpg" />
           <router-link class="button-link" to="/billing">{{
-          $t("setupSummary:NoPlanSelected:btn")
+              $t("setupSummary:NoPlanSelected:btn")
           }}</router-link>
         </div>
       </div>
@@ -32,20 +31,20 @@ export default {
   props: {
     feature: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapGetters(["subscription"]),
     noPlanSelected() {
       return !this.subscription?.name;
-    }
+    },
   },
   methods: {
     getImgURL(type) {
       return require(`../../assets/img/features/${this.feature}.jpg`);
-    }
-  }
+    },
+  },
 };
 </script>
 

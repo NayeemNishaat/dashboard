@@ -27,10 +27,12 @@
           :comparison="stats.comparison"
           :icon="stats.icon"
         >
-          <div class="stats" slot="footer">
-            <i class="ti-info"></i>
-            {{ $t(stats.footer) }}
-          </div>
+          <template #footer>
+            <div class="stats">
+              <i class="ti-info"></i>
+              {{ $t(stats.footer) }}
+            </div>
+          </template>
         </stats-card>
       </div>
     </div>
@@ -260,5 +262,23 @@ export default {
 <style scoped>
 .row.summary > div > div.el-alert {
   margin-bottom: 10px;
+}
+</style>
+<style>
+.el-date-editor {
+  --el-input-focus-border-color: #f3bb45 !important;
+}
+
+.el-date-table td.end-date .el-date-table-cell__text,
+.el-date-table td.start-date .el-date-table-cell__text {
+  background-color: #f3bb45 !important;
+}
+
+.el-date-table td.today .el-date-table-cell__text {
+  color: #f3bb45 !important;
+}
+
+.el-date-table td.available:hover {
+  color: #f3bb45 !important;
 }
 </style>

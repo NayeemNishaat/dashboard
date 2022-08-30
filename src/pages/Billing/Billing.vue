@@ -24,10 +24,7 @@
     <div class="row">
       <div class="col-sm-6 col-xs-12">
         <card :title="$t('your subscription')">
-          <loader-dots
-            v-if="l
-          ading"
-          />
+          <loader-dots v-if="loading" />
           <div v-else-if="currentSubscription" class="card-padding">
             <p class="plan-name">{{ currentSubscription.plan }}</p>
             <p>

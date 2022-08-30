@@ -292,6 +292,10 @@ export default {
   color: $red;
 }
 
+.el-select {
+  --el-select-input-focus-border-color: #fab800;
+}
+
 .css-form i.ti-check {
   color: $green;
 }

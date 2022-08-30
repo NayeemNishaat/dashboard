@@ -22,7 +22,7 @@
             :name="type"
             :disabled="!productAccess[type]"
           >
-            <template v-if="productAccess[type]" slot="title">
+            <template v-if="productAccess[type]" #title>
               <span @click.stop @keyup.stop>
                 <el-checkbox v-model="settings.active">{{
                   client.type == "shopify" &&
@@ -36,7 +36,9 @@
                   target="_blank"
                   :href="userGuideLinks[languageCode][type]"
                 >
-                  <i class="el-icon-info" />
+                  <el-icon class="header-icon">
+                    <info-filled />
+                  </el-icon>
                   {{ $t("see in user guide") }}
                 </a>
               </span>
@@ -46,14 +48,12 @@
                 @click.stop
                 @keyup.stop
               >
-                <el-button
-                  size="mini"
-                  @click="handleSectionReset('context', type)"
-                  >{{ $t("reset") }}</el-button
-                >
+                <el-button @click="handleSectionReset('context', type)">{{
+                  $t("reset")
+                }}</el-button>
               </span>
             </template>
-            <template v-else slot="title">
+            <template v-else #title>
               <span @click.stop @keyup.stop>
                 <span class="el-checkbox__label">
                   {{
@@ -123,16 +123,16 @@
                   <template
                     v-if="pageCheckEnabled && pageStatus[page] !== 'found'"
                   >
-                    <i18n path="we couldnt find the snippet" tag="p">
+                    <i18n-t keypath="we couldnt find the snippet" tag="p">
                       <template #guide>
                         <a :href="installGuideLink" target="_blank">{{
                           $t("install guide")
                         }}</a>
                       </template>
-                    </i18n>
+                    </i18n-t>
 
                     <el-button
-                      size="mini"
+                      size="small"
                       :loading="pageStatus[page] === 'checking'"
                       @click="checkPageStatus(page)"
                       >{{ $t("refresh") }}</el-button
@@ -152,7 +152,7 @@
         <el-radio-group class="row" v-model="current.section_layout">
           <div class="col-6">
             <el-radio label="grid">{{ $t("grid") }}</el-radio>
-            <el-tag size="mini" type="success">
+            <el-tag size="small" type="success">
               <i class="el-icon-star-on" />
               {{ $t("recommended") }}
             </el-tag>
@@ -173,19 +173,23 @@
 
       <card v-if="!onboarding">
         <h3 slot="header">{{ $t("number of products in each section") }}</h3>
-        <i18n path="display {size} products in each product section" tag="p">
-          <template #size>
+
+        <i18n-t
+          keypath="display {size} products in each product section"
+          tag="p"
+        >
+          <template v-slot:size>
             <el-input-number
-              size="mini"
               class="narrow-input inline-input"
               v-model="current.section_size"
               controls-position="right"
               step-strictly
               :min="4"
               :max="16"
+              place="size"
             />
           </template>
-        </i18n>
+        </i18n-t>
 
         <el-slider
           v-model="current.section_size"
@@ -212,15 +216,15 @@
 
         <el-collapse-transition>
           <div v-show="current.pct_promote_discounts > 0">
-            <i18n
-              path="display {discount} first in each product section"
+            <i18n-t
+              keypath="display {discount} first in each product section"
               tag="p"
             >
               <template #discount>
-                <i18n path="{percent} discount and higher" tag="strong">
+                <i18n-t keypath="{percent} discount and higher" tag="strong">
                   <template #percent>
                     <el-input-number
-                      size="mini"
+                      size="small"
                       class="narrow-input inline-input"
                       v-model="current.pct_promote_discounts"
                       controls-position="right"
@@ -230,9 +234,9 @@
                       :step="5"
                     />
                   </template>
-                </i18n>
+                </i18n-t>
               </template>
-            </i18n>
+            </i18n-t>
 
             <el-slider
               v-model="current.pct_promote_discounts"
@@ -304,7 +308,7 @@
               @change="handleCurrentSectionChange('custom_styles', $event)"
             >
               <el-collapse-item name="header">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.header.active">{{
                       $t("header styles")
@@ -317,12 +321,12 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
+                      size="small"
                       @click="handleSectionReset('custom_styles', 'header')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.header"
                   size="small"
@@ -403,7 +407,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="photo">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.photo.active">{{
                       $t("product photo styles")
@@ -416,12 +420,12 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
+                      size="small"
                       @click="handleSectionReset('custom_styles', 'photo')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.photo"
                   size="small"
@@ -473,7 +477,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="tag">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.tag.active">{{
                       $t("discount tag styles")
@@ -486,12 +490,12 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
+                      size="small"
                       @click="handleSectionReset('custom_styles', 'tag')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.tag"
                   size="small"
@@ -520,7 +524,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="title">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.title.active">{{
                       $t("product title styles")
@@ -533,12 +537,12 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
+                      size="small"
                       @click="handleSectionReset('custom_styles', 'title')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.title"
                   size="small"
@@ -597,7 +601,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="price">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.price.active">{{
                       $t("price styles")
@@ -610,12 +614,12 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
+                      size="small"
                       @click="handleSectionReset('custom_styles', 'price')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.price"
                   size="small"
@@ -715,7 +719,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="layout">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="styles.layout.active">{{
                       $t("layout styles")
@@ -728,12 +732,11 @@
                     @keyup.stop
                   >
                     <el-button
-                      size="mini"
                       @click="handleSectionReset('custom_styles', 'layout')"
                       >{{ $t("reset") }}
                     </el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   :model="styles.layout"
                   size="small"
@@ -798,7 +801,7 @@
               </el-collapse-item>
 
               <el-collapse-item name="fields">
-                <slot name="title">
+                <template #title>
                   <el-checkbox checked disabled />
                   <span class="el-checkbox__input is-checked" />
                   <span class="el-checkbox__label">{{
@@ -810,11 +813,11 @@
                     @click.stop
                     @keyup.stop
                   >
-                    <el-button size="mini" @click="handleFieldsReset()">{{
+                    <el-button size="small" @click="handleFieldsReset()">{{
                       $t("reset")
                     }}</el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   size="small"
                   label-width="200px"
@@ -836,7 +839,7 @@
                 </el-form>
               </el-collapse-item>
               <el-collapse-item name="cta-btn">
-                <slot name="title">
+                <template #title>
                   <span @click.stop @keyup.stop>
                     <el-checkbox v-model="current.cta_button.show_button">{{
                       $t(
@@ -852,11 +855,11 @@
                     @click.stop
                     @keyup.stop
                   >
-                    <el-button size="mini" @click="handleFieldsReset()">{{
+                    <el-button @click="handleFieldsReset()">{{
                       $t("reset")
                     }}</el-button>
                   </span>
-                </slot>
+                </template>
                 <el-form
                   size="small"
                   label-width="200px"
@@ -1132,7 +1135,7 @@ export default defineComponent({
 .footnote {
   margin: 0;
   font-size: 12px;
-  color: #999;
+  color: $gray;
 }
 
 .user-guide-link {
@@ -1179,7 +1182,7 @@ small.el-form-item--small {
   display: inline;
   margin: 0 0.5em;
   font-size: 12px;
-  color: #999;
+  color: $gray;
 }
 
 .page-switch-wrapper .el-button {
@@ -1188,11 +1191,11 @@ small.el-form-item--small {
 
 .page-switch-wrapper .el-switch > .el-switch__label,
 .page-switch-wrapper .el-switch > .el-switch__label.is-active {
-  color: #999;
+  color: $gray;
 }
 
 .layout-picker svg {
-  fill: #c7c7c7;
+  fill: $gray-light;
 }
 
 .layout-picker .el-radio {
@@ -1204,7 +1207,7 @@ small.el-form-item--small {
 }
 
 .discount-preview svg {
-  fill: #c7c7c7;
+  fill: $gray-light;
 }
 
 .inline-input {
@@ -1238,8 +1241,90 @@ small.el-form-item--small {
   flex-flow: column;
   align-items: flex-start;
 }
-</style>
-<style>
+
+.el-slider__bar {
+  background-color: $primary-dark !important;
+}
+
+.el-slider__button {
+  border: 2px solid $primary-dark !important;
+}
+
+.el-button:focus,
+.el-button:hover {
+  color: #555 !important;
+  border-color: $primary !important;
+  background-color: #fcefcb !important;
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: $primary !important;
+}
+
+.el-switch__label.is-active {
+  color: $gray !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner,
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}
+
+.el-radio.is-checked .el-radio__label {
+  color: $primary !important;
+}
+
+.el-radio-group {
+  display: flex !important;
+}
+
+.el-tab-pane {
+  padding: 10px 0;
+}
+
+.el-collapse-item__arrow.is-active {
+  margin: 0 10px 0 10px !important;
+}
+
+.el-form-item__content {
+  align-items: start !important;
+  flex-direction: column;
+}
+
+.el-radio-button__inner:hover {
+  color: $primary !important;
+}
+
+.el-radio-button.is-active .el-radio-button__inner:hover {
+  color: #fff !important;
+}
+
+.el-radio-button__inner.is-active {
+  color: #fff !important;
+}
+
+.el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background-color: $primary !important;
+  border-color: $primary !important;
+  box-shadow: none !important;
+}
+
+.el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px $primary !important;
+}
+
+.el-input-number__decrease:hover,
+.el-input-number__increase:hover {
+  color: $primary !important;
+}
+
 .is-disabled > div > div > i.el-collapse-item__arrow.el-icon-arrow-right {
   background-image: none;
   font-family: "themify" !important;

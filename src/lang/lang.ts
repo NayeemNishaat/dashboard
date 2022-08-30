@@ -9,7 +9,7 @@ Object.assign(messages.es, esLocale);
 
 export const supportedLanguages = [
   { code: "en", name: "English" },
-  { code: "es", name: "Español" }
+  { code: "es", name: "Español" },
 ];
 
 export const supportedLanguageCodes = ["en", "es"];
@@ -29,5 +29,5 @@ localStorage.setItem("lang", curLocale);
 export const i18n = createI18n({
   locale: curLocale,
   fallbackLocale: "en",
-  messages
+  messages,
 });

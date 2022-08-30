@@ -9,7 +9,7 @@
         >
         </el-input>
       </div>
-      <div class="col-sm-6 align-self-center text-right">
+      <div class="col-sm-6 ml-auto text-right d-flex align-items-center">
         <span>{{ $t("sort by") }}&nbsp;&nbsp;</span>
         <el-radio-group v-model="sortField" size="small" fill="#f8ba00">
           <el-radio-button label="impressions">
@@ -187,7 +187,9 @@ export default {
   flex-wrap: wrap;
   flex-direction: row;
 }
-
+.el-radio-button {
+  margin: 0;
+}
 .search-box {
   margin-bottom: 10px;
 }

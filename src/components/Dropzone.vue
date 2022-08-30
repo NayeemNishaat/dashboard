@@ -2,14 +2,14 @@
   <form class="dropzone">
     <!-- Not displayed, just for Dropzone's `dictDefaultMessage` option -->
     <div id="dropzone-message" style="display: none">
-      <span class="dropzone-title">
+      <p class="dropzone-title">
         {{ $t("banner-upload-title") }}
-      </span>
-      <span class="dropzone-info">
+      </p>
+      <p class="dropzone-info">
         {{
-          $t(customLayout ? "banner-upload-custom" : "banner-upload-standard")
+            $t(customLayout ? "banner-upload-custom" : "banner-upload-standard")
         }}
-      </span>
+      </p>
     </div>
   </form>
 </template>
@@ -27,12 +27,12 @@ export default {
       type: Object,
       default: () => {
         return {};
-      }
+      },
     },
     customLayout: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   mounted() {
     const vm = this;
@@ -67,7 +67,7 @@ export default {
       dictDefaultMessage: document.querySelector("#dropzone-message").innerHTML,
 
       // We're going to process each file manually (see `accept` below)
-      autoProcessQueue: false
+      autoProcessQueue: false,
     };
 
     options = Object.assign({}, options, this.options);
@@ -76,17 +76,17 @@ export default {
     this.dropzone = new Dropzone(this.$el, options);
 
     // Set signed upload URL for each file
-    this.dropzone.on("addedfile", file => {
+    this.dropzone.on("addedfile", (file) => {
       this.$emit("addedfile", file);
     });
 
     // Set signed upload URL for each file
-    this.dropzone.on("removedfile", file => {
+    this.dropzone.on("removedfile", (file) => {
       this.$emit("removedfile", file);
     });
 
     // Set signed upload URL for each file
-    vm.dropzone.on("processing", file => {
+    vm.dropzone.on("processing", (file) => {
       vm.dropzone.options.url = file.uploadURL;
     });
 
@@ -97,47 +97,48 @@ export default {
     vm.dropzone.on("error", (file, errorMsg) => {
       this.$emit("error", errorMsg);
     });
-  }
+  },
 };
 </script>
 
-<style lang="stylus">
-primaryBlue = #3498db;
+<style lang="scss" scoped>
+@import "@/assets/sass/datacue/_colors.scss";
 
 form.dropzone {
   transition: all 0.2s linear;
-  border: 2px dashed #ccc;
-  background-color: #fafafa;
+  border: 2px dashed $gray-light;
+  background-color: $bg-input;
   min-height: initial;
 
   &:hover {
-    border-color: primaryBlue;
+    border-color: $primary;
     background-color: white;
 
     .dz-message {
       .dropzone-title {
-        color: primaryBlue;
+        font-weight: bold;
       }
     }
   }
 
   .dz-message {
-    color: #666;
+    color: $gray;
 
-    span {
+    p {
       line-height: 1.8;
-      font-size: 13px;
+      font-size: 1em;
       letter-spacing: 0.4px;
 
-      span.dropzone-title {
+      .dropzone-title {
         display: block;
-        color: #888;
+        color: $dark;
+        font-weight: bold;
         font-size: 1.25em;
       }
 
-      span.dropzone-info {
+      .dropzone-info {
         display: block;
-        color: #a8a8a8;
+        color: $gray-dark;
       }
     }
   }

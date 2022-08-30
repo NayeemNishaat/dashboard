@@ -89,7 +89,6 @@
           &nbsp;{{ $t("pricing format") }}
         </h3>
         <h4>{{ $t("sample price") }}&nbsp;:&nbsp;{{ samplePrice }}</h4>
-        <HR />
         <p v-if="isShopify">
           {{ $t("settings:general:currency-settings") }}
         </p>
