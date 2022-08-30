@@ -242,7 +242,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/sass/datacue/_colors.scss ";
+@import "@/assets/sass/datacue/_colors.scss";
 @import "@/assets/css/calendly.css";
 
 .slide-logo {

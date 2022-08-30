@@ -45,11 +45,13 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 header {
   text-align: center;
   padding-bottom: 10px;
 }
+
 footer {
   margin-top: 0px;
   padding-top: 0px;
@@ -59,7 +61,7 @@ button.skip {
   color: $gray-dark;
 }
 
-button > div > i {
+button>div>i {
   margin-top: 3px;
 }
 </style>

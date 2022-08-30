@@ -3,21 +3,15 @@
     <div v-for="product in data" class="row">
       <div class="col-6 col-md-4">
         <span class="title">{{ product.title }}:</span>
-        <el-progress
-          :percentage="product.pct"
-          :status="product.done ? 'warning' : 'exception'"
-        ></el-progress>
+        <el-progress :percentage="product.pct" :status="product.done ? 'warning' : 'exception'"></el-progress>
       </div>
       <div class="col-6 col-md-8 right">
         <span v-if="product.done" class="done">
           <tick-check></tick-check>Done
         </span>
         <template v-else>
-          <el-checkbox
-            v-model="product.done"
-            :disabled="refreshing.includes(product.title)"
-            >{{ $t("mark as done") }}</el-checkbox
-          >
+          <el-checkbox v-model="product.done" :disabled="refreshing.includes(product.title)">{{ $t("mark as done") }}
+          </el-checkbox>
           <span @click="refresh(product.title)" class="icon">
             <refresh-icon :class="getIconClass(product.title)"></refresh-icon>
           </span>
@@ -144,6 +138,7 @@ span {
   color: $gray-light;
   fill: $gray-light;
 }
+
 .done svg {
   width: 15px;
   height: 15px;

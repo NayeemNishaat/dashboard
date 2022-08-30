@@ -2,11 +2,8 @@
   <div>
     <div class="row">
       <div class="col-sm-6 search-box align-self-center">
-        <el-input
-          :placeholder="$t(`type a ${cardType} name to filter the list`)"
-          icon="search"
-          v-model="filter"
-        ></el-input>
+        <el-input :placeholder="$t(`type a ${cardType} name to filter the list`)" icon="search" v-model="filter">
+        </el-input>
       </div>
       <div class="col-sm-6 align-self-center text-right">
         <span>{{ $t("sort by") }}&nbsp;&nbsp;</span>
@@ -19,9 +16,7 @@
             <i class="ti-mouse-alt"></i>
             &nbsp;&nbsp;{{ $tc("clicks", 2) }}
           </el-radio-button>
-          <el-radio-button
-            :label="cardType === 'banners' ? 'score' : 'ctr_norm'"
-          >
+          <el-radio-button :label="cardType === 'banners' ? 'score' : 'ctr_norm'">
             <i class="ti-star"></i>
             &nbsp;&nbsp;{{ $t("score") }}
           </el-radio-button>
@@ -34,37 +29,15 @@
           <loader-dots />
         </card>
       </div>
-      <template
-        v-else-if="displayCards.length > 0"
-        v-for="card in displayCards"
-      >
-        <banner-card
-          v-if="cardType === 'banners' && card.category !== null"
-          :category="card"
-          :photoURL="card.photo_url"
-          :name="card.name"
-          :type="card.type"
-          :bannerID="card.banner_id"
-          :link="getLink(card.link)"
-          :clicks="card.clicks || 0"
-          :impressions="card.impressions || 0"
-          :conversions="card.conversions || 0"
-          :rating="card.rating || 0"
-          :score="card.score || 1"
-          :key="card.banner_id"
-          @delete="delCard"
-          @edit="editCard"
-        />
-        <product-card
-          v-else-if="cardType === 'products' || cardType === 'notifications'"
-          :name="card.name"
-          :photoURL="card.photo_url"
-          :productID="card.product_id"
-          :clicks="card.clicks || 0"
-          :impressions="card.impressions || 0"
-          :rating="card.ctr_norm * 0.6 || 0"
-          :key="card.product_id"
-        />
+      <template v-else-if="displayCards.length > 0" v-for="card in displayCards">
+        <banner-card v-if="cardType === 'banners' && card.category !== null" :category="card" :photoURL="card.photo_url"
+          :name="card.name" :type="card.type" :bannerID="card.banner_id" :link="getLink(card.link)"
+          :clicks="card.clicks || 0" :impressions="card.impressions || 0" :conversions="card.conversions || 0"
+          :rating="card.rating || 0" :score="card.score || 1" :key="card.banner_id" @delete="delCard"
+          @edit="editCard" />
+        <product-card v-else-if="cardType === 'products' || cardType === 'notifications'" :name="card.name"
+          :photoURL="card.photo_url" :productID="card.product_id" :clicks="card.clicks || 0"
+          :impressions="card.impressions || 0" :rating="card.ctr_norm * 0.6 || 0" :key="card.product_id" />
       </template>
       <div v-else>
         <i class="ti-face-sad"></i>
@@ -74,7 +47,7 @@
     <div class="row text-center">
       <div class="col-12">
         <dc-button v-if="maxcards < cards.length" @click="addMore()">{{
-          $t("show more")
+        $t("show more")
         }}</dc-button>
       </div>
     </div>
@@ -177,7 +150,7 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() { },
 };
 </script>
 <style>
@@ -186,12 +159,15 @@ export default {
   flex-wrap: wrap;
   flex-direction: row;
 }
+
 .search-box {
   margin-bottom: 10px;
 }
-.search-box > .el-input > input::placeholder {
+
+.search-box>.el-input>input::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #333;
-  opacity: 0.7; /* Firefox */
+  opacity: 0.7;
+  /* Firefox */
 }
 </style>

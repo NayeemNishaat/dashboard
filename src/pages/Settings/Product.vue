@@ -918,8 +918,9 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { supportedLanguages } from "/src/lang/lang";
-import { nilDefaultsDeep } from "/src/api/utils";
+import { supportedLanguages } from "@/lang/lang";
+import { nilDefaultsDeep } from "@/api/utils";
+import { defineComponent } from 'vue'
 
 import Card from "/src/components/Cards/Card.vue";
 import PendingSettings from "/src/components/Settings/PendingSettings.vue";
@@ -933,7 +934,7 @@ import {
   defaultProductSettings
 } from "./product";
 
-export default {
+export default defineComponent({
   name: "Products",
   components: {
     Card,
@@ -1094,7 +1095,7 @@ export default {
       default: false
     }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

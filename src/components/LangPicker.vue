@@ -17,7 +17,7 @@ export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   components: {

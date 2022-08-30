@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import createVuePlugin from "@vitejs/plugin-vue";
 import path from "path";
+import checker from 'vite-plugin-checker'
 
 export default defineConfig({
   plugins: [
@@ -10,7 +11,8 @@ export default defineConfig({
           isCustomElement: (tag) => tag.startsWith("globals")
         }
       }
-    })
+    }),
+    checker({ vueTsc: true })
   ],
   server: {
     port: 8080

@@ -10,12 +10,8 @@
 
     <div v-if="showPicker" class="lang-selector">
       <div class="languages">
-        <div
-          :key="locale.code"
-          v-for="locale in locales"
-          @click="setLocale(locale)"
-          :class="{ item: true, active: selectedLocale.code === locale.code }"
-        >
+        <div :key="locale.code" v-for="locale in locales" @click="setLocale(locale)"
+          :class="{ item: true, active: selectedLocale.code === locale.code }">
           {{ locale.title }}
         </div>
       </div>
@@ -29,7 +25,7 @@ export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => {}
+      default: () => { }
     }
   },
   components: {
@@ -127,6 +123,7 @@ export default {
       justify-content: center;
       display: flex;
       height: 40px;
+
       &:hover,
       &.active {
         color: $primary;

@@ -29,7 +29,7 @@ export default defineComponent({
         chartData: props.chartData,
         chartOptions: props.chartOptions,
         chartId: props.chartId,
-        width: 590,
+        width: props.width || 590,
         height: props.height,
         cssClasses: props.cssClasses,
         styles: props.styles,

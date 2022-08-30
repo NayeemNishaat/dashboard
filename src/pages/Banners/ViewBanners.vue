@@ -4,11 +4,7 @@
       <div class="col-6">
         <div class="row d-flex">
           <router-link to="/banners/add">
-            <dc-button
-              type="primary"
-              data-id="feature_page:add-banner-btn"
-              :disabled="tooManyBanners"
-            >
+            <dc-button type="primary" data-id="feature_page:add-banner-btn" :disabled="tooManyBanners">
               <i class="ti-plus"></i>
               &nbsp;&nbsp;{{ $t("add banner") }}
             </dc-button>
@@ -21,43 +17,29 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <dc-upgrade-message
-          v-if="tooManyBanners"
-          :message="
-            $t('reached plan limit of n banners. upgrade to add more.', {
-              count: bannerLimit
-            })
-          "
-        />
-        <card-message-box v-if="!installationSettings.banners" type="error"
-          ><slot>{{ $t("banners not installed") }}</slot>
-          <template v-slot:action
-            ><dc-button tag="a" type="outline" :href="addBannersLink">{{
-              $t("add banners widget")
-            }}</dc-button></template
-          ></card-message-box
-        >
+        <dc-upgrade-message v-if="tooManyBanners" :message="
+          $t('reached plan limit of n banners. upgrade to add more.', {
+            count: bannerLimit
+          })
+        " />
+        <card-message-box v-if="!installationSettings.banners" type="error">
+          <slot>{{ $t("banners not installed") }}</slot>
+          <template v-slot:action>
+            <dc-button tag="a" type="outline" :href="addBannersLink">{{
+                $t("add banners widget")
+            }}</dc-button>
+          </template>
+        </card-message-box>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="selectedBannerType">
-          <el-tab-pane
-            :label="$t(getBannerLabel('main'))"
-            name="main"
-          ></el-tab-pane>
-          <el-tab-pane
-            :label="$t(getBannerLabel('sub'))"
-            name="sub"
-          ></el-tab-pane>
+          <el-tab-pane :label="$t(getBannerLabel('main'))" name="main"></el-tab-pane>
+          <el-tab-pane :label="$t(getBannerLabel('sub'))" name="sub"></el-tab-pane>
         </el-tabs>
-        <card-grid
-          :loading="loading"
-          :cards="selBanners"
-          @delete="delBanner"
-          @edit="editBanner"
-          card-type="banners"
-        ></card-grid>
+        <card-grid :loading="loading" :cards="selBanners" @delete="delBanner" @edit="editBanner" card-type="banners">
+        </card-grid>
       </div>
     </div>
   </div>

@@ -3,31 +3,14 @@
     <div class="row">
       <div class="col-12">
         <div class="mx-auto">
-          <setup-panel
-            v-show="step === 0"
-            nextBtnCaption="continue"
-            @back="back"
-            @next="next"
-            @skip="exit"
-          >
+          <setup-panel v-show="step === 0" nextBtnCaption="continue" @back="back" @next="next" @skip="exit">
             <banner-settings :onboarding="true" />
           </setup-panel>
-          <setup-panel
-            v-show="step === 1"
-            nextBtnCaption="continue"
-            @back="back"
-            @next="next"
-            @skip="exit"
-          >
+          <setup-panel v-show="step === 1" nextBtnCaption="continue" @back="back" @next="next" @skip="exit">
             <product-settings ref="productSettings" :onboarding="true" />
           </setup-panel>
-          <setup-panel
-            v-if="step === 2 && $route.params.platform === 'shopify'"
-            nextBtnCaption="continue"
-            @back="back"
-            @next="next"
-            @skip="exit"
-          >
+          <setup-panel v-if="step === 2 && $route.params.platform === 'shopify'" nextBtnCaption="continue" @back="back"
+            @next="next" @skip="exit">
             <card>
               <template v-slot:header>
                 <h3>{{ $t("onboarding:setup:title") }}</h3>
@@ -43,13 +26,8 @@
               <p>{{ $t("onboarding:setup:adjust") }}</p>
             </card>
           </setup-panel>
-          <setup-panel
-            v-else-if="step === 2 && $route.params.platform !== 'shopify'"
-            nextBtnCaption="continue"
-            @back="back"
-            @next="next"
-            @skip="exit"
-          >
+          <setup-panel v-else-if="step === 2 && $route.params.platform !== 'shopify'" nextBtnCaption="continue"
+            @back="back" @next="next" @skip="exit">
             <onboarding-setup-plugin-installation />
           </setup-panel>
         </div>
@@ -128,6 +106,7 @@ header {
   display: flex;
   justify-content: right;
 }
+
 .pages {
   line-height: 2;
   list-style-type: none;

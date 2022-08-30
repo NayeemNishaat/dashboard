@@ -34,24 +34,12 @@
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <line-chart
-            v-if="chartType === 'Line'"
-            :chart-data="chartData"
-            :options="chartOptions"
-            :height="chartHeight"
-          ></line-chart>
-          <doughnut-chart
-            v-else-if="chartType === 'Doughnut'"
-            :chart-data="chartData"
-            :options="chartOptions"
-            :height="chartHeight"
-          ></doughnut-chart>
-          <bar-chart
-            v-else-if="chartType === 'Bar'"
-            :chart-data="chartData"
-            :options="chartOptions"
-            :height="chartHeight"
-          ></bar-chart>
+          <line-chart v-if="chartType === 'Line'" :chart-data="chartData" :options="chartOptions" :height="chartHeight">
+          </line-chart>
+          <doughnut-chart v-else-if="chartType === 'Doughnut'" :chart-data="chartData" :options="chartOptions"
+            :height="chartHeight"></doughnut-chart>
+          <bar-chart v-else-if="chartType === 'Bar'" :chart-data="chartData" :options="chartOptions"
+            :height="chartHeight"></bar-chart>
         </div>
       </div>
       <div class="footer" v-if="$slots.footer">
@@ -144,12 +132,13 @@ export default {
 };
 </script>
 <style>
-div.card-body > .el-tabs--border-card {
+div.card-body>.el-tabs--border-card {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-div.chart-nodata > p {
+
+div.chart-nodata>p {
   margin-left: 5px;
 }
 </style>

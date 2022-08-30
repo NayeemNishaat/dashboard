@@ -17,9 +17,7 @@
               src="/src/assets/img/onboarding-intro/personalized-homepage.png"
             />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('personalized homepages are the future-description')"
-              />
+              <div v-html="$t('personalized homepages are the future-description')" />
             </template>
           </intro-panel>
           <intro-panel
@@ -35,9 +33,7 @@
               src="/src/assets/img/onboarding-intro/first-time-visitor.png"
             />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('first time visitors see best sellers-description')"
-              />
+              <div v-html="$t('first time visitors see best sellers-description')" />
             </template>
           </intro-panel>
           <intro-panel
@@ -53,22 +49,13 @@
               src="/src/assets/img/onboarding-intro/existing-visitors.png"
             />
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('each click instantly updates predictions-description')
-                "
-              />
+              <div v-html="
+                $t('each click instantly updates predictions-description')
+              " />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 3"
-            :title="$t('show different banners for each visitor')"
-            nextBtnCaption="continue"
-            :browserWindow="true"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
+          <intro-panel v-if="step === 3" :title="$t('show different banners for each visitor')"
+            nextBtnCaption="continue" :browserWindow="true" @next="next" @back="back" @skip="exit">
             <template v-slot:slideshow>
               <figure key="banners" class="feature feature-banners">
                 <div class="example-banner">
@@ -128,22 +115,13 @@
               </figure>
             </template>
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('show different banners for each visitor-description')
-                "
-              />
+              <div v-html="
+                $t('show different banners for each visitor-description')
+              " />
             </template>
           </intro-panel>
-          <intro-panel
-            v-if="step === 4"
-            :title="$t('different products for different folks')"
-            nextBtnCaption="continue"
-            :browserWindow="true"
-            @next="next"
-            @back="back"
-            @skip="exit"
-          >
+          <intro-panel v-if="step === 4" :title="$t('different products for different folks')" nextBtnCaption="continue"
+            :browserWindow="true" @next="next" @back="back" @skip="exit">
             <template v-slot:slideshow>
               <figure key="products" class="feature feature-products">
                 <div class="example-page">
@@ -162,11 +140,9 @@
               </figure>
             </template>
             <template v-slot:subtitle>
-              <div
-                v-html="
-                  $t('different products for different folks-description')
-                "
-              />
+              <div v-html="
+                $t('different products for different folks-description')
+              " />
             </template>
           </intro-panel>
           <intro-panel
@@ -183,9 +159,7 @@
               src="/src/assets/img/onboarding-intro/view-results.gif"
             />
             <template v-slot:subtitle>
-              <div
-                v-html="$t('relax, results will keep improving-description')"
-              />
+              <div v-html="$t('relax, results will keep improving-description')" />
             </template>
           </intro-panel>
         </div>
@@ -265,6 +239,7 @@ export default {
 }
 
 @keyframes fade-in-50 {
+
   0%,
   40% {
     opacity: 0;
@@ -277,6 +252,7 @@ export default {
 }
 
 @keyframes fade-in-75 {
+
   0%,
   70% {
     opacity: 0;
@@ -289,6 +265,7 @@ export default {
 }
 
 @keyframes slide-sideways {
+
   0%,
   45% {
     transform: translateX(0);
@@ -301,6 +278,7 @@ export default {
 }
 
 @keyframes scroll-down {
+
   0%,
   40% {
     transform: translateY(0);
@@ -313,6 +291,7 @@ export default {
 }
 
 @keyframes gray-out {
+
   0%,
   40% {
     filter: grayscale(0);
@@ -396,14 +375,14 @@ export default {
     animation: scroll-down 6s ease-in-out backwards alternate infinite;
   }
 
-  &:last-child img + img {
+  &:last-child img+img {
     animation-delay: 6.5s;
   }
 
   img {
     width: 100%;
 
-    + img {
+    +img {
       animation: slide-in-small 0.25s ease-out backwards;
       animation-delay: 0.5s;
     }

@@ -1,15 +1,7 @@
 <template>
-  <onboarding-step
-    :title="$t('onboarding:billing:title')"
-    show-back-button
-    @back="$emit('back')"
-  >
+  <onboarding-step :title="$t('onboarding:billing:title')" show-back-button @back="$emit('back')">
     <template v-slot:slideshow>
-      <img
-        class="screenshot"
-        alt=""
-        src="/src/assets/img/sign-up/slideshow/dashboard.jpg"
-      />
+      <img class="screenshot" alt="" src="@/assets/img/sign-up/slideshow/dashboard.jpg" />
     </template>
 
     <p>{{ $t("onboarding:billing:intro") }}</p>
@@ -21,27 +13,20 @@
 
       <p v-else>
         <i18n tag="label" path="onboarding:billing:lastMonthGuess">
-          <el-input-number
-            place="amount"
-            :min="10"
-            :step="1000"
-            size="small"
-            controls-position="right"
-            v-model="lastRevenue"
-          />
+          <el-input-number place="amount" :min="10" :step="1000" size="small" controls-position="right"
+            v-model="lastRevenue" />
         </i18n>
       </p>
 
       <p>
         {{
-          $t(
-            `onboarding:billing:${
-              receivedRevenue ? "estimated" : "guess"
-            }Earning`,
-            {
-              amount: lastRevenue + estimatedEarning
-            }
-          )
+            $t(
+              `onboarding:billing:${receivedRevenue ? "estimated" : "guess"
+              }Earning`,
+              {
+                amount: lastRevenue + estimatedEarning
+              }
+            )
         }}
         <br />
         {{ $t("onboarding:billing:estimatedCost", { amount: estimatedCost }) }}
@@ -64,11 +49,7 @@
     </template>
 
     <template v-slot:actions>
-      <dc-button
-        type="primary"
-        @click="handleActivateButton"
-        :disabled="loading"
-      >
+      <dc-button type="primary" @click="handleActivateButton" :disabled="loading">
         {{ $t("onboarding:billing:startTrialButton") }}
       </dc-button>
 
@@ -144,7 +125,7 @@ import {
   getPageData,
   selectPlan,
   postOnboardingNotification
-} from "/src/api/backend";
+} from "@/api/backend";
 
 export default {
   name: "OnboardingBilling",

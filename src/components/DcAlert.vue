@@ -36,7 +36,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 .alert {
   display: flex;
   border-radius: 0 15px 15px 0;
@@ -73,6 +74,7 @@ export default {
       font-size: 2em;
       color: #de8f4e;
     }
+
     .icon::before {
       content: "\e6c5";
     }
@@ -80,6 +82,7 @@ export default {
     &.alert-danger {
       border-left: 2px solid $red;
       background-color: $red-light;
+
       .icon {
         background-image: url("https://cdn.datacue.co/assets/login/icon-not-successful.svg");
       }

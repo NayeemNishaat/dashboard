@@ -1,10 +1,5 @@
 <template>
-  <dc-button
-    type="primary"
-    @click="$emit('click')"
-    :disabled="disabled"
-    :loading="loading"
-  >
+  <dc-button type="primary" @click="$emit('click')" :disabled="disabled" :loading="loading">
     {{ $t("next") }}
     <arrow-right-icon></arrow-right-icon>
   </dc-button>

@@ -2,13 +2,8 @@
   <div class="onboarding">
     <header class="onboarding-header">
       <dc-steps class="onboarding-steps">
-        <dc-step
-          v-for="step in steps"
-          :key="step"
-          :title="$t(`onboarding:step:${step}`)"
-          :done="isStepDone(step)"
-          :active="step === $route.meta.step"
-        />
+        <dc-step v-for="step in steps" :key="step" :title="$t(`onboarding:step:${step}`)" :done="isStepDone(step)"
+          :active="step === $route.meta.step" />
       </dc-steps>
 
       <a class="header-logo">
@@ -158,7 +153,7 @@ export default {
     p {
       margin: 1em 0;
 
-      & + p {
+      &+p {
         margin-top: 2em;
       }
     }
@@ -183,7 +178,7 @@ export default {
       }
     }
 
-    > .loader.dots {
+    >.loader.dots {
       align-self: center;
       margin: auto;
     }
@@ -210,7 +205,7 @@ export default {
   margin-left: auto;
   justify-self: end;
 
-  > img {
+  >img {
     height: 100%;
   }
 }

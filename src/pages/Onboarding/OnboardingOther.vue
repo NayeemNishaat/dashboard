@@ -93,6 +93,7 @@ export default {
 
 .password-strength {
   width: 160px;
+
   .status {
     color: #67c23a;
 

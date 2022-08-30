@@ -4,12 +4,7 @@
       <div class="onboarding-step-title">
         <h1>{{ title }}</h1>
 
-        <dc-button
-          type="text"
-          class="onboarding-step-back"
-          v-if="showBackButton"
-          @click="$emit('back')"
-        >
+        <dc-button type="text" class="onboarding-step-back" v-if="showBackButton" @click="$emit('back')">
           &laquo; Back
         </dc-button>
       </div>
@@ -107,7 +102,7 @@ export default {
     .el-dialog__header {
       padding: 80px 100px 0;
 
-      > h2 {
+      >h2 {
         margin-bottom: 40px;
       }
     }
@@ -136,7 +131,7 @@ export default {
     padding-right: 50%;
   }
 
-  > * {
+  >* {
     flex: 0 0 auto;
   }
 }
@@ -162,7 +157,7 @@ export default {
 .onboarding-step-actions {
   margin-top: 3em;
 
-  > * {
+  >* {
     margin-bottom: 1em;
 
     &:not(:last-child) {
@@ -180,7 +175,7 @@ export default {
   padding-top: 1em;
   color: $gray-dark;
 
-  > i {
+  >i {
     font-size: 20px;
     color: $primary;
   }

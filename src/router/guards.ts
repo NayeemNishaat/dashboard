@@ -18,7 +18,7 @@ function getOnboardingPath() {
   const client = store.getters.client;
 
   return {
-    name: "onboarding",
+    name: "onboarding-intro",
     params: {
       platform: client.type
     },
@@ -42,11 +42,12 @@ export const ifAuthenticated: NavigationGuard = (to, from, next) => {
   next("/login");
 };
 
-export const ifFinishedOnboarding: NavigationGuard = (to, from, next) => {
+export const ifFinishedOnboarding: NavigationGuard = async (to, from, next) => {
   if (isLoggedIn()) {
     const profile = store.getters["settings/profile"];
     if (!profile) {
-      store.dispatch("setNextPage", to).then(() => next({ name: "loading" }));
+      await store.dispatch("setNextPage", to);
+      next({ name: "loading" });
       return;
     }
     if (hasFinishedOnboarding()) {
@@ -64,12 +65,18 @@ export const ifFinishedOnboarding: NavigationGuard = (to, from, next) => {
 };
 
 export const ifOnboarding: NavigationGuard = (to, from, next) => {
+  console.log("ifonboarding");
+  console.dir(to);
+  console.dir(from);
   if (store.getters["onboarding/hasFinishedOnboarding"]) {
+    console.log("[ifonboarding] summary")
     next({ name: "summary" });
     return;
   }
-  if (isLoggedIn() && to.name === "onboarding-signup") {
+  if (isLoggedIn() && to.name === "onboarding") {
+    console.log("[ifonboarding] going to intro")
     next({ name: "onboarding-intro", params: to.params });
+    return
   }
   next();
 };

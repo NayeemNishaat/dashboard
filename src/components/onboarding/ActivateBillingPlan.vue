@@ -15,26 +15,16 @@
               <p>{{ $t("onboarding:billing:activateCustom") }}</p>
 
               <el-collapse-transition>
-                <p
-                  v-if="paymentsConfigured === false"
-                  class="setup-message error"
-                >
+                <p v-if="paymentsConfigured === false" class="setup-message error">
                   {{ $t("onboarding:billing:paymentMethod") }}
                 </p>
               </el-collapse-transition>
-              <dc-button
-                type="primary"
-                @click="addPaymentMethod"
-                :disabled="loading"
-              >
+              <dc-button type="primary" @click="addPaymentMethod" :disabled="loading">
                 {{ $t("onboarding:billing:addPaymentMethod") }}
               </dc-button>
             </card>
             <template v-else>
-              <pricing-plans
-                :available-plans="availablePlans"
-                @selectplan="processPlanSection"
-              />
+              <pricing-plans :available-plans="availablePlans" @selectplan="processPlanSection" />
             </template>
           </template>
         </div>
@@ -55,7 +45,7 @@ import {
   getPageData,
   selectPlan,
   postOnboardingNotification
-} from "/src/api/backend";
+} from "@/api/backend";
 
 export default {
   name: "ActivateBillingPlan",
@@ -268,6 +258,7 @@ export default {
   min-width: 960px;
   max-width: 1024px;
 }
+
 .panel {
   height: 100%;
   margin: 0 0 1.5em;
@@ -275,11 +266,13 @@ export default {
   background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
+
 header {
   padding: 10px 0px;
   display: flex;
   justify-content: right;
 }
+
 .pages {
   line-height: 2;
   list-style-type: none;
@@ -288,6 +281,7 @@ header {
     margin-right: 0.5em;
   }
 }
+
 .billing-panel {
   padding: 10px;
 }

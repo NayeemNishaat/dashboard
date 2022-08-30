@@ -61,7 +61,8 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 .message-banner-panel.success {
   i {
     color: $green;

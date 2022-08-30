@@ -41,7 +41,7 @@ export default {
     min-width: 10em;
   }
 
-  & + &::before {
+  &+&::before {
     content: "";
     position: absolute;
     bottom: -1em;

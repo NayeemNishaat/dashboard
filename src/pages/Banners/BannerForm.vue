@@ -2,23 +2,14 @@
   <div class="banner-form">
     <div class="row">
       <div class="col-12">
-        <el-form
-          class="bannerform"
-          ref="form"
-          :model="bannerform"
-          label-width="140px"
-        >
+        <el-form class="bannerform" ref="form" :model="bannerform" label-width="140px">
           <el-form-item v-if="isBannerLayoutCustom" :label="$t('type')">
-            <el-radio-group
-              v-model="bannerform.type"
-              class="banner-type"
-              size="small"
-            >
+            <el-radio-group v-model="bannerform.type" class="banner-type" size="small">
               <el-radio class="main" label="main" border>{{
-                $t("large")
+                  $t("large")
               }}</el-radio>
               <el-radio class="sub" label="sub" border>{{
-                $t("small")
+                  $t("small")
               }}</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -29,20 +20,10 @@
               </card>
             </div>
             <template v-else-if="!editMode">
-              <el-input
-                :placeholder="$t('type to filter the list')"
-                v-model="filterText"
-              ></el-input>
+              <el-input :placeholder="$t('type to filter the list')" v-model="filterText"></el-input>
               <div class="tree-container" data-id="banner-form:category-list">
-                <el-tree
-                  :data="categoriestree"
-                  ref="categorytree"
-                  :filter-node-method="filterNode"
-                  node-key="id"
-                  default-expand-all
-                  :expand-on-click-node="true"
-                  @node-click="categoryTreeClick"
-                >
+                <el-tree :data="categoriestree" ref="categorytree" :filter-node-method="filterNode" node-key="id"
+                  default-expand-all :expand-on-click-node="true" @node-click="categoryTreeClick">
                   <template v-slot="{ node, data }">
                     <span class="category-tree">
                       <span style="width: 10em">{{ node.label.text }}</span>
@@ -52,24 +33,14 @@
                         </small>
                       </span>
                       <span style="width: 8em">
-                        <span
-                          v-if="node.label.banner"
-                          class="dc-tag dc-tag--warning"
-                        >
+                        <span v-if="node.label.banner" class="dc-tag dc-tag--warning">
                           {{ node.label.banner }}&nbsp;{{
-                            $tc("banners", node.label.banner)
+                              $tc("banners", node.label.banner)
                           }}
                         </span>
-                        <span
-                          v-else-if="node.label.recommended"
-                          class="dc-tag dc-tag--success"
-                          >{{ $t("recommended") }}</span
-                        >
-                        <span
-                          v-else
-                          style="visibility: hidden"
-                          class="dc-tag"
-                        ></span>
+                        <span v-else-if="node.label.recommended" class="dc-tag dc-tag--success">{{ $t("recommended")
+                        }}</span>
+                        <span v-else style="visibility: hidden" class="dc-tag"></span>
                         <!-- <div v-else>&nbsp;</div> -->
                       </span>
                     </span>
@@ -77,35 +48,20 @@
                 </el-tree>
               </div>
             </template>
-            <el-select
-              v-else-if="editMode"
-              @change="updateEditFormLink"
-              v-model="bannerform.categoryJSON"
-              placeholder="Select"
-              filterable
-            >
-              <el-option
-                v-for="item in categories"
-                :key="item.id"
-                :label="item.label.text"
-                :value="item.json"
-              ></el-option>
+            <el-select v-else-if="editMode" @change="updateEditFormLink" v-model="bannerform.categoryJSON"
+              placeholder="Select" filterable>
+              <el-option v-for="item in categories" :key="item.id" :label="item.label.text" :value="item.json">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item :error="categoryLinkError" :label="$t('link')">
-            <el-input
-              @blur="validateCategoryLink(bannerform.link)"
-              :placeholder="$t('link')"
-              v-model="bannerform.link"
-            ></el-input>
+            <el-input @blur="validateCategoryLink(bannerform.link)" :placeholder="$t('link')" v-model="bannerform.link">
+            </el-input>
           </el-form-item>
 
           <el-form-item :label="$t('image')">
-            <banner-upload
-              v-if="!editMode && !bannerUploading"
-              :banner-layout="bannerLayout"
-              @success="bannerUploadedToS3"
-            ></banner-upload>
+            <banner-upload v-if="!editMode && !bannerUploading" :banner-layout="bannerLayout"
+              @success="bannerUploadedToS3"></banner-upload>
             <card v-else-if="editMode">
               <img class="bannerimg center" :src="editBannerform.photoURL" />
             </card>
@@ -115,23 +71,12 @@
     </div>
     <div class="row">
       <div class="col-12 button-row">
-        <dc-button
-          v-if="editMode"
-          data-id="banner-form:edit-btn"
-          :disabled="disableSave"
-          type="primary"
-          @click="editBanner"
-        >
+        <dc-button v-if="editMode" data-id="banner-form:edit-btn" :disabled="disableSave" type="primary"
+          @click="editBanner">
           <i class="ti-check"></i>
           &nbsp;{{ $t("update") }}
         </dc-button>
-        <dc-button
-          v-else
-          data-id="banner-form:upload-btn"
-          :disabled="disableSave"
-          type="primary"
-          @click="uploadBanner"
-        >
+        <dc-button v-else data-id="banner-form:upload-btn" :disabled="disableSave" type="primary" @click="uploadBanner">
           <i class="ti-plus"></i>
           &nbsp;{{ uploadBtnCaption }}
         </dc-button>
@@ -261,9 +206,8 @@ export default {
 
     filterNode(value, data) {
       if (!value) return true;
-      const label = `${data.label.text} ${
-        data.label.recommended ? "recommended" : ""
-      } ${data.label.banner ? "banner exists" : ""}`;
+      const label = `${data.label.text} ${data.label.recommended ? "recommended" : ""
+        } ${data.label.banner ? "banner exists" : ""}`;
       return label.toLocaleLowerCase().indexOf(value) !== -1;
     },
     updateEditFormLink() {
@@ -519,27 +463,33 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
+
 .el-form-item__label {
   text-align: left;
 }
+
 .el-form-item__content {
   display: block;
 }
+
 .centered {
   flex: 1;
   justify-content: space-around;
   display: flex;
   align-items: center;
 }
+
 .indent {
   padding-left: 1em;
 }
+
 .tree-container {
   max-height: 35vh;
   min-height: 10vh;
   overflow-y: auto;
 }
+
 .category-tree {
   flex: 1;
   display: flex;
@@ -549,6 +499,7 @@ export default {
   padding-right: 0.5em;
   height: 32px;
 }
+
 .dc-tag {
   background-color: rgba(64, 158, 255, 0.1);
   padding: 0 10px;
@@ -560,11 +511,13 @@ export default {
   box-sizing: border-box;
   border: 1px solid rgba(64, 158, 255, 0.2);
 }
+
 .dc-tag--success {
   background-color: rgba(103, 194, 58, 0.1);
   border-color: rgba(103, 194, 58, 0.2);
   color: $green;
 }
+
 .dc-tag--warning {
   background-color: rgba(230, 162, 60, 0.1);
   border-color: rgba(230, 162, 60, 0.2);
@@ -593,40 +546,50 @@ label.el-radio.sub {
   align-items: center;
   justify-content: center;
 }
-.banner-type > .el-radio.is-bordered.is-checked {
+
+.banner-type>.el-radio.is-bordered.is-checked {
   border-color: #f8ba00;
   border-width: 2px;
 }
 
-.banner-type > .el-radio.is-bordered {
+.banner-type>.el-radio.is-bordered {
   border: 1px solid #aaa;
 }
-.banner-type > .el-radio {
+
+.banner-type>.el-radio {
   padding: 10px;
 }
-.banner-type > label > .el-radio__input + .el-radio__label {
+
+.banner-type>label>.el-radio__input+.el-radio__label {
   font-size: 1.1em;
 }
-.banner-type > label > .el-radio__input.is-checked + .el-radio__label {
+
+.banner-type>label>.el-radio__input.is-checked+.el-radio__label {
   color: #f8ba00;
   font-weight: bold;
 }
-.banner-type > label > .el-radio__input {
+
+.banner-type>label>.el-radio__input {
   display: none;
 }
-.banner-type > label > .el-radio__label {
+
+.banner-type>label>.el-radio__label {
   padding: 0px;
 }
-.button-row > button {
+
+.button-row>button {
   margin-right: 10px;
 }
+
 img.bannerimg {
   max-height: 200px;
   max-width: 100%;
 }
-.bannerform > .el-select {
+
+.bannerform>.el-select {
   width: 100%;
 }
+
 .banner-form {
   padding-top: 1em;
 }

@@ -14,13 +14,9 @@
               </p>
             </div>
             <div class="d-flex align-items-center justify-content-end">
-              <dc-button
-                type="primary"
-                :disabled="!hasUnsavedChanges"
-                :loading="saving"
-                @click="$emit('save')"
-                >{{ $t("publish") }}</dc-button
-              >
+              <dc-button type="primary" :disabled="!hasUnsavedChanges" :loading="saving" @click="$emit('save')">{{
+                  $t("publish")
+              }}</dc-button>
             </div>
           </div>
         </div>
@@ -56,6 +52,7 @@ export default {
   background-color: #f4f3ef;
   box-shadow: 0 0 0 10px #f4f3ef, 0 10px 5px 5px #f4f3ef;
 }
+
 .status-bar .row {
   width: 100%;
   margin: 0;

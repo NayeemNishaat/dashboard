@@ -1,33 +1,13 @@
 <template>
   <div>
-    <div
-      v-show="hasClientDetails"
-      ref="btnHelp"
-      draggable="true"
-      @dragstart="dragStart"
-      @dragend="dragEnd"
-      @drag="drag"
-      :class="draggableClass"
-    >
-      <el-button
-        type="primary"
-        icon="ti-help"
-        circle
-        @click="feedbackFormVisible = true"
-      ></el-button>
+    <div v-show="hasClientDetails" ref="btnHelp" draggable="true" @dragstart="dragStart" @dragend="dragEnd" @drag="drag"
+      :class="draggableClass">
+      <el-button type="primary" icon="ti-help" circle @click="feedbackFormVisible = true"></el-button>
     </div>
-    <el-dialog
-      :title="$t('how can we help you today?')"
-      :visible.sync="feedbackFormVisible"
-      :modal-append-to-body="false"
-    >
+    <el-dialog :title="$t('how can we help you today?')" :visible.sync="feedbackFormVisible"
+      :modal-append-to-body="false">
       <p>{{ $t("how do you feel?") }}</p>
-      <el-radio-group
-        fill="#e6a23c"
-        class="smileys"
-        v-model="feelings"
-        size="medium"
-      >
+      <el-radio-group fill="#e6a23c" class="smileys" v-model="feelings" size="medium">
         <el-radio-button :label="$t('happy')" value="happy">
           <i class="far fa-smile"></i>
         </el-radio-button>
@@ -39,21 +19,12 @@
         </el-radio-button>
       </el-radio-group>
       <p>{{ $t("describe the issue") }}</p>
-      <el-input
-        class="comments"
-        type="textarea"
-        v-model="comments"
-        :placeholder="$t('describe the issue')"
-        autocomplete="off"
-      ></el-input>
+      <el-input class="comments" type="textarea" v-model="comments" :placeholder="$t('describe the issue')"
+        autocomplete="off"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button
-          :disabled="!comments || !feelings"
-          :loading="sending"
-          type="warning"
-          @click="sendEmail()"
-          >{{ $t("send") }}</el-button
-        >
+        <el-button :disabled="!comments || !feelings" :loading="sending" type="warning" @click="sendEmail()">{{
+            $t("send")
+        }}</el-button>
         <el-button @click="feedbackFormVisible = null">
           {{ $t("cancel") }}
         </el-button>
@@ -232,6 +203,7 @@ export default {
 .smileys i {
   font-size: 2em;
 }
+
 .el-radio-button__inner:hover {
   color: #e6a23c !important;
 }
@@ -258,6 +230,7 @@ export default {
     box-shadow: none !important;
   }
 }
+
 input.comments {
   height: 120px;
 }

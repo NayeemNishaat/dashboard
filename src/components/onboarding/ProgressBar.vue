@@ -7,14 +7,8 @@
       <div class="row">
         <div class="col-xl-10">
           <div class="progress">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              :style="style"
-              :aria-valuenow="value"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
+            <div class="progress-bar" role="progressbar" :style="style" :aria-valuenow="value" aria-valuemin="0"
+              aria-valuemax="100"></div>
           </div>
         </div>
 
@@ -59,13 +53,16 @@ export default {
   .top-label {
     margin-bottom: 10px;
   }
+
   .progress {
     border-radius: 0.4em;
     height: 10px;
   }
+
   .progress-bar {
     background: $primary;
   }
+
   .text-right {
     margin-top: -6px;
   }
