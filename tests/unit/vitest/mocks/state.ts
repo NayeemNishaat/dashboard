@@ -9,7 +9,7 @@ export default class State {
   constructor(
     accessToken: AuthToken,
     dateRange: [Date, Date],
-    languageCode: string,
+    languageCode: "en" | "es",
     nextPage: string | null,
     context: Context | null
   ) {
@@ -23,10 +23,18 @@ export default class State {
     } catch (err) {
       this.context = null;
     }
-    this.dateRange = [
-      format(subDays(new Date(dateRange[0]), 8), "yyyy-MM-dd"),
-      format(subDays(new Date(dateRange[1]), 1), "yyyy-MM-dd")
-    ];
+    try {
+      this.dateRange = [
+        format(subDays(new Date(dateRange[0]), 8), "yyyy-MM-dd"),
+        format(subDays(new Date(dateRange[1]), 1), "yyyy-MM-dd")
+      ];
+    } catch (error) {
+      this.dateRange = [
+        format(subDays(new Date(), 8), "yyyy-MM-dd"),
+        format(subDays(new Date(), 1), "yyyy-MM-dd")
+      ];
+    }
+
     this.languageCode = languageCode || "en";
     this.nextPage = nextPage || null;
   }
