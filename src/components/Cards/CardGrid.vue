@@ -12,20 +12,18 @@
       <div class="col-sm-6 ml-auto text-right d-flex align-items-center">
         <span>{{ $t("sort by") }}&nbsp;&nbsp;</span>
         <el-radio-group v-model="sortField" size="small" fill="#f8ba00">
-          <el-radio-button label="impressions">
+          <el-radio label="impressions">
             <i class="ti-eye"></i>
             &nbsp;&nbsp;{{ $t("views") }}
-          </el-radio-button>
-          <el-radio-button label="clicks">
+          </el-radio>
+          <el-radio label="clicks">
             <i class="ti-mouse-alt"></i>
             &nbsp;&nbsp;{{ $tc("clicks", 2) }}
-          </el-radio-button>
-          <el-radio-button
-            :label="cardType === 'banners' ? 'score' : 'ctr_norm'"
-          >
+          </el-radio>
+          <el-radio :label="cardType === 'banners' ? 'score' : 'ctr_norm'">
             <i class="ti-star"></i>
             &nbsp;&nbsp;{{ $t("score") }}
-          </el-radio-button>
+          </el-radio>
         </el-radio-group>
       </div>
     </div>
@@ -189,6 +187,9 @@ export default {
 }
 .el-radio-button {
   margin: 0;
+}
+label {
+  margin: 0.25rem 0;
 }
 .search-box {
   margin-bottom: 10px;
