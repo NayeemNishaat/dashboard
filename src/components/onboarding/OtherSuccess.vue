@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 stars">
-      <img alt src="/src/assets/img/sign-up/stars-icon.svg" />
+      <img alt src="@/assets/img/sign-up/stars-icon.svg" />
     </div>
     <div class="col-12">
       <p class="info">{{ $t("receivedAllTheData") }}</p>
@@ -9,11 +9,27 @@
       <p class="info">{{ $t("headToDashboard") }}</p>
     </div>
     <div class="col-12 action">
-      <el-button @click="goToSummary" type="warning" class="btn-yellow btn-large rounded">{{ $t("get started") }}
+      <el-button
+        @click="goToSummary"
+        type="warning"
+        class="btn-yellow btn-large rounded"
+        >{{ $t("get started") }}
       </el-button>
-      <img class="d-sm-none" alt src="@/assets/img/sign-up/arrows-layout-1.svg" />
-      <img class="d-none d-sm-block d-md-none" alt src="@/assets/img/sign-up/arrows-layout-2.svg" />
-      <img class="d-none d-md-block" alt src="@/assets/img/sign-up/arrows-layout-3-4-5.svg" />
+      <img
+        class="d-sm-none"
+        alt
+        src="@/assets/img/sign-up/arrows-layout-1.svg"
+      />
+      <img
+        class="d-none d-sm-block d-md-none"
+        alt
+        src="@/assets/img/sign-up/arrows-layout-2.svg"
+      />
+      <img
+        class="d-none d-md-block"
+        alt
+        src="@/assets/img/sign-up/arrows-layout-3-4-5.svg"
+      />
     </div>
   </div>
 </template>
@@ -22,8 +38,8 @@ export default {
   methods: {
     goToSummary() {
       this.$router.push({ name: "setup-summary", params: this.$route.params });
-    },
-  },
+    }
+  }
 };
 </script>
 

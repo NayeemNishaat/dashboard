@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .dc-step {
   position: relative;
@@ -41,7 +41,7 @@ export default {
     min-width: 10em;
   }
 
-  &+&::before {
+  & + &::before {
     content: "";
     position: absolute;
     bottom: -1em;

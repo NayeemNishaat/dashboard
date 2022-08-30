@@ -11,17 +11,16 @@
   </card>
 </template>
 <script>
-import Card from "/src/components/Cards/Card.vue";
+import Card from "@/components/Cards/Card.vue";
 export default {
   name: "UnavailableSettings",
   components: {
-    Card,
+    Card
   },
   props: {
     title: String,
-    subTitle: String,
-  },
+    subTitle: String
+  }
 };
 </script>
-<style>
-</style>
+<style></style>

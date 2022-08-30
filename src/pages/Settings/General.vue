@@ -10,7 +10,12 @@
         <div class="row">
           <div class="col-sm-6">
             <p v-if="isShopify">{{ storeName }}</p>
-            <el-form class="form:storename" label-position="top" label-width="180px" v-else>
+            <el-form
+              class="form:storename"
+              label-position="top"
+              label-width="180px"
+              v-else
+            >
               <el-form-item :label="$t('store name')">
                 <el-input v-model="storeName"></el-input>
               </el-form-item>
@@ -36,11 +41,21 @@
             <div class="col-sm-6">
               <el-form-item :label="$t('country')">
                 <p v-if="isShopify">{{ countryName }}</p>
-                <el-select v-else v-model="country" data-id="general-settings:country-list"
-                  :placeholder="$t('select country')" :disabled="isShopify" filterable
-                  @change="updateCountryDependents()">
-                  <el-option v-for="country in countries" :key="country.code" :label="country.name"
-                    :value="country.code"></el-option>
+                <el-select
+                  v-else
+                  v-model="country"
+                  data-id="general-settings:country-list"
+                  :placeholder="$t('select country')"
+                  :disabled="isShopify"
+                  filterable
+                  @change="updateCountryDependents()"
+                >
+                  <el-option
+                    v-for="country in countries"
+                    :key="country.code"
+                    :label="country.name"
+                    :value="country.code"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -49,10 +64,19 @@
                 <p v-if="isShopify">
                   {{ languageName }}
                 </p>
-                <el-select v-else v-model="language" :placeholder="$t('select your website language')"
-                  :disabled="isShopify" :allow-create="availableLanguages === []">
-                  <el-option v-for="language in availableLanguages" :key="language.code" :label="language.name"
-                    :value="language.code"></el-option>
+                <el-select
+                  v-else
+                  v-model="language"
+                  :placeholder="$t('select your website language')"
+                  :disabled="isShopify"
+                  :allow-create="availableLanguages === []"
+                >
+                  <el-option
+                    v-for="language in availableLanguages"
+                    :key="language.code"
+                    :label="language.name"
+                    :value="language.code"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </div>
@@ -76,31 +100,51 @@
               <div class="col-sm-4">
                 <el-form-item :label="$t('currency symbol')">
                   <el-select v-model="currency.code">
-                    <el-option v-for="currency in availableCurrencies" :key="currency" :label="currency"
-                      :value="currency"></el-option>
+                    <el-option
+                      v-for="currency in availableCurrencies"
+                      :key="currency"
+                      :label="currency"
+                      :value="currency"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="col-sm-4">
                 <el-form-item :label="$t('currency symbol separator')">
-                  <el-select data-id="general-settings:currency-symbol-separator" v-model="currencySymbolSeparator"
-                    :placeholder="$t('currency symbol position')">
-                    <el-option v-for="separator in [
-                      { name: $t('none'), value: '' },
-                      { name: $t('space'), value: ' ' },
-                      { name: '.', value: '.' }
-                    ]" :key="separator.value" :label="separator.name" :value="separator.value"></el-option>
+                  <el-select
+                    data-id="general-settings:currency-symbol-separator"
+                    v-model="currencySymbolSeparator"
+                    :placeholder="$t('currency symbol position')"
+                  >
+                    <el-option
+                      v-for="separator in [
+                        { name: $t('none'), value: '' },
+                        { name: $t('space'), value: ' ' },
+                        { name: '.', value: '.' }
+                      ]"
+                      :key="separator.value"
+                      :label="separator.name"
+                      :value="separator.value"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="col-sm-4">
                 <el-form-item :label="$t('placement')">
-                  <el-select data-id="general-settings:currency-symbol-placement" v-model="currencySymbolPosition"
-                    :placeholder="$t('currency symbol position')">
-                    <el-option v-for="placement in [
-                      { name: $t('front'), value: 'front' },
-                      { name: $t('back'), value: 'back' }
-                    ]" :key="placement.value" :label="placement.name" :value="placement.value"></el-option>
+                  <el-select
+                    data-id="general-settings:currency-symbol-placement"
+                    v-model="currencySymbolPosition"
+                    :placeholder="$t('currency symbol position')"
+                  >
+                    <el-option
+                      v-for="placement in [
+                        { name: $t('front'), value: 'front' },
+                        { name: $t('back'), value: 'back' }
+                      ]"
+                      :key="placement.value"
+                      :label="placement.name"
+                      :value="placement.value"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
@@ -111,24 +155,37 @@
             <div class="row">
               <div class="col-sm-4">
                 <el-form-item :label="$t('decimal separator')">
-                  <el-select v-model="currencyDecimalSeparator" :placeholder="$t('decimal symbol')">
-                    <el-option v-for="separator in [
-                      { name: '.', value: '.' },
-                      { name: ',', value: ',' }
-                    ]" :key="separator.value" :label="separator.name" :value="separator.value"></el-option>
+                  <el-select
+                    v-model="currencyDecimalSeparator"
+                    :placeholder="$t('decimal symbol')"
+                  >
+                    <el-option
+                      v-for="separator in [
+                        { name: '.', value: '.' },
+                        { name: ',', value: ',' }
+                      ]"
+                      :key="separator.value"
+                      :label="separator.name"
+                      :value="separator.value"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
               </div>
               <div class="col-sm-4">
                 <el-form-item :label="$t('decimals')">
                   <el-checkbox v-model="currencyShowDecimals">{{
-                      $t("show decimals")
+                    $t("show decimals")
                   }}</el-checkbox>
                 </el-form-item>
               </div>
             </div>
           </el-form>
-          <dc-button data-id="general-settings:save-btn" :loading="saving" @click="saveChanges" type="primary">
+          <dc-button
+            data-id="general-settings:save-btn"
+            :loading="saving"
+            @click="saveChanges"
+            type="primary"
+          >
             {{ $t("save") }}
           </dc-button>
         </template>
@@ -140,12 +197,12 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import { getCountrySettings } from "/src/api/backend";
+import { getCountrySettings } from "@/api/backend";
 
-import Card from "/src/components/Cards/Card.vue";
+import Card from "@/components/Cards/Card.vue";
 
-import DcButton from "/src/components/DcButton.vue";
-import LoaderDots from "/src/components/LoaderDots.vue";
+import DcButton from "@/components/DcButton.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
 
 function currencyFormatString(format) {
   var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
@@ -321,11 +378,11 @@ export default {
           if (
             this.languageCode &&
             this.languageCode in
-            this.countrySettings[countryCode].names.translations
+              this.countrySettings[countryCode].names.translations
           ) {
             name =
               this.countrySettings[countryCode].names.translations[
-              this.languageCode
+                this.languageCode
               ];
           }
         } catch (err) {

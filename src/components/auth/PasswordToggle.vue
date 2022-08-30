@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import EyeHideIcon from "/src/components/icons/EyeHideIcon";
-import EyeShowIcon from "/src/components/icons/EyeShowIcon";
+import EyeHideIcon from "@/components/icons/EyeHideIcon";
+import EyeShowIcon from "@/components/icons/EyeShowIcon";
 
 export default {
   props: {
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 label.show-password {
   cursor: pointer;

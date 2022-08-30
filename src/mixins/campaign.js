@@ -1,4 +1,4 @@
-import { postCampaign } from "/src/api/backend";
+import { postCampaign } from "@/api/backend";
 
 export const addCampaignMixin = {
   data() {

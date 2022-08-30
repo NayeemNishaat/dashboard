@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
-import SetupSummary from "/src/pages/SetupSummary.vue";
+import SetupSummary from "@/pages/SetupSummary.vue";
 import { elementStubs, getNewObject } from "./mocks/general";
 import { getClient, webSettings, pageInstallation } from "./mocks/store.js";
 import { RouterLinkStub } from "@vue/test-utils";

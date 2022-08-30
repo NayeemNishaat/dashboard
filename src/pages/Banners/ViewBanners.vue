@@ -4,7 +4,11 @@
       <div class="col-6">
         <div class="row d-flex">
           <router-link to="/banners/add">
-            <dc-button type="primary" data-id="feature_page:add-banner-btn" :disabled="tooManyBanners">
+            <dc-button
+              type="primary"
+              data-id="feature_page:add-banner-btn"
+              :disabled="tooManyBanners"
+            >
               <i class="ti-plus"></i>
               &nbsp;&nbsp;{{ $t("add banner") }}
             </dc-button>
@@ -17,16 +21,19 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <dc-upgrade-message v-if="tooManyBanners" :message="
-          $t('reached plan limit of n banners. upgrade to add more.', {
-            count: bannerLimit
-          })
-        " />
+        <dc-upgrade-message
+          v-if="tooManyBanners"
+          :message="
+            $t('reached plan limit of n banners. upgrade to add more.', {
+              count: bannerLimit
+            })
+          "
+        />
         <card-message-box v-if="!installationSettings.banners" type="error">
           <slot>{{ $t("banners not installed") }}</slot>
           <template v-slot:action>
             <dc-button tag="a" type="outline" :href="addBannersLink">{{
-                $t("add banners widget")
+              $t("add banners widget")
             }}</dc-button>
           </template>
         </card-message-box>
@@ -35,10 +42,22 @@
     <div class="row">
       <div class="col-12">
         <el-tabs v-model="selectedBannerType">
-          <el-tab-pane :label="$t(getBannerLabel('main'))" name="main"></el-tab-pane>
-          <el-tab-pane :label="$t(getBannerLabel('sub'))" name="sub"></el-tab-pane>
+          <el-tab-pane
+            :label="$t(getBannerLabel('main'))"
+            name="main"
+          ></el-tab-pane>
+          <el-tab-pane
+            :label="$t(getBannerLabel('sub'))"
+            name="sub"
+          ></el-tab-pane>
         </el-tabs>
-        <card-grid :loading="loading" :cards="selBanners" @delete="delBanner" @edit="editBanner" card-type="banners">
+        <card-grid
+          :loading="loading"
+          :cards="selBanners"
+          @delete="delBanner"
+          @edit="editBanner"
+          card-type="banners"
+        >
         </card-grid>
       </div>
     </div>
@@ -47,13 +66,13 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import * as Sentry from "@sentry/browser";
-import CardGrid from "/src/components/Cards/CardGrid.vue";
-import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
-import DcButton from "/src/components/DcButton.vue";
-import DateRangePicker from "/src/components/DateRangePicker.vue";
-import DcUpgradeMessage from "/src/components/DcUpgradeMessage.vue";
+import CardGrid from "@/components/Cards/CardGrid.vue";
+import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
+import DcButton from "@/components/DcButton.vue";
+import DateRangePicker from "@/components/DateRangePicker.vue";
+import DcUpgradeMessage from "@/components/DcUpgradeMessage.vue";
 
-import { getPageData, deleteBanner } from "/src/api/backend";
+import { getPageData, deleteBanner } from "@/api/backend";
 
 export default {
   name: "ViewBanners",

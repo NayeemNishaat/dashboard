@@ -11,13 +11,17 @@
       </p>
     </card-message-box>
     <template v-else>
-      <pending-settings :has-unsaved-changes="hasUnsavedChanges" :saving="saving" @save="saveChanges" />
+      <pending-settings
+        :has-unsaved-changes="hasUnsavedChanges"
+        :saving="saving"
+        @save="saveChanges"
+      />
 
       <card>
         <h3 slot="header">
           <i class="ti-layout-tab"></i>
           &nbsp;{{
-              $t(`categories:About${client.type === "shopify" ? "_shopify" : ""}`)
+            $t(`categories:About${client.type === "shopify" ? "_shopify" : ""}`)
           }}
         </h3>
         <ul>
@@ -27,10 +31,11 @@
           </li>
           <li>
             {{
-                $t(
-                  `user_related_categories${client.type === "shopify" ? "_shopify" : ""
-                  }`
-                )
+              $t(
+                `user_related_categories${
+                  client.type === "shopify" ? "_shopify" : ""
+                }`
+              )
             }}
           </li>
         </ul>
@@ -38,8 +43,13 @@
         <template v-else-if="current">
           <div class="row">
             <div class="col-12">
-              <multi-select-table idcol="category_id" selectorcol="active" :data="current" :columns="['name']"
-                @select="handleSelect"></multi-select-table>
+              <multi-select-table
+                idcol="category_id"
+                selectorcol="active"
+                :data="current"
+                :columns="['name']"
+                @select="handleSelect"
+              ></multi-select-table>
             </div>
           </div>
         </template>
@@ -49,16 +59,16 @@
 </template>
 
 <script>
-import Card from "/src/components/Cards/Card.vue";
-import CardMessageBox from "/src/components/Cards/CardMessageBox.vue";
-import PendingSettings from "/src/components/Settings/PendingSettings.vue";
+import Card from "@/components/Cards/Card.vue";
+import CardMessageBox from "@/components/Cards/CardMessageBox.vue";
+import PendingSettings from "@/components/Settings/PendingSettings.vue";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import * as Sentry from "@sentry/browser";
 import { mapGetters } from "vuex";
-import LoaderDots from "/src/components/LoaderDots.vue";
-import MultiSelectTable from "/src/components/table/MultiSelect.vue";
-import { GetCategories, DeactivateCategories } from "/src/api/backend";
+import LoaderDots from "@/components/LoaderDots.vue";
+import MultiSelectTable from "@/components/table/MultiSelect.vue";
+import { GetCategories, DeactivateCategories } from "@/api/backend";
 
 export default {
   name: "Category",
@@ -67,7 +77,7 @@ export default {
     MultiSelectTable,
     LoaderDots,
     PendingSettings,
-    CardMessageBox,
+    CardMessageBox
   },
   data() {
     return {
@@ -77,14 +87,14 @@ export default {
       multipleSelection: [],
       lastSaved: [],
       search: "",
-      current: null,
+      current: null
     };
   },
   computed: {
     ...mapGetters(["client"]),
     hasUnsavedChanges() {
       return !isEqual(this.current, this.lastSaved);
-    },
+    }
   },
   methods: {
     async saveChanges() {
@@ -131,10 +141,10 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
-  },
+  }
 };
 </script>

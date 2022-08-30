@@ -1,14 +1,14 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import VueRouter from "vue-router";
-import GeneralSettings from "/src/pages/Settings/General.vue";
-import BannerSettings from "/src/pages/Settings/Banner.vue";
-import ProductSettings from "/src/pages/Settings/Product.vue";
+import GeneralSettings from "@/pages/Settings/General.vue";
+import BannerSettings from "@/pages/Settings/Banner.vue";
+import ProductSettings from "@/pages/Settings/Product.vue";
 import { getClient, webSettings, pageInstallation } from "../mocks/store.js";
 import countryData from "../mocks/countryData.js";
 import { elementStubs, getNewObject } from "../mocks/general";
-import { nilDefaultsDeep } from "../../../src/api/utils";
-import { defaultProductSettings } from "../../../src/pages/Settings/product";
-import { getPageStatus } from "../../../src/store/modules/settings_helpers";
+import { nilDefaultsDeep } from "../../..@/api/utils";
+import { defaultProductSettings } from "../../..@/pages/Settings/product";
+import { getPageStatus } from "../../..@/store/modules/settings_helpers";
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);

@@ -15,16 +15,26 @@
               <p>{{ $t("onboarding:billing:activateCustom") }}</p>
 
               <el-collapse-transition>
-                <p v-if="paymentsConfigured === false" class="setup-message error">
+                <p
+                  v-if="paymentsConfigured === false"
+                  class="setup-message error"
+                >
                   {{ $t("onboarding:billing:paymentMethod") }}
                 </p>
               </el-collapse-transition>
-              <dc-button type="primary" @click="addPaymentMethod" :disabled="loading">
+              <dc-button
+                type="primary"
+                @click="addPaymentMethod"
+                :disabled="loading"
+              >
                 {{ $t("onboarding:billing:addPaymentMethod") }}
               </dc-button>
             </card>
             <template v-else>
-              <pricing-plans :available-plans="availablePlans" @selectplan="processPlanSection" />
+              <pricing-plans
+                :available-plans="availablePlans"
+                @selectplan="processPlanSection"
+              />
             </template>
           </template>
         </div>
@@ -35,11 +45,11 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import Card from "/src/components/Cards/Card.vue";
+import Card from "@/components/Cards/Card.vue";
 
-import PricingPlans from "/src/components/Billing/PricingPlans.vue";
-import LoaderDots from "/src/components/LoaderDots.vue";
-import DcButton from "/src/components/DcButton.vue";
+import PricingPlans from "@/components/Billing/PricingPlans.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import DcButton from "@/components/DcButton.vue";
 
 import {
   getPageData,
@@ -204,7 +214,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .screenshot {
   width: 100%;
@@ -263,7 +273,7 @@ export default {
   height: 100%;
   margin: 0 0 1.5em;
   padding: 2% 4%;
-  background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
 

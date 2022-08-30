@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import DcButton from "/src/components/DcButton.vue";
+import DcButton from "@/components/DcButton.vue";
 export default {
   name: "SetupPanel",
   components: {
@@ -61,7 +61,7 @@ button.skip {
   color: $gray-dark;
 }
 
-button>div>i {
+button > div > i {
   margin-top: 3px;
 }
 </style>

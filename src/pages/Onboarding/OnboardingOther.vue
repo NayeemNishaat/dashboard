@@ -14,10 +14,10 @@
 <script>
 import { mapActions } from "vuex";
 
-import OnboardingHeader from "/src/components/onboarding/OnboardingHeader.vue";
-import SignupForm from "/src/components/onboarding/SignupForm.vue";
-import OtherStep2 from "/src/components/onboarding/OtherStep2.vue";
-import OtherSuccess from "/src/components/onboarding/OtherSuccess.vue";
+import OnboardingHeader from "@/components/onboarding/OnboardingHeader.vue";
+import SignupForm from "@/components/onboarding/SignupForm.vue";
+import OtherStep2 from "@/components/onboarding/OtherStep2.vue";
+import OtherSuccess from "@/components/onboarding/OtherSuccess.vue";
 
 import * as Sentry from "@sentry/browser";
 
@@ -85,7 +85,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .password-rules {
   color: $gray-dark;

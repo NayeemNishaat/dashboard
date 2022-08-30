@@ -6,7 +6,7 @@ import {
   PageInstallationSettings,
   HomepageSettings,
   Locale
-} from "/src/api/interfaces";
+} from "@/api/interfaces";
 import { defaultHomepageSettings, getPageStatus } from "../settings_helpers";
 const getters: GetterTree<ModuleState, RootState> = {
   profile(state: ModuleState, getters, rootState, rootGetters) {

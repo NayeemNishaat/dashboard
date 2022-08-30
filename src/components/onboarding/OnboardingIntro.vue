@@ -1,47 +1,63 @@
 <template>
-  <onboarding-step :title="$t('onboarding:welcome', { name: client.user_name })">
+  <onboarding-step
+    :title="$t('onboarding:welcome', { name: client.user_name })"
+  >
     <template v-slot:slideshow>
       <transition name="fade">
-        <figure key="banners" class="feature feature-banners" v-if="selectedFeature === 'banners'">
+        <figure
+          key="banners"
+          class="feature feature-banners"
+          v-if="selectedFeature === 'banners'"
+        >
           <div class="example-banner">
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1a.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1b.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-1c.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1a.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1b.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-1c.jpg" />
           </div>
           <div class="example-banner">
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2a.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2b.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-2c.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2a.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2b.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-2c.jpg" />
           </div>
           <div class="example-banner">
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3a.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3b.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/banner-3c.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3a.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3b.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/banner-3c.jpg" />
           </div>
         </figure>
 
-        <figure key="products" class="feature feature-products" v-else-if="selectedFeature === 'products'">
+        <figure
+          key="products"
+          class="feature feature-products"
+          v-else-if="selectedFeature === 'products'"
+        >
           <div class="example-page">
-            <img alt="" src="/src/assets/img/sign-up/slideshow/product.jpg" />
-            <img
-              alt=""
-              src="/src/assets/img/sign-up/slideshow/product-recs.jpg"
-            />
+            <img alt="" src="@/assets/img/sign-up/slideshow/product.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/product-recs.jpg" />
           </div>
 
           <div class="example-page">
-            <img alt="" src="/src/assets/img/sign-up/slideshow/cart.jpg" />
-            <img alt="" src="/src/assets/img/sign-up/slideshow/cart-recs.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/cart.jpg" />
+            <img alt="" src="@/assets/img/sign-up/slideshow/cart-recs.jpg" />
           </div>
         </figure>
 
-        <figure key="notifications" class="feature feature-notifications"
-          v-else-if="selectedFeature === 'notifications'">
-          <img alt="" src="@/assets/img/sign-up/slideshow/notification-page.jpg" />
-          <img alt="" src="@/assets/img/sign-up/slideshow/notification-widget.jpg" />
+        <figure
+          key="notifications"
+          class="feature feature-notifications"
+          v-else-if="selectedFeature === 'notifications'"
+        >
+          <img
+            alt=""
+            src="@/assets/img/sign-up/slideshow/notification-page.jpg"
+          />
+          <img
+            alt=""
+            src="@/assets/img/sign-up/slideshow/notification-widget.jpg"
+          />
         </figure>
       </transition>
     </template>
@@ -49,15 +65,22 @@
     <div v-html="$t('onboarding:intro')" />
 
     <ul class="feature-list">
-      <li v-for="feature in features" :key="feature.id" class="feature-list-item"
-        :class="{ active: feature.id === selectedFeature }">
+      <li
+        v-for="feature in features"
+        :key="feature.id"
+        class="feature-list-item"
+        :class="{ active: feature.id === selectedFeature }"
+      >
         <button class="feature-toggle" @click="selectedFeature = feature.id">
           <i :class="feature.icon" />
           <span class="feature-name">{{ $t(`product:${feature.id}`) }}</span>
         </button>
 
         <el-collapse-transition>
-          <p class="feature-description" v-show="feature.id === selectedFeature">
+          <p
+            class="feature-description"
+            v-show="feature.id === selectedFeature"
+          >
             {{ $t(`onboarding:featureDescription:${feature.id}`) }}
           </p>
         </el-collapse-transition>
@@ -81,8 +104,8 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DcButton from "/src/components/DcButton.vue";
-import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
+import DcButton from "@/components/DcButton.vue";
+import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
 
 export default {
   name: "OnboardingIntro",
@@ -107,7 +130,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 @keyframes slide-in {
   0% {
@@ -134,7 +157,6 @@ export default {
 }
 
 @keyframes fade-in-50 {
-
   0%,
   40% {
     opacity: 0;
@@ -147,7 +169,6 @@ export default {
 }
 
 @keyframes fade-in-75 {
-
   0%,
   70% {
     opacity: 0;
@@ -160,7 +181,6 @@ export default {
 }
 
 @keyframes slide-sideways {
-
   0%,
   45% {
     transform: translateX(0);
@@ -173,7 +193,6 @@ export default {
 }
 
 @keyframes scroll-down {
-
   0%,
   40% {
     transform: translateY(0);
@@ -186,7 +205,6 @@ export default {
 }
 
 @keyframes gray-out {
-
   0%,
   40% {
     filter: grayscale(0);
@@ -223,8 +241,10 @@ export default {
   align-items: flex-start;
   justify-content: space-between;
   padding: 14% 3% 0;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100% no-repeat,
-    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100% no-repeat #f2f2f2;
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+      no-repeat,
+    url("@/assets/img/sign-up/slideshow/store-content.jpg") bottom / 100%
+      no-repeat #f2f2f2;
 }
 
 .example-banner {
@@ -270,20 +290,21 @@ export default {
   flex: 0 0 50%;
   min-width: 0;
   padding-top: 6%;
-  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100% no-repeat #f2f2f2;
+  background: url("@/assets/img/sign-up/slideshow/store-header.jpg") top / 100%
+    no-repeat #f2f2f2;
 
   &:first-child {
     animation: scroll-down 6s ease-in-out backwards alternate infinite;
   }
 
-  &:last-child img+img {
+  &:last-child img + img {
     animation-delay: 6.5s;
   }
 
   img {
     width: 100%;
 
-    +img {
+    + img {
       animation: slide-in-small 0.25s ease-out backwards;
       animation-delay: 0.5s;
     }
@@ -317,7 +338,7 @@ export default {
 .feature-list-item {
   list-style-type: none;
 
-  &+& {
+  & + & {
     margin-top: 1em;
   }
 }
@@ -336,7 +357,7 @@ export default {
   }
 
   // higher specificity to override `.onboarding p`
-  +.feature-description {
+  + .feature-description {
     margin: 0 0 0 calc(16px + 1.5em);
     border-left: 1px solid $primary;
     padding-left: 1em;

@@ -1,12 +1,19 @@
 <template>
   <div>
-    <div class="alerts-row row" v-if="!loading && pendingSubscription && isShopify">
+    <div
+      class="alerts-row row"
+      v-if="!loading && pendingSubscription && isShopify"
+    >
       <div class="col-sm-10">
-        <el-alert :title="
+        <el-alert
+          :title="
             $t(
-            'you have a pending billing change request that needs to be approved in Shopify'
+              'you have a pending billing change request that needs to be approved in Shopify'
             )
-        " type="warning" effect="dark"></el-alert>
+          "
+          type="warning"
+          effect="dark"
+        ></el-alert>
       </div>
       <div class="col-sm-2">
         <dc-button type="primary" @click="refreshData()" icon="ti-reload">
@@ -17,15 +24,21 @@
     <div class="row">
       <div class="col-sm-6 col-xs-12">
         <card :title="$t('your subscription')">
-          <loader-dots v-if="l
-          ading" />
+          <loader-dots
+            v-if="l
+          ading"
+          />
           <div v-else-if="currentSubscription" class="card-padding">
             <p class="plan-name">{{ currentSubscription.plan }}</p>
             <p>
               <strong>{{ $t("started") }}:</strong>
               {{ format(currentSubscription.since) }}
             </p>
-            <dc-button v-if="!isShopify" type="primary" @click="openChargebeePanel()">
+            <dc-button
+              v-if="!isShopify"
+              type="primary"
+              @click="openChargebeePanel()"
+            >
               {{ $t("manage billing info") }}
             </dc-button>
           </div>
@@ -33,7 +46,11 @@
             <p class="plan-name">
               {{ $t("no plan selected") }}
             </p>
-            <dc-button v-if="!isShopify" type="primary" @click="openChargebeePanel()">
+            <dc-button
+              v-if="!isShopify"
+              type="primary"
+              @click="openChargebeePanel()"
+            >
               {{ $t("manage billing info") }}
             </dc-button>
           </div>
@@ -41,7 +58,11 @@
             <p class="plan-name">
               {{ $t("pending") }}: {{ pendingSubscription.plan }}
             </p>
-            <i18n tag="p" path="open app in {shopifyLink} to accept and activate" v-if="isShopify">
+            <i18n
+              tag="p"
+              path="open app in {shopifyLink} to accept and activate"
+              v-if="isShopify"
+            >
               <a target="_blank" place="shopifyLink" :href="shopifyAppAdmin">
                 {{ $t("shopify admin panel") }}
               </a>
@@ -51,14 +72,16 @@
         </card>
       </div>
       <div class="col-sm-6 col-xs-12">
-        <card :title="
-          $t('current billing period') +
-          (currentSubscription
-            ? ` (${$t('since')} ${format(
-                currentSubscription.current_period_start
-              )})`
-            : '')
-        ">
+        <card
+          :title="
+            $t('current billing period') +
+            (currentSubscription
+              ? ` (${$t('since')} ${format(
+                  currentSubscription.current_period_start
+                )})`
+              : '')
+          "
+        >
           <loader-dots v-if="loading" />
           <div v-else-if="currentSubscription" class="card-padding">
             <table v-if="parseInt(currentSubscription.commission_percent) > 0">
@@ -70,8 +93,8 @@
                 <th>{{ $t("budget") }}</th>
                 <td>
                   ${{
-                  +currentSubscription.commission_cap +
-                  +currentSubscription.price
+                    +currentSubscription.commission_cap +
+                    +currentSubscription.price
                   }}
                 </td>
               </tr>
@@ -83,7 +106,7 @@
                 <th>
                   {{ $t("commission") }}
                   <span v-if="+currentSubscription.commission_percent > 0">{{
-                  `${+currentSubscription.commission_percent}%`
+                    `${+currentSubscription.commission_percent}%`
                   }}</span>
                 </th>
                 <td>${{ commission }}</td>
@@ -101,7 +124,11 @@
               </tr>
             </table>
 
-            <i18n tag="p" path="you can view your invoices in the {shopifyLink}" v-if="isShopify">
+            <i18n
+              tag="p"
+              path="you can view your invoices in the {shopifyLink}"
+              v-if="isShopify"
+            >
               <a target="_blank" place="shopifyLink" :href="shopifyAppAdmin">
                 {{ $t("shopify admin panel") }}
               </a>
@@ -111,14 +138,24 @@
         </card>
       </div>
     </div>
-    <pricing-plans :available-plans="availablePlans" :disable-plan-selection="
-      loading ||
-      saving ||
-      (!isShopify && !paymentsConfigured) ||
-      !!pendingSubscription
-    " :current-plan="currentSubscription" @selectplan="openBudgetDialog" />
+    <pricing-plans
+      :available-plans="availablePlans"
+      :disable-plan-selection="
+        loading ||
+        saving ||
+        (!isShopify && !paymentsConfigured) ||
+        !!pendingSubscription
+      "
+      :current-plan="currentSubscription"
+      @selectplan="openBudgetDialog"
+    />
 
-    <el-dialog width="25%" append-to-body :title="$t('set your monthly budget')" :visible.sync="budgetDialogOpen">
+    <el-dialog
+      width="25%"
+      append-to-body
+      :title="$t('set your monthly budget')"
+      :visible.sync="budgetDialogOpen"
+    >
       <label class="budget-form">
         {{ $t("budget (usd)") }}
         <el-input-number size="small" v-model="budget" :min="budgetMin" />
@@ -141,12 +178,12 @@ import * as Sentry from "@sentry/browser";
 import { differenceInCalendarDays, subDays, format, parseISO } from "date-fns";
 import { mapGetters, mapActions } from "vuex";
 
-import PricingPlans from "/src/components/Billing/PricingPlans.vue";
-import Card from "/src/components/Cards/Card.vue";
-import DcButton from "/src/components/DcButton.vue";
-import LoaderDots from "/src/components/LoaderDots.vue";
+import PricingPlans from "@/components/Billing/PricingPlans.vue";
+import Card from "@/components/Cards/Card.vue";
+import DcButton from "@/components/DcButton.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
 
-import { getPageData, selectPlan } from "/src/api/backend";
+import { getPageData, selectPlan } from "@/api/backend";
 
 export default {
   name: "Billing",
@@ -228,9 +265,9 @@ export default {
           Math.max(
             0,
             this.last30DaysConversions -
-            this.availablePlans[i].commission_threshold
+              this.availablePlans[i].commission_threshold
           )) /
-        100;
+          100;
 
       let best = 0;
       for (let i = 1; i < this.availablePlans.length; ++i) {

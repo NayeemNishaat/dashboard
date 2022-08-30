@@ -1,4 +1,4 @@
-import { SetupSummary } from "/src/api/interfaces";
+import { SetupSummary } from "@/api/interfaces";
 
 export default class State {
   public setupSummary: SetupSummary;

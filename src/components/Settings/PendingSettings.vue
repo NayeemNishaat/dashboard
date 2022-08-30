@@ -14,9 +14,13 @@
               </p>
             </div>
             <div class="d-flex align-items-center justify-content-end">
-              <dc-button type="primary" :disabled="!hasUnsavedChanges" :loading="saving" @click="$emit('save')">{{
-                  $t("publish")
-              }}</dc-button>
+              <dc-button
+                type="primary"
+                :disabled="!hasUnsavedChanges"
+                :loading="saving"
+                @click="$emit('save')"
+                >{{ $t("publish") }}</dc-button
+              >
             </div>
           </div>
         </div>
@@ -25,7 +29,7 @@
   </transition>
 </template>
 <script>
-import DcButton from "/src/components/DcButton.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   name: "PendingSettings",

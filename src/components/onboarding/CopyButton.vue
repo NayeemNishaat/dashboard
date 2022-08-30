@@ -6,8 +6,8 @@
   </label>
 </template>
 <script>
-import TickCircle from "/src/components/icons/TickCircle.vue";
-import CopyIcon from "/src/components/icons/CopyIcon.vue";
+import TickCircle from "@/components/icons/TickCircle.vue";
+import CopyIcon from "@/components/icons/CopyIcon.vue";
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 label.copy {
   cursor: pointer;

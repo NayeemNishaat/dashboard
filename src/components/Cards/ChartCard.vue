@@ -34,12 +34,25 @@
       </div>
       <div class="row" v-else>
         <div class="col-12">
-          <line-chart v-if="chartType === 'Line'" :chart-data="chartData" :options="chartOptions" :height="chartHeight">
+          <line-chart
+            v-if="chartType === 'Line'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          >
           </line-chart>
-          <doughnut-chart v-else-if="chartType === 'Doughnut'" :chart-data="chartData" :options="chartOptions"
-            :height="chartHeight"></doughnut-chart>
-          <bar-chart v-else-if="chartType === 'Bar'" :chart-data="chartData" :options="chartOptions"
-            :height="chartHeight"></bar-chart>
+          <doughnut-chart
+            v-else-if="chartType === 'Doughnut'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          ></doughnut-chart>
+          <bar-chart
+            v-else-if="chartType === 'Bar'"
+            :chart-data="chartData"
+            :options="chartOptions"
+            :height="chartHeight"
+          ></bar-chart>
         </div>
       </div>
       <div class="footer" v-if="$slots.footer">
@@ -54,10 +67,10 @@
 </template>
 <script>
 import Card from "./Card.vue";
-import DoughnutChart from "/src/components/Charts/DoughnutChart.js";
-import LineChart from "/src/components/Charts/LineChart.js";
-import BarChart from "/src/components/Charts/BarChart.js";
-import LoaderDots from "/src/components/LoaderDots.vue";
+import DoughnutChart from "@/components/Charts/DoughnutChart.js";
+import LineChart from "@/components/Charts/LineChart.js";
+import BarChart from "@/components/Charts/BarChart.js";
+import LoaderDots from "@/components/LoaderDots.vue";
 
 export default {
   name: "chart-card",
@@ -66,79 +79,79 @@ export default {
     LineChart,
     DoughnutChart,
     BarChart,
-    LoaderDots,
+    LoaderDots
   },
   props: {
     loading: {
       type: Boolean,
-      default: true,
+      default: true
     },
     footerText: {
       type: String,
-      default: "",
+      default: ""
     },
     title: {
       type: String,
-      default: "",
+      default: ""
     },
     subTitle: {
       type: String,
-      default: "",
+      default: ""
     },
     noData: {
       type: Boolean,
-      default: false,
+      default: false
     },
     noDataText: {
       type: String,
-      default: "no data",
+      default: "no data"
     },
     noDataIcon: {
       type: String,
-      default: "ti-alert",
+      default: "ti-alert"
     },
     chartType: {
       type: String,
-      default: "Line", // Line | Doughnut
+      default: "Line" // Line | Doughnut
     },
     chartOptions: {
       type: Object,
       default: () => {
         return {
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: false
         };
-      },
+      }
     },
     chartData: {
       type: Object,
       default: () => {
         return {
           labels: [],
-          series: [],
+          series: []
         };
-      },
+      }
     },
     chartHeight: {
       type: Number,
-      default: 300,
-    },
+      default: 300
+    }
   },
   data() {
     return {
-      chartId: "no-id",
+      chartId: "no-id"
     };
-  },
+  }
 };
 </script>
 <style>
-div.card-body>.el-tabs--border-card {
+div.card-body > .el-tabs--border-card {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-div.chart-nodata>p {
+div.chart-nodata > p {
   margin-left: 5px;
 }
 </style>

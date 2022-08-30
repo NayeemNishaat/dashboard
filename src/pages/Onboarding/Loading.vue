@@ -3,16 +3,31 @@
     <loader-dots v-if="loading"></loader-dots>
     <div v-else>
       <h3>{{ $t("select a website to manage") }}</h3>
-      <el-table ref="singleTable" data-id="loading:select-website-table" :data="Object.values({})" highlight-current-row
-        @current-change="handleClientChange" style="width: 100%" class="website-picker">
+      <el-table
+        ref="singleTable"
+        data-id="loading:select-website-table"
+        :data="Object.values({})"
+        highlight-current-row
+        @current-change="handleClientChange"
+        style="width: 100%"
+        class="website-picker"
+      >
         <el-table-column type="index" width="50"></el-table-column>
-        <el-table-column property="domain" :label="$t('domain')"></el-table-column>
+        <el-table-column
+          property="domain"
+          :label="$t('domain')"
+        ></el-table-column>
         <el-table-column property="name" :label="$t('name')"></el-table-column>
       </el-table>
       <div style="margin-top: 20px">
-        <dc-button data-id="loading:select-website-btn" :disabled="!selectedApikey" type="primary"
-          @click="selectClient()">
-          {{ $t("select") }}</dc-button>
+        <dc-button
+          data-id="loading:select-website-btn"
+          :disabled="!selectedApikey"
+          type="primary"
+          @click="selectClient()"
+        >
+          {{ $t("select") }}</dc-button
+        >
       </div>
     </div>
   </div>
@@ -20,8 +35,8 @@
 <script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
-import LoaderDots from "/src/components/LoaderDots.vue";
-import DcButton from "/src/components/DcButton.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import DcButton from "@/components/DcButton.vue";
 export default {
   name: "Loading",
   components: {

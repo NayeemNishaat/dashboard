@@ -4,7 +4,12 @@
       <div class="onboarding-step-title">
         <h1>{{ title }}</h1>
 
-        <dc-button type="text" class="onboarding-step-back" v-if="showBackButton" @click="$emit('back')">
+        <dc-button
+          type="text"
+          class="onboarding-step-back"
+          v-if="showBackButton"
+          @click="$emit('back')"
+        >
           &laquo; Back
         </dc-button>
       </div>
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-import DcButton from "/src/components/DcButton.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   name: "OnboardingStep",
@@ -58,7 +63,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 // anchoring the slideshow to the container instead of its immediate parent
 // prevents it from scrolling with overflow in desktop view
@@ -102,7 +107,7 @@ export default {
     .el-dialog__header {
       padding: 80px 100px 0;
 
-      >h2 {
+      > h2 {
         margin-bottom: 40px;
       }
     }
@@ -131,7 +136,7 @@ export default {
     padding-right: 50%;
   }
 
-  >* {
+  > * {
     flex: 0 0 auto;
   }
 }
@@ -157,7 +162,7 @@ export default {
 .onboarding-step-actions {
   margin-top: 3em;
 
-  >* {
+  > * {
     margin-bottom: 1em;
 
     &:not(:last-child) {
@@ -175,7 +180,7 @@ export default {
   padding-top: 1em;
   color: $gray-dark;
 
-  >i {
+  > i {
     font-size: 20px;
     color: $primary;
   }
@@ -189,7 +194,7 @@ export default {
 .onboarding-step-slideshow {
   margin: 0 0 1.5em;
   padding: 6.25% 12.5%;
-  background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 
   @media (min-width: 1024px) {

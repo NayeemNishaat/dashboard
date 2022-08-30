@@ -920,12 +920,12 @@ import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 import { supportedLanguages } from "@/lang/lang";
 import { nilDefaultsDeep } from "@/api/utils";
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-import Card from "/src/components/Cards/Card.vue";
-import PendingSettings from "/src/components/Settings/PendingSettings.vue";
-import LoaderDots from "/src/components/LoaderDots.vue";
-import ProductsPreview from "/src/components/ProductsPreview.vue";
+import Card from "@/components/Cards/Card.vue";
+import PendingSettings from "@/components/Settings/PendingSettings.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import ProductsPreview from "@/components/ProductsPreview.vue";
 import {
   userGuideLinks,
   titlePlaceholders,

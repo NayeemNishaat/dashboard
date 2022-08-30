@@ -10,8 +10,12 @@
 
     <div v-if="showPicker" class="lang-selector">
       <div class="languages">
-        <div :key="locale.code" v-for="locale in locales" @click="setLocale(locale)"
-          :class="{ item: true, active: selectedLocale.code === locale.code }">
+        <div
+          :key="locale.code"
+          v-for="locale in locales"
+          @click="setLocale(locale)"
+          :class="{ item: true, active: selectedLocale.code === locale.code }"
+        >
           {{ locale.title }}
         </div>
       </div>
@@ -19,13 +23,13 @@
   </div>
 </template>
 <script>
-import LangPickerIcon from "/src/components/icons/LangPickerIcon.vue";
+import LangPickerIcon from "@/components/icons/LangPickerIcon.vue";
 import { mapActions } from "vuex";
 export default {
   props: {
     selectedLocale: {
       type: Object,
-      default: () => { }
+      default: () => {}
     }
   },
   components: {
@@ -79,7 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .lang-picker-container {
   background: $bg-primary;

@@ -4,15 +4,29 @@
     <date-range-picker @datechange="refreshData"></date-range-picker>
     <section class="summary row">
       <div class="col-sm-12">
-        <el-alert v-if="installationError != ''" :title="$t(installationError)" type="error" effect="light">
+        <el-alert
+          v-if="installationError != ''"
+          :title="$t(installationError)"
+          type="error"
+          effect="light"
+        >
         </el-alert>
       </div>
     </section>
     <!--Stats cards-->
     <div class="row">
-      <div class="col-md-4 col-sm-6" v-for="stats in statsCards" :key="stats.title">
-        <stats-card :loading="loading" :title="stats.title" :value="stats.value" :comparison="stats.comparison"
-          :icon="stats.icon">
+      <div
+        class="col-md-4 col-sm-6"
+        v-for="stats in statsCards"
+        :key="stats.title"
+      >
+        <stats-card
+          :loading="loading"
+          :title="stats.title"
+          :value="stats.value"
+          :comparison="stats.comparison"
+          :icon="stats.icon"
+        >
           <div class="stats" slot="footer">
             <i class="ti-info"></i>
             {{ $t(stats.footer) }}
@@ -23,8 +37,12 @@
 
     <div class="row">
       <div class="col-sm-4 col-xs-12">
-        <chart-card title="% of sales with datacue clicks" :no-data="!conversionContribution[0]"
-          no-data-text="noSalesStayPositive" no-data-icon="ti-light-bulb" :chart-data="{
+        <chart-card
+          title="% of sales with datacue clicks"
+          :no-data="!conversionContribution[0]"
+          no-data-text="noSalesStayPositive"
+          no-data-icon="ti-light-bulb"
+          :chart-data="{
             datasets: [
               {
                 data: conversionContribution,
@@ -35,36 +53,48 @@
               }
             ],
             labels: ['DataCue', $t('other')]
-          }" :loading="loading" :chart-type="'Doughnut'" :chart-options="{
-  responsive: true,
-  maintainAspectRatio: false,
-  legend: { display: true },
-  layout: {
-    padding: {
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0
-    }
-  },
-  tooltips: {
-    callbacks: {
-      label: (tooltipItem, data) =>
-        data['datasets'][0]['data'][tooltipItem['index']] + '%'
-    }
-  }
-}"></chart-card>
+          }"
+          :loading="loading"
+          :chart-type="'Doughnut'"
+          :chart-options="{
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: { display: true },
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0
+              }
+            },
+            tooltips: {
+              callbacks: {
+                label: (tooltipItem, data) =>
+                  data['datasets'][0]['data'][tooltipItem['index']] + '%'
+              }
+            }
+          }"
+        ></chart-card>
       </div>
       <div class="col-sm-8 col-xs-12">
-        <chart-card-metrics :title="$t('product revenue per day')" :chart-data="pageData['summary_timeline']"
-          :chart-type="'Bar'" :loading="loading" default-metric="sales"></chart-card-metrics>
+        <chart-card-metrics
+          :title="$t('product revenue per day')"
+          :chart-data="pageData['summary_timeline']"
+          :chart-type="'Bar'"
+          :loading="loading"
+          default-metric="sales"
+        ></chart-card-metrics>
       </div>
     </div>
 
     <div class="row">
       <div class="col-12">
-        <chart-card-metrics title="performance by component" :chart-data="pageData['component_performance_chart']"
-          :loading="loading" :options="{
+        <chart-card-metrics
+          title="performance by component"
+          :chart-data="pageData['component_performance_chart']"
+          :loading="loading"
+          :options="{
             responsive: true,
             maintainAspectRatio: false,
             scales: {
@@ -76,21 +106,22 @@
                 }
               ]
             }
-          }"></chart-card-metrics>
+          }"
+        ></chart-card-metrics>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ChartCard from "/src/components/Cards/ChartCard.vue";
-import ChartCardMetrics from "/src/components/Cards/ChartCardMetrics.vue";
-import StatsCard from "/src/components/Cards/StatsCard.vue";
-import DateRangePicker from "/src/components/DateRangePicker.vue";
+import ChartCard from "@/components/Cards/ChartCard.vue";
+import ChartCardMetrics from "@/components/Cards/ChartCardMetrics.vue";
+import StatsCard from "@/components/Cards/StatsCard.vue";
+import DateRangePicker from "@/components/DateRangePicker.vue";
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import { getPageData } from "/src/api/backend";
+import { getPageData } from "@/api/backend";
 
 function pctChange(previous, today) {
   if (!previous) {
@@ -227,7 +258,7 @@ export default {
 };
 </script>
 <style scoped>
-.row.summary>div>div.el-alert {
+.row.summary > div > div.el-alert {
   margin-bottom: 10px;
 }
 </style>

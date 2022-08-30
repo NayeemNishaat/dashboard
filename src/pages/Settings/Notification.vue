@@ -11,24 +11,32 @@
       </div>
       <el-form label-position="top" label-width="100px" :model="notifications">
         <el-form-item :label="$t('position')">
-          <el-radio-group v-model="notifications.position" :disabled="saving" @change="saveChanges()" fill="#e6a23c">
+          <el-radio-group
+            v-model="notifications.position"
+            :disabled="saving"
+            @change="saveChanges()"
+            fill="#e6a23c"
+          >
             <el-radio-button label="top left">{{
-                $t("top left")
+              $t("top left")
             }}</el-radio-button>
             <el-radio-button label="top right">{{
-                $t("top right")
+              $t("top right")
             }}</el-radio-button>
             <el-radio-button label="bottom left">{{
-                $t("bottom left")
+              $t("bottom left")
             }}</el-radio-button>
             <el-radio-button label="bottom right">{{
-                $t("bottom right")
+              $t("bottom right")
             }}</el-radio-button>
             <el-radio-button label="custom">{{ $t("custom") }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item :label="$t('color')">
-          <el-color-picker v-model="notifications.color" @change="saveChanges()"></el-color-picker>
+          <el-color-picker
+            v-model="notifications.color"
+            @change="saveChanges()"
+          ></el-color-picker>
         </el-form-item>
       </el-form>
     </card>
@@ -38,9 +46,9 @@
 import * as Sentry from "@sentry/browser";
 import { mapGetters, mapActions } from "vuex";
 
-import Card from "/src/components/Cards/Card.vue";
-import LoaderDots from "/src/components/LoaderDots.vue";
-import UpgradePlan from "/src/pages/Billing/UpgradePlan.vue";
+import Card from "@/components/Cards/Card.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import UpgradePlan from "@/pages/Billing/UpgradePlan.vue";
 
 export default {
   name: "Notifications",

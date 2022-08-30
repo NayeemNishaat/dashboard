@@ -7,8 +7,14 @@
       <div class="row">
         <div class="col-xl-10">
           <div class="progress">
-            <div class="progress-bar" role="progressbar" :style="style" :aria-valuenow="value" aria-valuemin="0"
-              aria-valuemax="100"></div>
+            <div
+              class="progress-bar"
+              role="progressbar"
+              :style="style"
+              :aria-valuenow="value"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
           </div>
         </div>
 
@@ -47,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .step-progress {
   .top-label {

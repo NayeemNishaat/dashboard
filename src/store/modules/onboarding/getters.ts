@@ -6,7 +6,7 @@ import {
   HomepageSettings,
   WebSettings,
   Context
-} from "/src/api/interfaces";
+} from "@/api/interfaces";
 
 const getters: GetterTree<ModuleState, RootState> = {
   setupSummary(

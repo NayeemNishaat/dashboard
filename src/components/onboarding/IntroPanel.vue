@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-import DcButton from "/src/components/DcButton.vue";
+import DcButton from "@/components/DcButton.vue";
 export default {
   name: "IntroPanel",
   components: {
@@ -73,7 +73,7 @@ export default {
 <style scoped lang="scss">
 @import "@/assets/sass/datacue/_colors.scss";
 
-.card-header>* {
+.card-header > * {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -111,7 +111,7 @@ img.static {
   width: 80%;
 }
 
-button>div>i {
+button > div > i {
   margin-top: 3px;
 }
 

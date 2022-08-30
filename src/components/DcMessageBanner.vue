@@ -52,23 +52,23 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .message-banner-panel.success {
-  >i {
+  > i {
     color: $green;
   }
 }
 
 .message-banner-panel.error,
 .message-banner-panel.warning {
-  >i {
+  > i {
     color: $red;
   }
 }
 
 .message-banner-panel.default {
-  >i {
+  > i {
     color: $primary;
   }
 }
@@ -80,7 +80,7 @@ export default {
   margin-top: 1em;
   color: $gray-dark;
 
-  >i {
+  > i {
     font-size: 20px;
   }
 
@@ -88,7 +88,7 @@ export default {
     margin: 0 0 0 1em;
     font-size: 14px;
 
-    >a {
+    > a {
       font-weight: bold;
       text-decoration: underline;
     }

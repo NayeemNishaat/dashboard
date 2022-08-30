@@ -1,7 +1,11 @@
 <template>
   <div>
-    <pending-settings v-if="!onboarding" :has-unsaved-changes="hasUnsavedChanges" :saving="saving"
-      @save="saveChanges" />
+    <pending-settings
+      v-if="!onboarding"
+      :has-unsaved-changes="hasUnsavedChanges"
+      :saving="saving"
+      @save="saveChanges"
+    />
     <loader-dots v-if="!current" />
     <template v-else>
       <div class="row">
@@ -15,22 +19,41 @@
               {{ $t(titles[1]) }}
             </div>
             <transition name="fade">
-              <div class="banner-grid-selection" v-if="current.type != 'custom'">
-                <el-radio-group v-model="current.type" @change="saveIfOnboarding">
-                  <el-radio v-for="(layout, idx) in allowedLayouts" :key="idx" :label="layout">{{ $t(layout) }}&nbsp;<i
-                      v-if="!allowedLayouts.includes(layout)" class="ti-lock" /></el-radio>
+              <div
+                class="banner-grid-selection"
+                v-if="current.type != 'custom'"
+              >
+                <el-radio-group
+                  v-model="current.type"
+                  @change="saveIfOnboarding"
+                >
+                  <el-radio
+                    v-for="(layout, idx) in allowedLayouts"
+                    :key="idx"
+                    :label="layout"
+                    >{{ $t(layout) }}&nbsp;<i
+                      v-if="!allowedLayouts.includes(layout)"
+                      class="ti-lock"
+                  /></el-radio>
                 </el-radio-group>
-                <dc-upgrade-message v-if="!selectedBannerTypeAllowed"
-                  :message="$t(`upgrade your plan to use this layout`)" />
-                <dc-message-banner v-else icon="ti-light-bulb" :message="bannerRecommendation" />
+                <dc-upgrade-message
+                  v-if="!selectedBannerTypeAllowed"
+                  :message="$t(`upgrade your plan to use this layout`)"
+                />
+                <dc-message-banner
+                  v-else
+                  icon="ti-light-bulb"
+                  :message="bannerRecommendation"
+                />
               </div>
-              <dc-message-banner v-else type="error">{{ $t("custom layout selected") }}
+              <dc-message-banner v-else type="error"
+                >{{ $t("custom layout selected") }}
               </dc-message-banner>
             </transition>
             <transition name="fade">
               <div class="row" v-if="current.type === 'low'">
                 <div class="col-md-6 col-sm-12 img-col">
-                  <img src="/src/assets/img/banner-layout/low-desktop.jpg" />
+                  <img src="@/assets/img/banner-layout/low-desktop.jpg" />
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
@@ -59,7 +82,7 @@
               </div>
               <div class="row" v-else-if="current.type === 'medium'">
                 <div class="col-md-6 col-sm-12 img-col">
-                  <img src="/src/assets/img/banner-layout/medium-desktop.jpg" />
+                  <img src="@/assets/img/banner-layout/medium-desktop.jpg" />
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
@@ -88,7 +111,7 @@
               </div>
               <div class="row" v-else-if="current.type === 'high'">
                 <div class="col-md-6 col-sm-12 img-col">
-                  <img src="/src/assets/img/banner-layout/high-desktop.jpg" />
+                  <img src="@/assets/img/banner-layout/high-desktop.jpg" />
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <el-collapse>
@@ -129,28 +152,39 @@
             <div class="row">
               <div class="col-sm-6 col-xs-12">
                 <template v-if="!staticBannerLoading">
-                  <img v-if="installationSettings.static_banner.photo_url"
-                    :src="installationSettings.static_banner.photo_url" style="max-width: 100%" />
+                  <img
+                    v-if="installationSettings.static_banner.photo_url"
+                    :src="installationSettings.static_banner.photo_url"
+                    style="max-width: 100%"
+                  />
                   <p v-else>{{ $t("no static banner") }}</p>
                 </template>
                 <loader-dots v-else></loader-dots>
               </div>
               <div class="col-sm-6 col-xs-12">
-                <div v-html="
-                  $t(
-                    `static banner description:${installationSettings.static_banner.photo_url
-                      ? 'found'
-                      : 'notfound'
-                    }`
-                  )
-                " />
-                <dc-button class="btn-add-static-banner" tag="a" :href="staticBannerLink" type="outline">{{
+                <div
+                  v-html="
+                    $t(
+                      `static banner description:${
+                        installationSettings.static_banner.photo_url
+                          ? 'found'
+                          : 'notfound'
+                      }`
+                    )
+                  "
+                />
+                <dc-button
+                  class="btn-add-static-banner"
+                  tag="a"
+                  :href="staticBannerLink"
+                  type="outline"
+                  >{{
                     $t(
                       installationSettings.static_banner.photo_url
                         ? "change static banner"
                         : "add static banner"
                     )
-                }}
+                  }}
                 </dc-button>
               </div>
             </div>
@@ -165,22 +199,48 @@
               &nbsp;{{ $t("custom banner layout") }}
             </h3>
             <div>{{ $t("custom banner description") }}</div>
-            <dc-upgrade-message v-if="!bannerAccess.custom_layout" :message="
-              $t('upgrade your plan to design your own banner layout')
-            " />
+            <dc-upgrade-message
+              v-if="!bannerAccess.custom_layout"
+              :message="
+                $t('upgrade your plan to design your own banner layout')
+              "
+            />
             <div class="view-docs-btn">
-              <dc-button tag="a" :href="recommendationLink" type="outline">{{ $t("view docs") }}
+              <dc-button tag="a" :href="recommendationLink" type="outline"
+                >{{ $t("view docs") }}
               </dc-button>
             </div>
-            <el-switch v-model="custom" active-color="#fab800" inactive-color="#80848e"
-              :disabled="!bannerAccess.custom_layout" :active-text="$t('on')" :inactive-text="$t('off')">
+            <el-switch
+              v-model="custom"
+              active-color="#fab800"
+              inactive-color="#80848e"
+              :disabled="!bannerAccess.custom_layout"
+              :active-text="$t('on')"
+              :inactive-text="$t('off')"
+            >
             </el-switch>
-            <el-form label-position="top" label-width="180px" v-if="current.type === 'custom'">
+            <el-form
+              label-position="top"
+              label-width="180px"
+              v-if="current.type === 'custom'"
+            >
               <el-form-item :label="$t('large banners')">
-                <el-slider v-model="current.main_banners" :step="1" :max="20" :min="0" show-input></el-slider>
+                <el-slider
+                  v-model="current.main_banners"
+                  :step="1"
+                  :max="20"
+                  :min="0"
+                  show-input
+                ></el-slider>
               </el-form-item>
               <el-form-item :label="$t('small banners')">
-                <el-slider v-model="current.sub_banners" :step="1" :max="20" :min="0" show-input></el-slider>
+                <el-slider
+                  v-model="current.sub_banners"
+                  :step="1"
+                  :max="20"
+                  :min="0"
+                  show-input
+                ></el-slider>
               </el-form-item>
             </el-form>
           </card>
@@ -191,15 +251,15 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Card from "/src/components/Cards/Card.vue";
-import PendingSettings from "/src/components/Settings/PendingSettings.vue";
-import BannerDescription from "/src/components/Settings/BannerDescription.vue";
-import DcButton from "/src/components/DcButton.vue";
-import DcMessageBanner from "/src/components/DcMessageBanner.vue";
-import DcUpgradeMessage from "/src/components/DcUpgradeMessage.vue";
+import Card from "@/components/Cards/Card.vue";
+import PendingSettings from "@/components/Settings/PendingSettings.vue";
+import BannerDescription from "@/components/Settings/BannerDescription.vue";
+import DcButton from "@/components/DcButton.vue";
+import DcMessageBanner from "@/components/DcMessageBanner.vue";
+import DcUpgradeMessage from "@/components/DcUpgradeMessage.vue";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
-import LoaderDots from "/src/components/LoaderDots.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
 import * as Sentry from "@sentry/browser";
 
 export default {
@@ -421,7 +481,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/sass/datacue/_colors.scss";
 
-.img-col>img {
+.img-col > img {
   width: 100%;
 }
 

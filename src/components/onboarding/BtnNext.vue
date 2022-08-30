@@ -1,12 +1,17 @@
 <template>
-  <dc-button type="primary" @click="$emit('click')" :disabled="disabled" :loading="loading">
+  <dc-button
+    type="primary"
+    @click="$emit('click')"
+    :disabled="disabled"
+    :loading="loading"
+  >
     {{ $t("next") }}
     <arrow-right-icon></arrow-right-icon>
   </dc-button>
 </template>
 <script>
-import ArrowRightIcon from "/src/components/icons/ArrowRightIcon.vue";
-import DcButton from "/src/components/DcButton.vue";
+import ArrowRightIcon from "@/components/icons/ArrowRightIcon.vue";
+import DcButton from "@/components/DcButton.vue";
 
 export default {
   components: {
@@ -29,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .btn-next {
   padding: 0 20px 0 50px;

@@ -1,6 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import StatsCard from "/src/components/Cards/StatsCard.vue";
+import StatsCard from "@/components/Cards/StatsCard.vue";
 
 const localVue = createLocalVue();
 

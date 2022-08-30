@@ -1,10 +1,17 @@
 <template>
-  <onboarding-step :title="$t('onboarding:setup:title')" show-back-button @back="$emit('back')">
+  <onboarding-step
+    :title="$t('onboarding:setup:title')"
+    show-back-button
+    @back="$emit('back')"
+  >
     <template v-slot:slideshow>
       <el-carousel class="carousel" height="100%" arrow="never">
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:home')" src="@/assets/img/sign-up/slideshow/home.svg" />
+            <img
+              :alt="$t('page:home')"
+              src="@/assets/img/sign-up/slideshow/home.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:home") }}</p>
               <ul>
@@ -18,7 +25,10 @@
         </el-carousel-item>
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:category')" src="@/assets/img/sign-up/slideshow/category.svg" />
+            <img
+              :alt="$t('page:category')"
+              src="@/assets/img/sign-up/slideshow/category.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:category") }}</p>
               <ul>
@@ -32,7 +42,10 @@
         </el-carousel-item>
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:product')" src="@/assets/img/sign-up/slideshow/product.svg" />
+            <img
+              :alt="$t('page:product')"
+              src="@/assets/img/sign-up/slideshow/product.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:product") }}</p>
               <ul>
@@ -46,7 +59,10 @@
         </el-carousel-item>
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:cart')" src="@/assets/img/sign-up/slideshow/cart.svg" />
+            <img
+              :alt="$t('page:cart')"
+              src="@/assets/img/sign-up/slideshow/cart.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:cart") }}</p>
               <ul>
@@ -60,7 +76,10 @@
         </el-carousel-item>
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:search')" src="@/assets/img/sign-up/slideshow/search.svg" />
+            <img
+              :alt="$t('page:search')"
+              src="@/assets/img/sign-up/slideshow/search.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:search") }}</p>
               <ul>
@@ -74,7 +93,10 @@
         </el-carousel-item>
         <el-carousel-item>
           <div class="page-features">
-            <img :alt="$t('page:404')" src="@/assets/img/sign-up/slideshow/404.svg" />
+            <img
+              :alt="$t('page:404')"
+              src="@/assets/img/sign-up/slideshow/404.svg"
+            />
             <div class="feature-list">
               <p>{{ $t("page:404") }}</p>
               <ul>
@@ -109,8 +131,8 @@
 </template>
 
 <script>
-import DcButton from "/src/components/DcButton.vue";
-import OnboardingStep from "/src/components/onboarding/OnboardingStep.vue";
+import DcButton from "@/components/DcButton.vue";
+import OnboardingStep from "@/components/onboarding/OnboardingStep.vue";
 
 export default {
   name: "OnboardingSetupShopify",
@@ -145,7 +167,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .carousel {
   height: 100%;
@@ -178,7 +200,7 @@ export default {
     flex-flow: row nowrap;
   }
 
-  >img {
+  > img {
     width: 100%;
     height: 100%;
 

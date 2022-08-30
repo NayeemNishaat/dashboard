@@ -2,12 +2,17 @@
   <div class="onboarding">
     <header class="onboarding-header">
       <dc-steps class="onboarding-steps">
-        <dc-step v-for="step in steps" :key="step" :title="$t(`onboarding:step:${step}`)" :done="isStepDone(step)"
-          :active="step === $route.meta.step" />
+        <dc-step
+          v-for="step in steps"
+          :key="step"
+          :title="$t(`onboarding:step:${step}`)"
+          :done="isStepDone(step)"
+          :active="step === $route.meta.step"
+        />
       </dc-steps>
 
       <a class="header-logo">
-        <img alt="DataCue" src="/src/assets/img/datacue-logo-dark.svg" />
+        <img alt="DataCue" src="@/assets/img/datacue-logo-dark.svg" />
       </a>
     </header>
 
@@ -22,12 +27,12 @@
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 
-import LoaderDots from "/src/components/LoaderDots.vue";
-import DcSteps from "/src/components/DcSteps.vue";
-import DcStep from "/src/components/DcStep.vue";
+import LoaderDots from "@/components/LoaderDots.vue";
+import DcSteps from "@/components/DcSteps.vue";
+import DcStep from "@/components/DcStep.vue";
 
-import { getPageData, updatePartnerId } from "/src/api/backend.js";
-import { getCookieByName } from "/src/api/cookies.js";
+import { getPageData, updatePartnerId } from "@/api/backend.js";
+import { getCookieByName } from "@/api/cookies.js";
 
 export default {
   name: "Onboarding",
@@ -127,7 +132,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "/src/assets/sass/datacue/_colors.scss";
+@import "@/assets/sass/datacue/_colors.scss";
 
 .onboarding {
   display: flex;
@@ -153,7 +158,7 @@ export default {
     p {
       margin: 1em 0;
 
-      &+p {
+      & + p {
         margin-top: 2em;
       }
     }
@@ -178,7 +183,7 @@ export default {
       }
     }
 
-    >.loader.dots {
+    > .loader.dots {
       align-self: center;
       margin: auto;
     }
@@ -205,7 +210,7 @@ export default {
   margin-left: auto;
   justify-self: end;
 
-  >img {
+  > img {
     height: 100%;
   }
 }
@@ -218,7 +223,7 @@ export default {
 .onboarding-content {
   min-height: calc(100vh - 80px);
   padding: 2% 4%;
-  background: url("/src/assets/img/sign-up/slideshow/waves.svg") center / cover,
+  background: url("@/assets/img/sign-up/slideshow/waves.svg") center / cover,
     #fdd367;
 }
 </style>

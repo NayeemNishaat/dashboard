@@ -1,14 +1,14 @@
 import {
   defaultHomepageSettings,
   defaultPageSettings
-} from "../../../src/store/modules/settings_helpers";
+} from "../../..@/store/modules/settings_helpers";
 import accessProfiles from "./accessProfiles.js";
 
 export const pageInstallation = {
   home: defaultHomepageSettings,
   product: defaultPageSettings,
   category: defaultPageSettings,
-  "404": defaultPageSettings,
+  404: defaultPageSettings,
   cart: defaultPageSettings,
   search: defaultPageSettings
 };
@@ -60,7 +60,7 @@ export const webSettings = {
             category: true,
             search: true,
             cart: true,
-            "404": true
+            404: true
           }
         },
         related: {
@@ -78,7 +78,7 @@ export const webSettings = {
             category: true,
             search: true,
             cart: true,
-            "404": true
+            404: true
           }
         },
         user_related_categories: {
@@ -88,7 +88,7 @@ export const webSettings = {
             home: true,
             search: true,
             cart: true,
-            "404": true
+            404: true
           }
         },
         similar: {
@@ -110,7 +110,7 @@ export const webSettings = {
       section_layout: "grid",
       show_fields: ["price", "carousel_bottom"],
       "css-selectors": {
-        "404": ".better-404-pages-container-fluid",
+        404: ".better-404-pages-container-fluid",
         index: ".cuadros",
         search: ".no-search",
         product: ".datacue-car"
@@ -301,7 +301,7 @@ export const mockAuthenticatedClients = {
         first_time: { default: "", segment_name: "default" },
         notifications: { color: "#000000", limit: 10, position: "top right" },
         products: {
-          "css-selectors": { "404": "", product: "" },
+          "css-selectors": { 404: "", product: "" },
           limits: {
             product: { related: 10, similar: 0, slider: null },
             user: { recent: 10, related: 10, slider: null }

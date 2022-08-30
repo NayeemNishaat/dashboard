@@ -1,13 +1,33 @@
 <template>
   <div>
-    <div v-show="hasClientDetails" ref="btnHelp" draggable="true" @dragstart="dragStart" @dragend="dragEnd" @drag="drag"
-      :class="draggableClass">
-      <el-button type="primary" icon="ti-help" circle @click="feedbackFormVisible = true"></el-button>
+    <div
+      v-show="hasClientDetails"
+      ref="btnHelp"
+      draggable="true"
+      @dragstart="dragStart"
+      @dragend="dragEnd"
+      @drag="drag"
+      :class="draggableClass"
+    >
+      <el-button
+        type="primary"
+        icon="ti-help"
+        circle
+        @click="feedbackFormVisible = true"
+      ></el-button>
     </div>
-    <el-dialog :title="$t('how can we help you today?')" :visible.sync="feedbackFormVisible"
-      :modal-append-to-body="false">
+    <el-dialog
+      :title="$t('how can we help you today?')"
+      :visible.sync="feedbackFormVisible"
+      :modal-append-to-body="false"
+    >
       <p>{{ $t("how do you feel?") }}</p>
-      <el-radio-group fill="#e6a23c" class="smileys" v-model="feelings" size="medium">
+      <el-radio-group
+        fill="#e6a23c"
+        class="smileys"
+        v-model="feelings"
+        size="medium"
+      >
         <el-radio-button :label="$t('happy')" value="happy">
           <i class="far fa-smile"></i>
         </el-radio-button>
@@ -19,12 +39,21 @@
         </el-radio-button>
       </el-radio-group>
       <p>{{ $t("describe the issue") }}</p>
-      <el-input class="comments" type="textarea" v-model="comments" :placeholder="$t('describe the issue')"
-        autocomplete="off"></el-input>
+      <el-input
+        class="comments"
+        type="textarea"
+        v-model="comments"
+        :placeholder="$t('describe the issue')"
+        autocomplete="off"
+      ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button :disabled="!comments || !feelings" :loading="sending" type="warning" @click="sendEmail()">{{
-            $t("send")
-        }}</el-button>
+        <el-button
+          :disabled="!comments || !feelings"
+          :loading="sending"
+          type="warning"
+          @click="sendEmail()"
+          >{{ $t("send") }}</el-button
+        >
         <el-button @click="feedbackFormVisible = null">
           {{ $t("cancel") }}
         </el-button>
@@ -33,7 +62,7 @@
   </div>
 </template>
 <script>
-import { postSendEmail, setHelpWidgetPosition } from "/src/api/backend";
+import { postSendEmail, setHelpWidgetPosition } from "@/api/backend";
 import * as Sentry from "@sentry/browser";
 export default {
   name: "HelpWidget",
@@ -52,7 +81,7 @@ export default {
       clientX: 0,
       clientY: 0,
       left: null,
-      top: null,
+      top: null
     };
   },
   destroyed() {
@@ -87,12 +116,12 @@ export default {
     draggableClass() {
       return {
         float: true,
-        dragging: this.dragging,
+        dragging: this.dragging
       };
     },
     client() {
       return this.$store.getters.client;
-    },
+    }
   },
   methods: {
     updatePosition() {
@@ -141,8 +170,8 @@ export default {
         body: {
           feelings: this.feelings,
           comments: this.comments,
-          path: this.$route.fullPath,
-        },
+          path: this.$route.fullPath
+        }
       };
       postSendEmail(data)
         .then(() => {
@@ -152,7 +181,7 @@ export default {
           this.$notify({
             title: this.$t("error sending email"),
             message: this.$t("please send us an email to contact@datacue.co"),
-            type: "warning",
+            type: "warning"
           });
           Sentry.captureException(err);
         })
@@ -191,12 +220,12 @@ export default {
       elem.style.opacity = 1;
 
       const data = {
-        position: `${cleanedLeft},${cleanedTop}`,
+        position: `${cleanedLeft},${cleanedTop}`
       };
 
       setHelpWidgetPosition(data);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
