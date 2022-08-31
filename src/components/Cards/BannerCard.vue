@@ -61,13 +61,15 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import Card from "./Card.vue";
 
 let deleting = false;
-const title = () => {
-  return this.name || this.category.category_id.replace(/-/g, " ");
-};
-const ratingIcons = () => {
+const title = computed(() => {
+  return props.name || props.category.link.split("/")[2];
+});
+
+const ratingIcons = computed(() => {
   switch (props.score) {
     case 1:
       return [
@@ -86,7 +88,8 @@ const ratingIcons = () => {
       ];
   }
   return [];
-};
+});
+
 const props = defineProps({
   category: Object,
   name: String,
