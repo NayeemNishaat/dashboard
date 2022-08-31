@@ -69,27 +69,6 @@ const title = computed(() => {
   return props.name || props.category.link.split("/")[2];
 });
 
-const ratingIcons = computed(() => {
-  switch (props.score) {
-    case 1:
-      return [
-        ["el-icon-warning", "el-icon-warning", "el-icon-warning"],
-        ["#c3413e", "#c3413e", "#c3413e"]
-      ];
-    case 2:
-      return [
-        ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-        ["grey", "grey", "grey"]
-      ];
-    case 3:
-      return [
-        ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-        ["#F7BA2A", "#F7BA2A", "#F7BA2A"]
-      ];
-  }
-  return [];
-});
-
 const props = defineProps({
   category: Object,
   name: String,
