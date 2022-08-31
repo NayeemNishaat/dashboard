@@ -3,19 +3,12 @@ import { test, expect, beforeEach } from "vitest";
 import Vuex from "vuex";
 import ViewProducts from "@/pages/Products/ViewProducts.vue";
 import CardGrid from "@/components/Cards/CardGrid.vue";
+import store from "@/store";
 // import BannerCard from "@/components/Cards/BannerCard.vue";
 import ElementPlus from "element-plus";
 
 test("CardGrid", () => {
-  let store: any;
-  beforeEach(() => {
-    const getters = {
-      dateRange: () => ["2020-05-01", "2020-05-03"]
-    };
-    store = new Vuex.Store({
-      getters
-    });
-  });
+  const store = new Vuex.Store({});
 
   const wrapper = mount(CardGrid as any, {
     global: {
@@ -85,4 +78,32 @@ test("CardGrid", () => {
   expect(wrapper.text()).not.toContain("Modern White Table");
   // expect(wrapper.text()).not.toContain("Beach Towel"); // Note: Should Fail
   expect(wrapper.text()).toContain("Beach Towel");
+});
+
+test("ViewProducts", () => {
+  const wrapper = mount(ViewProducts as any, {
+    global: {
+      plugins: [store, ElementPlus],
+      mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt },
+      components: { CardGrid }
+    },
+    data() {
+      return {
+        productFilter: "related",
+        allSections: [
+          "recent",
+          "related",
+          "user_related",
+          "user_related_categories",
+          "top",
+          "similar"
+        ],
+        productPerf: [],
+        loading: false,
+        error: false
+      };
+    }
+  });
+  console.log(wrapper.html());
+  // expect(wrapper.find("#tab-related")).toContain("is-active");
 });
