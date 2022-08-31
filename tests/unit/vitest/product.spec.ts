@@ -104,6 +104,7 @@ test("ViewProducts", () => {
       };
     }
   });
-  console.log(wrapper.html());
-  // expect(wrapper.find("#tab-related")).toContain("is-active");
+  expect(wrapper.find("#pane-related").attributes("aria-hidden")).toBe("false");
+  expect(wrapper.find("#pane-recent").attributes("aria-hidden")).toBe("true");
+  // expect(wrapper.find("#pane-recent").attributes("aria-hidden")).toBe("false"); // Note: Should Fail
 });
