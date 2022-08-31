@@ -63,32 +63,29 @@
 <script setup>
 import Card from "./Card.vue";
 
-const name = "banner-card";
 let deleting = false;
-const computed = {
-  title() {
-    return this.name || this.category.category_id.replace(/-/g, " ");
-  },
-  ratingIcons() {
-    switch (this.score) {
-      case 1:
-        return [
-          ["el-icon-warning", "el-icon-warning", "el-icon-warning"],
-          ["#c3413e", "#c3413e", "#c3413e"]
-        ];
-      case 2:
-        return [
-          ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-          ["grey", "grey", "grey"]
-        ];
-      case 3:
-        return [
-          ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-          ["#F7BA2A", "#F7BA2A", "#F7BA2A"]
-        ];
-    }
-    return [];
+const title = () => {
+  return this.name || this.category.category_id.replace(/-/g, " ");
+};
+const ratingIcons = () => {
+  switch (props.score) {
+    case 1:
+      return [
+        ["el-icon-warning", "el-icon-warning", "el-icon-warning"],
+        ["#c3413e", "#c3413e", "#c3413e"]
+      ];
+    case 2:
+      return [
+        ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
+        ["grey", "grey", "grey"]
+      ];
+    case 3:
+      return [
+        ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
+        ["#F7BA2A", "#F7BA2A", "#F7BA2A"]
+      ];
   }
+  return [];
 };
 const props = defineProps({
   category: Object,
