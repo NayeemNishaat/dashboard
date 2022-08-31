@@ -102,7 +102,7 @@ const props = defineProps({
 }
 
 .card .current-value {
-  font-size: 3rem;
+  font-size: 3rem !important;
   text-align: left;
 }
 
