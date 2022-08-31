@@ -30,7 +30,7 @@ import { getPageData } from "@/api/backend";
 export default {
   components: {
     CardGrid,
-    DateRangePicker,
+    DateRangePicker
   },
   data() {
     return {
@@ -41,11 +41,11 @@ export default {
         "user_related",
         "user_related_categories",
         "top",
-        "similar",
+        "similar"
       ],
       productPerf: [],
       loading: true,
-      error: false,
+      error: false
     };
   },
   computed: {
@@ -62,7 +62,7 @@ export default {
         return [];
       }
       return this.allProducts[this.productFilter] || [];
-    },
+    }
   },
   methods: {
     async refreshData() {
@@ -82,11 +82,11 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
-  },
+  }
 };
 </script>
 <style>
