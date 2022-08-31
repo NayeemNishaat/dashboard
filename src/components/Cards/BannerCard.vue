@@ -59,74 +59,67 @@
     </card>
   </div>
 </template>
-<script>
+
+<script setup>
 import Card from "./Card.vue";
 
-export default {
-  name: "banner-card",
-  components: {
-    Card
+const name = "banner-card";
+let deleting = false;
+const computed = {
+  title() {
+    return this.name || this.category.category_id.replace(/-/g, " ");
   },
-  data() {
-    return {
-      deleting: false
-    };
-  },
-  computed: {
-    title() {
-      return this.name || this.category.category_id.replace(/-/g, " ");
-    },
-    ratingIcons() {
-      switch (this.score) {
-        case 1:
-          return [
-            ["el-icon-warning", "el-icon-warning", "el-icon-warning"],
-            ["#c3413e", "#c3413e", "#c3413e"]
-          ];
-        case 2:
-          return [
-            ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-            ["grey", "grey", "grey"]
-          ];
-        case 3:
-          return [
-            ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
-            ["#F7BA2A", "#F7BA2A", "#F7BA2A"]
-          ];
-      }
-      return [];
+  ratingIcons() {
+    switch (this.score) {
+      case 1:
+        return [
+          ["el-icon-warning", "el-icon-warning", "el-icon-warning"],
+          ["#c3413e", "#c3413e", "#c3413e"]
+        ];
+      case 2:
+        return [
+          ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
+          ["grey", "grey", "grey"]
+        ];
+      case 3:
+        return [
+          ["el-icon-star-on", "el-icon-star-on", "el-icon-star-on"],
+          ["#F7BA2A", "#F7BA2A", "#F7BA2A"]
+        ];
     }
-  },
-  props: {
-    category: Object,
-    name: String,
-    photoURL: String,
-    bannerID: String,
-    type: String,
-    link: String,
-    clicks: Number,
-    impressions: Number,
-    conversions: Number,
-    rating: Number,
-    score: Number
-  },
-  methods: {
-    delCard() {
-      this.deleting = true;
-      this.$emit("delete", this.bannerID);
-    },
-    editCard() {
-      this.$emit("edit", {
-        banner_id: this.bannerID,
-        category: this.category,
-        photo_url: this.photoURL,
-        type: this.type,
-        link: this.link
-      });
-    }
+    return [];
   }
 };
+const props = defineProps({
+  category: Object,
+  name: String,
+  photoURL: String,
+  bannerID: String,
+  type: String,
+  link: String,
+  clicks: Number,
+  impressions: Number,
+  conversions: Number,
+  rating: Number,
+  score: Number
+});
+const emit = defineEmits(["edit", "delete"]);
+
+const delCard = (_event) => {
+  deleting = true;
+  emit("delete", props.bannerID);
+};
+const editCard = () => {
+  emit("edit", {
+    banner_id: props.bannerID,
+    category: props.category,
+    photo_url: props.photoURL,
+    type: props.type,
+    link: props.link
+  });
+};
 </script>
+
 <style scoped>
 .banner-card-contents ul {
   margin: 0;
