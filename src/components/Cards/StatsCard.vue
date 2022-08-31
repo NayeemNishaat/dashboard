@@ -55,52 +55,45 @@
     </div>
   </card>
 </template>
-<script>
+<script setup>
 import Card from "./Card.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
-import { mapGetters } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
 import { differenceInCalendarDays, parseISO } from "date-fns";
 
-export default {
-  name: "stats-card",
-  computed: {
-    ...mapGetters(["dateRange"]),
-    numDays() {
-      return (
-        differenceInCalendarDays(
-          parseISO(this.dateRange?.[1]),
-          parseISO(this.dateRange?.[0])
-        ) + 1
-      );
-    }
+const store = useStore();
+const numDays = computed(() => {
+  const { dateRange } = store.getters;
+  return (
+    differenceInCalendarDays(
+      parseISO(dateRange?.[1]),
+      parseISO(dateRange?.[0])
+    ) + 1
+  );
+});
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false
   },
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: String,
-      default: ""
-    },
-    value: {
-      type: String,
-      default: ""
-    },
-    comparison: {
-      type: String,
-      default: ""
-    },
-    icon: {
-      type: String,
-      default: ""
-    }
+  title: {
+    type: String,
+    default: ""
   },
-  components: {
-    Card,
-    LoaderDots
+  value: {
+    type: String,
+    default: ""
+  },
+  comparison: {
+    type: String,
+    default: ""
+  },
+  icon: {
+    type: String,
+    default: ""
   }
-};
+});
 </script>
 
 <style scoped>
