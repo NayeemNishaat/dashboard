@@ -9,27 +9,29 @@ describe("General Settings", () => {
   it("shopify users should not see form and see explanation message instead", () => {
     const wrapper = factoryGeneralSettings(
       "SG",
-      "en",
+      "es",
       { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
       "shopify"
     );
-    console.log(wrapper.html());
+    console.log(wrapper.text());
     expect(wrapper.html()).toContain("<p>platform : shopify</p>");
-    // expect(wrapper.text()).toContain("region");
-    // expect(wrapper.text()).toContain("settings:general:regional-settings");
+    // expect(wrapper.html()).toContain(
+    //   "general-settings:currency-symbol-placement"
+    // );
     // expect(wrapper.html()).toContain("settings:general:currency-settings");
   });
-  // it("non-shopify users should see form to edit pricing and regional settings", () => {
-  //   const wrapper = factoryGeneralSettings(
-  //     "SG",
-  //     "en",
-  //     { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
-  //     "woocommerce"
-  //   );
-  //   expect(wrapper.html()).toContain("<p>platform : woocommerce</p>");
-  //   expect(wrapper.html()).toContain("form:storename");
-  //   expect(wrapper.html()).toContain("currency code");
-  // });
+  it("non-shopify users should see form to edit pricing and regional settings", () => {
+    const wrapper = factoryGeneralSettings(
+      "SG",
+      "en",
+      { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
+      "woocommerce"
+    );
+    console.log(wrapper.text());
+    expect(wrapper.html()).toContain("<p>platform : woocommerce</p>");
+    expect(wrapper.html()).toContain("form:storename");
+    expect(wrapper.html()).toContain("currency code");
+  });
 });
 
 // describe("Banner Settings", () => {
