@@ -21,73 +21,64 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import * as Sentry from "@sentry/browser";
+import { ref, computed, onMounted } from "vue";
 import CardGrid from "@/components/Cards/CardGrid.vue";
 import DateRangePicker from "@/components/DateRangePicker.vue";
-import { mapGetters } from "vuex";
 import { getPageData } from "@/api/backend";
-export default {
-  components: {
-    CardGrid,
-    DateRangePicker
-  },
-  data() {
-    return {
-      productFilter: "recent",
-      allSections: [
-        "recent",
-        "related",
-        "user_related",
-        "user_related_categories",
-        "top",
-        "similar"
-      ],
-      productPerf: [],
-      loading: true,
-      error: false
-    };
-  },
-  computed: {
-    ...mapGetters(["dateRange"]),
-    allProducts() {
-      let allProducts = {};
-      this.productPerf.forEach((e) => {
-        allProducts[e.section_type] = e.products;
-      });
-      return allProducts;
-    },
-    selProducts() {
-      if (!this.allProducts || this.allProducts === {}) {
-        return [];
-      }
-      return this.allProducts[this.productFilter] || [];
-    }
-  },
-  methods: {
-    async refreshData() {
-      const dates = this.dateRange;
-      if (!dates || dates.length !== 2) {
-        return;
-      }
-      this.loading = true;
-      try {
-        let response = await getPageData(
-          `products?startdate=${dates[0]}&enddate=${dates[1]}`
-        );
-        this.productPerf = response || [];
-      } catch (err) {
-        this.error = true;
-        Sentry.captureException(err);
-      } finally {
-        this.loading = false;
-      }
-    }
-  },
-  mounted() {
-    this.refreshData();
+import { useStore } from "vuex";
+
+const store = useStore();
+const { dateRange } = store.getters;
+
+const productFilter = ref("recent");
+const allSections = ref([
+  "recent",
+  "related",
+  "user_related",
+  "user_related_categories",
+  "top",
+  "similar"
+]);
+const productPerf = ref([]);
+const loading = ref(true);
+const error = ref(false);
+
+const allProducts = computed(() => {
+  let allProducts = {};
+  productPerf.value.forEach((e) => {
+    allProducts[e.section_type] = e.products;
+  });
+  return allProducts;
+});
+const selProducts = computed(() => {
+  if (!allProducts.value || allProducts.value === {}) {
+    return [];
+  }
+  return allProducts.value[productFilter.value] || [];
+});
+const refreshData = async () => {
+  const dates = dateRange;
+  if (!dates || dates.length !== 2) {
+    return;
+  }
+  loading.value = true;
+  try {
+    let response = await getPageData(
+      `products?startdate=${dates[0]}&enddate=${dates[1]}`
+    );
+    productPerf.value = response || [];
+  } catch (err) {
+    error.value = true;
+    Sentry.captureException(err);
+  } finally {
+    loading.value = false;
   }
 };
+onMounted(() => {
+  refreshData();
+});
 </script>
 <style>
 .product-btns > a {
