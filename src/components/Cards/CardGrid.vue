@@ -80,103 +80,89 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script setup>
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
 import BannerCard from "@/components/Cards/BannerCard.vue";
 import ProductCard from "@/components/Cards/ProductCard.vue";
 import Card from "@/components/Cards/Card.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
 import DcButton from "@/components/DcButton.vue";
 
-export default {
-  name: "CardGrid",
-  components: {
-    BannerCard,
-    ProductCard,
-    Card,
-    DcButton,
-    LoaderDots
-  },
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    cards: {
-      type: Array,
-      default: () => []
-    },
-    cardType: String
-  },
-  data() {
-    return {
-      maxcards: 30,
-      filter: "",
-      sortField: this.cardType === "banners" ? "score" : "ctr_norm"
-    };
-  },
-  computed: {
-    ...mapGetters(["client"]),
-    filteredCards() {
-      if (!this.cards) {
-        return [];
-      }
-      if (!this.filter) {
-        return this.cards;
-      }
+const store = useStore();
+const { client } = store.getters;
 
-      let cards = this.cards.filter((item) => {
-        let searchstring = this.getSearchString(item);
-        return searchstring.toLowerCase().includes(this.filter.toLowerCase());
-      });
-      return cards;
-    },
-    displayCards() {
-      if (!this.filteredCards || this.filteredCards.length === 0) {
-        return [];
-      }
-      let filteredCards = this.filteredCards;
-      return filteredCards
-        .sort(
-          (a, b) =>
-            parseFloat(b[this.sortField] || 0) -
-            parseFloat(a[this.sortField] || 0)
-        )
-        .slice(0, this.maxcards);
-    }
-  },
-  methods: {
-    getSearchString(item) {
-      if (this.cardType === "banners") {
-        return item["category_id"] + " " + (item["type"] || "");
-      }
-      return item["name"];
-    },
-    addMore() {
-      this.maxcards += 10;
-    },
-    handleClick(item) {
-      this.$emit("cardClick", item);
-    },
-    delCard(item) {
-      this.$emit("delete", item);
-    },
-    editCard(item) {
-      this.$emit("edit", item);
-    },
-    getLink(link) {
-      if (link.substring(0, 4) === "http") {
-        return link;
-      }
-      if (!this.client) {
-        return link;
-      }
-      const clientDomain = this.client.domain;
-      return `https://${clientDomain}${link}`;
-    }
-  },
+const emit = defineEmits(["edit", "delete", "cardClick"]);
 
-  mounted() {}
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  cards: {
+    type: Array,
+    default: () => []
+  },
+  cardType: String
+});
+
+const maxcards = ref(30);
+const filter = ref("");
+const sortField = ref(props.cardType === "banners" ? "score" : "ctr_norm");
+
+const filteredCards = computed(() => {
+  if (!props.cards) {
+    return [];
+  }
+  if (!filter.value) {
+    return props.cards;
+  }
+  let cards = props.cards.filter((item) => {
+    let searchstring = getSearchString(item);
+    return searchstring.toLowerCase().includes(filter.value.toLowerCase());
+  });
+  return cards;
+});
+const displayCards = computed(() => {
+  if (!filteredCards.value || filteredCards.value.length === 0) {
+    return [];
+  }
+  return filteredCards.value
+    .sort(
+      (a, b) =>
+        parseFloat(b[sortField.value] || 0) -
+        parseFloat(a[sortField.value] || 0)
+    )
+    .slice(0, maxcards.value);
+});
+
+const getSearchString = (item) => {
+  if (props.cardType === "banners") {
+    return item.link.slice(item.link.lastIndexOf("/") + 1);
+  }
+  return item["name"];
+};
+const addMore = () => {
+  maxcards.value += 10;
+};
+const handleClick = (item) => {
+  emit("cardClick", item);
+};
+const delCard = (item) => {
+  emit("delete", item);
+};
+const editCard = (item) => {
+  emit("edit", item);
+};
+const getLink = (link) => {
+  if (link.substring(0, 4) === "http") {
+    return link;
+  }
+  if (!client) {
+    return link;
+  }
+  const clientDomain = client.domain;
+  return `https://${clientDomain}${link}`;
 };
 </script>
 <style>
