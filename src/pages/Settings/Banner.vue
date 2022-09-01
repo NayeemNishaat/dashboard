@@ -271,7 +271,7 @@ export default {
     BannerDescription,
     DcButton,
     DcMessageBanner,
-    DcUpgradeMessage,
+    DcUpgradeMessage
   },
   data() {
     return {
@@ -280,17 +280,17 @@ export default {
       default: {
         type: "low",
         main_banners: 1,
-        sub_banners: 2,
+        sub_banners: 2
       },
       current: null,
-      lastSaved: null,
+      lastSaved: null
     };
   },
   props: {
     onboarding: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   computed: {
     ...mapGetters(["client", "subscription", "languageCode"]),
@@ -306,7 +306,7 @@ export default {
         ?.banners || {
         banner_limit: 0,
         custom_layout: false,
-        allowed_layouts: ["low"],
+        allowed_layouts: ["low"]
       };
       if (!bannerAccess.allowed_layouts) {
         bannerAccess.allowed_layouts = ["low"];
@@ -323,7 +323,7 @@ export default {
       if (this.onboarding) {
         return [
           "we picked a banner layout for you",
-          "just create 3 banners to start, one wide banner (1200 x 720 px) and two narrow (480 x 720 px)",
+          "just create 3 banners to start, one wide banner (1200 x 720 px) and two narrow (480 x 720 px)"
         ];
       }
       return ["select banner layout", "how many dynamic banners do you want?"];
@@ -354,7 +354,7 @@ export default {
         const layoutType =
           this.lastSaved.type !== "custom" ? this.lastSaved.type : "medium";
         this.current["type"] = layoutType;
-      },
+      }
     },
     banners() {
       let banners;
@@ -385,13 +385,13 @@ export default {
       return (
         this.selectedBannerTypeAllowed && !isEqual(this.current, this.lastSaved)
       );
-    },
+    }
   },
   methods: {
     ...mapActions("settings", [
       "getWebSettings",
       "saveSettings",
-      "getPageInstallationSettings",
+      "getPageInstallationSettings"
     ]),
     async refreshStaticBannerInfo() {
       this.staticBannerLoading = true;
@@ -471,11 +471,11 @@ export default {
       } finally {
         this.current = cloneDeep(this.banners || this.default);
       }
-    },
+    }
   },
   mounted() {
     this.refreshData();
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

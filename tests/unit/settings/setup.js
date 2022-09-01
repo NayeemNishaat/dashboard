@@ -12,6 +12,7 @@ import { getPageStatus } from "@/store/modules/settings_helpers";
 import router from "@/router/index";
 import ElementPlus from "element-plus";
 import store from "@/store";
+import Card from "@/components/Cards/Card.vue";
 
 export const factoryGeneralSettings = (
   country,
@@ -50,15 +51,16 @@ export const factoryGeneralSettings = (
 export const factoryBannerSettings = (accessProfile, bannerType) => {
   const newWebSettings = getNewObject(webSettings);
   const newPageInstallation = getNewObject(pageInstallation);
-  const router = new VueRouter();
   let currentSettings = newWebSettings.recommendations.banners;
   if (bannerType) {
     currentSettings.type = bannerType;
   }
   return mount(BannerSettings, {
-    store,
-    router,
-    stubs: elementStubs,
+    global: {
+      plugins: [store, router, ElementPlus],
+      mocks: { $tc: (txt) => txt, $t: (txt) => txt },
+      components: { Card }
+    },
     data() {
       return {
         current: currentSettings
@@ -78,16 +80,16 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
 export const factoryProductSettings = (accessProfile) => {
   const newWebSettings = getNewObject(webSettings);
   const newPageInstallation = getNewObject(pageInstallation);
-  const router = new VueRouter();
   let currentSettings = nilDefaultsDeep(
     {},
     newWebSettings.recommendations.products,
     defaultProductSettings
   );
   return mount(ProductSettings, {
-    store,
-    router,
-    stubs: elementStubs,
+    global: {
+      plugins: [store, router, ElementPlus],
+      mocks: { $tc: (txt) => txt, $t: (txt) => txt }
+    },
     data() {
       return {
         current: currentSettings
