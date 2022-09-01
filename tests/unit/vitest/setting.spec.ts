@@ -13,8 +13,10 @@ describe("General Settings", () => {
       { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
       "shopify"
     );
+    console.log(wrapper.html());
     expect(wrapper.html()).toContain("<p>platform : shopify</p>");
-    // expect(wrapper.html()).toContain("settings:general:regional-settings");
+    // expect(wrapper.text()).toContain("region");
+    // expect(wrapper.text()).toContain("settings:general:regional-settings");
     // expect(wrapper.html()).toContain("settings:general:currency-settings");
   });
   // it("non-shopify users should see form to edit pricing and regional settings", () => {

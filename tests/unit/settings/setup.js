@@ -1,6 +1,5 @@
 import { mount } from "@vue/test-utils";
 import VueRouter from "vue-router";
-import Vuex from "vuex";
 import GeneralSettings from "@/pages/Settings/General.vue";
 import BannerSettings from "@/pages/Settings/Banner.vue";
 import ProductSettings from "@/pages/Settings/Product.vue";
@@ -11,8 +10,8 @@ import { nilDefaultsDeep } from "@/api/utils";
 import { defaultProductSettings } from "@/pages/Settings/product";
 import { getPageStatus } from "@/store/modules/settings_helpers";
 import router from "@/router/index";
-
-const store = new Vuex.Store({});
+import ElementPlus from "element-plus";
+import store from "@/store";
 
 export const factoryGeneralSettings = (
   country,
@@ -26,10 +25,8 @@ export const factoryGeneralSettings = (
   newWebSettings.recommendations.all.currency = currency;
 
   return mount(GeneralSettings, {
-    store,
-    router,
-    stubs: elementStubs,
     global: {
+      plugins: [store, router, ElementPlus],
       mocks: { $tc: (txt) => txt, $t: (txt) => txt }
     },
     data() {
