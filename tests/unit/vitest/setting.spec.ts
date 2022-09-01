@@ -13,12 +13,9 @@ describe("General Settings", () => {
       { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
       "shopify"
     );
-    console.log(wrapper.text());
     expect(wrapper.html()).toContain("<p>platform : shopify</p>");
-    // expect(wrapper.html()).toContain(
-    //   "general-settings:currency-symbol-placement"
-    // );
-    // expect(wrapper.html()).toContain("settings:general:currency-settings");
+    expect(wrapper.html()).toContain("settings:general:currency-settings");
+    expect(wrapper.html()).toContain("settings:general:currency-settings");
   });
   it("non-shopify users should see form to edit pricing and regional settings", () => {
     const wrapper = factoryGeneralSettings(
@@ -27,7 +24,6 @@ describe("General Settings", () => {
       { code: "SGD", format: "${{amount}}", supported_codes: ["SGD"] },
       "woocommerce"
     );
-    console.log(wrapper.text());
     expect(wrapper.html()).toContain("<p>platform : woocommerce</p>");
     expect(wrapper.html()).toContain("form:storename");
     expect(wrapper.html()).toContain("currency code");

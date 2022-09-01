@@ -40,7 +40,10 @@ export const factoryGeneralSettings = (
       client: () => getClient("basics", clientType),
       languageCode: () => "en",
       currency: () => getNewObject(currency),
-      webSettings: () => newWebSettings
+      webSettings: () => newWebSettings,
+      isShopify() {
+        return (this.client?.type ?? "shopify") === "shopify";
+      }
     }
   });
 };
