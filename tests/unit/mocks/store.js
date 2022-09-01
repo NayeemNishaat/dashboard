@@ -1,7 +1,7 @@
 import {
   defaultHomepageSettings,
   defaultPageSettings
-} from "../../..@/store/modules/settings_helpers";
+} from "@/store/modules/settings_helpers";
 import accessProfiles from "./accessProfiles.js";
 
 export const pageInstallation = {
