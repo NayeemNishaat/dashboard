@@ -79,32 +79,3 @@ test("CardGrid", () => {
   // expect(wrapper.text()).not.toContain("Beach Towel"); // Note: Should Fail
   expect(wrapper.text()).toContain("Beach Towel");
 });
-
-test("ViewProducts", () => {
-  const wrapper = mount(ViewProducts as any, {
-    global: {
-      plugins: [store, ElementPlus],
-      mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt },
-      components: { CardGrid }
-    },
-    data() {
-      return {
-        productFilter: "related",
-        allSections: [
-          "recent",
-          "related",
-          "user_related",
-          "user_related_categories",
-          "top",
-          "similar"
-        ],
-        productPerf: [],
-        loading: false,
-        error: false
-      };
-    }
-  });
-  expect(wrapper.find("#pane-related").attributes("aria-hidden")).toBe("false");
-  expect(wrapper.find("#pane-recent").attributes("aria-hidden")).toBe("true");
-  // expect(wrapper.find("#pane-recent").attributes("aria-hidden")).toBe("false"); // Note: Should Fail
-});
