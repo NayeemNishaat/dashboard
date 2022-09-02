@@ -54,7 +54,7 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
   if (bannerType) {
     currentSettings.type = bannerType;
   }
-  return shallowMount(BannerSettings, {
+  return mount(BannerSettings, {
     global: {
       plugins: [store, router, ElementPlus],
       mocks: { $tc: (txt) => txt, $t: (txt) => txt },
@@ -65,14 +65,6 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
         current: currentSettings
       };
     }
-    // computed: {
-    //   client: () => getClient(accessProfile),
-    //   clientAccess: () => getClient(accessProfile).access,
-    //   languageCode: () => "en",
-    //   webSettings: () => newWebSettings,
-    //   banners: () => newWebSettings.recommendations.banners,
-    //   installationSettings: () => newPageInstallation["home"]
-    // }
   });
 };
 
@@ -229,3 +221,8 @@ export const factoryProductSettings = (accessProfile) => {
     }
   });
 };
+
+// bannerAccess: {
+//   custom_layout: true,
+//   allowed_layouts: ["low", "medium", "high"]
+// },
