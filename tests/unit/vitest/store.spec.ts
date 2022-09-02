@@ -1,6 +1,6 @@
 import { it, expect } from "vitest";
-import mutations from "./mocks/mutation";
-import State from "./mocks/state";
+import mutations from "../mocks/mutation";
+import State from "../mocks/state";
 import { Context } from "@/api/interfaces";
 
 it("Tests the state (Happy)", () => {
