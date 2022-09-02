@@ -74,7 +74,7 @@ export const factoryBannerSettings = (settings, bannerType) => {
   });
 };
 
-export const factoryProductSettings = (settings) => {
+export const factoryProductSettings = (accessSettings) => {
   return mount(ProductSettings, {
     global: {
       plugins: [store, ElementPlus, router],
@@ -86,18 +86,60 @@ export const factoryProductSettings = (settings) => {
       return {
         current: {
           context: {
-            ...settings
+            recent: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true,
+                product: true,
+                category: true,
+                search: true,
+                404: true,
+                cart: true
+              }
+            },
+            related: {
+              active: true,
+              title: "",
+              enabled: {
+                product: true
+              }
+            },
+            user_related: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true,
+                404: true,
+                cart: true
+              }
+            },
+            user_related_categories: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true
+              },
+              sections: 2
+            },
+            similar: {
+              active: true,
+              title: "",
+              enabled: {
+                product: true
+              }
+            },
+            top: {
+              active: true,
+              title: "",
+              enabled: {
+                category: true
+              }
+            }
           }
-        }
+        },
+        productAccess: { ...accessSettings }
       };
-    },
-    computed: {
-      productAccess() {
-        if (!this.apikey) {
-          return {};
-        }
-        return this.subscription?.access?.personalization?.products;
-      }
     }
   });
 };
