@@ -93,11 +93,36 @@ describe("Banner Settings", () => {
 
 describe("Product Settings", () => {
   it("recently viewed should be enabled if allowed in plan", () => {
-    const wrapper = factoryProductSettings("basics");
+    const wrapper = factoryProductSettings({
+      recent: {
+        active: true,
+        title: "",
+        enabled: {
+          home: true,
+          product: true,
+          category: true,
+          search: true,
+          404: true,
+          cart: true
+        }
+      }
+    });
     expect(wrapper.html()).toContain(`<el-collapse-item-stub name="recent"`);
+    expect(wrapper.html()).not.toContain(
+      `<el-collapse-item-stub name="user_related"`
+    );
   });
   it("related categories should be disabled if not allowed in plan", () => {
-    const wrapper = factoryProductSettings("basics");
+    const wrapper = factoryProductSettings({
+      user_related_categories: {
+        active: true,
+        title: "",
+        enabled: {
+          home: true
+        },
+        sections: 2
+      }
+    });
     expect(wrapper.html()).toContain(
       `name="user_related_categories" disabled="true"`
     );
