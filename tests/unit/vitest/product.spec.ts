@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
 import { test, expect } from "vitest";
 import Vuex from "vuex";
-import ViewProducts from "@/pages/Products/ViewProducts.vue";
+// import ViewProducts from "@/pages/Products/ViewProducts.vue";
 import CardGrid from "@/components/Cards/CardGrid.vue";
-import store from "@/store";
+// import store from "@/store";
 // import BannerCard from "@/components/Cards/BannerCard.vue";
 import ElementPlus from "element-plus";
 

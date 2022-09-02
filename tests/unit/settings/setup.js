@@ -1,5 +1,4 @@
-import { mount } from "@vue/test-utils";
-import VueRouter from "vue-router";
+import { mount, shallowMount } from "@vue/test-utils";
 import GeneralSettings from "@/pages/Settings/General.vue";
 import BannerSettings from "@/pages/Settings/Banner.vue";
 import ProductSettings from "@/pages/Settings/Product.vue";
@@ -55,7 +54,7 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
   if (bannerType) {
     currentSettings.type = bannerType;
   }
-  return mount(BannerSettings, {
+  return shallowMount(BannerSettings, {
     global: {
       plugins: [store, router, ElementPlus],
       mocks: { $tc: (txt) => txt, $t: (txt) => txt },
@@ -77,32 +76,193 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
   });
 };
 
+// export const factoryProductSettings = (accessProfile) => {
+//   const newWebSettings = getNewObject(webSettings);
+//   const newPageInstallation = getNewObject(pageInstallation);
+//   let currentSettings = nilDefaultsDeep(
+//     {},
+//     newWebSettings.recommendations.products,
+//     defaultProductSettings
+//   );
+//   return mount(ProductSettings, {
+//     global: {
+//       plugins: [store, router, ElementPlus],
+//       mocks: { $tc: (txt) => txt, $t: (txt) => txt }
+//       // stubs: ["info-filled", "i18n-t", "el-form", "el-form-item", "el-collapse"]
+//     },
+//     data() {
+//       return {
+//         current: currentSettings.products
+//       };
+//     },
+//     computed: {
+//       client: () => getClient(accessProfile),
+//       clientAccess: () => getClient(accessProfile).access,
+//       apikey: () => "test-store.myshopify.com",
+//       languageCode: () => "en",
+//       webSettings: () => newWebSettings,
+//       pageInstallationSettings: () => newPageInstallation,
+//       pageStatus: () => getPageStatus("found")
+//     }
+//   });
+// };
 export const factoryProductSettings = (accessProfile) => {
-  const newWebSettings = getNewObject(webSettings);
-  const newPageInstallation = getNewObject(pageInstallation);
-  let currentSettings = nilDefaultsDeep(
-    {},
-    newWebSettings.recommendations.products,
-    defaultProductSettings
-  );
+  // const newWebSettings = getNewObject(webSettings);
+  // const newPageInstallation = getNewObject(pageInstallation);
+  // let currentSettings = nilDefaultsDeep(
+  //   {},
+  //   newWebSettings.recommendations.products,
+  //   defaultProductSettings
+  // );
   return mount(ProductSettings, {
     global: {
-      plugins: [store, router, ElementPlus],
-      mocks: { $tc: (txt) => txt, $t: (txt) => txt }
+      plugins: [store, ElementPlus, router],
+      mocks: { $tc: (txt) => txt, $t: (txt) => txt },
+      stubs: ["i18n-t", "info-filled", "products-preview", "el-collapse-item"],
+      components: { Card }
+    },
+    props: {
+      onboarding: false
     },
     data() {
       return {
-        current: currentSettings
+        current: {
+          pct_promote_discounts: 0,
+          section_layout: "grid",
+          hide_out_of_stock: true,
+          section_size: 8,
+          context: {
+            recent: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true,
+                product: true,
+                category: true,
+                search: true,
+                404: true,
+                cart: true
+              }
+            },
+            related: {
+              active: true,
+              title: "",
+              enabled: {
+                product: true
+              }
+            },
+            user_related: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true,
+                404: true,
+                cart: true
+              }
+            },
+            user_related_categories: {
+              active: true,
+              title: "",
+              enabled: {
+                home: true
+              },
+              sections: 2
+            },
+            similar: {
+              active: true,
+              title: "",
+              enabled: {
+                product: true
+              }
+            },
+            top: {
+              active: true,
+              title: "",
+              enabled: {
+                category: true
+              }
+            }
+          },
+          cta_button: {
+            show_button: false,
+            caption: "Add to cart",
+            buy_caption: "Buy",
+            classes: ""
+          },
+          show_fields: ["price", "full_price"],
+          custom_styles: {
+            header: {
+              active: false,
+              color: null,
+              "text-align": "left",
+              "font-size": 24,
+              "font-weight": 600,
+              "text-transform": "none",
+              decorations: {
+                active: false,
+                "border-bottom-width": 1,
+                "border-color": null
+              }
+            },
+            photo: {
+              active: false,
+              "border-width": 1,
+              "border-color": "#cccccc",
+              padding: 10,
+              proportions: {
+                active: false,
+                "aspect-ratio": "1/1"
+              }
+            },
+            tag: {
+              active: false,
+              style: "classic",
+              color: null,
+              "background-color": null
+            },
+            title: {
+              active: false,
+              color: null,
+              "font-size": 16,
+              "font-weight": 400,
+              "text-align": "left",
+              "text-transform": "none"
+            },
+            price: {
+              active: false,
+              "text-align": "left",
+              current: {
+                color: null,
+                "font-size": 16,
+                "font-weight": 400
+              },
+              full: {
+                color: null,
+                "font-size": 16,
+                "font-weight": 400
+              },
+              discount: {
+                color: null,
+                "font-size": 16,
+                "font-weight": 400
+              }
+            },
+            layout: {
+              active: false,
+              show_next_item: true,
+              items_per_page: {
+                mobile: 2,
+                desktop: 4
+              },
+              advanced: {
+                active: false,
+                spacing: 2,
+                "max-width": 1200
+              }
+            }
+          }
+        }
       };
-    },
-    computed: {
-      client: () => getClient(accessProfile),
-      clientAccess: () => getClient(accessProfile).access,
-      apikey: () => "test-store.myshopify.com",
-      languageCode: () => "en",
-      webSettings: () => newWebSettings,
-      pageInstallationSettings: () => newPageInstallation,
-      pageStatus: () => getPageStatus("found")
     }
   });
 };
