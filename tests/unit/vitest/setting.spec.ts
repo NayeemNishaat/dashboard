@@ -32,38 +32,63 @@ describe("General Settings", () => {
 
 describe("Banner Settings", () => {
   it("custom banner layout section hidden if banner layout is standard", () => {
-    const wrapper = factoryBannerSettings("standard");
+    const wrapper = factoryBannerSettings({
+      banner_limit: 40,
+      custom_layout: false,
+      allowed_layouts: ["low", "medium", "high"]
+    });
     expect(wrapper.html()).toContain("select banner layout");
     expect(wrapper.html()).not.toContain("large banners");
   });
   it("custom banner layout disabled if no access", () => {
-    const wrapper = factoryBannerSettings("basics");
+    const wrapper = factoryBannerSettings({
+      banner_limit: 40,
+      custom_layout: false,
+      allowed_layouts: ["low", "medium", "high"]
+    });
     expect(wrapper.html()).toContain("select banner layout");
     expect(wrapper.html()).toContain(
       "upgrade your plan to design your own banner layout"
     );
   });
   it("custom banner layout enabled if plan allows it", () => {
-    const wrapper = factoryBannerSettings("premium");
-    // console.log(wrapper.html());
+    const wrapper = factoryBannerSettings({
+      banner_limit: 100,
+      custom_layout: true,
+      allowed_layouts: ["low", "medium", "high"]
+    });
     expect(wrapper.html()).toContain("select banner layout");
-    // expect(wrapper.html()).not.toContain(
-    //   "upgrade your plan to design your own banner layout"
-    // );
+    expect(wrapper.html()).not.toContain(
+      "upgrade your plan to design your own banner layout"
+    );
   });
   it("block using a layout if plan doesn't have it", () => {
-    const wrapper = factoryBannerSettings("basics", "medium");
+    const wrapper = factoryBannerSettings(
+      {
+        banner_limit: 5,
+        custom_layout: false,
+        allowed_layouts: ["low"]
+      },
+      "medium"
+    );
     expect(wrapper.html()).toContain("select banner layout");
     expect(wrapper.html()).toContain("upgrade your plan to use this layout");
   });
-  // it("allow using a layout if plan has it", () => {
-  //   const wrapper = factoryBannerSettings("standard", "medium");
-  //   expect(wrapper.html()).toContain("select banner layout");
-  //   expect(wrapper.html()).toContain("medium rec");
-  //   expect(wrapper.html()).not.toContain(
-  //     "upgrade your plan to use this layout"
-  //   );
-  // });
+  it("allow using a layout if plan has it", () => {
+    const wrapper = factoryBannerSettings(
+      {
+        banner_limit: 40,
+        custom_layout: false,
+        allowed_layouts: ["low", "medium", "high"]
+      },
+      "medium"
+    );
+    expect(wrapper.html()).toContain("select banner layout");
+    expect(wrapper.html()).toContain("medium rec");
+    expect(wrapper.html()).not.toContain(
+      "upgrade your plan to use this layout"
+    );
+  });
 });
 
 describe("Product Settings", () => {

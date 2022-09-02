@@ -47,7 +47,8 @@ export const factoryGeneralSettings = (
     }
   });
 };
-export const factoryBannerSettings = (accessProfile, bannerType) => {
+
+export const factoryBannerSettings = (settings, bannerType) => {
   const newWebSettings = getNewObject(webSettings);
   const newPageInstallation = getNewObject(pageInstallation);
   let currentSettings = newWebSettings.recommendations.banners;
@@ -62,9 +63,25 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
     },
     data() {
       return {
+        subscription: {
+          access: {
+            personalization: {
+              banners: settings
+            }
+          }
+        },
         current: currentSettings
       };
     }
+    // computed: {
+    //   client: () => getClient("basics", "shopify"),
+    //   subscription: () => newPageInstallation,
+    //   webSettings: () => newWebSettings,
+    //   languageCode: () => "en",
+    //   settings: () => newWebSettings.recommendations.banners,
+    //   installationSettings: () =>
+    //     newPageInstallation.access.personalization.banners
+    // }
   });
 };
 
