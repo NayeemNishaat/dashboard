@@ -1,13 +1,10 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import GeneralSettings from "@/pages/Settings/General.vue";
 import BannerSettings from "@/pages/Settings/Banner.vue";
 import ProductSettings from "@/pages/Settings/Product.vue";
-import { getClient, webSettings, pageInstallation } from "../mocks/store.js";
+import { getClient, webSettings } from "../mocks/store.js";
 import countryData from "../mocks/countryData.js";
-import { elementStubs, getNewObject } from "../mocks/general";
-import { nilDefaultsDeep } from "@/api/utils";
-import { defaultProductSettings } from "@/pages/Settings/product";
-import { getPageStatus } from "@/store/modules/settings_helpers";
+import { getNewObject } from "../mocks/general";
 import router from "@/router/index";
 import ElementPlus from "element-plus";
 import store from "@/store";
@@ -50,7 +47,6 @@ export const factoryGeneralSettings = (
 
 export const factoryBannerSettings = (settings, bannerType) => {
   const newWebSettings = getNewObject(webSettings);
-  const newPageInstallation = getNewObject(pageInstallation);
   let currentSettings = newWebSettings.recommendations.banners;
   if (bannerType) {
     currentSettings.type = bannerType;
@@ -73,15 +69,6 @@ export const factoryBannerSettings = (settings, bannerType) => {
         current: currentSettings
       };
     }
-    // computed: {
-    //   client: () => getClient("basics", "shopify"),
-    //   subscription: () => newPageInstallation,
-    //   webSettings: () => newWebSettings,
-    //   languageCode: () => "en",
-    //   settings: () => newWebSettings.recommendations.banners,
-    //   installationSettings: () =>
-    //     newPageInstallation.access.personalization.banners
-    // }
   });
 };
 
@@ -238,8 +225,3 @@ export const factoryProductSettings = (accessProfile) => {
     }
   });
 };
-
-// bannerAccess: {
-//   custom_layout: true,
-//   allowed_layouts: ["low", "medium", "high"]
-// },
