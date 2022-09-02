@@ -64,56 +64,19 @@ export const factoryBannerSettings = (accessProfile, bannerType) => {
       return {
         current: currentSettings
       };
-    },
-    computed: {
-      client: () => getClient(accessProfile),
-      clientAccess: () => getClient(accessProfile).access,
-      languageCode: () => "en",
-      webSettings: () => newWebSettings,
-      banners: () => newWebSettings.recommendations.banners,
-      installationSettings: () => newPageInstallation["home"]
     }
+    // computed: {
+    //   client: () => getClient(accessProfile),
+    //   clientAccess: () => getClient(accessProfile).access,
+    //   languageCode: () => "en",
+    //   webSettings: () => newWebSettings,
+    //   banners: () => newWebSettings.recommendations.banners,
+    //   installationSettings: () => newPageInstallation["home"]
+    // }
   });
 };
 
-// export const factoryProductSettings = (accessProfile) => {
-//   const newWebSettings = getNewObject(webSettings);
-//   const newPageInstallation = getNewObject(pageInstallation);
-//   let currentSettings = nilDefaultsDeep(
-//     {},
-//     newWebSettings.recommendations.products,
-//     defaultProductSettings
-//   );
-//   return mount(ProductSettings, {
-//     global: {
-//       plugins: [store, router, ElementPlus],
-//       mocks: { $tc: (txt) => txt, $t: (txt) => txt }
-//       // stubs: ["info-filled", "i18n-t", "el-form", "el-form-item", "el-collapse"]
-//     },
-//     data() {
-//       return {
-//         current: currentSettings.products
-//       };
-//     },
-//     computed: {
-//       client: () => getClient(accessProfile),
-//       clientAccess: () => getClient(accessProfile).access,
-//       apikey: () => "test-store.myshopify.com",
-//       languageCode: () => "en",
-//       webSettings: () => newWebSettings,
-//       pageInstallationSettings: () => newPageInstallation,
-//       pageStatus: () => getPageStatus("found")
-//     }
-//   });
-// };
 export const factoryProductSettings = (accessProfile) => {
-  // const newWebSettings = getNewObject(webSettings);
-  // const newPageInstallation = getNewObject(pageInstallation);
-  // let currentSettings = nilDefaultsDeep(
-  //   {},
-  //   newWebSettings.recommendations.products,
-  //   defaultProductSettings
-  // );
   return mount(ProductSettings, {
     global: {
       plugins: [store, ElementPlus, router],
