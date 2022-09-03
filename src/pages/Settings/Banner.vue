@@ -2,7 +2,7 @@
   <div>
     <pending-settings
       v-if="!onboarding"
-      :has-unsaved-changes="hasUnsavedChanges()"
+      :has-unsaved-changes="hasUnsavedChanges"
       :saving="saving"
       @save="saveChanges"
     />
@@ -37,7 +37,7 @@
                   /></el-radio>
                 </el-radio-group>
                 <dc-upgrade-message
-                  v-if="!selectedBannerTypeAllowed()"
+                  v-if="!selectedBannerTypeAllowed"
                   :message="$t(`upgrade your plan to use this layout`)"
                 />
                 <dc-message-banner
@@ -211,7 +211,7 @@
               </dc-button>
             </div>
             <el-switch
-              v-model="vCustom"
+              v-model="custom"
               active-color="#fab800"
               inactive-color="#80848e"
               :disabled="!bannerAccess.custom_layout"
@@ -249,10 +249,8 @@
     </template>
   </div>
 </template>
-<script setup>
+<script>
 import { mapGetters, mapActions } from "vuex";
-import { useStore } from "vuex";
-import { computed, ref, onMounted } from "vue";
 import Card from "@/components/Cards/Card.vue";
 import PendingSettings from "@/components/Settings/PendingSettings.vue";
 import BannerDescription from "@/components/Settings/BannerDescription.vue";
@@ -264,245 +262,221 @@ import isEqual from "lodash/isEqual";
 import LoaderDots from "@/components/LoaderDots.vue";
 import * as Sentry from "@sentry/browser";
 
-const store = useStore();
-// export default {
-// name: "BannerSettings",
-// components: {
-//   Card,
-//   LoaderDots,
-//   PendingSettings,
-//   BannerDescription,
-//   DcButton,
-//   DcMessageBanner,
-//   DcUpgradeMessage
-// },
-// data() {
-// return {
-const saving = ref(false);
-const staticBannerLoading = ref(false);
-const defaults = ref({
-  type: "low",
-  main_banners: 1,
-  sub_banners: 2
-});
-const current = ref(null);
-const lastSaved = ref(null);
-// };
-// }
-
-const props = defineProps({
-  onboarding: {
-    type: Boolean,
-    default: false
-  }
-});
-// props: {
-//   onboarding: {
-//     type: Boolean,
-//     default: false
-//   }
-// }
-
-const { client, subscription, languageCode } = store.getters;
-const webSettings = store.getters["settings/webSettings"];
-const installationSettings = store.getters["settings/installationSettings"];
-
-// ...mapGetters(["client", "subscription", "languageCode"]),
-// ...mapGetters("settings", ["webSettings", "installationSettings"]),
-
-const allowedLayouts = computed(() => {
-  if (props.onboarding || !bannerAccess.value.allowed_layouts) {
-    return ["low"];
-  }
-  return bannerAccess.value.allowed_layouts || ["low"];
-});
-
-const bannerAccess = computed(() => {
-  let bannerAccess = subscription?.access?.personalization?.banners || {
-    banner_limit: 0,
-    custom_layout: false,
-    allowed_layouts: ["low"]
-  };
-  if (!bannerAccess.allowed_layouts) {
-    bannerAccess.allowed_layouts = ["low"];
-  }
-  return bannerAccess;
-});
-const bannerRecommendation = computed(() => {
-  if (!current.value || current.value === "custom") {
-    return "";
-  }
-  return `${current.value.type} rec`;
-});
-const titles = computed(() => {
-  if (props.onboarding) {
-    return [
-      "we picked a banner layout for you",
-      "just create 3 banners to start, one wide banner (1200 x 720 px) and two narrow (480 x 720 px)"
-    ];
-  }
-  return ["select banner layout", "how many dynamic banners do you want?"];
-});
-const recommendationLink = computed(() => {
-  let lang = "";
-  if (languageCode === "es") {
-    lang = "es/";
-  }
-  return `https://help.datacue.co/${lang}${client.type}/install/advanced.html#custom-banner-layout`;
-});
-const staticBannerLink = computed(() => {
-  let lang = "";
-  if (languageCode === "es") {
-    lang = "es/";
-  }
-  return `https://help.datacue.co/${lang}install/${client.type}.html#changing-your-static-banner-later`;
-});
-const vCustom = {
-  get() {
-    return current.value.type === "custom";
+export default {
+  name: "BannerSettings",
+  components: {
+    Card,
+    LoaderDots,
+    PendingSettings,
+    BannerDescription,
+    DcButton,
+    DcMessageBanner,
+    DcUpgradeMessage
   },
-  set(v) {
-    if (v) {
-      current.value["type"] = "custom";
-      return;
+  data() {
+    return {
+      saving: false,
+      staticBannerLoading: false,
+      default: {
+        type: "low",
+        main_banners: 1,
+        sub_banners: 2
+      },
+      current: null,
+      lastSaved: null
+    };
+  },
+  props: {
+    onboarding: {
+      type: Boolean,
+      default: false
     }
-    const layoutType =
-      lastSaved.value.type !== "custom" ? lastSaved.value.type : "medium";
-    current.value["type"] = layoutType;
-  }
-};
-const banners = () => {
-  let banners;
-  try {
-    banners = webSettings.recommendations.banners;
-  } catch {
-    banners = null;
-  }
-  if (!banners) {
-    return null;
-  }
+  },
+  computed: {
+    ...mapGetters(["client", "subscription", "languageCode"]),
+    ...mapGetters("settings", ["webSettings", "installationSettings"]),
+    allowedLayouts() {
+      if (this.onboarding || !this.bannerAccess.allowed_layouts) {
+        return ["low"];
+      }
+      return this.bannerAccess.allowed_layouts || ["low"];
+    },
+    bannerAccess() {
+      let bannerAccess = this.subscription?.access?.personalization
+        ?.banners || {
+        banner_limit: 0,
+        custom_layout: false,
+        allowed_layouts: ["low"]
+      };
+      if (!bannerAccess.allowed_layouts) {
+        bannerAccess.allowed_layouts = ["low"];
+      }
+      return bannerAccess;
+    },
+    bannerRecommendation() {
+      if (!this.current || this.current === "custom") {
+        return "";
+      }
+      return this.$t(`${this.current.type} rec`);
+    },
+    titles() {
+      if (this.onboarding) {
+        return [
+          "we picked a banner layout for you",
+          "just create 3 banners to start, one wide banner (1200 x 720 px) and two narrow (480 x 720 px)"
+        ];
+      }
+      return ["select banner layout", "how many dynamic banners do you want?"];
+    },
+    recommendationLink() {
+      let lang = "";
+      if (this.languageCode === "es") {
+        lang = "es/";
+      }
+      return `https://help.datacue.co/${lang}${this.client.type}/install/advanced.html#custom-banner-layout`;
+    },
+    staticBannerLink() {
+      let lang = "";
+      if (this.languageCode === "es") {
+        lang = "es/";
+      }
+      return `https://help.datacue.co/${lang}install/${this.client.type}.html#changing-your-static-banner-later`;
+    },
+    custom: {
+      get() {
+        return this.current.type === "custom";
+      },
+      set(v) {
+        if (v) {
+          this.current["type"] = "custom";
+          return;
+        }
+        const layoutType =
+          this.lastSaved.type !== "custom" ? this.lastSaved.type : "medium";
+        this.current["type"] = layoutType;
+      }
+    },
+    banners() {
+      let banners;
+      try {
+        banners = this.webSettings.recommendations.banners;
+      } catch {
+        banners = null;
+      }
+      if (!banners) {
+        return null;
+      }
 
-  if (!banners.type) {
-    banners.type = guessBannerType(banners.main_banners);
-  }
-  return banners;
-};
-const selectedBannerTypeAllowed = () => {
-  if (!bannerAccess.value || !current.value) {
-    return false;
-  }
-  return (
-    (bannerAccess.value.custom_layout && current.value.type === "custom") ||
-    allowedLayouts.value.includes(current.value.type)
-  );
-};
-const hasUnsavedChanges = () => {
-  return (
-    selectedBannerTypeAllowed() && !isEqual(current.value, lastSaved.value)
-  );
-};
-// }
-// methods: {
-// ...mapActions("settings", [
-//   "getWebSettings",
-//   "saveSettings",
-//   "getPageInstallationSettings"
-// ]),
-const refreshStaticBannerInfo = async () => {
-  staticBannerLoading.value = true;
-  try {
-    // await this.getPageInstallationSettings("home");
-    await store.dispatch("settings/getPageInstallationSettings", "home");
-  } catch (err) {
-    Sentry.captureException(err);
-  } finally {
-    staticBannerLoading.value = false;
-  }
-};
-const submitForm = () => {
-  saveChanges();
-};
-const saveIfOnboarding = () => {
-  if (props.onboarding) {
-    saveChanges();
-  }
-};
-const getMainBannerCountFromType = (type) => {
-  switch (type) {
-    case "low":
-      return 1;
-    case "medium":
-      return 2;
-    case "high":
-      return 3;
-    default:
-      return 1;
-  }
-};
-const saveChanges = async () => {
-  if (!selectedBannerTypeAllowed()) {
-    return;
-  }
-  saving.value = true;
-  try {
-    const newSettings = cloneDeep(webSettings);
-    if (current.value.type !== "custom") {
-      current.value.sub_banners = 2;
-      current.value.main_banners = getMainBannerCountFromType(
-        current.value.type
+      if (!banners.type) {
+        banners.type = this.guessBannerType(banners.main_banners);
+      }
+      return banners;
+    },
+    selectedBannerTypeAllowed() {
+      if (!this.bannerAccess || !this.current) {
+        return false;
+      }
+      return (
+        (this.bannerAccess.custom_layout && this.current.type === "custom") ||
+        this.allowedLayouts.includes(this.current.type)
+      );
+    },
+    hasUnsavedChanges() {
+      return (
+        this.selectedBannerTypeAllowed && !isEqual(this.current, this.lastSaved)
       );
     }
-    newSettings.recommendations.banners = cloneDeep(current.value);
-    await store.dispatch("settings/saveSettings", {
-      web_settings: newSettings
-    });
-    // await this.saveSettings({ web_settings: newSettings });
-    lastSaved.value = cloneDeep(banners() || {});
-  } catch (err) {
-    Sentry.captureException(err);
-  } finally {
-    saving.value = false;
+  },
+  methods: {
+    ...mapActions("settings", [
+      "getWebSettings",
+      "saveSettings",
+      "getPageInstallationSettings"
+    ]),
+    async refreshStaticBannerInfo() {
+      this.staticBannerLoading = true;
+      try {
+        await this.getPageInstallationSettings("home");
+      } catch (err) {
+        Sentry.captureException(err);
+      } finally {
+        this.staticBannerLoading = false;
+      }
+    },
+    submitForm() {
+      this.saveChanges();
+    },
+    saveIfOnboarding() {
+      if (this.onboarding) {
+        this.saveChanges();
+      }
+    },
+    getMainBannerCountFromType(type) {
+      switch (type) {
+        case "low":
+          return 1;
+        case "medium":
+          return 2;
+        case "high":
+          return 3;
+        default:
+          return 1;
+      }
+    },
+    async saveChanges() {
+      if (!this.selectedBannerTypeAllowed) {
+        return;
+      }
+      this.saving = true;
+      try {
+        const newSettings = cloneDeep(this.webSettings);
+        if (this.current.type !== "custom") {
+          this.current.sub_banners = 2;
+          this.current.main_banners = this.getMainBannerCountFromType(
+            this.current.type
+          );
+        }
+        newSettings.recommendations.banners = cloneDeep(this.current);
+        await this.saveSettings({ web_settings: newSettings });
+        this.lastSaved = cloneDeep(this.banners || {});
+      } catch (err) {
+        Sentry.captureException(err);
+      } finally {
+        this.saving = false;
+      }
+    },
+    guessBannerType(main_banners) {
+      if (!main_banners) {
+        return "";
+      }
+      switch (main_banners) {
+        case (0, 1):
+          return "low";
+        case 2:
+          return "medium";
+        case 3:
+          return "high";
+        default:
+          return "low";
+      }
+    },
+    async refreshData() {
+      try {
+        const webSettings = this.getWebSettings();
+        const installationSettings = this.getPageInstallationSettings("home");
+        [await webSettings, await installationSettings];
+        this.lastSaved = cloneDeep(this.banners || {});
+      } catch (err) {
+        Sentry.captureException(err);
+      } finally {
+        this.current = cloneDeep(this.banners || this.default);
+      }
+    }
+  },
+  mounted() {
+    this.refreshData();
   }
 };
-const guessBannerType = (main_banners) => {
-  if (!main_banners) {
-    return "";
-  }
-  switch (main_banners) {
-    case (0, 1):
-      return "low";
-    case 2:
-      return "medium";
-    case 3:
-      return "high";
-    default:
-      return "low";
-  }
-};
-const refreshData = async () => {
-  try {
-    const webSettings = store.dispatch("settings/getWebSettings");
-    // const webSettings = this.getWebSettings();
-    const installationSettings = store.dispatch(
-      "settings/getPageInstallationSettings",
-      "home"
-    );
-    [await webSettings, await installationSettings];
-    lastSaved.value = cloneDeep(banners() || {});
-  } catch (err) {
-    Sentry.captureException(err);
-  } finally {
-    current.value = cloneDeep(banners() || defaults.value);
-  }
-};
-// },
-// mounted() {
-//   this.refreshData();
-// }
-// };
-onMounted(() => {
-  refreshData();
-});
 </script>
 <style lang="scss" scoped>
 @import "@/assets/sass/datacue/_colors.scss";
