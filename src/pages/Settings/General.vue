@@ -423,7 +423,6 @@ const refreshData = async () => {
   loading.value = true;
   try {
     const webSettings = getWebSettings;
-    console.log(88);
     const fetchCountrySettings = getCountrySettings();
     let response = [await webSettings, await fetchCountrySettings];
     setData();
@@ -478,13 +477,13 @@ const showError = (err) => {
 };
 const setCurrencyVars = (
   showDecimals,
-  currencySymbolSeparator,
-  currencySymbolPosition,
-  currencyDecimalSeparator
+  symbolSeparator,
+  symbolPosition,
+  decimalSeparator
 ) => {
-  currencySymbolPosition.value = currencySymbolPosition;
-  currencySymbolSeparator.value = currencySymbolSeparator;
-  currencyDecimalSeparator.value = currencyDecimalSeparator;
+  currencySymbolPosition.value = symbolPosition;
+  currencySymbolSeparator.value = symbolSeparator;
+  currencyDecimalSeparator.value = decimalSeparator;
   currencyShowDecimals.value = showDecimals;
 };
 const updateCountryDependents = () => {
