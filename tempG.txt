@@ -193,17 +193,15 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
+<script>
 import * as Sentry from "@sentry/browser";
 import { mapActions, mapGetters } from "vuex";
 import { getCountrySettings } from "@/api/backend";
-import { useStore } from "vuex";
+
 import Card from "@/components/Cards/Card.vue";
+
 import DcButton from "@/components/DcButton.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
-
-const store = useStore();
 
 function currencyFormatString(format) {
   var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
@@ -255,271 +253,281 @@ function formatPrice(price, options) {
   return formatString.replace(placeholderRegex, value);
 }
 
-// export default {
-// name: "General",
-// components: {
-//   Card,
-//   DcButton,
-//   LoaderDots
-// }
-// data() {
-// return {
-const saving = ref(false);
-const loading = ref(false);
-const countrySettings = ref({});
-const currencyCode = ref("");
-const currencyDecimalSeparator = ref(".");
-const currencyShowDecimals = ref(true);
-const currencySymbolPosition = ref("front");
-const currencySymbolSeparator = ref("");
-const storeName = ref("");
-const language = ref("es");
-const country = ref("US");
-const defaultCurrency = ref({
-  code: "USD",
-  format: "${{amount}}",
-  supported_codes: ["USD"]
-});
-// };
-// }
-// const { client, languageCode, settings } = store.getters;
-computed: {
-  // ...mapGetters(["client"]),
-  // ...mapGetters(["client", "languageCode"]),
-  // ...mapGetters("settings", ["webSettings", "locale"]),
-  const languageName = () => {
-    try {
-      return availableLanguages.filter((elem) => elem.code == language)[0].name;
-    } catch (err) {
-      return "";
-    }
-  };
-  const countryName = () => {
-    try {
-      return countries.filter((elem) => elem.code === country)[0].name;
-    } catch (err) {
-      return "";
-    }
-  };
-  const isShopify = () => {
-    return (client?.type ?? "shopify") === "shopify";
-  };
-  const currencySymbol = () => {
-    return currentCountry?.currencies?.currency?.symbol ?? "";
-  };
-  const availableLanguages = () => {
-    if (currentCountry === {}) {
-      return [];
-    }
-    let languages = currentCountry.languages || [
-      { iso639_1: "en", name: "English", nativeName: "English" }
-    ];
-
-    return languages.map((lang) => {
-      return {
-        code: lang.iso639_1,
-        name:
-          lang.name === lang.nativeName
-            ? lang.name
-            : `${lang.nativeName} (${lang.name})`
-      };
-    });
-  };
-  const currency = () => {
-    let currency = client?.profile?.locale?.currency ?? defaultCurrency;
-
-    let formatString = "{{amount}}";
-    if (currencyDecimalSeparator === "'") {
-      formatString = "{{amount_with_apostrophe_separator}}";
-    } else if (currencyDecimalSeparator === ",") {
-      if (currencyShowDecimals) {
-        formatString = "{{amount_with_comma_separator}}";
-      } else {
-        formatString = "{{amount_no_decimals_with_comma_separator}}";
+export default {
+  name: "General",
+  components: {
+    Card,
+    DcButton,
+    LoaderDots
+  },
+  data() {
+    return {
+      saving: false,
+      loading: false,
+      countrySettings: {},
+      currencyCode: "",
+      currencyDecimalSeparator: ".",
+      currencyShowDecimals: true,
+      currencySymbolPosition: "front",
+      currencySymbolSeparator: "",
+      storeName: "",
+      language: "es",
+      country: "US",
+      defaultCurrency: {
+        code: "USD",
+        format: "${{amount}}",
+        supported_codes: ["USD"]
       }
-    } else if (!currencyShowDecimals) {
-      formatString = "{{amount_no_decimals}}";
-    }
-    currency.supported_codes = [currencyCode];
-    if (currencySymbolPosition === "back") {
-      currency.format = `${formatString}${currencySymbolSeparator}${currencySymbol}`;
-      return currency;
-    }
-    currency.format = `${currencySymbol}${currencySymbolSeparator}${formatString}`;
-    return currency;
-  };
-  const availableCurrencies = () => {
-    if (currentCountry === {}) {
-      return [];
-    }
-    return [currentCountry?.currencies?.code ?? "USD"];
-  };
-  const currentCountry = () => {
-    if (
-      !countrySettings ||
-      countrySettings === {} ||
-      !country ||
-      !(country in countrySettings)
-    ) {
-      return {};
-    }
-    return countrySettings[country.toUpperCase()];
-  };
-  const countries = () => {
-    if (!countrySettings || countrySettings === {}) {
-      return [];
-    }
-    let countries = [];
-    Object.keys(countrySettings).map((countryCode) => {
-      let name = countrySettings[countryCode].names.en;
+    };
+  },
+  computed: {
+    ...mapGetters(["client"]),
+    ...mapGetters(["client", "languageCode"]),
+    ...mapGetters("settings", ["webSettings", "locale"]),
+    languageName() {
       try {
-        if (
-          languageCode &&
-          languageCode in countrySettings[countryCode].names.translations
-        ) {
-          name = countrySettings[countryCode].names.translations[languageCode];
+        return this.availableLanguages.filter(
+          (elem) => elem.code == this.language
+        )[0].name;
+      } catch (err) {
+        return "";
+      }
+    },
+    countryName() {
+      try {
+        return this.countries.filter((elem) => elem.code == this.country)[0]
+          .name;
+      } catch (err) {
+        return "";
+      }
+    },
+    isShopify() {
+      return (this.client?.type ?? "shopify") === "shopify";
+    },
+    currencySymbol() {
+      return this.currentCountry?.currencies?.currency?.symbol ?? "";
+    },
+    availableLanguages() {
+      if (this.currentCountry === {}) {
+        return [];
+      }
+      let languages = this.currentCountry.languages || [
+        { iso639_1: "en", name: "English", nativeName: "English" }
+      ];
+
+      return languages.map((lang) => {
+        return {
+          code: lang.iso639_1,
+          name:
+            lang.name === lang.nativeName
+              ? lang.name
+              : `${lang.nativeName} (${lang.name})`
+        };
+      });
+    },
+    currency() {
+      let currency =
+        this.client?.profile?.locale?.currency ?? this.defaultCurrency;
+
+      let formatString = "{{amount}}";
+      if (this.currencyDecimalSeparator === "'") {
+        formatString = "{{amount_with_apostrophe_separator}}";
+      } else if (this.currencyDecimalSeparator === ",") {
+        if (this.currencyShowDecimals) {
+          formatString = "{{amount_with_comma_separator}}";
+        } else {
+          formatString = "{{amount_no_decimals_with_comma_separator}}";
+        }
+      } else if (!this.currencyShowDecimals) {
+        formatString = "{{amount_no_decimals}}";
+      }
+      currency.supported_codes = [this.currencyCode];
+      if (this.currencySymbolPosition === "back") {
+        currency.format = `${formatString}${this.currencySymbolSeparator}${this.currencySymbol}`;
+        return currency;
+      }
+      currency.format = `${this.currencySymbol}${this.currencySymbolSeparator}${formatString}`;
+      return currency;
+    },
+    availableCurrencies() {
+      if (this.currentCountry === {}) {
+        return [];
+      }
+      return [this.currentCountry?.currencies?.code ?? "USD"];
+    },
+    currentCountry() {
+      if (
+        !this.countrySettings ||
+        this.countrySettings === {} ||
+        !this.country ||
+        !(this.country in this.countrySettings)
+      ) {
+        return {};
+      }
+      return this.countrySettings[this.country.toUpperCase()];
+    },
+    countries() {
+      if (!this.countrySettings || this.countrySettings === {}) {
+        return [];
+      }
+      let countries = [];
+      Object.keys(this.countrySettings).map((countryCode) => {
+        let name = this.countrySettings[countryCode].names.en;
+        try {
+          if (
+            this.languageCode &&
+            this.languageCode in
+              this.countrySettings[countryCode].names.translations
+          ) {
+            name =
+              this.countrySettings[countryCode].names.translations[
+                this.languageCode
+              ];
+          }
+        } catch (err) {
+          name = this.countrySettings[countryCode].names.en;
+        }
+        countries.push({
+          code: countryCode,
+          name: name
+        });
+      });
+      return countries;
+    },
+    samplePrice() {
+      if (!this.currency || this.currency === {}) {
+        return "$1,500.00";
+      }
+      return formatPrice(1500, this.currency);
+    }
+  },
+  methods: {
+    ...mapActions("settings", ["getWebSettings", "saveSettings"]),
+    async saveChanges() {
+      if (this.client.type === "shopify") {
+        return;
+      }
+      this.saving = true;
+      try {
+        const newProfile = this.client?.profile;
+        newProfile.locale["country"] = this.country;
+        newProfile.locale["language"] = this.language;
+        newProfile.locale["currency"] = this.currency;
+        await this.saveSettings({
+          profile: newProfile,
+          store_name: this.storeName
+        });
+        this.setData();
+        this.$notify({
+          title: this.$t("success"),
+          message: this.$t("saved"),
+          type: "success"
+        });
+      } catch (err) {
+        Sentry.captureException(err);
+        this.showError(err);
+      } finally {
+        this.saving = false;
+      }
+    },
+    async refreshData() {
+      this.loading = true;
+      try {
+        const webSettings = this.getWebSettings();
+        const countrySettings = getCountrySettings();
+        let response = [await webSettings, await countrySettings];
+        this.setData();
+        if (response[1]) {
+          this.countrySettings = response[1];
         }
       } catch (err) {
-        name = countrySettings[countryCode].names.en;
+        this.error = this.$t(
+          "an unknown error occured, please try again later"
+        );
+        Sentry.captureException(err);
+      } finally {
+        this.loading = false;
       }
-      countries.push({
-        code: countryCode,
-        name: name
+    },
+    setData() {
+      //set name
+      this.storeName = this.client.name;
+      //set country
+      this.country = this.client?.profile?.locale?.country ?? "US";
+
+      //set language
+      this.language = this.client?.profile?.locale?.language ?? "en";
+
+      const currency =
+        this.client?.profile?.locale?.currency ?? this.defaultCurrency;
+
+      //set currency vars
+      switch (currencyFormatString(currency.format)) {
+        case "amount":
+          this.setCurrencyVars(true, "", "front", ".");
+          break;
+        case "amount_no_decimals":
+          this.setCurrencyVars(false, "", "front", ".");
+          break;
+        case "amount_with_comma_separator":
+          this.setCurrencyVars(true, "", "front", ",");
+          break;
+        case "amount_no_decimals_with_comma_separator":
+          this.setCurrencyVars(false, "", "front", ",");
+          break;
+        case "amount_with_apostrophe_separator":
+          this.setCurrencyVars(true, "", "front", "'");
+          break;
+      }
+    },
+    showError(err) {
+      Sentry.captureException(err);
+      this.$notify({
+        title: this.$t("could not save"),
+        message: this.$t("an unknown error occured, please try again later"),
+        type: "warning"
       });
-    });
-    return countries;
-  };
-  const samplePrice = () => {
-    if (!currency || currency === {}) {
-      return "$1,500.00";
-    }
-    return formatPrice(1500, currency);
-  };
-}
-// };
-
-// {
-// ...mapActions("settings", ["getWebSettings", "saveSettings"]),
-const saveChanges = async () => {
-  if (client.type === "shopify") {
-    return;
-  }
-  saving.value = true;
-  try {
-    const newProfile = client?.profile;
-    newProfile.locale["country"] = country;
-    newProfile.locale["language"] = language;
-    newProfile.locale["currency"] = currency;
-    await saveSettings({
-      profile: newProfile,
-      store_name: storeName
-    });
-    setData();
-    $notify({
-      title: $t("success"),
-      message: $t("saved"),
-      type: "success"
-    });
-  } catch (err) {
-    Sentry.captureException(err);
-    showError(err);
-  } finally {
-    saving.value = false;
-  }
-};
-const refreshData = async () => {
-  loading = true;
-  try {
-    const webSettings = getWebSettings();
-    const countrySettings = getCountrySettings();
-    let response = [await webSettings, await countrySettings];
-    setData();
-    if (response[1]) {
-      countrySettings = response[1];
-    }
-  } catch (err) {
-    error = $t("an unknown error occured, please try again later");
-    Sentry.captureException(err);
-  } finally {
-    loading = false;
-  }
-};
-const setData = () => {
-  //set name
-  storeName = client.name;
-  //set country
-  country = client?.profile?.locale?.country ?? "US";
-
-  //set language
-  language = client?.profile?.locale?.language ?? "en";
-
-  const currency = client?.profile?.locale?.currency ?? defaultCurrency;
-
-  //set currency vars
-  switch (currencyFormatString(currency.format)) {
-    case "amount":
-      setCurrencyVars(true, "", "front", ".");
-      break;
-    case "amount_no_decimals":
-      setCurrencyVars(false, "", "front", ".");
-      break;
-    case "amount_with_comma_separator":
-      setCurrencyVars(true, "", "front", ",");
-      break;
-    case "amount_no_decimals_with_comma_separator":
-      setCurrencyVars(false, "", "front", ",");
-      break;
-    case "amount_with_apostrophe_separator":
-      setCurrencyVars(true, "", "front", "'");
-      break;
-  }
-};
-const showError = (err) => {
-  Sentry.captureException(err);
-  $notify({
-    title: $t("could not save"),
-    message: $t("an unknown error occured, please try again later"),
-    type: "warning"
-  });
-  saving.value = false;
-};
-const setCurrencyVars = (
-  showDecimals,
-  currencySymbolSeparator,
-  currencySymbolPosition,
-  currencyDecimalSeparator
-) => {
-  currencySymbolPosition = currencySymbolPosition;
-  currencySymbolSeparator = currencySymbolSeparator;
-  currencyDecimalSeparator = currencyDecimalSeparator;
-  currencyShowDecimals = showDecimals;
-};
-const updateCountryDependents = () => {
-  if (availableLanguages !== []) {
-    let found = false;
-    availableLanguages.forEach((lang) => {
-      if (language === lang.code) {
-        found = true;
+      this.saving = false;
+    },
+    setCurrencyVars(
+      showDecimals,
+      currencySymbolSeparator,
+      currencySymbolPosition,
+      currencyDecimalSeparator
+    ) {
+      this.currencySymbolPosition = currencySymbolPosition;
+      this.currencySymbolSeparator = currencySymbolSeparator;
+      this.currencyDecimalSeparator = currencyDecimalSeparator;
+      this.currencyShowDecimals = showDecimals;
+    },
+    updateCountryDependents() {
+      if (this.availableLanguages !== []) {
+        let found = false;
+        this.availableLanguages.forEach((lang) => {
+          if (this.language === lang.code) {
+            found = true;
+          }
+        });
+        if (!found) {
+          this.language = this.availableLanguages[0].code;
+        }
       }
-    });
-    if (!found) {
-      language = availableLanguages[0].code;
+      if (this.currentCountry !== {} && this.currentCountry.currencies !== {}) {
+        const currency = this.currentCountry.currencies;
+        this.currencyCode = currency.code;
+        this.currencyDecimalSeparator = currency?.separator?.decimal ?? ".";
+        this.currencyShowDecimals = !!currency.show_cents;
+        this.currencySymbolSeparator = currency?.separator?.currency ?? "";
+        this.currencySymbolPosition = ["front", "back"].includes(
+          currency.placement
+        )
+          ? currency.placement
+          : "front";
+      }
     }
-  }
-  if (currentCountry !== {} && currentCountry.currencies !== {}) {
-    const currency = currentCountry.currencies;
-    currencyCode = currency.code;
-    currencyDecimalSeparator = currency?.separator?.decimal ?? ".";
-    currencyShowDecimals = !!currency.show_cents;
-    currencySymbolSeparator = currency?.separator?.currency ?? "";
-    currencySymbolPosition = ["front", "back"].includes(currency.placement)
-      ? currency.placement
-      : "front";
+  },
+  async mounted() {
+    await this.refreshData();
   }
 };
-// }
-
-onMounted(() => {
-  refreshData();
-});
 </script>
