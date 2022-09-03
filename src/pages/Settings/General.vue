@@ -270,14 +270,10 @@ const defaultCurrency = ref({
   format: "${{amount}}",
   supported_codes: ["USD"]
 });
-// };
-// }
+
 const { client, languageCode } = store.getters;
-const webSettings = store.getters["settings/webSettings"];
-const locale = store.getters["settings/locale"];
-// mapGetters(["client"]);
-// mapGetters(["client", "languageCode"]);
-// mapGetters("settings", ["webSettings", "locale"]);
+// const webSettings = store.getters["settings/webSettings"];
+// const locale = store.getters["settings/locale"];
 
 const languageName = computed(() => {
   try {
@@ -392,9 +388,6 @@ const samplePrice = computed(() => {
   return formatPrice(1500, currency.value);
 });
 
-// mapActions("settings", ["getWebSettings", "saveSettings"]);
-// const settings = store.state[("getWebSettings", "saveSettings")];
-const { getWebSettings, saveSettings } = store.state;
 const saveChanges = async () => {
   if (client.type === "shopify") {
     return;
@@ -405,7 +398,8 @@ const saveChanges = async () => {
     newProfile.locale["country"] = country.value;
     newProfile.locale["language"] = language.value;
     newProfile.locale["currency"] = currency.value;
-    await saveSettings({
+
+    await store.dispatch("settings/saveSettings", {
       profile: newProfile,
       store_name: storeName.value
     });
@@ -426,7 +420,7 @@ const saveChanges = async () => {
 const refreshData = async () => {
   loading.value = true;
   try {
-    const webSettings = getWebSettings;
+    const webSettings = store.dispatch("settings/getWebSettings");
     const fetchCountrySettings = getCountrySettings();
     let response = [await webSettings, await fetchCountrySettings];
     setData();
