@@ -273,21 +273,25 @@ const defaultCurrency = ref({
 // };
 // }
 const { client, languageCode } = store.getters;
+const webSettings = store.getters["settings/webSettings"];
+const locale = store.getters["settings/locale"];
 // mapGetters(["client"]);
 // mapGetters(["client", "languageCode"]);
 // mapGetters("settings", ["webSettings", "locale"]);
 
 const languageName = computed(() => {
   try {
-    return availableLanguages.filter((elem) => elem.code === language.value)[0]
-      .name;
+    return availableLanguages.value.filter(
+      (elem) => elem.code === language.value
+    )[0].name;
   } catch (err) {
     return "";
   }
 });
 const countryName = computed(() => {
   try {
-    return countries.filter((elem) => elem.code === country.value)[0].name;
+    return countries.value.filter((elem) => elem.code === country.value)[0]
+      .name;
   } catch (err) {
     return "";
   }
@@ -296,13 +300,13 @@ const isShopify = computed(() => {
   return (client?.type ?? "shopify") === "shopify";
 });
 const currencySymbol = computed(() => {
-  return currentCountry?.currencies?.currency?.symbol ?? "";
+  return currentCountry.value?.currencies?.currency?.symbol ?? "";
 });
 const availableLanguages = computed(() => {
-  if (currentCountry === {}) {
+  if (currentCountry.value === {}) {
     return [];
   }
-  let languages = currentCountry.languages || [
+  let languages = currentCountry.value.languages || [
     { iso639_1: "en", name: "English", nativeName: "English" }
   ];
 
@@ -333,17 +337,17 @@ const currency = computed(() => {
   }
   currency.supported_codes = [currencyCode.value];
   if (currencySymbolPosition.value === "back") {
-    currency.format = `${formatString}${currencySymbolSeparator.value}${currencySymbol}`;
+    currency.format = `${formatString}${currencySymbolSeparator.value}${currencySymbol.value}`;
     return currency;
   }
   currency.format = `${currencySymbol.value}${currencySymbolSeparator.value}${formatString}`;
   return currency;
 });
 const availableCurrencies = computed(() => {
-  if (currentCountry === {}) {
+  if (currentCountry.value === {}) {
     return [];
   }
-  return [currentCountry?.currencies?.code ?? "USD"];
+  return [currentCountry.value?.currencies?.code ?? "USD"];
 });
 const currentCountry = computed(() => {
   if (
@@ -382,7 +386,7 @@ const countries = computed(() => {
   return countries;
 });
 const samplePrice = computed(() => {
-  if (!currency || currency === {}) {
+  if (!currency.value || currency.value === {}) {
     return "$1,500.00";
   }
   return formatPrice(1500, currency.value);
@@ -407,8 +411,8 @@ const saveChanges = async () => {
     });
     setData();
     $notify({
-      title: t("success"),
-      message: t("saved"),
+      title: "success",
+      message: "saved",
       type: "success"
     });
   } catch (err) {
@@ -469,8 +473,8 @@ function setData() {
 const showError = (err) => {
   Sentry.captureException(err);
   $notify({
-    title: t("could not save"),
-    message: t("an unknown error occured, please try again later"),
+    title: "could not save",
+    message: "an unknown error occured, please try again later",
     type: "warning"
   });
   saving.value = false;
@@ -487,19 +491,19 @@ const setCurrencyVars = (
   currencyShowDecimals.value = showDecimals;
 };
 const updateCountryDependents = () => {
-  if (availableLanguages !== []) {
+  if (availableLanguages.value !== []) {
     let found = false;
-    availableLanguages.forEach((lang) => {
+    availableLanguages.value.forEach((lang) => {
       if (language.value === lang.code) {
         found = true;
       }
     });
     if (!found) {
-      language.value = availableLanguages[0].code;
+      language.value = availableLanguages.value[0].code;
     }
   }
-  if (currentCountry !== {} && currentCountry.currencies !== {}) {
-    const currency = currentCountry.currencies;
+  if (currentCountry.value !== {} && currentCountry.value.currencies !== {}) {
+    const currency = currentCountry.value.currencies;
     currencyCode.value = currency.code;
     currencyDecimalSeparator.value = currency?.separator?.decimal ?? ".";
     currencyShowDecimals.value = !!currency.show_cents;
