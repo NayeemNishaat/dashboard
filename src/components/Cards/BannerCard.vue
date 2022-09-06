@@ -7,13 +7,7 @@
           <h4 style="text-transform: capitalize">
             {{ title }}
           </h4>
-          <el-rate
-            v-if="score > 1"
-            v-model="score"
-            disabled
-            :max="3"
-            :colors="['#80848f', '#80848f', '#f7ba2a']"
-          />
+          <el-rate v-if="score > 1" v-model="score" disabled :max="3" :colors="['#80848f', '#80848f', '#f7ba2a']" />
           <p v-else class="rating-warning">
             <i class="el-icon-warning" />
             {{ $t("consider changing this banner") }}
@@ -28,11 +22,11 @@
             </li>
             <li>
               <i class="ti-mouse-alt"></i>
-              &nbsp;&nbsp;{{ $tc("clicks", 2) }}: {{ clicks }}
+              &nbsp;&nbsp;{{ $t("clicks", 2) }}: {{ clicks }}
             </li>
             <li>
               <i class="ti-shopping-cart"></i>
-              &nbsp;&nbsp;{{ $tc("conversions", 2) }}: {{ conversions }}
+              &nbsp;&nbsp;{{ $t("conversions", 2) }}: {{ conversions }}
             </li>
           </ul>
         </div>
@@ -52,8 +46,8 @@
         </div>
         <div class="col-4 text-center">
           <el-button @click="delCard" :disabled="deleting" circle>
-            <i :class="deleting ? 'ti-time' : 'ti-trash'" circle></i
-          ></el-button>
+            <i :class="deleting ? 'ti-time' : 'ti-trash'" circle></i>
+          </el-button>
         </div>
       </div>
     </card>
@@ -133,6 +127,7 @@ export default {
   padding: 0;
   list-style-type: none;
 }
+
 .el-button:focus,
 .el-button:hover {
   color: #555;

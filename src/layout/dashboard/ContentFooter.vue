@@ -21,11 +21,7 @@
             </div>
             <template #dropdown>
               <el-dropdown-menu data-id="footer:language-switcher-options">
-                <el-dropdown-item
-                  v-for="(lang, idx) in languages"
-                  :key="idx"
-                  :command="lang.code"
-                  >{{ lang.name }}
+                <el-dropdown-item v-for="(lang, idx) in languages" :key="idx" :command="lang.code">{{ lang.name }}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -58,7 +54,7 @@ export default {
     ...mapActions(["setLanguageCode"]),
     changeLanguage(payload) {
       this.setLanguageCode(payload);
-      this.$i18n.locale = locale;
+      this.$i18n.locale.value = locale;
     }
   }
 };
@@ -67,6 +63,7 @@ export default {
 .centered {
   justify-content: center;
 }
+
 .el-dropdown-menu__item:hover {
   background-color: #f3bb45 !important;
   color: white !important;

@@ -20,10 +20,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Control from "@/components/Steps/Control.vue";
-import Bullet from "@/components/Steps/Bullet.vue";
-import IntroLeft from "@/components/Steps/Intro/IntroLeft.vue";
-import IntroRight from "@/components/Steps/Intro/IntroRight.vue";
+import Control from "@/components/Onboarding/Control.vue";
+import Bullet from "@/components/Onboarding/Bullet.vue";
+import IntroLeft from "@/components/Onboarding/Intro/IntroLeft.vue";
+import IntroRight from "@/components/Onboarding/Intro/IntroRight.vue";
 
 export default defineComponent({
   name: "IntroMain",

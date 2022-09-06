@@ -58,40 +58,36 @@ export default {
       // }
     },
     async checkOnboardingStatus() {
-      const profile = this.profile;
       try {
         this.$Tawk.$updateChatUser(this.user, this.context?.token);
       } catch (err) {
         Sentry.captureException(err);
       }
-      if (profile) {
-        try {
-          if (profile.has_finished_setup) {
-            await this.$router.push(this.nextRoute || { name: "summary" });
-            return;
-          }
-          await this.fetchSetupSummary();
-          if (this.hasFinishedSetup) {
-            this.finishSetup();
-            if (this.nextRoute?.name ?? "" === "setup-summary") {
-              await this.$router.push({ name: "summary" });
-              return;
-            }
-            await this.$router.push(this.nextRoute || { name: "summary" });
-            return;
-          }
-          this.$router.push(this.nextPage || { name: "setup-summary" });
-        } catch (err) {
-          console.error(err);
-          Sentry.captureException(err);
+      try {
+        if (this.hasFinishedSetup) {
+          await this.$router.push(this.nextRoute || { name: "summary" });
+          return;
         }
+        await this.fetchSetupSummary();
+        if (this.hasFinishedSetup) {
+          this.finishSetup();
+          if (this.nextRoute?.name ?? "" === "setup-summary") {
+            await this.$router.push({ name: "summary" });
+            return;
+          }
+          await this.$router.push(this.nextRoute || { name: "summary" });
+          return;
+        }
+        this.$router.push(this.nextPage || { name: "setup-summary" });
+      } catch (err) {
+        console.error(err);
+        Sentry.captureException(err);
       }
     }
   },
   computed: {
     ...mapGetters(["client", "nextPage", "user", "context"]),
-    ...mapGetters("settings", ["profile"]),
-    ...mapGetters("onboarding", ["hasFinishedSetup"]),
+    ...mapGetters("onboarding", ["hasFinishedSetup", "hasFinishedOnboarding"]),
     nextRoute() {
       return this.nextPage || { name: "summary" };
     },

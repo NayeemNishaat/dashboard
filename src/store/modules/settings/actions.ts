@@ -2,33 +2,20 @@ import { ActionContext, ActionTree } from "vuex";
 import ModuleState from "./state";
 import RootState from "../../state";
 //backend
-import { Http } from "../../../http";
+import { GetPageInstallationSettings, GetSettings, SaveSettings } from "@/api/backend";
+import { ClientSettings, ClientSettingsUpdate, PageInstallationSettings } from "@/api/interfaces";
 
 const actions: ActionTree<ModuleState, RootState> = {
-  setSettings: ({ commit }: ActionContext<ModuleState, RootState>, data) => {
-    // Update the settings value in the client state
-    commit("updateClientSettings", data, { root: true });
-  },
-  getSettings({ commit, dispatch }: ActionContext<ModuleState, RootState>) {
-    return new Promise((resolve, reject) => {
-      Http.get("settings")
-        .then((response) => {
-          dispatch("setSettings", response.data);
-          resolve(response.data);
-        })
-        .catch((error) => reject(error));
-    });
-  },
   getPageInstallationSettings(
     { commit }: ActionContext<ModuleState, RootState>,
-    page
-  ): Promise<any> {
+    page: string
+  ): Promise<PageInstallationSettings> {
     commit("setPageInstallationLoading", page);
     return new Promise((resolve, reject) => {
-      Http.get("settings/installation/" + page)
+      GetPageInstallationSettings(page)
         .then((response) => {
-          commit("setPageInstallationSettings", [response.data, page]);
-          resolve(response.data);
+          commit("setPageInstallationSettings", { settings: response, page });
+          resolve(response);
         })
         .catch((error) => reject(error.response))
         .finally(() => commit("setPageInstallationLoading", null));
@@ -36,12 +23,12 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
   saveSettings(
     { commit, dispatch }: ActionContext<ModuleState, RootState>,
-    payload
-  ): Promise<any> {
+    payload: ClientSettingsUpdate
+  ): Promise<ClientSettings> {
     return new Promise((resolve, reject) => {
-      Http.post("settings", payload)
+      SaveSettings(payload)
         .then((response) => {
-          dispatch("setSettings", response.data);
+          dispatch("setSettings", response);
           resolve(response);
         })
         .catch((error) => {
@@ -49,15 +36,13 @@ const actions: ActionTree<ModuleState, RootState> = {
         });
     });
   },
-  getWebSettings({
+  getSettings({
     commit
   }: ActionContext<ModuleState, RootState>): Promise<any> {
     return new Promise((resolve, reject) => {
-      Http.get("settings/web")
+      GetSettings()
         .then((response) => {
-          const data = {};
-          data["web_settings"] = response.data;
-          commit("updateClientSettings", data, { root: true });
+          commit("updateClientSettings", response, { root: true });
           resolve(response);
         })
         .catch((error) => reject(error));

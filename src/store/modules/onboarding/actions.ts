@@ -3,57 +3,43 @@ import ModuleState from "./state";
 import RootState from "../../state";
 
 //backend
-import { Http } from "../../../http";
-import { AuthToken, SetupSummary } from "../../../api/interfaces";
+import { Context, SetupSummary } from "@/api/interfaces";
+import { FinishOnboarding, FinishSetup, GetSetupSummary } from "@/api/backend";
 
 const actions: ActionTree<ModuleState, RootState> = {
-  setAccessToken(
-    { commit, dispatch }: ActionContext<ModuleState, RootState>,
-    token: AuthToken
-  ) {
-    dispatch("setAccessToken", token, { root: true });
-  },
   fetchSetupSummary({
     commit
-  }: ActionContext<ModuleState, RootState>): Promise<{ data: SetupSummary }> {
+  }: ActionContext<ModuleState, RootState>): Promise<SetupSummary> {
     return new Promise((resolve, reject) => {
-      Http.get("/summary/setup")
+      GetSetupSummary()
         .then((response) => {
-          commit("setSetupSummary", response.data);
-          resolve(response.data);
+          commit("setSetupSummary", response);
+          resolve(response);
         })
-        .catch((error) => reject(error.response));
+        .catch((error) => reject(error));
     });
   },
   finishOnboarding({
-    dispatch
-  }: ActionContext<ModuleState, RootState>): Promise<any> {
+    commit
+  }: ActionContext<ModuleState, RootState>): Promise<Context> {
     return new Promise((resolve, reject) => {
-      Http.post("client/finish-onboarding")
-        .then((resp) => {
-          dispatch("getContext", resp, { root: true })
-            .then(() => {
-              resolve(resp);
-            })
-            .catch(() => {
-              reject(new Error("could not update store"));
-            });
+      FinishOnboarding()
+        .then((response) => {
+          commit("setContext", response, { root: true });
+          resolve(response);
         })
-        .catch((err) => {
-          reject(err);
+        .catch((error) => {
+          reject(error);
         });
     });
   },
   finishSetup({
-    commit,
-    rootGetters
+    commit
   }: ActionContext<ModuleState, RootState>): Promise<any> {
-    const context = rootGetters.context;
     return new Promise((resolve, reject) => {
-      Http.post("/client/finish-setup")
+      FinishSetup()
         .then((response) => {
-          context.client.profile["has_finished_setup"] = true;
-          commit("setContext", context);
+          commit("setContext", response, { root: true });
           resolve(response);
         })
         .catch((error) => reject(error));

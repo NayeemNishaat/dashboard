@@ -35,8 +35,7 @@ export default {
         this.$router.push({ name: "summary" });
       } else {
         this.$router.push({
-          name: "onboarding-intro",
-          params: { platform: "shopify" }
+          name: "onboarding"
         });
       }
     } catch (err) {

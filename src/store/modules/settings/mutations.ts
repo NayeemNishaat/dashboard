@@ -8,16 +8,16 @@ import ModuleState from "./state";
 const mutations: MutationTree<ModuleState> = {
   setPageInstallationSettings(
     state: ModuleState,
-    [payload, page]: [PageInstallationSettings, string]
+    payload: { settings: PageInstallationSettings, page: string }
   ): void {
-    if (!payload || !page) {
+    if (!payload?.settings || !payload?.page) {
       return;
     }
-    if (page === "all") {
-      state.pageInstallationSettings = payload;
+    if (payload.page === "all") {
+      state.pageInstallationSettings = payload.settings;
       return;
     }
-    state.pageInstallationSettings[page] = payload;
+    state.pageInstallationSettings[payload.page] = payload.settings[payload.page];
   },
   setPageInstallationLoading(state: ModuleState, page: string): void {
     state.pageInstallationLoading = page;

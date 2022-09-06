@@ -86,7 +86,7 @@
       <card>
         <h3 slot="header">
           <i class="ti-image"></i>
-          &nbsp;{{ $tc("banners", 2) }}
+          &nbsp;{{ $t("banners", 2) }}
         </h3>
         <div class="row">
           <div :class="{ 'col-12': true, done: bannerSectionFound }">
@@ -148,7 +148,7 @@
       <card>
         <h3 slot="header">
           <i class="ti-package"></i>
-          &nbsp;{{ $tc("products", 2) }}
+          &nbsp;{{ $t("products", 2) }}
         </h3>
         <div class="row">
           <div :class="{ 'col-12': true, done: productSectionFound }">
@@ -210,7 +210,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("settings", ["webSettings"]),
     ...mapGetters(["client", "languageCode", "trustedClient"]),
     ...mapGetters("onboarding", ["setupSummary", "hasFinishedSetup"]),
     bannerSectionFound() {

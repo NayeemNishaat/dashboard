@@ -3,9 +3,9 @@ import ModuleState from "./state";
 import RootState from "../../state";
 import {
   OnboardingCompletionStatus,
-  HomepageSettings,
   WebSettings,
-  Context
+  Context,
+  PageSettings
 } from "@/api/interfaces";
 
 const getters: GetterTree<ModuleState, RootState> = {
@@ -22,7 +22,7 @@ const getters: GetterTree<ModuleState, RootState> = {
     const webSettings = rootGetters["settings/webSettings"] as WebSettings;
     const homePageInstallationSettings = rootGetters[
       "settings/installationSettings"
-    ] as HomepageSettings;
+    ] as PageSettings;
     const context = rootGetters["context"] as Context;
     const hasProductsAndCategories =
       setupSummary?.store_data?.has_products_categories;
@@ -44,7 +44,7 @@ const getters: GetterTree<ModuleState, RootState> = {
           expected: ordersExpected
         }
       },
-      bannerSectionFound: homePageInstallationSettings.banners,
+      bannerSectionFound: !!homePageInstallationSettings.banners,
       bannersUploaded: {
         done: main >= mainBannersExpected && sub >= subBannersExpected,
         main: {
@@ -69,9 +69,6 @@ const getters: GetterTree<ModuleState, RootState> = {
           return "";
         }, "")
     };
-  },
-  introStep(state: ModuleState): number {
-    return state.introStep;
   },
   setupStep(state: ModuleState): number {
     return state.setupStep;
@@ -109,7 +106,7 @@ const getters: GetterTree<ModuleState, RootState> = {
   ): boolean {
     const context = rootGetters["context"] as Context;
     const profile = context.client.profile;
-    return (profile && profile.has_finished_onboarding) || false;
+    return profile?.has_finished_onboarding ?? false;
   },
   hasFinishedSetup(
     state: ModuleState,

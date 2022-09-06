@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="sidebar"
-    :data-background-color="backgroundColor"
-    :data-active-color="activeColor"
-  >
+  <div class="sidebar" :data-background-color="backgroundColor" :data-active-color="activeColor">
     <div class="sidebar-wrapper" id="style-3" data-id="sidebar">
       <div class="logo">
         <router-link to="/" class="simple-text">
@@ -16,13 +12,8 @@
       <ul class="nav">
         <slot></slot>
         <slot name="links" data-id="sidebar:links">
-          <sidebar-link
-            v-for="(link, index) in sidebarLinks"
-            :key="index"
-            :to="link.path"
-            :name="$tc(link.name, 2)"
-            :icon="link.icon"
-          >
+          <sidebar-link v-for="(link, index) in sidebarLinks" :key="index" :to="link.path" :name="$t(link.name, 2)"
+            :icon="link.icon">
           </sidebar-link>
         </slot>
       </ul>
@@ -130,4 +121,3 @@ export default {
   }
 };
 </script>
-<style></style>

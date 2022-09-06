@@ -27,6 +27,7 @@ const curLocale = localStorage.getItem("lang") || browserLanguage();
 localStorage.setItem("lang", curLocale);
 
 export const i18n = createI18n({
+  legacy: false,
   locale: curLocale,
   fallbackLocale: "en",
   messages,

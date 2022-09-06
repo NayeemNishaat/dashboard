@@ -1,6 +1,6 @@
-import { PageStatus, HomepageSettings } from "@/api/interfaces";
+import { PageStatus, PageSettings } from "@/api/interfaces";
 
-export const defaultHomepageSettings: HomepageSettings = {
+export const defaultHomepageSettings: PageSettings = {
   library: true,
   banners: true,
   products: true,
@@ -25,7 +25,7 @@ export const getPageStatus = (status = "unknown"): PageStatus => {
   };
 };
 
-export const defaultPageSettings = {
+export const defaultPageSettings: PageSettings = {
   library: true,
   products: true
 };

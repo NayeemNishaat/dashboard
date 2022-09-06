@@ -14,7 +14,7 @@
                 {{ +plan.commission_percent }}%
               </p>
               <p v-else class="plan-price">${{ +plan.price }}</p>
-              <p>{{ $tc("banners", 2) }}</p>
+              <p>{{ $t("banners", 2) }}</p>
               <ul class="plan-product-list">
                 <li>
                   {{
@@ -34,7 +34,7 @@
                   {{ $t(`custom banner layout`) }}
                 </li>
               </ul>
-              <p>{{ $tc("products", 2) }}</p>
+              <p>{{ $t("products", 2) }}</p>
               <ul class="plan-product-list">
                 <li v-for="(productType, idx) in [
                   'recent',

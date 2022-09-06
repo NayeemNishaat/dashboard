@@ -1,20 +1,19 @@
 import axios from "axios";
-import { Http } from "@/http";
-import TinyEmitter from "tiny-emitter";
 import * as Sentry from "@sentry/browser";
 
 import store from "@/store/index";
-import router from "@/router/index";
 
 // event bus setup
-const bus = new TinyEmitter();
+import bus from 'tiny-emitter/instance';
+import { ClientBillingDetails } from "./billing_interfaces";
+import { ClientSettings, Context, ClientSettingsUpdate, SetupSummary, PageInstallationSettings } from "./interfaces";
 
 const BACKEND = import.meta.env.VITE_APP_BACKEND_URL;
 
 axios.defaults.baseURL = `${BACKEND}/v1`;
-axios.defaults.timeout = 15000;
+axios.defaults.timeout = 8000;
 
-function updateAuthHeader(token) {
+function updateAuthHeader(token?) {
   const accessToken = token || store?.getters?.accessToken?.token;
   let headers = {
     Authorization: `Bearer ${accessToken}`
@@ -53,9 +52,19 @@ export function getPageData(pagename, config) {
   });
 }
 
+export function GetBillingPlans(): Promise<ClientBillingDetails> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .get("billing", { headers })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error));
+  });
+}
+
 export function GetCategories() {
   return new Promise((resolve, reject) => {
-    Http.get("categories")
+    axios.get("categories")
       .then((response) => {
         resolve(response.data);
       })
@@ -65,7 +74,7 @@ export function GetCategories() {
 
 export function DeactivateCategories(categories) {
   return new Promise((resolve, reject) => {
-    Http.patch("categories", categories)
+    axios.patch("categories", categories)
       .then((response) => {
         resolve(response);
       })
@@ -111,7 +120,6 @@ export function deleteBanner(bannerId) {
   const headers = updateAuthHeader();
   return axios
     .delete(`banners/${encodeURI(bannerId)}`, {
-      body: "",
       data: "",
       headers
     })
@@ -137,27 +145,11 @@ export function deleteImage(bannerId) {
   const headers = updateAuthHeader();
   return axios
     .delete(`images/${bannerId}`, {
-      body: "",
       data: "",
       headers
     })
     .then((response) => response)
     .catch((error) => error);
-}
-
-export function setHelpWidgetPosition(data) {
-  const headers = updateAuthHeader();
-  return axios.post("client/help-widget", data, { headers });
-}
-
-export function postCampaign(campaign) {
-  const headers = updateAuthHeader();
-  return axios.post("campaigns", campaign, { headers });
-}
-
-export function putCampaign(campaignId, campaign) {
-  const headers = updateAuthHeader();
-  return axios.put(`campaigns/${campaignId}`, campaign, { headers });
 }
 
 export function preSign(uploadType, fileName, contentType) {
@@ -224,4 +216,92 @@ export function verifyWebsite(url) {
 export function postOnboardingNotification(data) {
   const headers = updateAuthHeader();
   return axios.post("client/onboarding-notification", data, { headers });
+}
+
+export function GetSetupSummary(): Promise<SetupSummary> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .get("summary/setup", { headers })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error));
+  });
+}
+
+export function GetPageInstallationSettings(page: string): Promise<PageInstallationSettings> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`settings/installation/${page}`, { headers })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error));
+  });
+}
+
+export function GetDashboardContext(): Promise<Context> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${BACKEND}/login`, { headers })
+      .then((response) => resolve(response.data))
+      .catch((error) => reject(error));
+  });
+}
+
+export function GetSettings(): Promise<ClientSettings> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .get("settings", { headers })
+      .then((response) => {
+        if (response?.data?.name && response.data.name != "") {
+          resolve(response.data)
+          return
+        }
+        reject("invalid client settings object");
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export function SaveSettings(settings: ClientSettingsUpdate): Promise<ClientSettings> {
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .post("settings", settings, { headers })
+      .then((response) => {
+        if (response?.data?.name && response.data.name != "") {
+          resolve(response.data)
+          return
+        }
+        reject("invalid settings object");
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+function finishOnboardingStage(stage: string): Promise<Context> {
+  if (!["finish-setup", "finish-onboarding"].includes(stage)) {
+    throw new Error(`invalid stage specified: ${stage}`)
+  }
+  const headers = updateAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`client/${stage}`, "", { headers })
+      .then((response) => {
+        if (response?.data?.client?.apikey) {
+          resolve(response.data)
+          return
+        }
+        reject("invalid context");
+      })
+      .catch((error) => reject(error));
+  });
+}
+export function FinishOnboarding(): Promise<Context> {
+  return finishOnboardingStage("finish-onboarding");
+}
+
+export function FinishSetup(): Promise<Context> {
+  return finishOnboardingStage("finish-setup");
 }

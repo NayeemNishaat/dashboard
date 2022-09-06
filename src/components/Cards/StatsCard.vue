@@ -4,7 +4,7 @@
       <template v-if="icon">
         <i :class="icon" />
       </template>
-      {{ $tc(title, 2) }}
+      {{ $t(title, 2) }}
     </h3>
     <div>
       <div class="numbers">

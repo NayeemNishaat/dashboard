@@ -2,7 +2,6 @@ import { SetupSummary } from "@/api/interfaces";
 
 export default class State {
   public setupSummary: SetupSummary;
-  public introStep: number;
   public setupStep: number;
   constructor() {
     this.setupSummary = {
@@ -20,7 +19,6 @@ export default class State {
         products: false
       }
     };
-    this.introStep = 0;
     this.setupStep = 0;
   }
 }

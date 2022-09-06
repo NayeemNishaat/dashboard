@@ -14,18 +14,6 @@ function hasFinishedSetup() {
   return store.getters["onboarding/hasFinishedSetup"];
 }
 
-function getOnboardingPath() {
-  const client = store.getters.client;
-
-  return {
-    name: "onboarding-intro",
-    params: {
-      platform: client.type
-    },
-    replace: true
-  };
-}
-
 export const ifNotAuthenticated: NavigationGuard = (to, from, next) => {
   if (!isLoggedIn()) {
     next();
@@ -44,7 +32,7 @@ export const ifAuthenticated: NavigationGuard = (to, from, next) => {
 
 export const ifFinishedOnboarding: NavigationGuard = async (to, from, next) => {
   if (isLoggedIn()) {
-    const profile = store.getters["settings/profile"];
+    const profile = store.getters?.client?.profile;
     if (!profile) {
       await store.dispatch("setNextPage", to);
       next({ name: "loading" });
@@ -58,7 +46,7 @@ export const ifFinishedOnboarding: NavigationGuard = async (to, from, next) => {
       next();
       return;
     }
-    next(getOnboardingPath());
+    next({ name: "onboarding" });
     return;
   }
   next({ name: "login" });
@@ -70,7 +58,7 @@ export const ifOnboarding: NavigationGuard = (to, from, next) => {
     return;
   }
   if (isLoggedIn() && to.name === "onboarding-signup") {
-    next({ name: "onboarding-intro", params: to.params });
+    next({ name: "onboarding", params: to.params });
   }
   next();
 };

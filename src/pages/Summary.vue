@@ -142,10 +142,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["client", "dateRange"]),
+    ...mapGetters(["client", "dateRange", "locale"]),
     ...mapGetters("settings", [
-      "locale",
-      "webSettings",
       "installationSettings",
     ]),
     installationError() {

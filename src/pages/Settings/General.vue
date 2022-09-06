@@ -224,9 +224,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["client"]),
-    ...mapGetters(["client", "languageCode"]),
-    ...mapGetters("settings", ["webSettings", "locale"]),
+    ...mapGetters(["client", "languageCode", "locale"]),
     languageName() {
       try {
         return this.availableLanguages.filter(
@@ -345,7 +343,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("settings", ["getWebSettings", "saveSettings"]),
+    ...mapActions("settings", ["getSettings", "saveSettings"]),
     async saveChanges() {
       if (this.client.type === "shopify") {
         return;
@@ -376,9 +374,9 @@ export default {
     async refreshData() {
       this.loading = true;
       try {
-        const webSettings = this.getWebSettings();
+        const getSettings = this.getSettings();
         const countrySettings = getCountrySettings();
-        let response = [await webSettings, await countrySettings];
+        let response = [await getSettings, await countrySettings];
         this.setData();
         if (response[1]) {
           this.countrySettings = response[1];

@@ -1,21 +1,12 @@
 <template>
   <div>
-    <chart-card
-      :title="chartTitle"
-      :chart-data="selChartData"
-      :chart-type="chartType"
-      :chart-options="chartOptions"
-      :loading="loading"
-    >
+    <chart-card :title="chartTitle" :chart-data="selChartData" :chart-type="chartType" :chart-options="chartOptions"
+      :loading="loading">
       <el-tabs v-model="metric" slot="metrics">
-        <el-tab-pane
-          :name="curMetric"
-          v-for="curMetric in metrics"
-          :key="curMetric"
-        >
+        <el-tab-pane :name="curMetric" v-for="curMetric in metrics" :key="curMetric">
           <span slot="label">
             <i :class="metricIcons[curMetric]"></i>
-            <span style="padding-left:5px;">{{ $tc(curMetric, 2) }}</span>
+            <span style="padding-left:5px;">{{ $t(curMetric, 2) }}</span>
           </span>
         </el-tab-pane>
       </el-tabs>
@@ -129,19 +120,19 @@ export default {
         let datasets = chartData.map((elem, idx) => {
           return this.chartType == "Bar"
             ? {
-                label: this.$t(elem.series),
-                data: elem?.dataset?.map(e => e[this.metric]) ?? [],
-                backgroundColor: chartColors[idx % chartColors.length],
-                stack: "Stack 0",
-                borderColor: chartColors[idx % chartColors.length]
-              }
+              label: this.$t(elem.series),
+              data: elem?.dataset?.map(e => e[this.metric]) ?? [],
+              backgroundColor: chartColors[idx % chartColors.length],
+              stack: "Stack 0",
+              borderColor: chartColors[idx % chartColors.length]
+            }
             : {
-                value: elem.series,
-                label: this.$t(elem.series),
-                data: elem?.dataset?.map(e => e[this.metric]) ?? [],
-                backgroundColor: `transparent`,
-                borderColor: chartColors[idx % chartColors.length]
-              };
+              value: elem.series,
+              label: this.$t(elem.series),
+              data: elem?.dataset?.map(e => e[this.metric]) ?? [],
+              backgroundColor: `transparent`,
+              borderColor: chartColors[idx % chartColors.length]
+            };
         });
         try {
           let labels = chartData[0].dataset.map(e => e["dts"]);

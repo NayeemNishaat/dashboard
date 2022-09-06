@@ -3,10 +3,10 @@
     <card :title="
       noPlanSelected
         ? $t('select a plan to activate {feature}', {
-          feature: $tc(feature, 2).toLowerCase(),
+          feature: $t(feature, 2).toLowerCase(),
         })
         : $t('upgrade your plan to activate {feature}', {
-          feature: $tc(feature, 2).toLowerCase(),
+          feature: $t(feature, 2).toLowerCase(),
         })
     ">
       <div class="row">

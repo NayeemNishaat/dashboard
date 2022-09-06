@@ -2,21 +2,15 @@
   <div>
     <div class="row">
       <div class="col-6 align-self-center">
-        <el-breadcrumb
-          separator=">"
-          v-if="subPageName !== 'view' && subPageName !== 'upgrade'"
-        >
+        <el-breadcrumb separator=">" v-if="subPageName !== 'view' && subPageName !== 'upgrade'">
           <el-breadcrumb-item :to="{ path: `/${mainPageName}` }">{{
-            $tc(mainPageName, 2)
+              $t(mainPageName, 2)
           }}</el-breadcrumb-item>
           <el-breadcrumb-item>{{ $t($route.name) }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="col-6 text-right banner-btns align-self-center">
-        <router-link
-          v-if="!['upgrade', 'view'].includes(subPageName)"
-          :to="`/${mainPageName}/view`"
-        >
+        <router-link v-if="!['upgrade', 'view'].includes(subPageName)" :to="`/${mainPageName}/view`">
           <el-button>
             <i class="ti-arrow-left"></i>
             &nbsp;&nbsp;{{ $t("back") }}

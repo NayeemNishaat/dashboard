@@ -64,7 +64,6 @@ export default {
       }
     },
     setLocale(locale, redirect = true) {
-      this.$i18n.locale = locale.code;
       this.setLanguageCode(locale.code);
       this.$emit("select", locale);
       this.togglePicker();
