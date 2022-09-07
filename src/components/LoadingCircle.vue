@@ -1,15 +1,13 @@
 <template>
-  <svg
-    class="loading-circle"
-    viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg class="loading-circle" :class="{ 'w-6': inline }" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <circle cx="50" cy="50" r="45" />
   </svg>
 </template>
 
-<script>
-export default {};
+<script setup lang="ts">
+const props = defineProps({
+  inline: Boolean
+})
 </script>
 
 <style scoped>
@@ -22,6 +20,7 @@ svg {
   0% {
     transform: rotateZ(0deg);
   }
+
   100% {
     transform: rotateZ(360deg);
   }
@@ -40,6 +39,7 @@ circle {
 }
 
 @keyframes circle-animation {
+
   0%,
   25% {
     stroke-dashoffset: 280;

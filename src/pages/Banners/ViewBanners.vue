@@ -94,7 +94,7 @@ export default {
   },
   computed: {
     ...mapGetters(["client", "subscription", "languageCode", "dateRange"]),
-    ...mapGetters("settings", ["webSettings", "installationSettings"]),
+    ...mapGetters("settings", ["installationSettings"]),
     addBannersLink() {
       let lang = "";
       if (this.languageCode === "es") {
@@ -126,12 +126,12 @@ export default {
       return this.banners[this.selectedBannerType];
     },
     bannerLayout() {
-      return this.webSettings?.recommendations?.banners?.type || "";
+      return this.client?.web_settings?.recommendations?.banners?.type || "";
     }
   },
   methods: {
     ...mapActions("settings", [
-      "getWebSettings",
+      "getSettings",
       "getPageInstallationSettings"
     ]),
     getBannerLabel(type) {
@@ -170,15 +170,11 @@ export default {
       }
     },
     async refreshData() {
-      const getBanners = this.getBannerData();
-      const getPageInstallationSettings =
-        this.getPageInstallationSettings("home");
-      const getWebSettings = this.getWebSettings();
       try {
-        [
-          await getBanners,
-          await getPageInstallationSettings,
-          await getWebSettings
+        Promise.allSettled[
+          this.getBannerData(),
+          this.getPageInstallationSettings("home"),
+          this.getSettings()
         ];
       } catch (err) {
         Sentry.captureException(err);

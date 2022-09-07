@@ -70,7 +70,6 @@ export default {
   },
   computed: {
     ...mapGetters(["client", "subscription"]),
-    ...mapGetters("settings", ["webSettings"]),
     notificationsAccess() {
       if (!this.client?.apikey) {
         return {};
@@ -79,10 +78,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions("settings", ["getWebSettings", "saveSettings"]),
+    ...mapActions("settings", ["getSettings", "saveSettings"]),
     saveChanges() {
       this.saving = true;
-      const newWebSettings = this.webSettings;
+      const newWebSettings = this.client.web_settings;
       newWebSettings.recommendations.notifications = this.notifications;
       this.saveSettings({ web_settings: newWebSettings })
         .catch((err) => {
@@ -99,12 +98,10 @@ export default {
     },
     async refreshData() {
       try {
-        await this.getWebSettings();
+        await this.getSettings();
       } finally {
         const notifications =
-          this.webSettings &&
-          this.webSettings.recommendations &&
-          this.webSettings.recommendations.notifications;
+          this.client?.web_settings?.recommendations?.notifications;
         this.notifications = notifications || {
           position: "top left",
           color: "#f8ba00"

@@ -174,11 +174,7 @@ export default {
   },
   computed: {
     ...mapGetters(["client", "dateRange"]),
-    ...mapGetters("settings", [
-      "locale",
-      "webSettings",
-      "installationSettings"
-    ]),
+    ...mapGetters("settings", ["installationSettings"]),
     installationError() {
       if (!this.installationSettings.library) {
         return "installerror:MissingLibrary";

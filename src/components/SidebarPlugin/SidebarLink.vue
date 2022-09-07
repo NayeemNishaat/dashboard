@@ -1,20 +1,10 @@
 <template>
-  <component
-    :is="tag"
-    @click="hideSidebar"
-    class="nav-item"
-    v-bind="$attrs"
-    tag="li"
-  >
-    <a
-      :data-id="`sidebar:link-${name}`"
-      class="nav-link"
-      :class="{ 'nav-disabled-link': disabled }"
-    >
+  <component :is="tag" @click="hideSidebar" class="nav-item" v-bind="$attrs" tag="li">
+    <a :data-id="`sidebar:link-${name}`" class="nav-link" :class="{ 'nav-disabled-link': disabled }">
       <slot>
         <i v-if="icon" :class="icon"></i>
         <p :class="{ greyed: disabled }">
-          {{ translatedName || $tc(name, 2) }}
+          {{ translatedName || $t(name, 2) }}
         </p>
       </slot>
     </a>
@@ -29,10 +19,10 @@ export default {
       default: true
     },
     addLink: {
-      default: () => {}
+      default: () => { }
     },
     removeLink: {
-      default: () => {}
+      default: () => { }
     }
   },
   props: {
@@ -74,10 +64,11 @@ export default {
 };
 </script>
 <style>
-.wrapper .sidebar .nav .nav-item:hover > .nav-link.nav-disabled-link {
+.wrapper .sidebar .nav .nav-item:hover>.nav-link.nav-disabled-link {
   opacity: 0.5;
 }
-.wrapper .sidebar .nav .nav-item > .nav-link.nav-disabled-link {
+
+.wrapper .sidebar .nav .nav-item>.nav-link.nav-disabled-link {
   opacity: 0.5;
 }
 </style>

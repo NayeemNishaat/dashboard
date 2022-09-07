@@ -1,36 +1,10 @@
+import { ClientSubscriptionAccess } from "./billing_interfaces";
+
 export interface Context {
   client: Client;
   user: User;
-  subscription: Subscription;
+  subscription: ClientSubscriptionAccess;
   token: string;
-}
-
-export interface Subscription {
-  name: string,
-  access: planFeatures
-}
-
-interface planFeatures {
-  personalization: {
-    banners?: {
-      banner_limit: number;
-      custom_layout: boolean;
-      allowed_layouts: Array<string>;
-    };
-    products?: {
-      recent: boolean;
-      related: boolean;
-      user_related: boolean;
-      user_related_categories: boolean;
-      similar: boolean;
-      top: boolean;
-    };
-    ab_testing?: boolean;
-    notifications?: boolean;
-  }
-  segments?: {
-    segment_limit: number;
-  };
 }
 
 export interface SetupSummary {
@@ -74,8 +48,10 @@ interface bannerStatus {
   expected: number;
 }
 
-export interface HomepageSettings extends pageSettings {
-  banners: boolean;
+export interface PageSettings {
+  library: boolean;
+  products: boolean;
+  banners?: boolean;
   static_banner?: {
     link: string;
     photo_url: string;
@@ -86,18 +62,14 @@ export interface HomepageSettings extends pageSettings {
   };
 }
 
-interface pageSettings {
-  library: boolean;
-  products: boolean;
-}
 
 export interface PageInstallationSettings {
-  home: HomepageSettings;
-  product: pageSettings;
-  category: pageSettings;
-  search: pageSettings;
-  "404": pageSettings;
-  cart: pageSettings;
+  home: PageSettings;
+  product: PageSettings;
+  category: PageSettings;
+  search: PageSettings;
+  "404": PageSettings;
+  cart: PageSettings;
 }
 
 export interface ClientProfile {
@@ -218,4 +190,18 @@ export interface currencyOptions {
   code: string;
   format: string;
   supported_codes: Array<string>;
+}
+
+export interface ClientSettings {
+  name: string;
+  profile: ClientProfile;
+  algo_settings: AlgoSettings;
+  web_settings: WebSettings;
+}
+
+export interface ClientSettingsUpdate {
+  name: string | null;
+  profile: ClientProfile | null;
+  algo_settings: AlgoSettings | null;
+  web_settings: WebSettings | null;
 }

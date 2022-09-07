@@ -54,7 +54,6 @@ export default {
       return this.locales.find((item) => item.code === code);
     },
     setLocale(locale, redirect = true) {
-      this.$i18n.locale = locale.code;
       this.setLanguageCode(locale.code);
       this.$emit("select", locale);
       if (redirect) {

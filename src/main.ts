@@ -6,7 +6,7 @@ import Vuex from "./store/index";
 import LoadScript from "vue-plugin-load-script";
 import DataCueDashboard from "./plugins/datacueComponents";
 import Tawk from "./plugins/tawk";
-import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import { UserFilled } from "@element-plus/icons-vue";
 
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
@@ -14,10 +14,7 @@ import { Integrations } from "@sentry/tracing";
 import store from "./store/index";
 
 export const app = createApp(App as any);
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  app.component(key, component);
-}
-
+app.component("user-filled", UserFilled);
 const sentryDSN = import.meta.env.VITE_APP_SENTRY_DSN;
 if (sentryDSN) {
   Sentry.init({

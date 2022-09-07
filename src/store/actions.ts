@@ -1,7 +1,5 @@
 import { ActionContext, ActionTree } from "vuex";
 import router from "../router/index";
-//backend
-import { Http } from "../http";
 
 //i18n
 import { i18n, supportedLanguageCodes } from "../lang/lang";
@@ -16,6 +14,7 @@ import { Context, AuthToken } from "../api/interfaces";
 
 //error reporting
 import * as Sentry from "@sentry/browser";
+import { GetDashboardContext } from "@/api/backend";
 
 // ActionTree<[current state], [root state]>
 const actions: ActionTree<State, State> = {
@@ -51,7 +50,7 @@ const actions: ActionTree<State, State> = {
     }
     commit("setLanguageCode", lcode);
     localStorage.setItem("lang", lcode);
-    i18n.global.locale = lcode;
+    i18n.global.locale.value = lcode;
     (window as any).locale = lcode;
   },
   setContext(
@@ -65,27 +64,20 @@ const actions: ActionTree<State, State> = {
   setDateRange({ commit }: ActionContext<State, State>, payload: [Date, Date]) {
     commit("setDateRange", payload);
   },
-  getContext({ commit, dispatch }: ActionContext<State, State>) {
-    const BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
-    return new Promise((resolve, reject) => {
-      Http.get(`${BACKEND_URL}/login`)
-        .then((response: { data: Context }) => {
-          if (!response.data.client.apikey) {
-            router.push({
-              name: "login-failed"
-            });
-            reject("invalid context");
-          }
-          dispatch("setContext", response.data);
-          resolve(response.data);
-        })
-        .catch((error: { response: any }) => {
-          router.push({
-            name: "login-failed"
-          });
-          reject(error.response);
-        });
-    });
+  async getContext({ dispatch }: ActionContext<State, State>) {
+    try {
+      let context = await GetDashboardContext();
+      //skip onboarding if user already has a billing plan selected
+      if (context?.subscription?.name && !context?.client?.profile?.has_finished_onboarding) {
+        context = await dispatch("onboarding/finishOnboarding");
+      }
+      await dispatch("setContext", context)
+    } catch (error: any) {
+      router.push({
+        name: "login-failed"
+      });
+      throw new Error(error)
+    };
   }
 };
 

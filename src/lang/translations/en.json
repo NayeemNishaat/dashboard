@@ -763,5 +763,7 @@
   "relax, results will keep improving-description": "As you get more sales, <strong>the recommendations will improve automatically.</strong> This will take a few weeks. Monitor results with your dashboard.",
   "skip": "Skip",
   "continue": "Continue",
-  "store setup": "Setup my store"
+  "store setup": "Setup my store",
+  "{count} banner layouts": "{count} banner layouts",
+  "{count} dynamic banners": "{count} dynamic banners"
 }

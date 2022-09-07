@@ -964,7 +964,6 @@ export default defineComponent({
   computed: {
     ...mapGetters(["client", "subscription", "apikey", "languageCode"]),
     ...mapGetters("settings", [
-      "webSettings",
       "pageInstallationSettings",
       "pageStatus"
     ]),
@@ -976,7 +975,7 @@ export default defineComponent({
     },
     products() {
       try {
-        return this.webSettings.recommendations.products;
+        return this.client.web_settings.recommendations.products;
       } catch {
         return null;
       }
@@ -1026,7 +1025,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("settings", [
-      "getWebSettings",
+      "getSettings",
       "saveSettings",
       "getPageInstallationSettings"
     ]),
@@ -1066,7 +1065,7 @@ export default defineComponent({
           this.current = nilDefaultsDeep({}, this.products || {}, this.default);
           this.lastSaved = cloneDeep(this.products || {});
         }
-        await this.getWebSettings();
+        await this.getSettings();
         this.lastSaved = cloneDeep(this.products || {});
       } catch (err) {
         Sentry.captureException(err);
@@ -1078,7 +1077,7 @@ export default defineComponent({
     async saveChanges() {
       this.saving = true;
       try {
-        const newSettings = cloneDeep(this.webSettings);
+        const newSettings = cloneDeep(this.client.web_settings);
         newSettings.recommendations.products = cloneDeep(this.current);
         await this.saveSettings({ web_settings: newSettings });
         this.lastSaved = cloneDeep(this.products || {});

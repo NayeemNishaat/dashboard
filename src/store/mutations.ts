@@ -7,7 +7,8 @@ import {
   AuthToken,
   Context,
   AlgoSettings,
-  ClientProfile
+  ClientProfile,
+  ClientSettings
 } from "@/api/interfaces";
 
 import State from "./state";
@@ -30,11 +31,7 @@ const mutations: MutationTree<State> = {
   },
   updateClientSettings(
     state: State,
-    payload: {
-      web_settings: WebSettings;
-      algo_settings: AlgoSettings;
-      profile: ClientProfile;
-    }
+    payload: ClientSettings
   ): void {
     // This sets the settings keys in the client
     // everytime we save new settings value

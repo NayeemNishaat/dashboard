@@ -100,7 +100,9 @@ export default {
     }
   },
   mounted() {
-    this.$Tawk.$showWidget();
+    try {
+      this.$Tawk.$showWidget();
+    } catch { }
   }
 };
 </script>

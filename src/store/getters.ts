@@ -2,12 +2,13 @@ import { GetterTree } from "vuex";
 import {
   Client,
   User,
-  Subscription,
   AuthToken,
-  Context
+  Context,
+  Locale
 } from "../api/interfaces";
 import { isTokenExpired } from "../api/AuthService";
 import State from "./state";
+import { ClientSubscriptionAccess } from "@/api/billing_interfaces";
 
 // GetterTree<[current state], [root state]>
 const getters: GetterTree<State, State> = {
@@ -43,8 +44,17 @@ const getters: GetterTree<State, State> = {
   trustedClient(state: State, getters): boolean {
     return getters?.client?.type === "shopify";
   },
-  subscription(state: State, getters): Subscription {
-    return state.context?.subscription || ({} as Subscription);
+  subscription(state: State, getters): ClientSubscriptionAccess {
+    return state.context?.subscription || ({} as ClientSubscriptionAccess);
+  },
+  locale(state: State, getters): string {
+    let locale = getters.client.profile.locale as Locale;
+    if (!locale?.language) {
+      locale = getters.client?.web_settings?.recommendations?.all;
+    }
+    const lang = locale?.language || "en";
+    const country = locale?.country || "US";
+    return `${lang}-${country}`;
   }
 };
 

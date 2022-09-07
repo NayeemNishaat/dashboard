@@ -294,7 +294,7 @@ export default {
   },
   computed: {
     ...mapGetters(["client", "subscription", "languageCode"]),
-    ...mapGetters("settings", ["webSettings", "installationSettings"]),
+    ...mapGetters("settings", ["installationSettings"]),
     allowedLayouts() {
       if (this.onboarding || !this.bannerAccess.allowed_layouts) {
         return ["low"];
@@ -357,12 +357,7 @@ export default {
       }
     },
     banners() {
-      let banners;
-      try {
-        banners = this.webSettings.recommendations.banners;
-      } catch {
-        banners = null;
-      }
+      const banners = this.client?.web_settings?.recommendations?.banners;
       if (!banners) {
         return null;
       }
@@ -389,7 +384,7 @@ export default {
   },
   methods: {
     ...mapActions("settings", [
-      "getWebSettings",
+      "getSettings",
       "saveSettings",
       "getPageInstallationSettings"
     ]),
@@ -429,7 +424,7 @@ export default {
       }
       this.saving = true;
       try {
-        const newSettings = cloneDeep(this.webSettings);
+        const newSettings = cloneDeep(this.client.web_settings);
         if (this.current.type !== "custom") {
           this.current.sub_banners = 2;
           this.current.main_banners = this.getMainBannerCountFromType(
@@ -462,9 +457,9 @@ export default {
     },
     async refreshData() {
       try {
-        const webSettings = this.getWebSettings();
-        const installationSettings = this.getPageInstallationSettings("home");
-        [await webSettings, await installationSettings];
+        Promise.allSettled([this.getSettings(),
+        this.getPageInstallationSettings("home")
+        ]);
         this.lastSaved = cloneDeep(this.banners || {});
       } catch (err) {
         Sentry.captureException(err);

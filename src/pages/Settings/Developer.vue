@@ -150,7 +150,7 @@ import Card from "@/components/Cards/Card.vue";
 import DcButton from "@/components/DcButton.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
 
-import ApiSettings from "@/components/onboarding/ApiSettings.vue";
+import ApiSettings from "@/components/Settings/ApiSettings.vue";
 import * as Sentry from "@sentry/browser";
 import { mapGetters, mapActions } from "vuex";
 
@@ -191,18 +191,18 @@ export default {
   },
   computed: {
     ...mapGetters(["client", "trustedClient"]),
-    ...mapGetters("settings", ["webSettings", "pageStatus"])
+    ...mapGetters("settings", ["pageStatus"])
   },
   methods: {
     ...mapActions("settings", [
-      "getWebSettings",
+      "getSettings",
       "saveSettings",
       "getPageInstallationSettings"
     ]),
     async saveChanges(css) {
       this.saving = true;
       this.setTestMode();
-      const newSettings = this.webSettings;
+      const newSettings = this.client.web_settings;
       newSettings.testing.user_ids = this.userIDs;
       newSettings.recommendations.products["css-selectors"] = this.cssSelectors;
       try {
@@ -245,16 +245,19 @@ export default {
       let filter = this.client.domain || "";
       try {
         const getUsers = getPageData(`/users/emails?filter=${filter}`);
-        const webSettings = this.getWebSettings();
-        let resp = [await getUsers, webSettings];
+        const getSettings = this.getSettings();
+        let resp = [await getUsers, getSettings];
         this.filteredUsers = resp[0].test_users;
         this.userIDs =
-          (this.webSettings.testing && this.webSettings.testing.user_ids) || [];
+          (this.client.web_settings.testing &&
+            this.client.web_settings.testing.user_ids) ||
+          [];
         this.setTestMode();
         this.cssSelectors =
-          (this.webSettings.recommendations &&
-            this.webSettings.recommendations.products &&
-            this.webSettings.recommendations.products["css-selectors"]) ||
+          (this.client?.web_settings?.recommendations?.products &&
+            this.client.web_settings.recommendations.products[
+              "css-selectors"
+            ]) ||
           emptyCssSelectors;
       } catch (err) {
         Sentry.captureException(err);
@@ -266,7 +269,9 @@ export default {
   },
   mounted() {
     this.userIDs =
-      (this.webSettings.testing && this.webSettings.testing.user_ids) || [];
+      (this.client.web_settings.testing &&
+        this.client.web_settings.testing.user_ids) ||
+      [];
     this.setTestMode();
     this.refreshData();
   }

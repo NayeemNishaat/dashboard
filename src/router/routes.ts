@@ -2,12 +2,10 @@ import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 const FeaturePage = () => import("@/layout/dashboard/FeaturePage.vue");
 
 //Onboarding
-import Loading from "@/pages/Onboarding/Loading.vue";
-const Onboarding = () => import("@/pages/Onboarding/Onboarding.vue");
-
+import Loading from "@/pages/Auth/Loading.vue";
 const LoginError = () => import("@/pages/Auth/LoginError.vue");
 
-const Intro = () => import("@/components/onboarding/Intro.vue");
+const Onboarding = () => import("@/layout/dashboard/Onboarding.vue");
 
 const DeveloperSettings = () => import("@/pages/Settings/Developer.vue");
 const SetupSummary = () => import("@/pages/SetupSummary.vue");
@@ -71,17 +69,10 @@ const routes: any = [
     beforeEnter: ifNotAuthenticated
   },
   {
-    path: "/onboarding/:platform",
+    path: "/welcome",
     name: "onboarding",
     component: Onboarding,
-    children: [
-      {
-        path: "intro",
-        name: "onboarding-intro",
-        component: Intro,
-        beforeEnter: ifOnboarding,
-      },
-    ]
+    beforeEnter: ifOnboarding,
   },
   {
     path: "/callback",

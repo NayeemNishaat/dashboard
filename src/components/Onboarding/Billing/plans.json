@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "name": "Basics",
+    "trial_period_days": 14,
+    "price_per_month": 9.99,
+    "price_per_year": 110,
+    "description": "Basic homepage with personalized banners for new business",
+    "features": [
+      "5 dynamic banners",
+      "1 banner layout",
+      "Recently viewed products",
+      "Google Analytics support",
+      "Chat + Email support"
+    ],
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Essentials",
+    "trial_period_days": 14,
+    "price_per_month": 29.99,
+    "price_per_year": 110,
+    "description": "Must-have homepage features for a personalized visitor experience",
+    "features": [
+      "15 dynamic banners",
+      "3 banner layouts",
+      "Personalized products for each visitor",
+      "Frequently bought together (cross-sell)",
+      "Similar products (up-sell)"
+    ],
+    "active": false
+  },
+  {
+    "id": 3,
+    "name": "Standard",
+    "trial_period_days": 14,
+    "price_per_month": 99.99,
+    "price_per_year": 110,
+    "description": "Complete personalized homepage for businesses looking to grow sales",
+    "features": [
+      "40 dynamic banners",
+      "Personalized categories for each visitor",
+      "Category top products"
+    ],
+    "active": false
+  },
+  {
+    "id": 4,
+    "name": "Premium",
+    "trial_period_days": 14,
+    "price_per_month": 299.99,
+    "price_per_year": 110,
+    "description": "Premium personalized homepage for brands that need a unique design",
+    "features": [
+      "100 dynamic banners",
+      "Custom designed banner layouts",
+      "Web Notifications",
+      "A/B testing (coming soon)"
+    ],
+    "active": false
+  }
+]

@@ -48,7 +48,7 @@
                       <span style="width: 10em">{{ node.label.text }}</span>
                       <span>
                         <small>
-                          {{ node.label.orders }}&nbsp;{{ $tc("sales", 2) }}
+                          {{ node.label.orders }}&nbsp;{{ $t("sales", 2) }}
                         </small>
                       </span>
                       <span style="width: 8em">
@@ -57,7 +57,7 @@
                           class="dc-tag dc-tag--warning"
                         >
                           {{ node.label.banner }}&nbsp;{{
-                            $tc("banners", node.label.banner)
+                            $t("banners", node.label.banner)
                           }}
                         </span>
                         <span
@@ -198,7 +198,6 @@ export default {
   },
   computed: {
     ...mapGetters(["client"]),
-    ...mapGetters("settings", ["webSettings"]),
     disableSave() {
       return (
         this.validatingCategoryLink ||
@@ -248,7 +247,7 @@ export default {
     bannerLayout() {
       try {
         // Api may return response without banners yet
-        return this.webSettings.recommendations.banners.type;
+        return this.client.web_settings.recommendations.banners.type;
       } catch (e) {
         return null;
       }
@@ -258,7 +257,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions("settings", ["getSettings"]),
     ...mapActions("validators", ["verifyWebsite"]),
 
     filterNode(value, data) {
@@ -287,14 +285,6 @@ export default {
       if (link.startsWith("http")) {
         url = link;
       }
-      // this.verifyWebsite(url)
-      //   .catch(err => {
-      //     console.log(err);
-      //     this.invalidCategoryLink = true;
-      //   })
-      //   .finally(() => {
-      //     this.validatingCategoryLink = false;
-      //   });
       this.validatingCategoryLink = false;
     },
     getLink(link) {
@@ -421,20 +411,16 @@ export default {
       let bannerToEdit = {};
       let categories = {};
       this.categoriesLoading = true;
+      const reqSettings = this.getSettings();
       try {
-        const reqSettings = this.getSettings();
         const reqCategories = getPageData("banners/categories");
         if (this.editMode) {
           const reqBannerData = getPageData(
             `banners/${this.$route.params.bannerid}`
           );
-          let resp = [
-            await reqSettings,
-            await reqCategories,
-            await reqBannerData
-          ];
-          categories = resp[1];
-          bannerToEdit = resp[2];
+          let resp = [await reqCategories, await reqBannerData];
+          categories = resp[0];
+          bannerToEdit = resp[1];
           this.editBannerform.photoURL = bannerToEdit.photo_url;
           this.bannerform.type = bannerToEdit.type;
           this.bannerform.category = {
@@ -442,12 +428,12 @@ export default {
           };
           this.bannerform.link = bannerToEdit.link;
         } else {
-          let resp = [await reqSettings, await reqCategories];
-          categories = resp[1];
+          categories = await reqCategories;
         }
       } catch (e) {
         Sentry.captureException(e);
       }
+      await reqSettings;
       if (!this.bannerLayout) {
         this.$notify({
           title: this.$t("incomplete form"),

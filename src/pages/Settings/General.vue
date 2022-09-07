@@ -314,10 +314,39 @@ const availableLanguages = computed(() => {
           ? lang.name
           : `${lang.nativeName} (${lang.name})`
     };
-  });
-});
-const currency = computed(() => {
-  let currency = client?.profile?.locale?.currency ?? defaultCurrency.value;
+  },
+  computed: {
+    ...mapGetters(["client", "languageCode", "locale"]),
+    languageName() {
+      try {
+        return this.availableLanguages.filter(
+          (elem) => elem.code == this.language
+        )[0].name;
+      } catch (err) {
+        return "";
+      }
+    },
+    countryName() {
+      try {
+        return this.countries.filter((elem) => elem.code == this.country)[0]
+          .name;
+      } catch (err) {
+        return "";
+      }
+    },
+    isShopify() {
+      return (this.client?.type ?? "shopify") === "shopify";
+    },
+    currencySymbol() {
+      return this.currentCountry?.currencies?.currency?.symbol ?? "";
+    },
+    availableLanguages() {
+      if (this.currentCountry === {}) {
+        return [];
+      }
+      let languages = this.currentCountry.languages || [
+        { iso639_1: "en", name: "English", nativeName: "English" }
+      ];
 
   let formatString = "{{amount}}";
   if (currencyDecimalSeparator.value === "'") {
@@ -374,19 +403,60 @@ const countries = computed(() => {
     } catch (err) {
       name = countrySettings.value[countryCode].names.en;
     }
-    countries.push({
-      code: countryCode,
-      name: name
-    });
-  });
-  return countries;
-});
-const samplePrice = computed(() => {
-  if (!currency.value || currency.value === {}) {
-    return "$1,500.00";
-  }
-  return formatPrice(1500, currency.value);
-});
+  },
+  methods: {
+    ...mapActions("settings", ["getSettings", "saveSettings"]),
+    async saveChanges() {
+      if (this.client.type === "shopify") {
+        return;
+      }
+      this.saving = true;
+      try {
+        const newProfile = this.client?.profile;
+        newProfile.locale["country"] = this.country;
+        newProfile.locale["language"] = this.language;
+        newProfile.locale["currency"] = this.currency;
+        await this.saveSettings({
+          profile: newProfile,
+          store_name: this.storeName
+        });
+        this.setData();
+        this.$notify({
+          title: this.$t("success"),
+          message: this.$t("saved"),
+          type: "success"
+        });
+      } catch (err) {
+        Sentry.captureException(err);
+        this.showError(err);
+      } finally {
+        this.saving = false;
+      }
+    },
+    async refreshData() {
+      this.loading = true;
+      try {
+        const getSettings = this.getSettings();
+        const countrySettings = getCountrySettings();
+        let response = [await getSettings, await countrySettings];
+        this.setData();
+        if (response[1]) {
+          this.countrySettings = response[1];
+        }
+      } catch (err) {
+        this.error = this.$t(
+          "an unknown error occured, please try again later"
+        );
+        Sentry.captureException(err);
+      } finally {
+        this.loading = false;
+      }
+    },
+    setData() {
+      //set name
+      this.storeName = this.client.name;
+      //set country
+      this.country = this.client?.profile?.locale?.country ?? "US";
 
 const saveChanges = async () => {
   if (client.type === "shopify") {

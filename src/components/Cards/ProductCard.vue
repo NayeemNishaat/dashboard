@@ -10,15 +10,8 @@
         <div class="col-12 text-center">
           <h4 style="text-transform: capitalize">{{ name }}</h4>
 
-          <el-rate
-            v-if="rating > 0.6"
-            v-model="rating"
-            disabled
-            :colors="['#80848f', '#80848f', '#f7ba2a']"
-            :max="3"
-            :low-threshold="1"
-            :high-threshold="2"
-          />
+          <el-rate v-if="rating > 0.6" v-model="rating" disabled :colors="['#80848f', '#80848f', '#f7ba2a']" :max="3"
+            :low-threshold="1" :high-threshold="2" />
           <p v-else class="rating-warning">
             <i class="el-icon-warning" />
             {{ $t("this product isnt performing well") }}
@@ -33,7 +26,7 @@
                 </td>
                 <td>
                   <i class="ti-mouse-alt" />
-                  &nbsp;{{ $tc("clicks", 2) }}:&nbsp;{{ clicks }}
+                  &nbsp;{{ $t("clicks", 2) }}:&nbsp;{{ clicks }}
                 </td>
               </tr>
             </tbody>
@@ -66,7 +59,7 @@ export default {
   },
   methods: {}
 };
-</script>
+ </script>
 <style scoped>
 .product-photo-outer {
   position: relative;
