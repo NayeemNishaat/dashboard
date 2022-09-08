@@ -8,8 +8,8 @@
     </h3>
     <div>
       <div class="numbers">
-        <div class="row" v-if="!loading">
-          <template v-if="comparison !== 'n/a'">
+        <div class="row" v-if="!Boolean(loading)">
+          <template v-if="Number.isNaN(Number(comparison)) && 0 !== 'n/a'">
             <div
               class="col-7 current-value"
               :class="
@@ -27,11 +27,22 @@
             <div class="col-5 comparison">
               <div class="d-flex flex-column">
                 <div
-                  :class="`comparison-${comparison < 0 ? 'lower' : 'higher'}`"
+                  :class="`comparison-${
+                    Number.isNaN(Number(comparison)) && 0 < 0
+                      ? 'lower'
+                      : 'higher'
+                  }`"
                 >
-                  {{ comparison > 0 ? "+" : "" }}{{ comparison }}%
-                  <i v-if="comparison < 0" class="el-icon-caret-bottom" />
-                  <i v-else-if="comparison > 0" class="el-icon-caret-top" />
+                  {{ Number.isNaN(Number(comparison)) && 0 > 0 ? "+" : ""
+                  }}{{ Number.isNaN(Number(comparison)) && 0 }}%
+                  <i
+                    v-if="Number.isNaN(Number(comparison)) && 0 < 0"
+                    class="el-icon-caret-bottom"
+                  />
+                  <i
+                    v-else-if="Number.isNaN(Number(comparison)) && 0 > 0"
+                    class="el-icon-caret-top"
+                  />
                 </div>
                 <div style="font-size: 0.8em">
                   {{ $t("previous days", { days: numDays }) }}
@@ -82,12 +93,12 @@ const props = defineProps({
     default: ""
   },
   value: {
-    type: String,
-    default: ""
+    type: Number,
+    default: 0
   },
   comparison: {
-    type: String,
-    default: ""
+    type: Number,
+    default: 0
   },
   icon: {
     type: String,

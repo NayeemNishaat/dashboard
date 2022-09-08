@@ -20,32 +20,43 @@ test("StatsCard", () => {
       title: "This is a test",
       value: "22",
       comparison: "test comparison",
-      loading: true
+      loading: false
     }
   });
 
   expect(wrapper.text()).toContain("This is a test");
-  expect(wrapper.html()).not.toContain("22");
+  expect(wrapper.html()).toContain("22");
   expect(wrapper.text()).not.toContain("test comparison");
-  expect(wrapper.html()).toContain('class="loader dots"');
+  expect(wrapper.html()).not.toContain('class="loader dots"');
 });
 
-test("StatsCard", () => {
+test("StatsCard Sad", () => {
   const wrapper = mount(StatsCard as any, {
     global: {
       plugins: [store],
       mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt }
     },
     props: {
-      title: "Test2",
-      value: "300",
-      comparison: "test comparison",
-      loading: false
+      loading: "dgdgh" // Note: Invalid but handled by the component
     }
   });
 
-  expect(wrapper.text()).toContain("Test2");
-  expect(wrapper.html()).toContain(300);
-  expect(wrapper.text()).toContain("test comparison");
-  expect(wrapper.html()).not.toContain('class="loader dots"');
+  expect(wrapper.html()).toContain('class="loader dots"');
+});
+
+test("StatsCard Sad", () => {
+  const wrapper = mount(StatsCard as any, {
+    global: {
+      plugins: [store],
+      mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt }
+    },
+    props: {
+      value: "sfdg",
+      comparison: "test comparison",
+      loading: false // Note: Invalid but handled by the component
+    }
+  });
+
+  expect(wrapper.html()).toContain(0);
+  expect(wrapper.text()).not.toContain("test comparison");
 });
