@@ -9,7 +9,13 @@
     <div>
       <div class="numbers">
         <div class="row" v-if="!Boolean(loading)">
-          <template v-if="Number.isNaN(Number(comparison)) && 0 !== 'n/a'">
+          <template
+            v-if="
+              Number.isNaN(Number(comparison))
+                ? 0
+                : Number(comparison) !== 'n/a'
+            "
+          >
             <div
               class="col-7 current-value"
               :class="
@@ -28,19 +34,36 @@
               <div class="d-flex flex-column">
                 <div
                   :class="`comparison-${
-                    Number.isNaN(Number(comparison)) && 0 < 0
+                    Number.isNaN(Number(comparison))
+                      ? 0
+                      : Number(comparison) < 0
                       ? 'lower'
                       : 'higher'
                   }`"
                 >
-                  {{ Number.isNaN(Number(comparison)) && 0 > 0 ? "+" : ""
-                  }}{{ Number.isNaN(Number(comparison)) && 0 }}%
+                  {{
+                    Number.isNaN(Number(comparison))
+                      ? 0
+                      : Number(comparison) > 0
+                      ? "+"
+                      : ""
+                  }}{{
+                    Number.isNaN(Number(comparison)) ? 0 : Number(comparison)
+                  }}%
                   <i
-                    v-if="Number.isNaN(Number(comparison)) && 0 < 0"
+                    v-if="
+                      (Number.isNaN(Number(comparison))
+                        ? 0
+                        : Number(comparison)) < 0
+                    "
                     class="el-icon-caret-bottom"
                   />
                   <i
-                    v-else-if="Number.isNaN(Number(comparison)) && 0 > 0"
+                    v-else-if="
+                      (Number.isNaN(Number(comparison))
+                        ? 0
+                        : Number(comparison)) > 0
+                    "
                     class="el-icon-caret-top"
                   />
                 </div>
@@ -50,7 +73,9 @@
               </div>
             </div>
           </template>
-          <div v-else class="col-12 current-value">{{ value }}</div>
+          <div v-else class="col-12 current-value">
+            {{ Number.isNaN(Number(value)) ? 0 : Number(value) }}
+          </div>
         </div>
         <div class="row" v-else>
           <div class="col-8"></div>

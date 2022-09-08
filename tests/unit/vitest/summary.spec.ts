@@ -51,7 +51,7 @@ test("StatsCard Sad", () => {
       mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt }
     },
     props: {
-      value: "sfdg",
+      value: "sfdg", // Invalid Value
       comparison: "test comparison",
       loading: false // Note: Invalid but handled by the component
     }

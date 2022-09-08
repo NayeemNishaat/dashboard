@@ -79,17 +79,14 @@ test("BannerCrd Sad", () => {
     },
     props: {
       name: "Product",
-      photoURL: "url",
-      bannerID: "String",
-      type: "String",
-      link: "String",
-      clicks: "6y",
-      impressions: 567,
-      conversions: 44,
-      rating: 34,
-      score: "fhj"
+      clicks: "6y", // Invalid Value
+      impressions: "ghh",
+      conversions: -44
     }
   });
 
-  console.log(wrapper.html());
+  console.log(wrapper.text());
+  expect(wrapper.text()).toContain("clicks: 0"); // Remark: Not 6y
+  expect(wrapper.text()).toContain("views: 0"); // Remark: Handled to be 0 if invalid!
+  expect(wrapper.text()).toContain("conversions: 44"); // Note: Conversion can't be negative.
 });

@@ -7,7 +7,13 @@
           <h4 style="text-transform: capitalize">
             {{ title }}
           </h4>
-          <el-rate v-if="score > 1" v-model="score" disabled :max="3" :colors="['#80848f', '#80848f', '#f7ba2a']" />
+          <el-rate
+            v-if="score > 1"
+            v-model="score"
+            disabled
+            :max="3"
+            :colors="['#80848f', '#80848f', '#f7ba2a']"
+          />
           <p v-else class="rating-warning">
             <i class="el-icon-warning" />
             {{ $t("consider changing this banner") }}
@@ -18,15 +24,22 @@
           <ul>
             <li>
               <i class="ti-eye"></i>
-              &nbsp;&nbsp;{{ $t("views") }}: {{ impressions }}
+              &nbsp;&nbsp;{{ $t("views") }}:
+              {{ Number.isNaN(Number(impressions)) ? 0 : Number(impressions) }}
             </li>
             <li>
               <i class="ti-mouse-alt"></i>
-              &nbsp;&nbsp;{{ $t("clicks", 2) }}: {{ clicks }}
+              &nbsp;&nbsp;{{ $t("clicks", 2) }}:
+              {{ Number.isNaN(Number(clicks)) ? 0 : Number(clicks) }}
             </li>
             <li>
               <i class="ti-shopping-cart"></i>
-              &nbsp;&nbsp;{{ $t("conversions", 2) }}: {{ conversions }}
+              &nbsp;&nbsp;{{ $t("conversions", 2) }}:
+              {{
+                Number.isNaN(Number(conversions))
+                  ? 0
+                  : Number(Math.abs(conversions))
+              }}
             </li>
           </ul>
         </div>
