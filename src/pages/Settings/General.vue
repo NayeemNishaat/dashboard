@@ -193,16 +193,15 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
+<script>
 import * as Sentry from "@sentry/browser";
+import { mapActions, mapGetters } from "vuex";
 import { getCountrySettings } from "@/api/backend";
-import { useStore } from "vuex";
+
 import Card from "@/components/Cards/Card.vue";
+
 import DcButton from "@/components/DcButton.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
-
-const store = useStore();
 
 function currencyFormatString(format) {
   var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
@@ -254,65 +253,31 @@ function formatPrice(price, options) {
   return formatString.replace(placeholderRegex, value);
 }
 
-const saving = ref(false);
-const loading = ref(false);
-const countrySettings = ref({});
-const currencyCode = ref("");
-const currencyDecimalSeparator = ref(".");
-const currencyShowDecimals = ref(true);
-const currencySymbolPosition = ref("front");
-const currencySymbolSeparator = ref("");
-const storeName = ref("");
-const language = ref("es");
-const country = ref("US");
-const defaultCurrency = ref({
-  code: "USD",
-  format: "${{amount}}",
-  supported_codes: ["USD"]
-});
-
-const { client, languageCode } = store.getters;
-// const webSettings = store.getters["settings/webSettings"];
-// const locale = store.getters["settings/locale"];
-
-const languageName = computed(() => {
-  try {
-    return availableLanguages.value.filter(
-      (elem) => elem.code === language.value
-    )[0].name;
-  } catch (err) {
-    return "";
-  }
-});
-const countryName = computed(() => {
-  try {
-    return countries.value.filter((elem) => elem.code === country.value)[0]
-      .name;
-  } catch (err) {
-    return "";
-  }
-});
-const isShopify = computed(() => {
-  return (client?.type ?? "shopify") === "shopify";
-});
-const currencySymbol = computed(() => {
-  return currentCountry.value?.currencies?.currency?.symbol ?? "";
-});
-const availableLanguages = computed(() => {
-  if (currentCountry.value === {}) {
-    return [];
-  }
-  let languages = currentCountry.value.languages || [
-    { iso639_1: "en", name: "English", nativeName: "English" }
-  ];
-
-  return languages.map((lang) => {
+export default {
+  name: "General",
+  components: {
+    Card,
+    DcButton,
+    LoaderDots
+  },
+  data() {
     return {
-      code: lang.iso639_1,
-      name:
-        lang.name === lang.nativeName
-          ? lang.name
-          : `${lang.nativeName} (${lang.name})`
+      saving: false,
+      loading: false,
+      countrySettings: {},
+      currencyCode: "",
+      currencyDecimalSeparator: ".",
+      currencyShowDecimals: true,
+      currencySymbolPosition: "front",
+      currencySymbolSeparator: "",
+      storeName: "",
+      language: "es",
+      country: "US",
+      defaultCurrency: {
+        code: "USD",
+        format: "${{amount}}",
+        supported_codes: ["USD"]
+      }
     };
   },
   computed: {
@@ -348,60 +313,90 @@ const availableLanguages = computed(() => {
         { iso639_1: "en", name: "English", nativeName: "English" }
       ];
 
-  let formatString = "{{amount}}";
-  if (currencyDecimalSeparator.value === "'") {
-    formatString = "{{amount_with_apostrophe_separator}}";
-  } else if (currencyDecimalSeparator.value === ",") {
-    if (currencyShowDecimals.value) {
-      formatString = "{{amount_with_comma_separator}}";
-    } else {
-      formatString = "{{amount_no_decimals_with_comma_separator}}";
-    }
-  } else if (!currencyShowDecimals.value) {
-    formatString = "{{amount_no_decimals}}";
-  }
-  currency.supported_codes = [currencyCode.value];
-  if (currencySymbolPosition.value === "back") {
-    currency.format = `${formatString}${currencySymbolSeparator.value}${currencySymbol.value}`;
-    return currency;
-  }
-  currency.format = `${currencySymbol.value}${currencySymbolSeparator.value}${formatString}`;
-  return currency;
-});
-const availableCurrencies = computed(() => {
-  if (currentCountry.value === {}) {
-    return [];
-  }
-  return [currentCountry.value?.currencies?.code ?? "USD"];
-});
-const currentCountry = computed(() => {
-  if (
-    !countrySettings.value ||
-    countrySettings.value === {} ||
-    !country.value ||
-    !(country in countrySettings.value)
-  ) {
-    return {};
-  }
-  return countrySettings.value[country.value.toUpperCase()];
-});
-const countries = computed(() => {
-  if (!countrySettings.value || countrySettings.value === {}) {
-    return [];
-  }
-  let countries = [];
-  Object.keys(countrySettings.value).map((countryCode) => {
-    let name = countrySettings.value[countryCode].names.en;
-    try {
-      if (
-        languageCode &&
-        languageCode in countrySettings.value[countryCode].names.translations
-      ) {
-        name =
-          countrySettings.value[countryCode].names.translations[languageCode];
+      return languages.map((lang) => {
+        return {
+          code: lang.iso639_1,
+          name:
+            lang.name === lang.nativeName
+              ? lang.name
+              : `${lang.nativeName} (${lang.name})`
+        };
+      });
+    },
+    currency() {
+      let currency =
+        this.client?.profile?.locale?.currency ?? this.defaultCurrency;
+
+      let formatString = "{{amount}}";
+      if (this.currencyDecimalSeparator === "'") {
+        formatString = "{{amount_with_apostrophe_separator}}";
+      } else if (this.currencyDecimalSeparator === ",") {
+        if (this.currencyShowDecimals) {
+          formatString = "{{amount_with_comma_separator}}";
+        } else {
+          formatString = "{{amount_no_decimals_with_comma_separator}}";
+        }
+      } else if (!this.currencyShowDecimals) {
+        formatString = "{{amount_no_decimals}}";
       }
-    } catch (err) {
-      name = countrySettings.value[countryCode].names.en;
+      currency.supported_codes = [this.currencyCode];
+      if (this.currencySymbolPosition === "back") {
+        currency.format = `${formatString}${this.currencySymbolSeparator}${this.currencySymbol}`;
+        return currency;
+      }
+      currency.format = `${this.currencySymbol}${this.currencySymbolSeparator}${formatString}`;
+      return currency;
+    },
+    availableCurrencies() {
+      if (this.currentCountry === {}) {
+        return [];
+      }
+      return [this.currentCountry?.currencies?.code ?? "USD"];
+    },
+    currentCountry() {
+      if (
+        !this.countrySettings ||
+        this.countrySettings === {} ||
+        !this.country ||
+        !(this.country in this.countrySettings)
+      ) {
+        return {};
+      }
+      return this.countrySettings[this.country.toUpperCase()];
+    },
+    countries() {
+      if (!this.countrySettings || this.countrySettings === {}) {
+        return [];
+      }
+      let countries = [];
+      Object.keys(this.countrySettings).map((countryCode) => {
+        let name = this.countrySettings[countryCode].names.en;
+        try {
+          if (
+            this.languageCode &&
+            this.languageCode in
+              this.countrySettings[countryCode].names.translations
+          ) {
+            name =
+              this.countrySettings[countryCode].names.translations[
+                this.languageCode
+              ];
+          }
+        } catch (err) {
+          name = this.countrySettings[countryCode].names.en;
+        }
+        countries.push({
+          code: countryCode,
+          name: name
+        });
+      });
+      return countries;
+    },
+    samplePrice() {
+      if (!this.currency || this.currency === {}) {
+        return "$1,500.00";
+      }
+      return formatPrice(1500, this.currency);
     }
   },
   methods: {
@@ -458,129 +453,79 @@ const countries = computed(() => {
       //set country
       this.country = this.client?.profile?.locale?.country ?? "US";
 
-const saveChanges = async () => {
-  if (client.type === "shopify") {
-    return;
-  }
-  saving.value = true;
-  try {
-    const newProfile = client?.profile;
-    newProfile.locale["country"] = country.value;
-    newProfile.locale["language"] = language.value;
-    newProfile.locale["currency"] = currency.value;
+      //set language
+      this.language = this.client?.profile?.locale?.language ?? "en";
 
-    await store.dispatch("settings/saveSettings", {
-      profile: newProfile,
-      store_name: storeName.value
-    });
-    setData();
-    $notify({
-      title: "success",
-      message: "saved",
-      type: "success"
-    });
-  } catch (err) {
-    Sentry.captureException(err);
-    showError(err);
-  } finally {
-    saving.value = false;
-  }
-};
+      const currency =
+        this.client?.profile?.locale?.currency ?? this.defaultCurrency;
 
-const refreshData = async () => {
-  loading.value = true;
-  try {
-    const webSettings = store.dispatch("settings/getWebSettings");
-    const fetchCountrySettings = getCountrySettings();
-    let response = [await webSettings, await fetchCountrySettings];
-    setData();
-    if (response[1]) {
-      countrySettings.value = response[1];
-    }
-  } catch (err) {
-    console.log(err);
-    Sentry.captureException(err);
-  } finally {
-    loading.value = false;
-  }
-};
-function setData() {
-  //set name
-  storeName.value = client.name;
-  //set country
-  country.value = client?.profile?.locale?.country ?? "US";
-
-  //set language
-  language.value = client?.profile?.locale?.language ?? "en";
-
-  const currency = client?.profile?.locale?.currency ?? defaultCurrency.value;
-
-  //set currency vars
-  switch (currencyFormatString(currency.format)) {
-    case "amount":
-      setCurrencyVars(true, "", "front", ".");
-      break;
-    case "amount_no_decimals":
-      setCurrencyVars(false, "", "front", ".");
-      break;
-    case "amount_with_comma_separator":
-      setCurrencyVars(true, "", "front", ",");
-      break;
-    case "amount_no_decimals_with_comma_separator":
-      setCurrencyVars(false, "", "front", ",");
-      break;
-    case "amount_with_apostrophe_separator":
-      setCurrencyVars(true, "", "front", "'");
-      break;
-  }
-}
-const showError = (err) => {
-  Sentry.captureException(err);
-  $notify({
-    title: "could not save",
-    message: "an unknown error occured, please try again later",
-    type: "warning"
-  });
-  saving.value = false;
-};
-const setCurrencyVars = (
-  showDecimals,
-  symbolSeparator,
-  symbolPosition,
-  decimalSeparator
-) => {
-  currencySymbolPosition.value = symbolPosition;
-  currencySymbolSeparator.value = symbolSeparator;
-  currencyDecimalSeparator.value = decimalSeparator;
-  currencyShowDecimals.value = showDecimals;
-};
-const updateCountryDependents = () => {
-  if (availableLanguages.value !== []) {
-    let found = false;
-    availableLanguages.value.forEach((lang) => {
-      if (language.value === lang.code) {
-        found = true;
+      //set currency vars
+      switch (currencyFormatString(currency.format)) {
+        case "amount":
+          this.setCurrencyVars(true, "", "front", ".");
+          break;
+        case "amount_no_decimals":
+          this.setCurrencyVars(false, "", "front", ".");
+          break;
+        case "amount_with_comma_separator":
+          this.setCurrencyVars(true, "", "front", ",");
+          break;
+        case "amount_no_decimals_with_comma_separator":
+          this.setCurrencyVars(false, "", "front", ",");
+          break;
+        case "amount_with_apostrophe_separator":
+          this.setCurrencyVars(true, "", "front", "'");
+          break;
       }
-    });
-    if (!found) {
-      language.value = availableLanguages.value[0].code;
+    },
+    showError(err) {
+      Sentry.captureException(err);
+      this.$notify({
+        title: this.$t("could not save"),
+        message: this.$t("an unknown error occured, please try again later"),
+        type: "warning"
+      });
+      this.saving = false;
+    },
+    setCurrencyVars(
+      showDecimals,
+      currencySymbolSeparator,
+      currencySymbolPosition,
+      currencyDecimalSeparator
+    ) {
+      this.currencySymbolPosition = currencySymbolPosition;
+      this.currencySymbolSeparator = currencySymbolSeparator;
+      this.currencyDecimalSeparator = currencyDecimalSeparator;
+      this.currencyShowDecimals = showDecimals;
+    },
+    updateCountryDependents() {
+      if (this.availableLanguages !== []) {
+        let found = false;
+        this.availableLanguages.forEach((lang) => {
+          if (this.language === lang.code) {
+            found = true;
+          }
+        });
+        if (!found) {
+          this.language = this.availableLanguages[0].code;
+        }
+      }
+      if (this.currentCountry !== {} && this.currentCountry.currencies !== {}) {
+        const currency = this.currentCountry.currencies;
+        this.currencyCode = currency.code;
+        this.currencyDecimalSeparator = currency?.separator?.decimal ?? ".";
+        this.currencyShowDecimals = !!currency.show_cents;
+        this.currencySymbolSeparator = currency?.separator?.currency ?? "";
+        this.currencySymbolPosition = ["front", "back"].includes(
+          currency.placement
+        )
+          ? currency.placement
+          : "front";
+      }
     }
-  }
-  if (currentCountry.value !== {} && currentCountry.value.currencies !== {}) {
-    const currency = currentCountry.value.currencies;
-    currencyCode.value = currency.code;
-    currencyDecimalSeparator.value = currency?.separator?.decimal ?? ".";
-    currencyShowDecimals.value = !!currency.show_cents;
-    currencySymbolSeparator.value = currency?.separator?.currency ?? "";
-    currencySymbolPosition.value = ["front", "back"].includes(
-      currency.placement
-    )
-      ? currency.placement
-      : "front";
+  },
+  async mounted() {
+    await this.refreshData();
   }
 };
-
-onMounted(() => {
-  refreshData();
-});
 </script>
