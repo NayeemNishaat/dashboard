@@ -74,9 +74,11 @@
     </div>
     <div class="row text-center">
       <div class="col-12">
-        <dc-button v-if="maxcards < cards.length" @click="addMore()">{{
-          $t("show more")
-        }}</dc-button>
+        <dc-button
+          v-if="Math.abs(maxcards) < cards.length"
+          @click="addMore()"
+          >{{ $t("show more") }}</dc-button
+        >
       </div>
     </div>
   </div>
