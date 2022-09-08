@@ -1,11 +1,9 @@
 import { mount } from "@vue/test-utils";
 import { test, expect } from "vitest";
 import Vuex from "vuex";
-// import ViewProducts from "@/pages/Products/ViewProducts.vue";
 import CardGrid from "@/components/Cards/CardGrid.vue";
-// import store from "@/store";
-// import BannerCard from "@/components/Cards/BannerCard.vue";
 import ElementPlus from "element-plus";
+import DcButton from "@/components/DcButton.vue";
 
 test("CardGrid", () => {
   const store = new Vuex.Store({});
@@ -78,4 +76,29 @@ test("CardGrid", () => {
   expect(wrapper.text()).not.toContain("Modern White Table");
   // expect(wrapper.text()).not.toContain("Beach Towel"); // Note: Should Fail
   expect(wrapper.text()).toContain("Beach Towel");
+});
+
+test("CardGrid Sad", () => {
+  const store = new Vuex.Store({});
+
+  const wrapper = mount(CardGrid as any, {
+    global: {
+      plugins: [store, ElementPlus],
+      mocks: { $tc: (txt: string) => txt, $t: (txt: string) => txt },
+      components: { "dc-button": DcButton }
+    },
+    props: {
+      loading: false,
+      cards: 455, // Note: This is invalid data
+      cardType: "products"
+    },
+    data() {
+      return {
+        maxcards: "2s" // Note: This is invalid data
+      };
+    }
+  });
+
+  expect(wrapper.html()).not.toContain("banner-card"); // Because the value of card is invalid.
+  expect(wrapper.html()).not.toContain("show more");
 });

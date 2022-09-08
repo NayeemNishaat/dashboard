@@ -36,8 +36,8 @@
         </card>
       </div>
       <template
-        v-else-if="displayCards.length > 0"
-        v-for="card in displayCards"
+        v-else-if="displayCards?.length > 0"
+        v-for="card in (displayCards as any)"
       >
         <banner-card
           v-if="cardType === 'banners' && card.category !== null"
@@ -82,103 +82,96 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script setup lang="ts">
+import { ref, computed } from "vue";
 import BannerCard from "@/components/Cards/BannerCard.vue";
 import ProductCard from "@/components/Cards/ProductCard.vue";
 import Card from "@/components/Cards/Card.vue";
 import LoaderDots from "@/components/LoaderDots.vue";
 import DcButton from "@/components/DcButton.vue";
+import { useStore } from "vuex";
 
-export default {
-  name: "CardGrid",
-  components: {
-    BannerCard,
-    ProductCard,
-    Card,
-    DcButton,
-    LoaderDots
+const props = defineProps({
+  loading: {
+    type: Boolean,
+    default: false
   },
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
-    cards: {
-      type: Array,
-      default: () => []
-    },
-    cardType: String
+  cards: {
+    type: Array,
+    default: () => []
   },
-  data() {
-    return {
-      maxcards: 30,
-      filter: "",
-      sortField: this.cardType === "banners" ? "score" : "ctr_norm"
-    };
-  },
-  computed: {
-    ...mapGetters(["client"]),
-    filteredCards() {
-      if (!this.cards) {
-        return [];
-      }
-      if (!this.filter) {
-        return this.cards;
-      }
+  cardType: String
+});
+const emit = defineEmits(["cardClick", "delete", "edit"]);
+const mainStore = useStore();
 
-      let cards = this.cards.filter((item) => {
-        let searchstring = this.getSearchString(item);
-        return searchstring.toLowerCase().includes(this.filter.toLowerCase());
-      });
-      return cards;
-    },
-    displayCards() {
-      if (!this.filteredCards || this.filteredCards.length === 0) {
-        return [];
-      }
-      let filteredCards = this.filteredCards;
-      return filteredCards
-        .sort(
-          (a, b) =>
-            parseFloat(b[this.sortField] || 0) -
-            parseFloat(a[this.sortField] || 0)
-        )
-        .slice(0, this.maxcards);
-    }
-  },
-  methods: {
-    getSearchString(item) {
-      if (this.cardType === "banners") {
-        return item["category_id"] + " " + (item["type"] || "");
-      }
-      return item["name"];
-    },
-    addMore() {
-      this.maxcards += 10;
-    },
-    handleClick(item) {
-      this.$emit("cardClick", item);
-    },
-    delCard(item) {
-      this.$emit("delete", item);
-    },
-    editCard(item) {
-      this.$emit("edit", item);
-    },
-    getLink(link) {
-      if (link.substring(0, 4) === "http") {
-        return link;
-      }
-      if (!this.client) {
-        return link;
-      }
-      const clientDomain = this.client.domain;
-      return `https://${clientDomain}${link}`;
-    }
-  },
+const maxcards = ref(30);
+const filter = ref("");
+const sortField = ref(props.cardType === "banners" ? "score" : "ctr_norm");
 
-  mounted() {}
+const client = computed(() => mainStore.getters["client"]);
+
+const filteredCards = computed(() => {
+  if (!props.cards) {
+    return [];
+  }
+  if (!filter.value) {
+    return props.cards;
+  }
+
+  let cards = props.cards.filter((item) => {
+    let searchstring = getSearchString(item);
+    return searchstring.toLowerCase().includes(filter.value.toLowerCase());
+  });
+  return cards;
+});
+
+const displayCards = computed(() => {
+  if (!filteredCards.value || filteredCards.value?.length === 0) {
+    return [];
+  }
+  let newFilteredCards = filteredCards.value;
+
+  try {
+    return newFilteredCards
+      .sort(
+        (a: any, b: any) =>
+          parseFloat(b[sortField.value] || 0) -
+          parseFloat(a[sortField.value] || 0)
+      )
+      .slice(0, maxcards.value);
+  } catch (error) {
+    return [];
+  }
+});
+
+const getSearchString = (item: any) => {
+  if (props.cardType === "banners") {
+    return item["category_id"] + " " + (item["type"] || "");
+  }
+  return item["name"];
+};
+const addMore = () => {
+  maxcards.value += 10;
+};
+const handleClick = (item: any) => {
+  emit("cardClick", item);
+};
+const delCard = (item: any) => {
+  emit("delete", item);
+};
+const editCard = (item: any) => {
+  emit("edit", item);
+};
+const getLink = (link: string) => {
+  if (link.substring(0, 4) === "http") {
+    return link;
+  }
+  if (!client.value) {
+    return link;
+  }
+  const clientDomain = client.value.domain;
+  return `https://${clientDomain}${link}`;
 };
 </script>
 <style>
