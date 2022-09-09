@@ -17,9 +17,7 @@ it("Tests the state (Happy)", () => {
     context
   );
 
-  mutations.setDateRange(state, dateRange);
-
-  expect(dateRange).toEqual(state.dateRange);
+  expect(state.dateRange).toEqual(["2020-07-07", "2020-08-02"]);
   expect(accessToken).toEqual(state.accessToken);
   expect(languageCode).toEqual(state.languageCode);
   expect(nextPage).toEqual(state.nextPage);
@@ -27,25 +25,22 @@ it("Tests the state (Happy)", () => {
 });
 
 it("Tests the state (Sad)", () => {
-  const dateRange = [new Date(), "afsg"] as unknown as [Date, Date];
-  const accessToken = { token: "gdg", auth_provider: "fdg" };
-  const languageCode = "es";
-  // const languageCode = "bn"; // Remark: This throws en error
+  const dateRange = [new Date(), "2nd test"] as unknown as [Date, Date]; // Invalid Date
+  const accessToken = { token: "fsf" }; // Invalid access token
+  const languageCode = "bn";
   const nextPage = "sfdh";
   const context = null;
   const state = new State(
-    accessToken,
+    accessToken as any,
     dateRange,
-    languageCode,
+    languageCode as any, // Note: For escaping typescript error
     nextPage,
     context
   );
 
-  mutations.setDateRange(state, dateRange);
-
-  expect(dateRange).toEqual(state.dateRange);
-  expect(accessToken).toEqual(state.accessToken);
-  expect(languageCode).toEqual(state.languageCode);
+  expect(state.dateRange).toEqual(["2022-09-01", "2022-09-08"]); // Fallback to default date range
+  expect(state.accessToken).toEqual({ token: "", auth_provider: "" });
+  expect(state.languageCode).toEqual("en"); // fallback to default because invalid langcode given
   expect(nextPage).toEqual(state.nextPage);
   expect(context).toEqual(state.context);
 });

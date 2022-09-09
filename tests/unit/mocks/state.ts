@@ -14,6 +14,8 @@ export default class State {
     context: Context | null
   ) {
     try {
+      if (!accessToken.token || !accessToken.auth_provider) throw new Error();
+
       this.accessToken = accessToken || `{"token":"","auth_provider":""}`;
     } catch (err) {
       this.accessToken = { token: "", auth_provider: "" };
@@ -24,6 +26,13 @@ export default class State {
       this.context = null;
     }
     try {
+      if (isNaN(dateRange[0] as any) || isNaN(dateRange[1] as any)) {
+        this.dateRange = [
+          format(subDays(new Date(), 8), "yyyy-MM-dd"),
+          format(subDays(new Date(), 1), "yyyy-MM-dd")
+        ];
+      }
+
       this.dateRange = [
         format(subDays(new Date(dateRange[0]), 8), "yyyy-MM-dd"),
         format(subDays(new Date(dateRange[1]), 1), "yyyy-MM-dd")
@@ -35,7 +44,10 @@ export default class State {
       ];
     }
 
-    this.languageCode = languageCode || "en";
+    const regex = new RegExp(/en|es/);
+    if (regex.test(languageCode)) this.languageCode = languageCode;
+    else this.languageCode = "en";
+
     this.nextPage = nextPage || null;
   }
 }
