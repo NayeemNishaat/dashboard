@@ -4,13 +4,13 @@ export default class State {
   public accessToken: AuthToken;
   public dateRange: [string, string];
   public languageCode: string;
-  public nextPage: string | null;
+  public nextPage: number | null;
   public context: Context | null;
   constructor(
     accessToken: AuthToken,
     dateRange: [Date, Date],
     languageCode: "en" | "es",
-    nextPage: string | null,
+    nextPage: number | null | any,
     context: Context | null
   ) {
     try {
@@ -48,6 +48,6 @@ export default class State {
     if (regex.test(languageCode)) this.languageCode = languageCode;
     else this.languageCode = "en";
 
-    this.nextPage = nextPage || null;
+    this.nextPage = isNaN(+nextPage) ? null : +nextPage;
   }
 }
